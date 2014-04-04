@@ -1,0 +1,335 @@
+% LAB 5: Strings, Slice and Dice 
+% CSE/IT 107: Introduction to Programming
+% New Mexico Tech
+% 
+% Prepared by Scott Chadde 
+% Fall 2013
+
+\documentclass[12pt]{article}
+
+
+
+% Allows for bold tele-type
+\DeclareFontShape{OT1}{cmtt}{bx}{n}{
+  <5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
+
+
+% AMS math formatting
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}     
+\usepackage{textcomp}
+% Indention formatting
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Margin support
+\usepackage[margin=1in]{geometry}
+
+% Header/footer support
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{CSE 107}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Replace with title for lab
+\fancyhead[R]{Lab 5: Strings - Slice and Dice}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Color support
+\usepackage{color}
+\definecolor{light-gray}{gray}{0.9}
+% Outline support
+%\usepackage{outlines}
+% URL formatting
+\usepackage{}\usepackage{url}
+% Image/graphic support
+\usepackage{graphicx}
+% Supports in-document hyperlinks
+\usepackage[pdfborder=0in]{hyperref}
+% List compression
+\usepackage{mdwlist}
+\usepackage{enumerate}
+\usepackage{enumitem}
+% Support long tables across pages
+\usepackage{longtable}
+\setlength{\LTcapwidth}{6in}
+\usepackage{array}
+\usepackage{multirow}
+% Supports code formatting/highlighting
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily, keywordstyle=\bfseries\color{black}, stringstyle=\color{black}, commentstyle=\color{blue}, showstringspaces=false, numbers=none}
+\lstdefinestyle{bash}{language=bash, backgroundcolor=\color{light-gray}}
+\lstdefinestyle{c}{language=C, frame=single}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Replace with title for lab
+\title{Lab 5: Strings - Slice and Dice}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author{CSE/IT 107}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+
+\hrule
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Introduction}
+
+The purpose of this lab is to introduce strings and reading files.
+
+\section*{Reading}
+
+Chapter 8 in Think Python: How to Think Like a Computer Scientist (Think)
+
+\section*{Coding Conventions}
+
+Follow PEP-8 recommendations for your code. 
+
+\section*{Problems}
+
+    
+  Make sure your source code files are appropriately named. Make sure your code has a main function; use \texttt{boilerplate.py} you created in Lab 1.
+
+\emph{Think Python} is available from \url{http://www.greenteapress.com/thinkpython/}. Page numbers and exercise numbers refer to those found in the PDF file available at the website.
+
+\begin{enumerate}
+  \item Exercise 8.1 \emph{Think Python}, page 72. Use a while loop. Name your source code \texttt{think\_8-1.py}
+
+  \item Rewrite the function in Exercise 8.1 using negative indexing (see section 8.2 in Think). Use a while loop. Add the function to \texttt{think\_8-1.py}. 
+  
+  \item Exercise 8.2 \emph{Think Python}, page 73. Write the code as a function. Name your source code \texttt{think\_8-2.py}. The function should return a list of duckling names. The \texttt{in} operator can be used to check whether a value is contained inside another object such as a string or list. The \texttt{in} operator returns True or False. For example:
+
+    \begin{verbatim}
+    letters = 'abcd'
+    i = 'a'
+    if i in letters:
+        print i + ' is in letters'  
+    else:
+        print i + ' not in letters'
+
+  \end{verbatim}
+
+  Use \texttt{in} your function to test to see in the letter is a 'O' or 'Q'. Do not test using equality. 
+
+\item Given
+
+  \begin{verbatim}
+  s = 'spam'
+  t = 'ni!'
+  \end{verbatim}
+
+  With an interpreter, evaluate the following expressions:
+
+  \begin{itemize}
+  \item 'The Knights who say, ' + t
+  \item 3 * s + 4 * t
+  \item s[1]
+  \item s[1:3]
+    \item s[2] + s[:2]
+  \item s[2] + t[:2]
+  \item s[:] + t[:]
+  \item s + t[-1]
+  \item s.upper()
+  \item t.upper().ljust(6) * 3
+  \item t.upper().rjust(6) * 3
+  \end{itemize}
+
+
+More information on slicing can be found here:
+
+\url{http://docs.python.org/2/tutorial/introduction.html#strings}
+
+Now, given \texttt{s} and \texttt{t}, write a program using string operations that produces the following output:
+
+\begin{verbatim}
+'NI'
+'ni!spamni!'
+'Spam Ni!  Spam Ni!  Spam Ni!  '  # two spaces between ! and S
+'spam'
+['sp', 'm']
+'spm'
+'spniam'
+\end{verbatim}
+
+
+You can place everything in the \texttt{main()} function. You cannot change \texttt{s} or \texttt{t} or add any other variables. Name your source code \texttt{spamni.py}
+
+\item Exercise 8.4 \emph{Think Python}, page 74. Name your source code \texttt{think\_8-4.py}
+
+\item Exercise 8.5 \emph{Think Python}, page 75. Name your source code \texttt{think\_8-5.py}
+
+\item Exercise 8.6 \emph{Think Python}, page 75. Name your source code \texttt{think\_8-6.py}
+
+\item Exercise 8.7 \emph{Think Python}, page 76. Name your source code \texttt{think\_8-7.py}
+
+\item Exercise 8.8 \emph{Think Python}, page 76. Nothing to turn in here, but familiarize yourself with string methods. The url is:
+
+  \url{http://docs.python.org/2/library/stdtypes.html#string-methods}
+
+
+\section*{Caesar Cipher}
+
+\item Write a program that uses a Caesar cipher (see \url{http://en.wikipedia.org/wiki/Caesar_cipher} to encrypt and decrypt a string. Name your program \texttt{caesar.py}. 
+  
+You will pass in three command line arguments: one for the string to cipher, one for the direction to shift ('right' or 'left'), and one for the distance to shift. 
+  
+Make sure to enclose the string to encrypt in quotes, otherwise it will be stored as a list. Convert the string to lower case. Spaces are left as spaces. Write a function that checks to make sure the string
+  consists of only characters a - z or a space. Use the Python provided string methods \texttt{isalpha()} and \texttt{isspace(}) to determine if the string is valid or not. 
+
+  Once you have a valid string, then you can encrypt it using a Caesar cipher. Pass in as parameters the string, the direction you want to shift ('left' or 'right'), and the number of positions you want to shift. As you can't perform modular arithmetic on characters (a string of length one), you will first have to convert the string to its ASCII equivalent and back to a character. Python provides two builtin functions \texttt{chr()} and \texttt{ord()} that will help in this task. \texttt{chr(i)}, returns a string of one character with i an integer, 0 <= i < 256. \texttt{ord(c)} returns the integer value of the one character string c. Since all numbers are lower case, you will find it easier if you subtract off \texttt{ord('a')} from each character before you take the modulus 26. Subtracting off \texttt{ord('a')} will make the letter 'a' zero.Of course, you have to add \texttt{ord('a')} to convert the number to the correct character.
+
+To decrypt the encrypted text, you perform the inverse of the encryption. If you called the Caesar function with a left shift of 3 to encrypt the string, you call the function with a right shift of 3 to decrypt it. 
+
+Test with the string 'the quick brown fox jumps over the lazy dog'. Encrypt the string with a left shift of 3. Print the encrypted string. Decrypt the string and print to stdin. For example, 
+
+\begin{verbatim}
+run caesar.py 'the quick brown fox jumps over the lazy dog' 'left' 3
+encrypt: qeb nrfzh yoltk clu grjmp lsbo qeb ixwv ald
+decrypt: the quick brown fox jumps over the lazy dog
+\end{verbatim}
+
+\subsection*{ROT13}
+Once you have your Caesar cipher working, you have ROT13 encryption/decryption as well. For information on ROT13 see \url{http://en.wikipedia.org/wiki/ROT13}. Try a few of the words in the table next to the section entitled ``Letter Games'' to make sure your encryption/decryption scheme is working correctly.
+
+
+\section*{Word Count}
+
+\subsection*{Splitting Strings}
+Python has a nice builtin function for strings called \texttt{split()}, which splits a string into substrings. You will find many uses for split. Try the following examples in an interpreter to get a feel how split works:
+
+\begin{verbatim}
+import string
+for w in string.split("to be or not to be"):
+    print w
+
+for w in string.split("Mississippi", "i"):
+    print w
+\end{verbatim}
+
+In the second example, the \texttt{i} is the delimiter in which to split the string on. The default delimiter is any whitespace character. Delimiters can be longer than a single character. Split Mississippi on ss. Notice how the delimiter is removed from the substrings.
+
+\subsection*{Reading a File}
+It is very easy to open a file in Python. The following program opens a file for reading, echoes the contents to the terminal, closes the file, and exits.
+
+\begin{verbatim}
+#!/usr/bin/env python
+
+from sys import argv
+
+
+def main():
+    infile = open(argv[1], 'r')
+    data = infile.read()
+    print data
+    infile.close()
+
+
+if __name__ == '__main__':
+    main()
+\end{verbatim}
+
+To run, assuming the name of the program is \texttt{echo.py} and the file \texttt{getty.txt} is available on Moodle:
+
+\begin{verbatim}
+run echo.py getty.txt
+\end{verbatim}
+
+\subsection*{Word Count}
+
+On *nix systems, there is a nice little utility called \texttt{wc} which analyzes a file and determines the number of lines, words, and characters in the file. 
+
+\item Write a program named \texttt{wc.py} that reads in a file and prints out the counts of lines, words, and characters. 
+
+Write a function \texttt{line\_count} which counts the number of new lines (\texttt{\textbackslash n}) in the file. Use Python's  \texttt{find} method. 
+
+Write a function \texttt{word\_count} which counts the number of words in the file. For purposes here, we will consider any text separated by whitespace a \texttt``word''. This means you will count \texttt{--} as a word.
+
+Write a function \text{char\_count} which counts the number of characters in the file. Count all characters.
+
+Your output should match that of the \texttt{wc} command. That is
+\begin{verbatim}
+run wc.py getty.txt
+5 278 1476 getty.txt
+
+$ wc getty.txt
+   5  278 1476 getty.txt
+   \end{verbatim}
+
+\section*{Anagrams}
+
+You are going to write two programs to determine if two words are anagrams. Two strings are anagrams if they are simply rearrangements of each other. For example, \texttt{earth} and \texttt{heart} are anagrams. While \texttt{googl} and \texttt{apple} are not. If the words differ in length they obviously are not anagrams. 
+
+Each program will have a function \texttt{is\_anagram(s, t)} that returns true if the strings are anagrams or false if not. \texttt{is\_anagram()} implements the given algorithm. Your \texttt{main()} function processes the input and prints whether the words are anagrams or not. 
+
+Enter the two words via the command line. You can simply use \texttt{argv[1]} and \texttt{argv[2]} to get the words. Your programs should check to see that the strings are of the same length. Otherwise it should print an error. 
+
+
+\item \emph{Check Off Algorithm}
+
+  Implement a solution that checks to see that each character in the first string occurs in the second string. If each character in the first string occurs in the second string, then the strings are anagrams. The algorithm can be implement by checking if the first character in the first word is in the second word, the second character in the first word is in the second word, etc. Assume words have unique characters. 
+
+  The \texttt{break} statement is useful here. You can use a boolean to see if the character in the first word is in the second word. If it isn't you can break out of the loop. Section 7.4 of Think Python discusses the \texttt{break} statement.
+  
+  
+Name your source code \texttt{check\_off.py}.
+
+\item \emph{Sort and Compare Algorithm}
+
+Implement a sort and compare algorithm to find if two words are anagrams. The words are only anagrams if they consist of exactly the same characters. So if you sort each string and then check to make sure they consist of the same characters, you can determine if the words are anagrams. 
+
+Since strings are immutable, you cannot sort strings directly. You first need to convert them to a list and then you can use python's builtin \texttt{sort()} function. To convert a string to a list and sort it, it is as simple as doing the following:
+
+\begin{verbatim}
+>>> s = 'hello'
+>>> s = list(s)
+>>> s.sort()
+>>> print s
+\end{verbatim}
+
+
+Name your source code \texttt{sort.py}. 
+
+  
+
+
+\end{enumerate}
+
+%Some of the functions you are going to write are duplicates of already builtin Python string methods. However, rather than using Python's builtin string methods, you are going to roll your own to give you an understanding how these methods are implemented. Most of the functions involve using for loops. 
+
+
+% future labs
+% to_lower and to_upper & ascii table -- chr and ord
+
+%\item Shuffle DNA - use Knuth's algorithm
+
+% codon frequencys - build a list, sort it, and get the count of codons
+
+% write reverse with slice and dice methodology
+
+% extract the first base-pair of the codon, second -base pair, and third base pair (tuples). Get the GC content.
+
+\section*{Submission}
+
+Create a tarball of your *.py files.
+
+\begin{lstlisting}[style=bash]
+tar czvf cse107_firstname_lastname_lab5.tar.gz *.py
+\end{lstlisting}
+
+
+To check the contents of your tarball, run the following command:
+
+\begin{lstlisting}[style=bash]
+tar tf cse107_firstname_lastname_lab5.tar.gz *.py
+\end{lstlisting}
+
+You should see a list of your Python source code files.
+
+Upload your tarball in Moodle before the start of you next lab.
+
+
+\end{document}

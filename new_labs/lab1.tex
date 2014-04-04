@@ -1,0 +1,1143 @@
+% LAB 0: An Introduction to Linux and Python
+% 
+% CSE/IT 107: Introduction to Programming
+% New Mexico Tech
+% 
+% Prepared by Cynthia Veitch, William Kwan, Scott Chadde and Kaley Goatcher
+% Fall 2013
+
+\documentclass[12pt]{article}
+
+
+
+% Allows for bold tele-type
+\DeclareFontShape{OT1}{cmtt}{bx}{n}{
+  <5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
+
+
+% AMS math formatting
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}     
+\usepackage{textcomp}
+% Indention formatting
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Margin support
+\usepackage[margin=1in]{geometry}
+
+% Header/footer support
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{CSE 107}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Replace with title for lab
+\fancyhead[R]{Lab 1: An Introduction to Linux and Python}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Color support
+\usepackage{color}
+\definecolor{light-gray}{gray}{0.9}
+% Outline support
+%\usepackage{outlines}
+% URL formatting
+\usepackage{}\usepackage{url}
+% Image/graphic support
+\usepackage{graphicx}
+% Supports in-document hyperlinks
+\usepackage[pdfborder=0in]{hyperref}
+% List compression
+\usepackage{mdwlist}
+\usepackage{enumerate}
+% Support long tables across pages
+\usepackage{longtable}
+\setlength{\LTcapwidth}{6in}
+\usepackage{array}
+\usepackage{multirow}
+% Supports code formatting/highlighting
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily, keywordstyle=\bfseries\color{black}, stringstyle=\color{black}, commentstyle=\color{blue}, showstringspaces=false, numbers=none}
+\lstdefinestyle{bash}{language=bash, backgroundcolor=\color{light-gray}}
+\lstdefinestyle{c}{language=C, frame=single}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Replace with title for lab
+\title{Lab 1: An Introduction to Linux and Python}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author{CSE/IT 107}
+\date{NMT Computer Science}
+
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+The purpose of this lab is to introduce you to the Linux environment (including some common, useful commands) and to the Python programming environment. In this lab, you will learn how to
+\begin{enumerate*}
+\item Log into Linux at the Tech Computer Center (TCC).
+\item Learn to use IDLE as an interpreter.
+\item Edit, compile, and run a few short Python programs.
+\item Create a tarball and submit a lab to Moodle.
+\end{enumerate*}
+
+
+Throughout this semester's labs, we will be using specially formatted text to aid in your understanding. For example,
+\begin{lstlisting}[style=bash]
+text in a console font within a gray box
+\end{lstlisting}
+is text that either appears in the terminal or is to be typed into the terminal verbatim. Even the case is important, so be sure to keep it the same! If a \$ is used that indicates the terminal prompt. You do not type the \$.
+
+\vspace{12pt}
+
+\begin{lstlisting}[style=c]
+Text that appears in console font within a framed box is 
+sample Python code or program output.
+\end{lstlisting}
+
+\vspace{12pt}
+
+Text in a \texttt{simple console font}, without a frame or background, indicates the name of a file, a function, or some action you need to perform, but not necessarily type into the terminal. Don't worry: as you become familiar with both the terminal and Python, it will become obvious which is being described!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Requirements}
+
+% In order to receive full credit for this lab, you must do the following:
+% \begin{enumerate*}
+% \item Log into Linux at the TCC using your assigned username.
+% \item Replace the conversion constant in \texttt{sample\_c\_file.c}.
+% \item Compile and run \texttt{sample\_c\_file.c}, saving the output in a script file.
+% \item Add a header to the script.
+% \item Edit the script file to include answers to the questions posed in this lab.
+% \item Create a Tar archive of your lab submission and submit it to the lab email address.
+% \end{enumerate*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Instructions}
+
+The following instructions will guide you through this lab. Because this is an introductory lab, the instructions are rather detailed and specific. However, it is important that you understand the concepts behind the actions you take---you will be repeating them throughout the semester. If you have any questions, ask the instructor, teaching assistant, or lab assistant.
+
+\subsection{Log in}
+To log into a TCC machine, you must use your TCC username and password. If you do not have a TCC account, you must visit the TCC Office to have one activated.
+
+\begin{enumerate}
+\item First, sit down at a computer. If you're looking at some flavor of Linux (such as Fedora), skip forward to Step \ref{login}. If you're looking at Windows, press \texttt{Ctrl+Alt+Delete}.
+\item Click on the \texttt{Shutdown...} button.
+\item Select \texttt{Restart} from the menu and click \texttt{OK}. Wait for Windows to shutdown and for the computer to restart.
+\item When the computer reboots, you will be presented with a menu to select the operating system you prefer. Select \texttt{Fedora} or the flavor of Linux installed on the computer you are using.
+\item Wait while the Linux operating system boots.
+\item \label{login} When the login screen comes up, type your username and your password followed by \texttt{Enter}.
+\end{enumerate}
+
+\subsection{Open a terminal}
+Throughout this semester, you will perform most actions from the command line. In order to do this, you must first open a terminal. There are many methods for opening a terminal; the following is just one.
+
+\begin{enumerate}
+\item Click on the \texttt{Activities} button at the top left of the screen.
+\item In the text box in the upper right hand corner, type in
+  \texttt{Terminal} and hit return.
+\end{enumerate}
+
+\subsection{Change your password(optional)}
+In order to protect the work that you do this semester, it is important that you have strong password protection of your TCC account. \textbf{\textit{Any student whose work is stolen, changed, or copied because of weak password protection (i.e., your account is hacked) will be held as liable as the malicious party.}} See Microsoft's article ``Strong Passwords and Password Security'' (\url{http://www.microsoft.com/protect/fraud/passwords/create.aspx}) for advice on creating strong passwords.
+
+The following instructions are optional; however, they are a useful way to become familiar with command line actions.
+
+\begin{enumerate}
+
+\item In the terminal, type the following command:
+\begin{lstlisting}[style=bash]
+$ passwd
+\end{lstlisting}
+\item Follow the prompts to change your password.
+\end{enumerate}
+
+\subsection{shell}
+At the terminal prompt you are using what is called a shell. A shell
+provides a means to interact with the operating system.
+
+
+\subsection{File Hierarchy}
+
+Unix has a logical file system, which means as an end user you don't care about the
+actual physical layout and can focus on navigating the file system.  
+
+Key: Everything begins at the root directory
+\texttt{/} and all other directories are children of the root directory. The
+file system forms a tree.
+
+A path consists of the names of directories and is a way to navigate from the root file system to the
+desired directory. If you include the root directory in the path this
+is called an absolute path. Another way to navigate the tree is to use
+relative paths, which navigate the tree based on where you currently are.
+
+To navigate the file system, a couple of useful commands.
+
+\subsubsection{pwd - \textbf{p}rint \textbf{w}orking \textbf{d}irectory}
+
+\textbf{p}rint \textbf{w}orking \textbf{d}irectory displays the
+directory you are in.  
+
+\begin{lstlisting}[style=bash]
+$ pwd
+/home/cse
+\end{lstlisting}
+
+The directory you are currently in is called your ``working'' directory.
+
+\subsubsection{cd - change directory}
+\texttt{cd} allows you to change your working directory to another location.
+
+syntax:
+
+\begin{lstlisting}[style=bash]
+$ cd <path_name> 
+\end{lstlisting}
+
+where the $<$path\_name$>$ is either relative or absolute.
+
+\begin{lstlisting}[style=bash]
+$ cd /usr/local/bin
+$ pwd
+/usr/local/bin
+$ cd -
+\end{lstlisting}
+
+Where are you?
+
+\begin{lstlisting}[style=bash]
+cd -
+\end{lstlisting}
+
+Now where are you?
+
+The command \texttt{cd -} returns you to your previous working directory
+
+The \texttt{-} is called a command line argument or option. To view
+the list of options for a command use the manual.
+
+\begin{lstlisting}[style=bash]
+$ man cd
+\end{lstlisting}
+
+\texttt{man} is short for manual
+
+Notice the man page comes up with a Bash built-in. Bash is the name of
+the shell and built-in commands are
+already loaded into memory.
+
+To move up one directory (one node) level use dot-dot.
+
+\begin{lstlisting}[style=bash]
+$ cd ..
+\end{lstlisting}
+Where are you?
+
+To move up two levels use dot-dot slash dot-dot
+\begin{lstlisting}[style=bash]
+$ cd ../..
+\end{lstlisting}
+ 
+To go to your home directory you can type
+ 
+\begin{lstlisting}[style=bash]
+$ cd /home/<user>
+\end{lstlisting}
+
+where $<$user$>$ is your user name or use a tilde
+
+\begin{lstlisting}[style=bash]
+$ cd ~
+\end{lstlisting}
+
+or you can use 
+\begin{lstlisting}[style=bash]
+$ cd $HOME
+\end{lstlisting}
+
+where \$HOME is an environment variable that stores the path to your
+home directory. This is more useful in shell scripting than path
+navigation. Use tilde instead.
+
+or even easier, just type \texttt{cd} without any options. This always takes you to your home directory.
+
+\begin{lstlisting}[style=bash]
+$ cd 
+\end{lstlisting}
+
+
+
+\subsubsection{ls - listing the contents of a directory}
+\texttt{ls} allows you to list the contents of a directory. In other
+words what files and directories are located there.
+
+\begin{lstlisting}[style=bash]
+$ cd 
+$ ls
+<a list of file names and directories contained 
+with your working directory, which is currently
+your home directory>
+\end{lstlisting}
+
+Adding some command options let you see other file information
+
+\begin{lstlisting}[style=bash]
+$ ls -alFh 
+...
+-rwxr-x---.  1 scott scott  1.0K Jan 12 14:56 down_and_out*
+drwxr-xr-x.  5 scott scott  4.0K Jan 21 17:04 Downloads/
+-rw-r-x---.  1 scott scott  2.2K Jan 12 11:31 .emacs
+...
+ \end{lstlisting}
+
+
+The \texttt{a} option show hidden files (aka dot-files), the
+\texttt{l} option produces a long
+listing format of file names and directories, the \texttt{F} option
+adds a \texttt{*} to the end of the file if is an executable and a
+\texttt{/} if it is a directory, and the \texttt{h} option prints out the size of the
+file in human readable format.
+
+\subsection*{Understanding the long format option}
+
+The \texttt{-l} option of \texttt{ls} tells you quite a bit about a file. The first character of the line indicates the file type. Some file type options are:
+\\\texttt{-} ordinary file
+\\\texttt{d} directory
+\\\texttt{l} symbolic link
+
+There are other file types.
+
+The next three groups of three letters indicate the file permissions for the \emph{user}, \emph{group}, and \emph{others} (aka ugo). Common letters are \texttt{r} for the ability to read the file; \texttt{w} for the ability to write or change the contents of the file on disk; and \texttt{x} for executable or the ability to run the file. There are other file permissions.
+
+The next item indicates how many links the file has. A directory often has several links, because each of its subdirectories includes an entry for its parent directory and that entry counts as a link to the parent.
+
+The next two items indicate the user and the group that own the file.
+
+The next item indicates the file size in characters (1 character = 1 byte). Use the -h option to get this in human readable format (K for kilobytes, M for megabytes, and G for gigabytes)
+
+The next two items indicate the date and time when the file was last modified.
+
+The last item is the file name. If you use the \texttt{-F} option, a \texttt{*} at the end of the file indicates it is an executable file and a \texttt{/} indicates it is a directory.
+
+
+\subsection*{Finding more information}
+
+How can you see more command line options for \texttt{ls}? What is the option to sort by file size?
+
+
+\subsection{Other directory commands}
+
+\begin{lstlisting}[style=bash]
+mkdir 
+cp
+mv
+rm
+touch
+cat
+less
+script
+\end{lstlisting}
+
+\subsection{Creating directories}
+Directories are very important for organizing your work, and you should get in the habit of creating a new directory for every lab this semester.
+
+\begin{enumerate}
+
+\item In the terminal, change your current working directory to your home directory by typing the following command:
+\begin{lstlisting}[style=bash]
+cd
+\end{lstlisting}
+
+\item Create a \texttt{cse107} directory by typing the following command;
+\begin{lstlisting}[style=bash]
+mkdir cse107
+\end{lstlisting}
+
+\item Change your current working directory to the \texttt{cse107} directory by typing the following command:
+\begin{lstlisting}[style=bash]
+cd cse107
+\end{lstlisting}
+
+\item Create a subdirectory for this lab in your \texttt{cse107} directory by typing the following command:
+\begin{lstlisting}[style=bash]
+mkdir lab1
+\end{lstlisting}
+
+\item Change your current working directory to the \texttt{lab1} directory by typing the following command:
+\begin{lstlisting}[style=bash]
+cd lab1
+\end{lstlisting}
+
+\end{enumerate}
+
+
+\subsection{Modify your profile}
+The \texttt{.bash\_profile} file contains your profile settings. You are going to modify your profile so that 1) if you try to delete a file, the system will ask you for confirmation before deleting it (*nix systems assume you know what you are doing) and 2) add Anaconda python to your path.
+
+\begin{enumerate}
+
+\item In the terminal, type the following command:
+\begin{lstlisting}[style=bash]
+gedit ~/.bash_profile &
+\end{lstlisting}
+\texttt{gedit} is the name of a very simple text editor in the same style as Notepad, except with syntax highlighting. The \texttt{\&} at the end of the command line tells the shell to background the process, letting you continue to use the prompt (command line).
+
+\item In \texttt{gedit}, you need to add the following line to the end of the \texttt{.bash\_profile} file:
+\begin{lstlisting}[style=c]
+alias rm="rm -i"
+\end{lstlisting}
+
+Also add the following line to make Anaconda python the default version of python you use:
+\begin{lstlisting}[style=c]
+export PATH=/usr/local/anaconda/bin:$PATH
+\end{lstlisting}
+
+\item Save the file.
+
+\item Close \texttt{gedit}.
+
+\item In the terminal, type the following command:
+\begin{lstlisting}[style=bash]
+$ source ~/.bash_profile
+\end{lstlisting}
+
+\item To test your new profile settings, run the following commands:
+
+\begin{lstlisting}[style=bash]
+$ touch junk
+$ rm junk
+rm: remove regular empty file ‘junk’? <y>
+$ python
+Python 2.7.3 |Anaconda 1.4.0 (64-bit)| 
+(default, Feb 25 2013, 18:46:31) 
+[GCC 4.1.2 20080704 (Red Hat 4.1.2-52)] on linux2
+Type "help", "copyright", "credits" or "license" 
+for more information.
+>>> 
+\end{lstlisting}
+
+The \texttt{>>>} is the python prompt.
+
+To exit the python prompt and return to your shell prompt type \texttt{CTRL + d}
+
+\end{enumerate}
+
+
+\subsection{Using the file system}
+The following instructions will show you how to maneuver in the Unix file system. For more information on these commands, review the TCC publications ``Summary of common Unix commands'' (\url{http://infohost.nmt.edu/tcc/help/pubs/unixcrib/}) and ``Customizing your Unix account'' (\url{http://infohost.nmt.edu/tcc/help/pubs/dotfiles/}).
+
+\begin{enumerate}
+
+\item In the terminal, type the following command:
+\begin{lstlisting}[style=bash]
+$ pwd
+\end{lstlisting}
+
+\texttt{pwd} stands for `print working directory,' and the result is called the \textit{absolute path} to this location. In this instance, the result should be something similar to
+
+\begin{lstlisting}[style=bash]
+/u/username/cse107/lab1
+\end{lstlisting}
+
+where \texttt{username} is your TCC account username.
+
+\item Type the following command:
+\begin{lstlisting}[style=bash]
+$ ls
+\end{lstlisting}
+
+\texttt{ls} stands for `list segments' (a carry over from Multics) and it prints to the screen, \textit{standard out}, a list of files in the current directory. At this point, you should see nothing, because you have not put any files into your \texttt{lab1} directory. If, instead, you type the following command:
+\begin{lstlisting}[style=bash]
+$ ls -a
+\end{lstlisting}
+
+you should see two entries: \texttt{.} and \texttt{..}, which exist in every directory. The \texttt{.} stands for `this directory' and the \texttt{..} stands for the `parent directory.'
+
+\item Try the following commands to move within your directory structures:
+\begin{lstlisting}[style=bash]
+$ cd .
+$ pwd
+$ cd ..
+$ pwd
+\end{lstlisting}
+
+\item To return to your \texttt{lab1} directory, type the following command:
+\begin{lstlisting}[style=bash]
+$ cd lab1
+\end{lstlisting}
+
+\item Now type the following commands:
+\begin{lstlisting}[style=bash]
+$ cd
+$ pwd
+\end{lstlisting}
+Typing \texttt{cd} without any parameters should take you to your `home directory.'
+
+\item Using the commands you've just learned, return to your \texttt{lab1} directory. There is more than one way to get to the directory.
+
+\item In your \texttt{lab1} directory, type the following command, and then find out where it takes you:
+\begin{lstlisting}[style=bash]
+$ cd ../..
+$ pwd
+\end{lstlisting}
+
+\item From your current directory, type the following command:
+\begin{lstlisting}[style=bash]
+$ cd cse107/lab1
+$ pwd
+\end{lstlisting}
+Notice that you can use multiple paths at once on the command line, separated by \texttt{/}. If you've used Windows for some time, you will notice that this differs from Windows path designations where the directory separator is \texttt{\textbackslash}.
+
+\end{enumerate}
+
+\section{Python as a calculator}
+Forgot ever using your calculator! Python rocks as a calculator.
+
+Start the interactive python interpreter 
+\begin{lstlisting}[style=bash]
+$ python
+Python 2.7.3 |Anaconda 1.4.0 (64-bit)| 
+(default, Feb 25 2013, 18:46:31) 
+[GCC 4.1.2 20080704 (Red Hat 4.1.2-52)] on linux2
+Type "help", "copyright", "credits" or "license" 
+for more information.
+>>> 
+\end{lstlisting}
+
+At the python prompt \texttt{>>>}. You can type in python statements. For instance, to add 2 + 3 
+\begin{lstlisting}[style=bash]
+>>> 2 + 3
+5
+>>>
+\end{lstlisting}
+
+Notice how after a python statement is executed, you are given a python prompt much like a shell.
+
+The \texttt{+} is the addition operator. Other basic math operators in python include:
+
+\texttt{-} Subtraction: subtracts right hand operand from left hand operand
+
+\begin{lstlisting}[style=bash]
+>>> 2 - 3
+-1
+\end{lstlisting}
+
+\texttt{*} Multiplication: Multiplies values on either side of the operator
+
+\begin{lstlisting}[style=bash]
+>>> 2 * 3
+6
+\end{lstlisting}
+
+
+\texttt{/} Division - Divides left hand operand by right hand operand
+
+\begin{lstlisting}[style=bash]
+>>> 2 / 3
+0
+>>> 2 / 3.0
+0.6666666666666666
+>>> 2. / 3.
+0.6666666666666666
+>>> 2 / float(3)
+0.6666666666666666
+\end{lstlisting}
+
+Notice that when python divides two integers, the decimal portion of the answer is dropped. If you want the answer you expect from a typical calculator when you divide, you have to change one or both of the numbers to a floating point number. There are a number of ways to have a floating point number in python. Add a decimal point or use the built-in class \texttt{float(x)}, where x is a number or a string. The zero after the decimal point is not required. Some programmers add it as a matter of style as it clearly identifies the number has a decimal point and is a floating point number.
+
+A string in python is a list of characters enclosed in single or double quotes. For example, \texttt{float(\textquotesingle 3.5\textquotesingle)} will convert the string \textquotesingle 3.5\textquotesingle $\,$ to the floating point number 3.5. Try it. While this may seem like something you would never do, it is very common task when you read numeric data from a text file. The number is read in as a string and needs to be converted to a number. 
+
+What is the 7 divided by 3 in python? Think of the answer before you type it in. 
+
+\% Modulus: Divides left hand operand by right hand operand and returns the remainder.
+
+\begin{lstlisting}[style=bash]
+>>> 5 % 3
+2
+>>> 3 % 5
+3
+\end{lstlisting}
+
+** Exponent: Performs exponential (power) calculation on operator. a ** b means a raised to b.
+
+\begin{lstlisting}[style=bash]
+>>> 10 ** 5
+100000
+>>> 5 ** 10 
+9765625
+>>> 9 ** .5
+3.0
+>>> 5.5 ** 6.8
+108259.56770464421
+\end{lstlisting}
+
+Besides fractional powers, python can handle very large numbers. Try raising 10 to the 100th power (a googol)
+
+\begin{lstlisting}[style=bash]
+>>> 10 ** 100
+10000000000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000L
+\end{lstlisting}
+
+The \texttt{L} at the end of the number indicates it is a long. Long integers are integers that are to big to represent with an integer data type.  
+
+
+// Floor Division - The division of operands where the result is the quotient in which the digits after the decimal point are removed.	
+
+\begin{lstlisting}[style=bash]
+>>> 6 // 4
+1
+>>> 6 // 4.0
+1.0
+\end{lstlisting}
+
+Of course these commands can be combined to form more complex expressions. They follow typical precedence rules, with ** having higher precedence than * / \% //, which have higher precedence than + -. If operators have equal precedence they associate left to right. You can always use parenthesis to change the precedence.
+
+\begin{lstlisting}[style=bash]
+>>> 6 * 5 % 4 - 6 ** 7 + 80 / 3 # ((6 * 5) % 4) - (6 ** 7) + (80 / 3)
+-279908
+>>> 6 * 5 % 4
+2
+>>> 6 * (5 % 4)
+6
+>>> (6 * 5) % 4
+2
+\end{lstlisting}
+
+The \# indicates a comment. Comments are not executed by the interpreter.
+
+Now the real power of python as a calculator comes when you add variables and make assignments.
+
+\begin{lstlisting}[style=bash]
+>>> x = 7
+>>> y = 3 * x ** 2 + 7 * x + 6
+>>> y
+202
+\end{lstlisting}
+
+Now enter \texttt{Ctrl + d}. This will exit the python interpreter.
+
+\section{IPython}
+
+The standard python interpreter has some limitations. From now on you are going to use IPython. A more sophisticated python interpreter.
+
+From the command line type the following:
+\begin{lstlisting}[style=bash]
+$ ipython --pylab 
+Python 2.7.3 |Anaconda 1.4.0 (64-bit)| 
+(default, Feb 25 2013, 18:46:31) 
+Type "copyright", "credits" or "license" 
+for more information.
+
+IPython 0.13.1 -- An enhanced Interactive Python.
+?         -> Introduction and overview of IPython's features.
+%quickref -> Quick reference.
+help      -> Python's own help system.
+object?   -> Details about 'object', use 'object??' 
+for extra details.
+
+Welcome to pylab, a matplotlib-based Python environment 
+[backend: Qt4Agg].
+For more information, type 'help(pylab)'.
+
+In [1]: x = 9
+
+In [2]: x
+Out[2]: 9
+
+In [3]: 
+\end{lstlisting}
+
+IPython replaces the python prompt \texttt{>>>} with \texttt{In [1]:} where the number represents the line number.
+
+IPython provides a much richer environment to work in. Among other things, it understands *nix commands. At the IPython prompt, type in the commands \texttt{pwd, ls}, and \texttt{cd} to your home directory and back to your previous working directory using \texttt{cd -}. Note: your line numbering for the IPython prompt will differ.
+
+\begin{lstlisting}[style=bash]
+In [26]: pwd
+Out[26]: u'/u/jdoe/cse107/lab1'
+
+In [27]: ls
+
+In [28]: ls -a
+./  ../:w
+
+In [29]: cd
+/u/jdoe
+
+In [30]: pwd
+Out[30]: u'/u/jdoe'
+
+In [31]: cd -
+/u/jdoe/cse107/lab1
+
+In [32]: pwd
+Out[32]: u'/u/jdoe/cse107/lab1'
+
+In [33]: ls -alF
+total 8
+drwxrwx--- 2 jdoe 9876 4096 Sep  2 16:46 ./
+drwxrwx--- 3 jdoe 9876 4096 Sep  2 16:46 ../
+
+In [34]:
+\end{lstlisting}
+
+As the initial screen suggested. To get help with IPython type ?
+
+\begin{lstlisting}[style=bash]
+In [35]: ?
+\end{lstlisting}
+
+You will get a screen of information. The cursor is at the bottom of the screen. It is flashing after the colon. Typing \texttt{h} will bring up a help screen on how to navigate the pager. Note: you can type \texttt{h} with any pager program like \texttt{less} or \texttt{man} from the command line. You will discover the commands are consistent across paging programs.
+
+When you are done reading the IPython Introduction. Quit and return to the IPython prompt. Type \texttt{quickref} at the prompt. The same pager commands work as before. 
+
+IPython lets you access Python's built in help. Type \texttt{help()} at the prompt. This changes the prompt to \texttt{help>} to indicate you are using help, which is Python's built in documentation system. Follow the prompts. You should be able to get help on \textquotesingle modules\textquotesingle, \textquotesingle keywords\textquotesingle, or \textquotesingle topics\textquotesingle .
+
+\begin{lstlisting}[style=bash]
+In [7]: help()
+
+Welcome to Python 2.7!  This is the online help utility.
+
+If this is your first time using Python, you should definitely
+check out the tutorial on the Internet at
+http://docs.python.org/2.7/tutorial/.
+
+Enter the name of any module, keyword, or topic to get help 
+on writing Python programs and using Python modules.  To quit 
+this help utility and return to the interpreter, just type "quit".
+
+To get a list of available modules, keywords, or topics, 
+type "modules", "keywords", or "topics".  Each module also 
+comes with a one-line summary of what it does; to list the 
+modules whose summaries contain a given word such as "spam", 
+type "modules spam".
+
+help> keywords
+
+Here is a list of the Python keywords.  
+Enter any keyword to get more help.
+
+and                 elif                if                  print
+as                  else                import              raise
+assert              except              in                  return
+break               exec                is                  try
+class               finally             lambda              while
+continue            for                 not                 with
+def                 from                or                  yield
+del                 global              pass                
+
+help> and
+
+\end{lstlisting}
+
+After typing \texttt{and} you are given information about the keyword \texttt{and}. You navigate the page like before.
+
+Another feature of IPython, is you can learn about any object using ? or ??. For example,
+
+\begin{lstlisting}[style=bash]
+In [9]: x = 3
+
+In [10]: x?
+Type:       int
+String Form:3
+Docstring:
+int(x=0) -> int or long
+int(x, base=10) -> int or long
+
+Convert a number or string to an integer, or return 0 if no arguments
+are given.  If x is floating point, the conversion truncates towards zero.
+If x is outside the integer range, the function returns a long instead.
+
+If x is not a number or if base is given, then x must be a string or
+Unicode object representing an integer literal in the given base.  The
+literal can be preceded by '+' or '-' and be surrounded by whitespace.
+The base defaults to 10.  Valid bases are 0 and 2-36.  Base 0 means to
+interpret the base from the string as an integer literal.
+>>> int('0b100', base=0)
+4
+
+In [11]: 
+\end{lstlisting}
+
+To get more information about an object you can use \texttt{??}. Sometimes there is not more information and you get the same output as \texttt{?}. 
+
+If you just want the \emph{type} of the Python object, use the \texttt{type} builtin. You often need to know the type of the variable.
+
+\begin{lstlisting}[style=bash]
+In [19]: type(x)
+Out[19]: int
+\end{lstlisting}
+
+And if you want information on type use the command \texttt{type?} or \texttt{help(type)}.
+
+A few other things about IPython. It supports the use of the up and down arrow keys to walk you through your command history. CTRL + a to move to the beginning of a line. CTRL + e to move to the end of a line. IPython also supports tab completion.
+
+At the prompt, type \texttt{math.} followed by a TAB. Note the period after the word \texttt{math}. This is an example of tab completion.
+
+\begin{lstlisting}[style=bash]
+In [19]: math. <TAB>
+math.acos       math.degrees    math.fsum       math.pi
+math.acosh      math.e          math.gamma      math.pow
+math.asin       math.erf        math.hypot      math.radians
+math.asinh      math.erfc       math.isinf      math.sin
+math.atan       math.exp        math.isnan      math.sinh
+math.atan2      math.expm1      math.ldexp      math.sqrt
+math.atanh      math.fabs       math.lgamma     math.tan
+math.ceil       math.factorial  math.log        math.tanh
+math.copysign   math.floor      math.log10      math.trunc
+math.cos        math.fmod       math.log1p      
+math.cosh       math.frexp      math.modf       
+
+In [19]: math.
+\end{lstlisting}
+
+You are presented with a list of availbale math functions. Use help to determine what these math functions do. For example, \texttt{help(math.cos)}
+
+The math functions are built in. To use them you do this:
+\begin{lstlisting}[style=bash]
+In [64]: x = 100
+
+In [65]: log10(x) 
+Out[65]: 2.0
+\end{lstlisting}
+
+Of course these can be combined to make more complicated expressions:
+
+\begin{lstlisting}[style=bash]
+In [66]: sqrt(log10(x))
+Out[66]: 1.4142135623730951
+\end{lstlisting}
+
+One of the advantages of using IPython is has builtin support for matplotlib, which allows you to plot math functions.
+
+Lets say you want to plot the line $y = x$ with $x \in [0, 10]$. In IPython, you would do the following:
+
+\begin{lstlisting}[style=bash]
+In [71]: x = range(11) # why is it 11?
+
+In [72]: help(range)
+
+In [73]: y = x
+
+In [74]: plot(x, y)
+\end{lstlisting}
+
+This should launch a new window with a plot of $y = x$. Try to plot the line $y = x$ for x from -100 to 100. Read the help page about \texttt{range} to figure out how. If you do not close the plot window or use the command \texttt{clf()} or \texttt{close()} your plot will just be written to the current plot window.
+
+Let's try to plot something more complicated, $y = x^2$. Lets plot this over the values of x $\in[-10, 10]$
+
+\begin{lstlisting}[style=bash]
+In [77]: x = range(-10, 11) # Why is it 11 and not 10?
+
+In [78]: x
+Out[78]: [-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] #note the [], a list
+
+In [79]: y = x ** 2
+---------------------------------------------------------------------------
+TypeError                                 
+Traceback (most recent call last)
+<ipython-input-79-f4db1f0b84fe> in <module>()
+----> 1 y = x ** 2
+
+TypeError: unsupported operand type(s) 
+for ** or pow(): 'list' and 'int'
+
+In [80]:
+\end{lstlisting}
+
+The problem is you are mixing types: a \emph{list} with an \emph{int}. A list in Python is a ``comma-separated values (items) between square brackets". The method \texttt{range()} returns a list of numbers. In this case a list of integers from -10 to 10. The line \texttt{y = x ** 2} assumes x is of type \texttt{int}, which it is not and that is why you get a \texttt{TypeError}. The \texttt{Traceback} gives the stack frame that created the error.
+
+To fix this, we need to make \texttt{y} a list as well. 
+
+\begin{lstlisting}[style=bash]
+y = [i ** 2 for i in x]
+\end{lstlisting}
+
+The \texttt{[]} indicates that the object you are creating is a list. Inside the brackets we put an expression, \texttt{i ** 2}, followed by a for loop. Python's for statement iterates over the items of any sequence (a list or a string), in the order that they appear in the sequence. To see what the for loop does, type the for loop at the IPython prompt. When you type a for loop you have to finish the loop body before the code is executed. That is what the ....: indicates. When you are done typing the loop body, hit Enter and the for loop is executed.
+
+\begin{lstlisting}[style=bash]
+In [96]: for i in x: 
+   ....:     print i,
+   ....:     
+-10 -9 -8 -7 -6 -5 -4 -3 -2 -1 0 1 2 3 4 5 6 7 8 9 10
+\end{lstlisting}
+
+That is a comma after the \texttt{i}. Without the comma, python will print each value with a new line. Try it. 
+
+As you can see \texttt{for i in x} justs walks through the list, printing out the value of \texttt{i}. In the assignment for the variable \texttt{y} we just add an expression \texttt{i ** 2} that is applied to each \texttt{i}.
+
+Try this at the prompt:
+
+\begin{lstlisting}[style=bash]
+In [100]: for i in x:
+    print i ** 2,
+   .....:     
+100 81 64 49 36 25 16 9 4 1 0 1 4 9 16 25 36 49 64 81 100
+\end{lstlisting}
+
+Now you just need to assign each value to the variable \texttt{y}. At the prompt type this:
+
+\begin{lstlisting}[style=bash]
+In [101]: y = [] #create a empty list
+
+In [102]: for i in x:
+   .....:     y.append(i ** 2)
+   .....:     
+
+In [103]: y
+Out[103]: [100, 81, 64, 49, 36, 25, 16, 9, 4, 1, 0, 1, 4, 9, 
+16, 25, 36, 49, 64, 81, 100]
+
+In [104]: type(y)
+Out[104]: list
+\end{lstlisting}
+
+This code creates an empty list and then adds each element to the of the list (\texttt{y.append()}) with the square of each x value. Run the command \texttt{help(y.append)}. The statement \texttt{y = [i ** 2 for i in x]} is just shorthand for the above for loop. Pretty cool!
+
+To correctly plot $y = x^2$ then, you would do the following:
+
+\begin{lstlisting}[style=bash]
+In [108]: close() #close the figure window
+
+In [109]: x = range(-10, 11)
+
+In [110]: y = [i ** 2 for i in x]
+
+In [111]: plot(x, y)
+Out[111]: [<matplotlib.lines.Line2D at 0x45828d0>]
+\end{lstlisting}
+
+Try to plot the following functions:
+
+$y = x^3$ for $x \in [-10, -10]$
+
+$y = 4x^2 + 5x + 6$ for $x \in [-10, -10]$
+
+$y = sin(x)$ for $x \in [-10,10]$.
+
+The sine plot doesn't plot very well as it uses integer data. To fix this, there is a function \texttt{frange()} which is similar to \texttt{range()}. The \texttt{frange()} requires that you provide a start, stop, and a step (delta). For instance, setting \texttt{x = frange(-10, 10, .1)} creates an numpy array (more on numpy later in class) of floating point values from -10 to 10 separated by a tenth. Plot sine using these x values. A much smoother curve is produced. If you do not know what sine is, ask the Instructor.
+
+Do something similar to plot the function:
+
+$y = sqrt(x)$ for $x \in [0, 100]$
+
+Come up with a few functions on your own to plot.
+
+\section{Running Python programs} 
+
+So far, you have been running Python interactively. This is a nice feature as it lets you test ideas interactively. However, there are time you want to save your ideas to a text file and to run the code as a program.
+
+Open a text editor (e.g. gedit) and create a one line python program:
+
+\begin{lstlisting}[style=c]
+print 'hello, world!\n'
+\end{lstlisting}
+
+The \texttt{\textbackslash n} prints a newline. Save your file as \texttt{hello.py}. The \texttt{py} extension indicates it is a Python file.
+
+
+Now in IPython, you can use the command \texttt{run} to execute the program. If you don't add a path before the file name, the file is assumed to be in your current working directory (cwd). If the file is in a different directory just navigate to it or use a path.
+
+\begin{lstlisting}[style=bash]
+In [112]: run hello.py # assumes hello.py in cwd 
+hello, world!
+
+In [113]:
+\end{lstlisting}
+
+From the terminal, you can do the same thing:
+
+\begin{lstlisting}[style=bash]
+$ python hello.py
+hello, world!
+\end{lstlisting}
+
+Make sure you can run \texttt{hello.py} from IPython and the terminal.
+
+At times, you would like to run the Python file as a regular *nix program. To do this, you have to change the permission of the file so it is an executable. 
+
+
+\begin{lstlisting}[style=bash]
+$ chmod 755 hello.py
+\end{lstlisting}
+
+Where \texttt{chmod} changes the permission of the file. The numbers come from a combination of \texttt{r = 4, w = 2} and \texttt{x = 1}. To turn on \texttt{rwx} you add the numbers 4 + 2 + 1 = 7. If you only want the file to be read only you would use 4. If you want it to be read and write you use 6. For read and executable you use 5. The first number sets the user's permission (7 in this case) the next number sets the group's permission (5 in this case), and the last number sets other's permissions (5 in this case). If you run the command \texttt{ls -l} the file's permission should be \texttt{rwxr-xr-x}.
+
+Now one would think, you should be able to execute the file. Try it.
+
+\begin{lstlisting}[style=bash]
+$ ./hello.py
+\end{lstlisting}
+
+You should get an error. The error is that the python program does not know where to find the python interpreter. You have to add the following line to \texttt{hello.py}. It also must be the \texttt{first} line in your program.
+
+\begin{lstlisting}[style=c]
+#!/usr/bin/env python
+
+print 'hello, world!\n'
+\end{lstlisting}
+
+Now the program will run as a *nix executable. Try it.
+
+\section*{Adding structure to your programs}
+
+While you can just string together python statements into a source file and run it, this strategy is soon to lead to "spaghetti" code: a tangled mess of unmaintainable code. To prevent this we are going to use the following boilerplate code to write programs.
+
+\begin{lstlisting}[style=c]
+#!/usr/bin/env python
+
+def main():
+    print 'hello, world!'
+
+
+# Standard boilerplate to call the main() function to begin
+# the program.
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+
+Writing code in this way then starts the program with the \texttt{main()} function as other programming languages do. We will find later that it also allows you to import your code easily and makes it easy to test your code. You should create a file called \texttt{boilerplate.py} and then when you want to create a new python file, just copy \texttt{boilerplate.py} to a new file. For instance, if you want to create a new python file called \texttt{dna.py}, you would run the command:
+
+\begin{lstlisting}[style=bash]
+$ cp boilerplate.py dna.py
+\end{lstlisting}
+
+\pagebreak
+
+\section{ASCII Art}
+
+Copy \texttt{boilerplate.py} to \texttt{ascii.py}. The goal of the program is to create ASCII art that produces the word ``python" across the terminal.
+
+
+\begin{lstlisting}[style=bash]
+ 1234567890123456789012345689012345678901234567890123456789
+1                             #     
+2                             #
+3                             #
+4                       #     #
+5                       #     #                
+6 ###     #       #  #######  ####      ####   ######     
+7 #  #     #     #      #     #   #    #    #  #    #
+8 #   #     #   #       #     #    #   #    #  #    #
+9 #  #       # #        #     #   #    #    #  #    #
+0 ###         #         #     #  #      ####   #    #
+1 #          #       
+2 #         #
+3 #        #
+4 #       #
+5 #      #
+\end{lstlisting}
+
+The line and column numbering is not part of the program. They are there as a guide. Feel free to design your own typography, within the following constraints: letters are at most 10 characters wide; at most 10 lines high; and there is no more than 15 lines total; the terminal is 80 characters wide.
+
+Python has some nice string features. Strings can be either enclosed in single or double quotes. For this program, use single quotes for your strings. To print 10 hash tags (\#) rather than writing
+
+\begin{lstlisting}[style=c]
+print '##########'
+\end{lstlisting}
+ 
+you can ``multiply'' strings:
+
+\begin{lstlisting}[style=c]
+print 10 * '#' 
+\end{lstlisting}
+
+To concatenate strings you use the \texttt{+} operator. To print 10 spaces, followed by 10 hash tags, followed by 20 spaces, followed by 5 hash tags, you do the following:
+
+\begin{lstlisting}[style=c]
+print 10 *  ' ' + 10 * '#'  + 20 * ' ' + 5 * '#'
+\end{lstlisting}
+
+\section{The Tunnel}
+
+Copy \texttt{boilerplate.py} to a file named \texttt{tunnel.py}. 
+
+Download the files \texttt{tunnel} and \texttt{tunnel2} from Moodle. To terminate the programs enter CTRL + c. Run the programs:
+
+\begin{lstlisting}[style=c]
+$ ./tunnel
+$ ./tunnel2
+\end{lstlisting}
+
+You should see a tunnel being created across the screen (\texttt{tunnel}). The other program produces two tunnels across the screen \texttt{tunnel2}.
+
+Your job is to create these two programs as Python programs. The terminal is assumed to be 80 characters wide. The tunnel is 5 spaces wide and where it starts varies from line to line, but there is always a path through the tunnel. The print statement is similar to what you just did, printing out python. However, you need to add some randomness to the line you are printing. To get you started, experiment with the following command on the python interpreter. 
+
+
+\begin{lstlisting}[style=bash]
+In [171]: import random
+
+In [172]: random.randrange(0, 10)
+Out[172]: 2
+
+In [173]: random.randrange(0, 10)
+Out[173]: 8
+
+In [174]: random.randrange(0, 10)
+Out[174]: 6
+\end{lstlisting}
+
+To write an infinite loop you can write \texttt{while 1:}. To terminate the program use CTRL + d. If you want to slow the program down you can add these lines to your program:
+
+\begin{lstlisting}[style=c]
+import time
+time.sleep(0.5)
+\end{lstlisting}
+
+If you want to speed up the program, comment out the line \texttt{time.sleep} or change the number to be smaller. Larger numbers will make the program slower.
+
+Note: import statements occur at the beginning of the source code files. The following code prints out random integers between 0 and 9 until the user enters CTRL + d.
+
+\begin{lstlisting}[style=c]
+#!/usr/bin/env python
+
+import random
+import time
+
+
+def main():
+
+    while 1:
+        x = random.randrange(0, 10)
+        print x
+        time.sleep(0.5)
+
+
+#Standard boilerplate to call the main() function to begin
+# the program.
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+
+
+\section{Creating Tar archives}
+
+Tar is used much the same way that Zip is used in Windows: it combines many files and/or directories into a single file. Gzip is used in Linux to compress a single file, so the combination of Tar and Gzip do what Zip does. However, Tar deals with Gzip for you, so you will only need to learn and understand one command for zipping and extracting.
+
+In the terminal (ensure you are in your \texttt{lab1} directory), type the following command, replacing \texttt{firstname} and \texttt{lastname} with your first and last names:
+
+\begin{lstlisting}[style=bash]
+tar czvf cse107_firstname_lastname_lab1.tar.gz *.py
+\end{lstlisting}
+
+This creates the file \texttt{cse107\_firstname\_lastname\_lab1.tar.gz} in the directory. The resulting archive, which includes every python file in your \texttt{lab1} directory, is called a tarball. 
+
+To check the contents of your tarball, run the following command:
+
+\begin{lstlisting}[style=bash]
+tar tf cse107_firstname_lastname_lab1.tar.gz *.py
+\end{lstlisting}
+
+You should see a list of your Python source code files.
+
+Upload your tarball in Moodle
+
+
+\end{document}

@@ -1,0 +1,314 @@
+% LAB 6: Strings and File I/O
+% CSE/IT 107: Introduction to Programming
+% New Mexico Tech
+% 
+% Prepared by Scott Chadde 
+% Fall 2013
+
+\documentclass[12pt]{article}
+
+
+
+% Allows for bold tele-type
+\DeclareFontShape{OT1}{cmtt}{bx}{n}{
+  <5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
+
+
+% AMS math formatting
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}     
+\usepackage{textcomp}
+% Indention formatting
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Margin support
+\usepackage[margin=1in]{geometry}
+
+% Header/footer support
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{CSE 107}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Replace with title for lab
+\fancyhead[R]{Lab 6: Strings and File I/O}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Color support
+\usepackage{color}
+\definecolor{light-gray}{gray}{0.9}
+% Outline support
+%\usepackage{outlines}
+% URL formatting
+\usepackage{}\usepackage{url}
+% Image/graphic support
+\usepackage{graphicx}
+% Supports in-document hyperlinks
+\usepackage[pdfborder=0in]{hyperref}
+% List compression
+\usepackage{mdwlist}
+\usepackage{enumerate}
+\usepackage{enumitem}
+% Support long tables across pages
+\usepackage{longtable}
+\setlength{\LTcapwidth}{6in}
+\usepackage{array}
+\usepackage{multirow}
+% Supports code formatting/highlighting
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily, keywordstyle=\bfseries\color{black}, stringstyle=\color{black}, commentstyle=\color{blue}, showstringspaces=false, numbers=none}
+\lstdefinestyle{bash}{language=bash, backgroundcolor=\color{light-gray}}
+\lstdefinestyle{c}{language=C, frame=single}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Replace with title for lab
+\title{Lab 6: Strings and File I/O}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author{CSE/IT 107}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+
+\hrule
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Introduction}
+
+The purpose of this lab is to dig a little deeper into strings and file operations.
+
+\section*{Reading}
+
+Chapter 9 in Think Python: How to Think Like a Computer Scientist (Think)
+
+\section*{Coding Conventions}
+
+Follow PEP-8 recommendations for your code. 
+
+\section*{Problems}
+
+    
+  Make sure your source code files are appropriately named. Make sure your code has a main function; use \texttt{boilerplate.py} you created in Lab 1.
+
+\emph{Think Python} is available from \url{http://www.greenteapress.com/thinkpython/}. Page numbers and exercise numbers refer to those found in the PDF file available at the website.
+
+
+
+\begin{enumerate}
+  \item Exercise 9.1 \emph{Think Python}, page 82. Name your source code \texttt{think\_9-1.py}
+
+
+\item Exercise 9.2 \emph{Think Python}, page 82. Name your source code \texttt{think\_9-2.py}
+
+\item Exercise 9.3 \emph{Think Python}, page 82. Name your source code \texttt{think\_9-3.py}. Ignore the \emph{Modify} portion of the problem.
+
+\item Exercise 9.4 \emph{Think Python}, page 82. Name your source code \texttt{think\_9-4.py}
+
+\item Exercise 9.5 \emph{Think Python}, page 82. Name your source code \texttt{think\_9-5.py}
+
+\item Exercise 9.6 \emph{Think Python}, page 82. Name your source code \texttt{think\_9-6.py}
+
+
+\subsection*{Reading and Writing to a File}
+Last week we saw it was very easy to open a file in Python. For example, the following program opens the file \texttt{integers.txt} for reading, reads one line of the file at a time, prints the contents of the line to the terminal, closes the file, and exits. Note: if you open a file, you are responsible for closing it.
+
+This assumes \texttt{integers.txt} is in the current working directory. \texttt{integers.txt} is available on Moodle in the tarball \texttt{lab6.tar.gz}.
+
+\begin{verbatim}
+#!/usr/bin/env python
+
+
+def main():
+    infile = open('integers.txt', 'r')
+    for line in infile:
+        print line
+    infile.close()
+
+
+if __name__ == '__main__':
+    main()
+\end{verbatim}
+
+If you run this program, you will notice that the data is printed followed by a new line. For better output, you need to strip off the new line from each line. Can you find the built-in string function that does this? Also, remember you are reading in strings not integers. If you want the data to be integers, you have to convert the string to an integer using the function \texttt{int()}.
+
+Now to write to a new file you change the second parameter of \texttt{open()}, known as its mode, to a  \texttt{'w'}. \texttt{'w'} stands for write. To make a copy of a file in the current working directory, you can do the following:
+
+\begin{verbatim}
+#!/usr/bin/env python
+
+
+def main():
+    infile = open('integers.txt', 'r')
+    outfile = open('copy_integers.txt', 'w')
+    for line in infile:
+        outfile.write(line)
+        # or
+        # line = line.rstrip()
+        # outfile.write(line + '\n')
+    infile.close()
+    outfile.close()
+
+
+if __name__ == '__main__':
+    main()
+\end{verbatim}
+
+You can check that \texttt{integers.py} and \texttt{copy\_integers} are the same by running the \texttt{diff} command. Run the following command at a terminal. It should return nothing. 
+
+\begin{verbatim}
+$ diff integers.txt copy_integers.txt 
+\end{verbatim}
+
+Notice that the program did not strip off the new line character as it is making a copy. If you stripped off the new line from the line, you have to add it back in when you write to the out file. The commented code shows how to do that. 
+
+To have more complex write statements you can combine format with write calls. For example, 
+
+\begin{verbatim}
+l = [1, 2, 3, 4]
+outfile.write('number of items = {0}\n'.format(len(l))) 
+\end{verbatim}
+
+
+\item Write a program that reads in the file \texttt{integers.txt}, available on Moodle, and creates a new file \texttt{summary.txt} that writes the number of integers in the file, their sum, and the mean, median, mode, minimum and maximum of the integers in the file at the beginning of the file followed by a new line and then the data sorted. 
+
+As you read the data one line at a time, strip off the new line, convert it to an integer and add it to a list. Python has some built-in functions that will be helpful in your calculations: \texttt{min(list), max(list), list.sort()} and \texttt{list.count(i)}. Look up what these functions/methods do with Ipython's help facility.
+
+The average is sum / number of integers. This should be a float.
+
+For the median, first sort the data and then calculate the median:
+ 
+If n is odd then Median (M) = value of ((n + 1)/2)th term.
+
+If n is even then Median (M) = value of (((n)/2)th term + ((n)/2 + 1)th term) / 2
+
+For the mode, which is the most frequent value in a data set, use the \texttt{list.count()} method.
+
+Your output should look like this:
+
+\begin{verbatim}
+number of items = 500
+sum = 244167
+avg = 488.334
+median = 474
+mode is 169 with a count of 4
+min = 0
+max = 999
+
+0
+1
+3
+3
+5
+11
+...
+\end{verbatim}
+
+\section*{Stop Words}
+
+If you are trying to index a webpage or a book or any text for that matter, one strategy would be to simply store every word on the page. This, of course, allows for duplicate words which would waste space on the server. To save space, you remove all duplicate words from the text to construct your index. While saving significant space with this strategy, you soon realize you can do better if you filter out words that are common and provide little lexical meaning. Such words are called stop words. Example of such words are \texttt{'the'} and \texttt{'a'}. Searching on stop words doesn't yield useful results as all or a large portion of pages have those words. Try searching on \texttt{'the'} in google.
+
+There is little agreement about what constitutes a stop word and filtering based on stop words is problem dependent. But overall the strategy is effective. For example, this strategy has been employed by Stackoverflow to speed up their queries: ``One of our major performance optimizations for the “related questions” query is removing the top 10,000 most common English dictionary words (as determined by Google search) before submitting the query to the SQL Server 2008 full text engine. It’s shocking how little is left of most posts once you remove the top 10k English dictionary words. This helps limit and narrow the returned results, which makes the query dramatically faster.'' \url{http://blog.stackoverflow.com/2008/12/podcast-32/}
+
+On Moodle is two stop word lists, \texttt{stopwords.csv} and \texttt{function\_words.txt}. You will use these lists to employ two different stop word strategies when you filter a text document. The stop word list is based on MySQL's list of words that are excluded from full text queries. Function words are words that provide grammatical connections between words in a sentence. The list of function words is incomplete as it doesn't account for two or more word combinations. 
+
+\item Write a program that takes a filename from the command line and 
+  \begin{enumerate}
+\item finds all unique words in the text
+\item writes the list of unique words one word per line to a file (argv[1] + '\_unique.txt')
+\item reads in two types of stop words lists and creates a list for each type
+\item removes all stop words from the unique word list using words in \texttt{stopword.csv}
+\item write the unique word list with stop words removed one word per line to a file (argv[1] + '\_stop.txt')
+\item removes all function words from the unique word list, using words in \texttt{function\_words.txt}
+\item write the unique word list with stop words removed one word per line to a file (argv[1] + '\_function.txt')
+\item Calculates the percent of 1) unique words to all words, 2) the percent of unique words with stop words removed to all words, 3) the percent of unique words with stop words removed to unique words, 4) the percent of unique words with function words removed to all words, and 5) the percent of unique words with function words removed to unique words. Print the percentages to the terminal. 
+\end{enumerate}
+
+Name your source code file \texttt{stopwords.py}. Test with the files \texttt{alice.txt}, \texttt{metamorphosis.txt}, and \texttt{gadsby.txt}. All files are available on Moodle.
+
+\section*{Scrabble}
+
+You are working on developing a electronic version of Scrabble. You are tasked with writing a variety of functions to this end. \texttt{scrabble.txt} is available on Moodle. \texttt{scrabble.txt} is a modified version of the Tournament Word List used in the US and Canada and based on the Official Scrabble Players Dictionary.
+
+\item Write a program that finds and prints all two letter words in the Scrabble dictionary. Name your program \texttt{twoletter.py}
+
+\item Write a program that finds and prints all words that consist of only consonants in the Scrabble dictionary. Consider \texttt{y} a vowel in all cases. Name your program \texttt{consonants.py}
+
+\item Write a program that determines if a word entered by a user is a valid scrabble word. While you could perform a linear search strategy this is inefficient. Employ a binary search strategy to find if a word is valid or not. To test your search, in \texttt{main()} write an infinite while loop that keeps asking for words to test. Use a digit to exit out of the program. Name your file \texttt{binsearch.py}.
+
+\item Write a program that finds your best play given a list of characters (the letter tiles you are holding) and a letter(s) on the board. You can think of this as a two part strategy. First, find all words in the dictionary that consist only of characters in the given character set.  You have to be careful that you do not return words with duplicate letters. For instance, if a user enters \texttt{'capjekit'} your list should not include \texttt{'jeep'} or \texttt{'aa'} or \texttt{'tat'} as you only have one \texttt{'e'}, \texttt{'a'}, and \texttt{'t'} tile. Second, given what the letter tiles are worth find the word that returns the maximum letter score. You do not need to account for double letter or triple letter scores on the board. Write a loop in \texttt{main()} that asks the user to input his/her tiles and a character from the board and prints out the list of all possible words plus the best play. What is the best play given the letters \texttt{'qzxjkaeiou'}? Name your program \texttt{bestplay.py}
+
+Remember strings are immutable. So you may want to use lists when you find words. 
+
+Word tiles in Scrabble have the following numeric values:
+
+\begin{verbatim}
+    A is worth 1
+    B is worth 3
+    C is worth 3
+    D is worth 2
+    E is worth 1
+    F is worth 4
+    G is worth 2
+    H is worth 4
+    I is worth 1
+    J is worth 8
+    K is worth 5
+    L is worth 1
+    M is worth 3
+    N is worth 1
+    O is worth 1
+    P is worth 3
+    Q is worth 10
+    R is worth 1
+    S is worth 1
+    T is worth 1
+    U is worth 1
+    V is worth 4
+    W is worth 4
+    X is worth 8
+    Y is worth 4
+    Z is worth 10
+\end{verbatim}
+   
+
+
+
+
+\end{enumerate}
+
+% future labs
+% to_lower and to_upper & ascii table -- chr and ord
+
+%\item Shuffle DNA - use Knuth's algorithm
+
+% codon frequencys - build a list, sort it, and get the count of codons
+
+% write reverse with slice and dice methodology
+
+% extract the first base-pair of the codon, second -base pair, and third base pair (tuples). Get the GC content.
+
+\section*{Submission}
+
+Create a tarball of your *.py files.
+
+\begin{lstlisting}[style=bash]
+tar czvf cse107_firstname_lastname_lab6.tar.gz *.py
+\end{lstlisting}
+
+
+To check the contents of your tarball, run the following command:
+
+\begin{lstlisting}[style=bash]
+tar tf cse107_firstname_lastname_lab6.tar.gz *.py
+\end{lstlisting}
+
+You should see a list of your Python source code files.
+
+Upload your tarball in Moodle before the start of you next lab.
+
+
+\end{document}

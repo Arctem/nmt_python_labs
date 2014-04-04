@@ -1,0 +1,20 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Instructions}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Log in}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Open a terminal}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Change your password\(optional\)}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{shell}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.5}{File Hierarchy}{section.2}% 7
+\BOOKMARK [3][-]{subsubsection.2.5.1}{pwd - print working directory}{subsection.2.5}% 8
+\BOOKMARK [3][-]{subsubsection.2.5.2}{cd - change directory}{subsection.2.5}% 9
+\BOOKMARK [3][-]{subsubsection.2.5.3}{ls - listing the contents of a directory}{subsection.2.5}% 10
+\BOOKMARK [2][-]{subsection.2.6}{Other directory commands}{section.2}% 11
+\BOOKMARK [2][-]{subsection.2.7}{Creating directories}{section.2}% 12
+\BOOKMARK [2][-]{subsection.2.8}{Modify your profile}{section.2}% 13
+\BOOKMARK [2][-]{subsection.2.9}{Using the file system}{section.2}% 14
+\BOOKMARK [1][-]{section.3}{Python as a calculator}{}% 15
+\BOOKMARK [1][-]{section.4}{IPython}{}% 16
+\BOOKMARK [1][-]{section.5}{Running Python programs}{}% 17
+\BOOKMARK [1][-]{section.6}{ASCII Art}{}% 18
+\BOOKMARK [1][-]{section.7}{The Tunnel}{}% 19
+\BOOKMARK [1][-]{section.8}{Creating Tar archives}{}% 20

@@ -1,0 +1,266 @@
+% LAB 7: Lists
+% CSE/IT 107: Introduction to Programming
+% New Mexico Tech
+% 
+% Prepared by Scott Chadde 
+% Fall 2013
+
+\documentclass[12pt]{article}
+
+
+
+% Allows for bold tele-type
+\DeclareFontShape{OT1}{cmtt}{bx}{n}{
+  <5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
+
+
+% AMS math formatting
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}     
+\usepackage{textcomp}
+% Indention formatting
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Margin support
+\usepackage[margin=1in]{geometry}
+
+% Header/footer support
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{CSE 107}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Replace with title for lab
+\fancyhead[R]{Lab 7: Lists}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Color support
+\usepackage{color}
+\definecolor{light-gray}{gray}{0.9}
+% Outline support
+%\usepackage{outlines}
+% URL formatting
+\usepackage{}\usepackage{url}
+% Image/graphic support
+\usepackage{graphicx}
+% Supports in-document hyperlinks
+\usepackage[pdfborder=0in]{hyperref}
+% List compression
+\usepackage{mdwlist}
+\usepackage{enumerate}
+\usepackage{enumitem}
+% Support long tables across pages
+\usepackage{longtable}
+\setlength{\LTcapwidth}{6in}
+\usepackage{array}
+\usepackage{multirow}
+% Supports code formatting/highlighting
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily, keywordstyle=\bfseries\color{black}, stringstyle=\color{black}, commentstyle=\color{blue}, showstringspaces=false, numbers=none}
+\lstdefinestyle{bash}{language=bash, backgroundcolor=\color{light-gray}}
+\lstdefinestyle{c}{language=C, frame=single}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Replace with title for lab
+\title{Lab 7: Lists}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author{CSE/IT 107}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+
+\hrule
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Introduction}
+
+The purpose of this lab is to dig a little deeper into lists.
+
+\section*{Reading}
+
+Chapter 10 in Think Python: How to Think Like a Computer Scientist (Think)
+
+\section*{Coding Conventions}
+
+Follow PEP-8 recommendations for your code. 
+
+\section*{Problems}
+
+Make sure your source code files are appropriately named. Make sure your code has a main function; use \texttt{boilerplate.py} you created in Lab 1.
+
+\emph{Think Python} is available from \url{http://www.greenteapress.com/thinkpython/}. Page numbers and exercise numbers refer to those found in the PDF file available at the website.
+
+
+
+\begin{enumerate}
+  \item Exercise 10.1 \emph{Think Python}, page 91. Name your source code \texttt{think\_10-1.py}. As you walk through a list you can test an element's type in the following way:
+
+\begin{verbatim}
+lst = [1, [1, 2], [1, 2, 3]]
+for i in lst:
+    if type(i) is list:
+        print i
+    \end{verbatim}
+
+Your function just needs to work with one level of nesting. In other words, lists that contain lists. Not lists that contain lists that contain lists, etc.
+
+\item Exercise 10.2 \emph{Think Python}, page 91. Name your source code \texttt{think\_10-2.py}. Your function just needs to work with one level of nesting. In other words, lists that contain lists. Not lists that contain lists that contain lists, etc.
+
+
+\item Exercise 10.3 \emph{Think Python}, page 92. Name your source code \texttt{think\_10-3.py}. Find the cumulative sum of the first 100 positive integers.
+
+\item Exercise 10.4 \emph{Think Python}, page 92. Name your source code \texttt{think\_10-4.py}
+
+\item Exercise 10.5 \emph{Think Python}, page 92. Name your source code \texttt{think\_10-5.py}
+
+\item Exercise 10.6 \emph{Think Python}, page 98. Name your source code \texttt{think\_10-6.py}
+
+
+\subsection*{List Comprehensions}
+Python has a nifty little feature for generating lists known as list comprehensions. List comprehensions create a list and have two forms: 
+
+[\emph{expression} \textbf{for} \emph{value} \textbf{in} \emph{iterable}]
+
+This is shorthand for the following code:
+
+\begin{verbatim}
+lst = []
+for value in iterable:
+    lst.append(expression)
+\end{verbatim}
+
+or you can add a conditional statement:
+
+[\emph{expression} \textbf{for} \emph{value} \textbf{in} \emph{iterable} \textbf{if} \emph{condition}]
+
+This is shorthand for the following code:
+
+\begin{verbatim}
+lst = []
+for value in iterable:
+    if condition:
+        lst.append(expression)
+\end{verbatim}
+
+For example, to generate a list of squares of the numbers from 1 to $n$, [1, 4, 9, 16, 25, ..., $n^2$], you could do
+
+\begin{verbatim}
+squares = []
+for k in range(1, n + 1):
+    squares.append(k * k)
+\end{verbatim}
+
+Using a list comprehension, you could do this as one line:
+
+\begin{verbatim}
+squares = [k * k for k in range(1, n + 1)]
+\end{verbatim}
+
+Or if you wanted to create a list of factors of a number $n$. Rather than doing this:
+
+\begin{verbatim}
+factors = []
+for k in range(1, n + 1):
+    if n % k == 0:    
+        factors.append(k)
+\end{verbatim}
+
+Using a list comprehension, you could do this:
+
+\begin{verbatim}
+factors = [k for k in range(1, n + 1) if n % k == 0]
+\end{verbatim}
+
+Place the following 7 problems in a file named \texttt{list\_comp.py}. Unless otherwise directed, just place the list comprehension in \texttt{main()} followed by a print statement. 
+
+\item Use a list comprehension to create the list [1, 2, 4, 8, 16, 32, 64, 128, 256].
+
+\item Use a list comprehension to create the list [0, 2, 6, 12, 20, 30, 42, 56, 72, 90].
+
+\item Use a list comprehension to create the list ['a', 'b', 'c', ..., 'z'] without typing all 26 characters.
+
+\item Use a list comprehension to create the list ['Z', 'Y', 'X', ..., 'A'] without typing all 26 characters.
+
+Since list comprehensions just return a list, you can use them whenever you need a list. For instance, you can find the sum of the squares of the first 100 integers by doing: 
+
+\begin{verbatim}
+sum([k * k for k in range(1, 101)])
+\end{verbatim}
+
+
+
+\item Write a function named \texttt{sum\_cubes} that uses a list comprehension to find the sum of the first $n$ cubes. That is return the sum of [1, 8, 27, ..., $n^3$]
+
+\item Write a function named \texttt{sum\_even} that uses a list comprehension to find the sum of the even integers in a list.
+
+\item Write a function named \texttt{sum\_factors} that uses a list comprehension to find the sum of all the factors of a number $n$. That is, if $n = 6$, the function should return 12 as the factors of 6 are 1, 2, 3, and 6 (1 + 2 + 3 + 6 = 12).
+
+  \section*{Miscellaneous}
+
+%\item You can express a fraction as a list: [numerator, denominator]
+
+%  \begin{enumerate}
+%  \item Write a function that adds two fractions together. The function returns a list.
+%  \item Write a function that multiplies two fractions together. The function returns a list.
+%  \item Write a function that divides two fractions. The function returns a list. Check for zeros in the denominator. 
+%  \end{enumerate}
+%  Enter the fractions and type of operation you want via command line arguments. Name the source code file \texttt{fraction.py}. E
+
+\item Given a list of items, write a program that generates a list of lists of the following form:
+
+  [a, b, c, . . ., z] $\rightarrow$ [ [z], [y, z], [x, y, z], . . .,  [a, b, c, . . . , y, z] ]
+
+Name your source code \texttt{list\_list.py}
+
+\item Given a list of numbers, create a new list of numbers such that the first and last numbers are added together and stored as the first number, the second and second-to-last numbers are stored as the second number, and so on. You need to check for even and odd lists. In case the length is odd, the middle value of an odd length list is its final value. Name your source code file \texttt{new\_list.py}
+
+\item Write a function that takes a string as an argument, converts the string to a list of characters (technically, strings of length one), sorts the list, converts the list back to a string, and returns the new string. Name your source code \texttt{string.py}. 
+
+\item The Birthday problem. Exercise 10.8 \emph{Think Python}, page 98. Name your source code \texttt{birthday.py}. You are doing a simulation, so you are going to run this for $n = 5, 10, 15, 20, ..., 100$ where $n$ is the number of people in the room. For each $n$ the number of simulations is 1000. The probability two people share the same birthday is the number times the list of birthdays contains a duplicate divided by the total number of simulations (1000). Since you are only concerned that a pair of people share the same birthday, you only need to find one duplicate in the list not all duplicates. Use Julian dates for birthdays. That is, a birthday is an integer between [1, 365] (ignoring leap years).  
+
+  \section*{Stacks}
+
+  One nice feature of lists in Python is that you have built-in functions for stack operations: push and pop. Pushing (adding an element) is implemented via \texttt{append()} and popping (remove the top element of the stack) an element is accomplished via \texttt{pop()}. Besides the call stack, stacks are very useful in programming. One such use is to evaluate postfix and prefix expressions.
+
+\item Evaluate a Prefix Notation. \url{http://en.wikipedia.org/wiki/Polish_notation}. Convert the algorithm to evaluate prefix expressions into Python. The algorithm starts at ``Scan the given prefix expression from right to left''. Read in the prefix expression from the command line. Name your source code file \texttt{prefix.py}
+
+
+\end{enumerate}
+
+% future labs
+% to_lower and to_upper & ascii table -- chr and ord
+
+%\item Shuffle DNA - use Knuth's algorithm
+
+% codon frequencys - build a list, sort it, and get the count of codons
+
+% write reverse with slice and dice methodology
+
+% extract the first base-pair of the codon, second -base pair, and third base pair (tuples). Get the GC content.
+
+\section*{Submission}
+
+Create a tarball of your *.py files.
+
+\begin{lstlisting}[style=bash]
+tar czvf cse107_firstname_lastname_lab7.tar.gz *.py
+\end{lstlisting}
+
+
+To check the contents of your tarball, run the following command:
+
+\begin{lstlisting}[style=bash]
+tar tf cse107_firstname_lastname_lab7.tar.gz *.py
+\end{lstlisting}
+
+You should see a list of your Python source code files.
+
+Upload your tarball in Moodle before the start of you next lab.
+
+
+\end{document}
