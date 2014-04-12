@@ -145,19 +145,20 @@ Forgot ever using your calculator! Python rocks as a calculator.
 
 When you first open IDLE, you should see something like this
 \begin{lstlisting}[style=bash]
-Python 2.7.6 (default, Nov 10 2013, 19:24:18) [MSC v.1500 32 bit (Intel)] on win32
+Python 2.7.6 (default, Feb 26 2014, 12:07:17) 
+[GCC 4.8.2 20140206 (prerelease)] on linux2
 Type "copyright", "credits" or "license()" for more information.
 >>> 
 \end{lstlisting}
 
-At the python prompt \texttt{>>>}. You can type in python statements. For instance, to add 2 + 3 
+At the Python prompt \texttt{>>>} you can type in Python statements. For instance, to add 2 + 3 
 \begin{lstlisting}[style=bash]
 >>> 2 + 3
 5
 >>>
 \end{lstlisting}
 
-Notice how after a python statement is executed, you are given a python prompt much like a shell.
+Notice how after a statement is executed, you are given a prompt to enter another statement.
 
 The \texttt{+} is the addition operator. Other basic math operators in python include:
 
@@ -176,24 +177,50 @@ The \texttt{+} is the addition operator. Other basic math operators in python in
 \end{lstlisting}
 
 
-\texttt{/} Division - Divides left hand operand by right hand operand
+\texttt{/} Division, \texttt{//} Floor division - Divides left hand operand by right hand operand
 
+\begin{minipage}{.5\linewidth}
+Python 2
 \begin{lstlisting}[style=bash]
 >>> 2 / 3
 0
+>>> 2 // 3
+0
 >>> 2 / 3.0
 0.6666666666666666
+>>> 2 // 3.0
+0.0
 >>> 2. / 3.
 0.6666666666666666
 >>> 2 / float(3)
 0.6666666666666666
 \end{lstlisting}
+\end{minipage}
+\begin{minipage}{.5\linewidth}
+Python 3
+\begin{lstlisting}[style=bash]
+>>> 2 / 3
+0.6666666666666666
+>>> 2 // 3
+0
+>>> 2 / 3.0
+0.6666666666666666
+>>> 2 // 3.0
+0.0
+>>> 2. / 3.
+0.6666666666666666
+>>> 2 / float(3)
+0.6666666666666666
+\end{lstlisting}
+\end{minipage}
 
-Notice that when python divides two integers, the decimal portion of the answer is dropped. If you want the answer you expect from a typical calculator when you divide, you have to change one or both of the numbers to a floating point number. There are a number of ways to have a floating point number in python. Add a decimal point or use the built-in class \texttt{float(x)}, where x is a number or a string. The zero after the decimal point is not required. Some programmers add it as a matter of style as it clearly identifies the number has a decimal point and is a floating point number.
+Notice the difference between Python 2 and 3 when using \texttt{/}. When Python 2 divides two integers using \texttt{/}, the decimal portion of the answer is dropped. If you want the answer you expect from a typical calculator when you divide, you have to change one or both of the numbers to a floating point number. There are a number of ways to have a floating point number in python. Add a decimal point or use the built-in class \texttt{float(x)}, where x is a number or a string. The zero after the decimal point is not required. Some programmers add it as a matter of style as it clearly identifies the number has a decimal point and is a floating point number.
 
-A string in python is a list of characters enclosed in single or double quotes. For example, \texttt{float(\textquotesingle 3.5\textquotesingle)} will convert the string \textquotesingle 3.5\textquotesingle $\,$ to the floating point number 3.5. Try it. While this may seem like something you would never do, it is very common task when you read numeric data from a text file. The number is read in as a string and needs to be converted to a number. 
+In Python 3, using \texttt{/} will always include the decimal portion of the answer. If you wish to drop the decimal portion, you must use \texttt{//}. Dropping the decimal portion of the answer is called integer or floor division, since your answer will always be an integer. In this class, we will always use \texttt{/} to refer to floating point division and \texttt{//} to refer to integer division. If you are using Python 2, be you will need to be aware of the inconsistent behavior of \texttt{/}.
 
-What is the 7 divided by 3 in python? Think of the answer before you type it in. 
+%A string in python is a list of characters enclosed in single or double quotes. For example, \texttt{float(\textquotesingle 3.5\textquotesingle)} will convert the string \textquotesingle 3.5\textquotesingle $\,$ to the floating point number 3.5. Try it. While this may seem like something you would never do, it is very common task when you read numeric data from a text file. The number is read in as a string and needs to be converted to a number. 
+
+%What is the 7 divided by 3 in python? Think of the answer before you type it in. 
 
 \% Modulus: Divides left hand operand by right hand operand and returns the remainder.
 
@@ -228,14 +255,14 @@ Besides fractional powers, python can handle very large numbers. Try raising 10 
 The \texttt{L} at the end of the number indicates it is a long. Long integers are integers that are to big to represent with an integer data type.  
 
 
-// Floor Division - The division of operands where the result is the quotient in which the digits after the decimal point are removed.	
+%// Floor Division - The division of operands where the result is the quotient in which the digits after the decimal point are removed.	
 
-\begin{lstlisting}[style=bash]
->>> 6 // 4
-1
->>> 6 // 4.0
-1.0
-\end{lstlisting}
+%\begin{lstlisting}[style=bash]
+%>>> 6 // 4
+%1
+%>>> 6 // 4.0
+%1.0
+%\end{lstlisting}
 
 Of course these commands can be combined to form more complex expressions. They follow typical precedence rules, with ** having higher precedence than * / \% //, which have higher precedence than + -. If operators have equal precedence they associate left to right. You can always use parenthesis to change the precedence.
 
