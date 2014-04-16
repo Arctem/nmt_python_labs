@@ -178,6 +178,7 @@ The \texttt{+} is the addition operator. Other basic math operators in python in
 
 
 \texttt{/} Division, \texttt{//} Floor division - Divides left hand operand by right hand operand
+\\
 
 \begin{minipage}{.5\linewidth}
 Python 2
@@ -222,7 +223,7 @@ In Python 3, using \texttt{/} will always include the decimal portion of the ans
 
 %What is the 7 divided by 3 in python? Think of the answer before you type it in. 
 
-\% Modulus: Divides left hand operand by right hand operand and returns the remainder.
+\texttt{\%} Modulus: Divides left hand operand by right hand operand and returns the remainder.
 
 \begin{lstlisting}[style=bash]
 >>> 5 % 3
@@ -231,7 +232,7 @@ In Python 3, using \texttt{/} will always include the decimal portion of the ans
 3
 \end{lstlisting}
 
-** Exponent: Performs exponential (power) calculation on operator. a ** b means a raised to b.
+\texttt{**} Exponent: Performs exponential (power) calculation on operator. \texttt{a ** b} means a raised to b.
 
 \begin{lstlisting}[style=bash]
 >>> 10 ** 5
@@ -264,7 +265,7 @@ The \texttt{L} at the end of the number indicates it is a long. Long integers ar
 %1.0
 %\end{lstlisting}
 
-Of course these commands can be combined to form more complex expressions. They follow typical precedence rules, with ** having higher precedence than * / \% //, which have higher precedence than + -. If operators have equal precedence they associate left to right. You can always use parenthesis to change the precedence.
+Of course these commands can be combined to form more complex expressions. They follow typical precedence rules, with \texttt{**} having higher precedence than \texttt{*} \texttt{/} \texttt{\%} \texttt{//}, which have higher precedence than \texttt{+} \texttt{-}. If operators have equal precedence they associate left to right. You can always use parenthesis to change the precedence.
 
 \begin{lstlisting}[style=bash]
 >>> 6 * 5 % 4 - 6 ** 7 + 80 / 3 # ((6 * 5) % 4) - (6 ** 7) + (80 / 3)
@@ -277,7 +278,7 @@ Of course these commands can be combined to form more complex expressions. They 
 2
 \end{lstlisting}
 
-The \# indicates a comment. Comments are not executed by the interpreter.
+The \texttt{\#} indicates a comment. Comments are ignored by the interpreter.
 
 Now the real power of python as a calculator comes when you add variables and make assignments.
 
@@ -288,314 +289,7 @@ Now the real power of python as a calculator comes when you add variables and ma
 202
 \end{lstlisting}
 
-Now enter \texttt{Ctrl + d}. This will exit the python interpreter.
-
-\section{IPython}
-
-The standard python interpreter has some limitations. From now on you are going to use IPython. A more sophisticated python interpreter.
-
-From the command line type the following:
-\begin{lstlisting}[style=bash]
-$ ipython --pylab 
-Python 2.7.3 |Anaconda 1.4.0 (64-bit)| 
-(default, Feb 25 2013, 18:46:31) 
-Type "copyright", "credits" or "license" 
-for more information.
-
-IPython 0.13.1 -- An enhanced Interactive Python.
-?         -> Introduction and overview of IPython's features.
-%quickref -> Quick reference.
-help      -> Python's own help system.
-object?   -> Details about 'object', use 'object??' 
-for extra details.
-
-Welcome to pylab, a matplotlib-based Python environment 
-[backend: Qt4Agg].
-For more information, type 'help(pylab)'.
-
-In [1]: x = 9
-
-In [2]: x
-Out[2]: 9
-
-In [3]: 
-\end{lstlisting}
-
-IPython replaces the python prompt \texttt{>>>} with \texttt{In [1]:} where the number represents the line number.
-
-IPython provides a much richer environment to work in. Among other things, it understands *nix commands. At the IPython prompt, type in the commands \texttt{pwd, ls}, and \texttt{cd} to your home directory and back to your previous working directory using \texttt{cd -}. Note: your line numbering for the IPython prompt will differ.
-
-\begin{lstlisting}[style=bash]
-In [26]: pwd
-Out[26]: u'/u/jdoe/cse107/lab1'
-
-In [27]: ls
-
-In [28]: ls -a
-./  ../:w
-
-In [29]: cd
-/u/jdoe
-
-In [30]: pwd
-Out[30]: u'/u/jdoe'
-
-In [31]: cd -
-/u/jdoe/cse107/lab1
-
-In [32]: pwd
-Out[32]: u'/u/jdoe/cse107/lab1'
-
-In [33]: ls -alF
-total 8
-drwxrwx--- 2 jdoe 9876 4096 Sep  2 16:46 ./
-drwxrwx--- 3 jdoe 9876 4096 Sep  2 16:46 ../
-
-In [34]:
-\end{lstlisting}
-
-As the initial screen suggested. To get help with IPython type ?
-
-\begin{lstlisting}[style=bash]
-In [35]: ?
-\end{lstlisting}
-
-You will get a screen of information. The cursor is at the bottom of the screen. It is flashing after the colon. Typing \texttt{h} will bring up a help screen on how to navigate the pager. Note: you can type \texttt{h} with any pager program like \texttt{less} or \texttt{man} from the command line. You will discover the commands are consistent across paging programs.
-
-When you are done reading the IPython Introduction. Quit and return to the IPython prompt. Type \texttt{quickref} at the prompt. The same pager commands work as before. 
-
-IPython lets you access Python's built in help. Type \texttt{help()} at the prompt. This changes the prompt to \texttt{help>} to indicate you are using help, which is Python's built in documentation system. Follow the prompts. You should be able to get help on \textquotesingle modules\textquotesingle, \textquotesingle keywords\textquotesingle, or \textquotesingle topics\textquotesingle .
-
-\begin{lstlisting}[style=bash]
-In [7]: help()
-
-Welcome to Python 2.7!  This is the online help utility.
-
-If this is your first time using Python, you should definitely
-check out the tutorial on the Internet at
-http://docs.python.org/2.7/tutorial/.
-
-Enter the name of any module, keyword, or topic to get help 
-on writing Python programs and using Python modules.  To quit 
-this help utility and return to the interpreter, just type "quit".
-
-To get a list of available modules, keywords, or topics, 
-type "modules", "keywords", or "topics".  Each module also 
-comes with a one-line summary of what it does; to list the 
-modules whose summaries contain a given word such as "spam", 
-type "modules spam".
-
-help> keywords
-
-Here is a list of the Python keywords.  
-Enter any keyword to get more help.
-
-and                 elif                if                  print
-as                  else                import              raise
-assert              except              in                  return
-break               exec                is                  try
-class               finally             lambda              while
-continue            for                 not                 with
-def                 from                or                  yield
-del                 global              pass                
-
-help> and
-
-\end{lstlisting}
-
-After typing \texttt{and} you are given information about the keyword \texttt{and}. You navigate the page like before.
-
-Another feature of IPython, is you can learn about any object using ? or ??. For example,
-
-\begin{lstlisting}[style=bash]
-In [9]: x = 3
-
-In [10]: x?
-Type:       int
-String Form:3
-Docstring:
-int(x=0) -> int or long
-int(x, base=10) -> int or long
-
-Convert a number or string to an integer, or return 0 if no arguments
-are given.  If x is floating point, the conversion truncates towards zero.
-If x is outside the integer range, the function returns a long instead.
-
-If x is not a number or if base is given, then x must be a string or
-Unicode object representing an integer literal in the given base.  The
-literal can be preceded by '+' or '-' and be surrounded by whitespace.
-The base defaults to 10.  Valid bases are 0 and 2-36.  Base 0 means to
-interpret the base from the string as an integer literal.
->>> int('0b100', base=0)
-4
-
-In [11]: 
-\end{lstlisting}
-
-To get more information about an object you can use \texttt{??}. Sometimes there is not more information and you get the same output as \texttt{?}. 
-
-If you just want the \emph{type} of the Python object, use the \texttt{type} builtin. You often need to know the type of the variable.
-
-\begin{lstlisting}[style=bash]
-In [19]: type(x)
-Out[19]: int
-\end{lstlisting}
-
-And if you want information on type use the command \texttt{type?} or \texttt{help(type)}.
-
-A few other things about IPython. It supports the use of the up and down arrow keys to walk you through your command history. CTRL + a to move to the beginning of a line. CTRL + e to move to the end of a line. IPython also supports tab completion.
-
-At the prompt, type \texttt{math.} followed by a TAB. Note the period after the word \texttt{math}. This is an example of tab completion.
-
-\begin{lstlisting}[style=bash]
-In [19]: math. <TAB>
-math.acos       math.degrees    math.fsum       math.pi
-math.acosh      math.e          math.gamma      math.pow
-math.asin       math.erf        math.hypot      math.radians
-math.asinh      math.erfc       math.isinf      math.sin
-math.atan       math.exp        math.isnan      math.sinh
-math.atan2      math.expm1      math.ldexp      math.sqrt
-math.atanh      math.fabs       math.lgamma     math.tan
-math.ceil       math.factorial  math.log        math.tanh
-math.copysign   math.floor      math.log10      math.trunc
-math.cos        math.fmod       math.log1p      
-math.cosh       math.frexp      math.modf       
-
-In [19]: math.
-\end{lstlisting}
-
-You are presented with a list of availbale math functions. Use help to determine what these math functions do. For example, \texttt{help(math.cos)}
-
-The math functions are built in. To use them you do this:
-\begin{lstlisting}[style=bash]
-In [64]: x = 100
-
-In [65]: log10(x) 
-Out[65]: 2.0
-\end{lstlisting}
-
-Of course these can be combined to make more complicated expressions:
-
-\begin{lstlisting}[style=bash]
-In [66]: sqrt(log10(x))
-Out[66]: 1.4142135623730951
-\end{lstlisting}
-
-One of the advantages of using IPython is has builtin support for matplotlib, which allows you to plot math functions.
-
-Lets say you want to plot the line $y = x$ with $x \in [0, 10]$. In IPython, you would do the following:
-
-\begin{lstlisting}[style=bash]
-In [71]: x = range(11) # why is it 11?
-
-In [72]: help(range)
-
-In [73]: y = x
-
-In [74]: plot(x, y)
-\end{lstlisting}
-
-This should launch a new window with a plot of $y = x$. Try to plot the line $y = x$ for x from -100 to 100. Read the help page about \texttt{range} to figure out how. If you do not close the plot window or use the command \texttt{clf()} or \texttt{close()} your plot will just be written to the current plot window.
-
-Let's try to plot something more complicated, $y = x^2$. Lets plot this over the values of x $\in[-10, 10]$
-
-\begin{lstlisting}[style=bash]
-In [77]: x = range(-10, 11) # Why is it 11 and not 10?
-
-In [78]: x
-Out[78]: [-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 
-0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] #note the [], a list
-
-In [79]: y = x ** 2
----------------------------------------------------------------------------
-TypeError                                 
-Traceback (most recent call last)
-<ipython-input-79-f4db1f0b84fe> in <module>()
-----> 1 y = x ** 2
-
-TypeError: unsupported operand type(s) 
-for ** or pow(): 'list' and 'int'
-
-In [80]:
-\end{lstlisting}
-
-The problem is you are mixing types: a \emph{list} with an \emph{int}. A list in Python is a ``comma-separated values (items) between square brackets". The method \texttt{range()} returns a list of numbers. In this case a list of integers from -10 to 10. The line \texttt{y = x ** 2} assumes x is of type \texttt{int}, which it is not and that is why you get a \texttt{TypeError}. The \texttt{Traceback} gives the stack frame that created the error.
-
-To fix this, we need to make \texttt{y} a list as well. 
-
-\begin{lstlisting}[style=bash]
-y = [i ** 2 for i in x]
-\end{lstlisting}
-
-The \texttt{[]} indicates that the object you are creating is a list. Inside the brackets we put an expression, \texttt{i ** 2}, followed by a for loop. Python's for statement iterates over the items of any sequence (a list or a string), in the order that they appear in the sequence. To see what the for loop does, type the for loop at the IPython prompt. When you type a for loop you have to finish the loop body before the code is executed. That is what the ....: indicates. When you are done typing the loop body, hit Enter and the for loop is executed.
-
-\begin{lstlisting}[style=bash]
-In [96]: for i in x: 
-   ....:     print i,
-   ....:     
--10 -9 -8 -7 -6 -5 -4 -3 -2 -1 0 1 2 3 4 5 6 7 8 9 10
-\end{lstlisting}
-
-That is a comma after the \texttt{i}. Without the comma, python will print each value with a new line. Try it. 
-
-As you can see \texttt{for i in x} justs walks through the list, printing out the value of \texttt{i}. In the assignment for the variable \texttt{y} we just add an expression \texttt{i ** 2} that is applied to each \texttt{i}.
-
-Try this at the prompt:
-
-\begin{lstlisting}[style=bash]
-In [100]: for i in x:
-    print i ** 2,
-   .....:     
-100 81 64 49 36 25 16 9 4 1 0 1 4 9 16 25 36 49 64 81 100
-\end{lstlisting}
-
-Now you just need to assign each value to the variable \texttt{y}. At the prompt type this:
-
-\begin{lstlisting}[style=bash]
-In [101]: y = [] #create a empty list
-
-In [102]: for i in x:
-   .....:     y.append(i ** 2)
-   .....:     
-
-In [103]: y
-Out[103]: [100, 81, 64, 49, 36, 25, 16, 9, 4, 1, 0, 1, 4, 9, 
-16, 25, 36, 49, 64, 81, 100]
-
-In [104]: type(y)
-Out[104]: list
-\end{lstlisting}
-
-This code creates an empty list and then adds each element to the of the list (\texttt{y.append()}) with the square of each x value. Run the command \texttt{help(y.append)}. The statement \texttt{y = [i ** 2 for i in x]} is just shorthand for the above for loop. Pretty cool!
-
-To correctly plot $y = x^2$ then, you would do the following:
-
-\begin{lstlisting}[style=bash]
-In [108]: close() #close the figure window
-
-In [109]: x = range(-10, 11)
-
-In [110]: y = [i ** 2 for i in x]
-
-In [111]: plot(x, y)
-Out[111]: [<matplotlib.lines.Line2D at 0x45828d0>]
-\end{lstlisting}
-
-Try to plot the following functions:
-
-$y = x^3$ for $x \in [-10, -10]$
-
-$y = 4x^2 + 5x + 6$ for $x \in [-10, -10]$
-
-$y = sin(x)$ for $x \in [-10,10]$.
-
-The sine plot doesn't plot very well as it uses integer data. To fix this, there is a function \texttt{frange()} which is similar to \texttt{range()}. The \texttt{frange()} requires that you provide a start, stop, and a step (delta). For instance, setting \texttt{x = frange(-10, 10, .1)} creates an numpy array (more on numpy later in class) of floating point values from -10 to 10 separated by a tenth. Plot sine using these x values. A much smoother curve is produced. If you do not know what sine is, ask the Instructor.
-
-Do something similar to plot the function:
-
-$y = sqrt(x)$ for $x \in [0, 100]$
-
-Come up with a few functions on your own to plot.
+%Now enter \texttt{Ctrl + d}. This will exit the python interpreter.
 
 \section{Running Python programs} 
 
