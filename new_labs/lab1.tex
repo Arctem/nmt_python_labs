@@ -215,7 +215,7 @@ Python 3
 \end{lstlisting}
 \end{minipage}
 
-Notice the difference between Python 2 and 3 when using \texttt{/}. When Python 2 divides two integers using \texttt{/}, the decimal portion of the answer is dropped. If you want the answer you expect from a typical calculator when you divide, you have to change one or both of the numbers to a floating point number. There are a number of ways to have a floating point number in python. Add a decimal point or use the built-in class \texttt{float(x)}, where x is a number or a string. The zero after the decimal point is not required. Some programmers add it as a matter of style as it clearly identifies the number has a decimal point and is a floating point number.
+Notice the difference between Python 2 and 3 when using \texttt{/}. When Python 2 divides two integers using \texttt{/}, the decimal portion of the answer is dropped. If you want the answer you expect from a typical calculator when you divide, you have to change one or both of the numbers to a floating point number. There are a number of ways to have a floating point number in python. Add a decimal point or use the built-in class \texttt{float(x)}, where x is the number you wish to convert. The zero after the decimal point is not required. Some programmers add it as a matter of style as it clearly identifies the number has a decimal point and is a floating point number.
 
 In Python 3, using \texttt{/} will always include the decimal portion of the answer. If you wish to drop the decimal portion, you must use \texttt{//}. Dropping the decimal portion of the answer is called integer or floor division, since your answer will always be an integer. In this class, we will always use \texttt{/} to refer to floating point division and \texttt{//} to refer to integer division. If you are using Python 2, be you will need to be aware of the inconsistent behavior of \texttt{/}.
 
@@ -253,22 +253,12 @@ Besides fractional powers, python can handle very large numbers. Try raising 10 
 000000000000000000000000000000000000000000000L
 \end{lstlisting}
 
-The \texttt{L} at the end of the number indicates it is a long. Long integers are integers that are to big to represent with an integer data type.  
-
-
-%// Floor Division - The division of operands where the result is the quotient in which the digits after the decimal point are removed.	
-
-%\begin{lstlisting}[style=bash]
-%>>> 6 // 4
-%1
-%>>> 6 // 4.0
-%1.0
-%\end{lstlisting}
+The \texttt{L} at the end of the number indicates it is a long. Long integers are integers that are too big to represent with a normal integer. In general you are able to treat integers and longs as equivalent data types.
 
 Of course these commands can be combined to form more complex expressions. They follow typical precedence rules, with \texttt{**} having higher precedence than \texttt{*} \texttt{/} \texttt{\%} \texttt{//}, which have higher precedence than \texttt{+} \texttt{-}. If operators have equal precedence they associate left to right. You can always use parenthesis to change the precedence.
 
 \begin{lstlisting}[style=bash]
->>> 6 * 5 % 4 - 6 ** 7 + 80 / 3 # ((6 * 5) % 4) - (6 ** 7) + (80 / 3)
+>>> 6 * 5 % 4 - 6 ** 7 + 80 / 3 #((6 * 5) % 4) - (6 ** 7) + (80 / 3)
 -279908
 >>> 6 * 5 % 4
 2
@@ -278,9 +268,9 @@ Of course these commands can be combined to form more complex expressions. They 
 2
 \end{lstlisting}
 
-The \texttt{\#} indicates a comment. Comments are ignored by the interpreter.
+The \texttt{\#} indicates the start of a comment. Comments are ignored by the interpreter.
 
-Now the real power of python as a calculator comes when you add variables and make assignments.
+Now the real power of python as a calculator comes when you add variables and make assignments. Using \texttt{=} allows you to assign a value to a variable. A variable can have any name consisting of letters, numbers, and underscores. Once a variable has been assigned, it can be used in future computations.
 
 \begin{lstlisting}[style=bash]
 >>> x = 7
@@ -293,189 +283,94 @@ Now the real power of python as a calculator comes when you add variables and ma
 
 \section{Running Python programs} 
 
-So far, you have been running Python interactively. This is a nice feature as it lets you test ideas interactively. However, there are time you want to save your ideas to a text file and to run the code as a program.
+So far, you have been running Python interactively. This is a nice feature as it lets you test ideas quickly and easily. However, there are times you want to save your ideas to a text file and to run the code as a program.
 
-Open a text editor (e.g. gedit) and create a one line python program:
+%Open a text editor (e.g. gedit) and create a one line python program:
+Open IDLE's text editor from \texttt{File > New File} or with \texttt{Ctrl + N} and create a one line Python program:
 
 \begin{lstlisting}[style=c]
-print 'hello, world!\n'
+print('hello, world!\n')
 \end{lstlisting}
+
+\texttt{print} is a function. It will print the value of whatever is within its parentheses. In order to print plaintext (not variables), you must additionally surround it with quotes. This is called a string. It is important to note that
+
+\begin{lstlisting}[style=c]
+print("hello, world!\n")
+\end{lstlisting}
+
+is equivalent to the above.
 
 The \texttt{\textbackslash n} prints a newline. Save your file as \texttt{hello.py}. The \texttt{py} extension indicates it is a Python file.
 
-
-Now in IPython, you can use the command \texttt{run} to execute the program. If you don't add a path before the file name, the file is assumed to be in your current working directory (cwd). If the file is in a different directory just navigate to it or use a path.
-
-\begin{lstlisting}[style=bash]
-In [112]: run hello.py # assumes hello.py in cwd 
-hello, world!
-
-In [113]:
-\end{lstlisting}
-
-From the terminal, you can do the same thing:
+To run the program, press \texttt{F5}.
 
 \begin{lstlisting}[style=bash]
-$ python hello.py
-hello, world!
+Python 2.7.6 (default, Feb 26 2014, 12:07:17) 
+[GCC 4.8.2 20140206 (prerelease)] on linux2
+Type "copyright", "credits" or "license()" for more information.
+>>> ========================= RESTART =========================
+>>> 
+Hello, world!
+>>> 
 \end{lstlisting}
 
-Make sure you can run \texttt{hello.py} from IPython and the terminal.
-
-At times, you would like to run the Python file as a regular *nix program. To do this, you have to change the permission of the file so it is an executable. 
-
-
-\begin{lstlisting}[style=bash]
-$ chmod 755 hello.py
-\end{lstlisting}
-
-Where \texttt{chmod} changes the permission of the file. The numbers come from a combination of \texttt{r = 4, w = 2} and \texttt{x = 1}. To turn on \texttt{rwx} you add the numbers 4 + 2 + 1 = 7. If you only want the file to be read only you would use 4. If you want it to be read and write you use 6. For read and executable you use 5. The first number sets the user's permission (7 in this case) the next number sets the group's permission (5 in this case), and the last number sets other's permissions (5 in this case). If you run the command \texttt{ls -l} the file's permission should be \texttt{rwxr-xr-x}.
-
-Now one would think, you should be able to execute the file. Try it.
-
-\begin{lstlisting}[style=bash]
-$ ./hello.py
-\end{lstlisting}
-
-You should get an error. The error is that the python program does not know where to find the python interpreter. You have to add the following line to \texttt{hello.py}. It also must be the \texttt{first} line in your program.
+You can also print out the values of variable that you may have assigned earlier in the program.
 
 \begin{lstlisting}[style=c]
-#!/usr/bin/env python
-
-print 'hello, world!\n'
+x = 5
+y = 4
+print(y)
+y = y + x
+print(y)
 \end{lstlisting}
-
-Now the program will run as a *nix executable. Try it.
-
-\section*{Adding structure to your programs}
-
-While you can just string together python statements into a source file and run it, this strategy is soon to lead to "spaghetti" code: a tangled mess of unmaintainable code. To prevent this we are going to use the following boilerplate code to write programs.
-
-\begin{lstlisting}[style=c]
-#!/usr/bin/env python
-
-def main():
-    print 'hello, world!'
-
-
-# Standard boilerplate to call the main() function to begin
-# the program.
-if __name__ == '__main__':
-    main()
-\end{lstlisting}
-
-Writing code in this way then starts the program with the \texttt{main()} function as other programming languages do. We will find later that it also allows you to import your code easily and makes it easy to test your code. You should create a file called \texttt{boilerplate.py} and then when you want to create a new python file, just copy \texttt{boilerplate.py} to a new file. For instance, if you want to create a new python file called \texttt{dna.py}, you would run the command:
 
 \begin{lstlisting}[style=bash]
-$ cp boilerplate.py dna.py
+>>> 
+4
+5
 \end{lstlisting}
+
+But what if you wish to print a variable's value on the same line as another string? Unfortunately, the simplest method of doing this does not work:
+
+\begin{lstlisting}[style=bash]
+>>> x = 5
+>>> print('x = ' + x)
+
+Traceback (most recent call last):
+  File "<pyshell#3>", line 1, in <module>
+    print('x = ' + x)
+TypeError: cannot concatenate 'str' and 'int' objects
+\end{lstlisting}
+
+However, we can get around this by converting \texttt{x} into a string using \texttt{str()}.
+
+\begin{lstlisting}[style=bash]
+>>> x = 5
+>>> print('x = ' + str(x))
+x = 5
+\end{lstlisting}
+
+At this point it is not necessary to completely understand the differences between a string and an actual number, just remember that \texttt{x = '5'} and \texttt{x = 5} denote different things.
 
 \pagebreak
 
-\section{ASCII Art}
-
-Copy \texttt{boilerplate.py} to \texttt{ascii.py}. The goal of the program is to create ASCII art that produces the word ``python" across the terminal.
-
-
-\begin{lstlisting}[style=bash]
- 1234567890123456789012345689012345678901234567890123456789
-1                             #     
-2                             #
-3                             #
-4                       #     #
-5                       #     #                
-6 ###     #       #  #######  ####      ####   ######     
-7 #  #     #     #      #     #   #    #    #  #    #
-8 #   #     #   #       #     #    #   #    #  #    #
-9 #  #       # #        #     #   #    #    #  #    #
-0 ###         #         #     #  #      ####   #    #
-1 #          #       
-2 #         #
-3 #        #
-4 #       #
-5 #      #
-\end{lstlisting}
-
-The line and column numbering is not part of the program. They are there as a guide. Feel free to design your own typography, within the following constraints: letters are at most 10 characters wide; at most 10 lines high; and there is no more than 15 lines total; the terminal is 80 characters wide.
-
-Python has some nice string features. Strings can be either enclosed in single or double quotes. For this program, use single quotes for your strings. To print 10 hash tags (\#) rather than writing
+\section{Conversions}
+Download \texttt{conversions.py}. It is a simple Python program for converting temperatures from Celsius to Kelvin. We would like to modify it to also convert the temperatures to Fahrenheit. Currently, the output of the program is something like this:
 
 \begin{lstlisting}[style=c]
-print '##########'
+Please input a temperature in Celsius: 10
+Kelvin temperature: 283.15
 \end{lstlisting}
- 
-you can ``multiply'' strings:
+
+Add code (you should not need to modify the existing lines, though you are free to) so that its output is as follows:
 
 \begin{lstlisting}[style=c]
-print 10 * '#' 
+Please input a temperature in Celsius: 10
+Kelvin temperature: 283.15
+Fahrenheit temperature: 50.0
 \end{lstlisting}
 
-To concatenate strings you use the \texttt{+} operator. To print 10 spaces, followed by 10 hash tags, followed by 20 spaces, followed by 5 hash tags, you do the following:
-
-\begin{lstlisting}[style=c]
-print 10 *  ' ' + 10 * '#'  + 20 * ' ' + 5 * '#'
-\end{lstlisting}
-
-\section{The Tunnel}
-
-Copy \texttt{boilerplate.py} to a file named \texttt{tunnel.py}. 
-
-Download the files \texttt{tunnel} and \texttt{tunnel2} from Moodle. To terminate the programs enter CTRL + c. Run the programs:
-
-\begin{lstlisting}[style=c]
-$ ./tunnel
-$ ./tunnel2
-\end{lstlisting}
-
-You should see a tunnel being created across the screen (\texttt{tunnel}). The other program produces two tunnels across the screen \texttt{tunnel2}.
-
-Your job is to create these two programs as Python programs. The terminal is assumed to be 80 characters wide. The tunnel is 5 spaces wide and where it starts varies from line to line, but there is always a path through the tunnel. The print statement is similar to what you just did, printing out python. However, you need to add some randomness to the line you are printing. To get you started, experiment with the following command on the python interpreter. 
-
-
-\begin{lstlisting}[style=bash]
-In [171]: import random
-
-In [172]: random.randrange(0, 10)
-Out[172]: 2
-
-In [173]: random.randrange(0, 10)
-Out[173]: 8
-
-In [174]: random.randrange(0, 10)
-Out[174]: 6
-\end{lstlisting}
-
-To write an infinite loop you can write \texttt{while 1:}. To terminate the program use CTRL + d. If you want to slow the program down you can add these lines to your program:
-
-\begin{lstlisting}[style=c]
-import time
-time.sleep(0.5)
-\end{lstlisting}
-
-If you want to speed up the program, comment out the line \texttt{time.sleep} or change the number to be smaller. Larger numbers will make the program slower.
-
-Note: import statements occur at the beginning of the source code files. The following code prints out random integers between 0 and 9 until the user enters CTRL + d.
-
-\begin{lstlisting}[style=c]
-#!/usr/bin/env python
-
-import random
-import time
-
-
-def main():
-
-    while 1:
-        x = random.randrange(0, 10)
-        print x
-        time.sleep(0.5)
-
-
-#Standard boilerplate to call the main() function to begin
-# the program.
-if __name__ == '__main__':
-    main()
-\end{lstlisting}
+%\section{ASCII Art} % Maybe?
 
 
 \section{Creating Tar archives}
