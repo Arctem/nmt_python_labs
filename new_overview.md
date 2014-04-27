@@ -13,6 +13,7 @@
 - input()
 - Turtle
 - Comments
+- Calling functions inside one another
 
 ##Lab 3 - Lists and Strings
 - Lists
