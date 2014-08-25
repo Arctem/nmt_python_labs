@@ -114,17 +114,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
-The purpose of this lab is to introduce you to the Python programming environment. In this
-lab, you will learn how to 
+The purpose of this lab is to introduce you to the Python programming
+environment. In this lab, you will learn how to 
 \begin{enumerate*}
-\item Log into Linux at the Tech Computer Center (TCC).
+\item Log into a computer of the Tech Computer Center (TCC).
 \item Learn to use IDLE as an interpreter.
-\item Edit, compile, and run a few short Python programs.
-\item Create a tarball and submit a lab to Moodle.
+\item Edit and run a few short Python programs.
+\item Create a tarball or zip file and submit a lab to Canvas.
 \end{enumerate*}
 
 
-Throughout this semester's labs, we will be using specially formatted text to aid in your understanding. For example,
+Throughout this semester's labs, we will be using specially formatted text to
+aid in your understanding. For example, 
 \begin{lstlisting}[style=bash]
 text in a console font within a gray box
 \end{lstlisting}
@@ -143,9 +144,7 @@ sample Python code or program output.
 \vspace{12pt}
 
 Text in a \texttt{simple console font}, without a frame or background, indicates
-the name of a file, a function, or some action you need to perform, but not
-necessarily type into the terminal. Don't worry: as you become familiar with
-both the terminal and Python, it will become obvious which is being described!
+the name of a file, a function, or some action you need to perform.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -166,13 +165,17 @@ both the terminal and Python, it will become obvious which is being described!
 \pagebreak
 \section{Instructions}
 
-The following instructions will guide you through this lab. Because this is an introductory lab, the instructions are rather detailed and specific. However, it is important that you understand the concepts behind the actions you take---you will be repeating them throughout the semester. If you have any questions, ask the instructor, teaching assistant, or lab assistant.
+The following instructions will guide you through this lab. Because this is an
+introductory lab, the instructions are rather detailed and specific. However, it
+is important that you understand the concepts behind the actions you take -- you
+will be repeating them throughout the semester. If you have any questions, ask
+the instructor, teaching assistant, or lab assistant.
 
 \subsection{Log in}
 To log into a TCC machine, you must use your TCC username and password. If you
 do not have a TCC account, you must visit the TCC Office to have one activated.
 
-You can choose to use Linux or Windows in this class. 
+You can choose to use Linux or Windows in this class.
 
 It should be noted that most of these instructions will work on Windows or Mac
 OS with Python installed, though we recommend using Linux simply to gain
@@ -216,37 +219,40 @@ version of Python IDLE is running. Make sure you have \emph{Python 3} or higher.
 If you do not, check for another program called IDLE (or IDLE 3) or, if on your
 own computer, install Python 3.
 
-At the Python prompt \texttt{>>>} you can type in Python statements. For instance, to add 2 + 3 
+At the Python prompt \texttt{>>>} you can type in Python statements and
+immediately see the result. For instance, to add 2 + 3, simply type \texttt{2 +
+3}: 
 \begin{lstlisting}[style=bash]
 >>> 2 + 3
 5
 >>>
 \end{lstlisting}
 
-Notice how after a statement is executed, you are given a prompt to enter another statement.
+Notice that after a statement is executed, you are given a prompt to enter
+another statement. The \texttt{+} is the addition operator. Other basic math
+operators in python include:
 
-The \texttt{+} is the addition operator. Other basic math operators in python include:
-
-\texttt{-} Subtraction: subtracts right hand operand from left hand operand
-
-\begin{lstlisting}[style=bash]
+\begin{description}
+  \item[Subtraction] \texttt{-} subtracts the right hand operand from the left
+    hand operand:
+    \begin{lstlisting}[style=bash]
 >>> 2 - 3
 -1
-\end{lstlisting}
+    \end{lstlisting}
 
-\texttt{*} Multiplication: Multiplies values on either side of the operator
+  \item[Multiplication] \texttt{*} multiplies values on either side of the
+    operator:
 
-\begin{lstlisting}[style=bash]
+    \begin{lstlisting}[style=bash]
 >>> 2 * 3
 6
-\end{lstlisting}
+    \end{lstlisting}
 
+  \item[Division] \texttt{/} divides the left hand operand by the right hand
+    operand, while \texttt{//} does the division and cuts off the decimals. The
+    latter is called \emph{floor division}.
 
-\texttt{/} Division, \texttt{//} Floor division - Divides left hand operand by right hand operand
-\\
-
-Python 3
-\begin{lstlisting}[style=bash]
+  \begin{lstlisting}[style=bash]
 >>> 2 / 3
 0.6666666666666666
 >>> 2 // 3
@@ -259,28 +265,36 @@ Python 3
 0.6666666666666666
 >>> 2 / float(3)
 0.6666666666666666
-\end{lstlisting}
+  \end{lstlisting}
 
-This is an example of a major difference between Python 2 and Python 3. If you are using Python 2 some of these calculations will give different results. Make sure you are using Python 3.
+    This is an example of a major difference between Python 2 and Python 3. If
+    you are using Python 2 some of these calculations will give different
+    results. Make sure you are using Python 3.
 
-Using \texttt{/} will always include the decimal portion of the answer. If you wish to drop the decimal portion, you must use \texttt{//}. Dropping the decimal portion of the answer is called integer division (since your answer will always be an integer) or floor division (since it will always round down).
+    Using \texttt{/} will always include the decimal portion of the answer. If
+    you wish to drop the decimal portion, you must use \texttt{//}. Dropping the
+    decimal portion of the answer is called integer division (since your answer
+    will always be an integer) or floor division (since it will always round
+    down).
 
-%A string in python is a list of characters enclosed in single or double quotes. For example, \texttt{float(\textquotesingle 3.5\textquotesingle)} will convert the string \textquotesingle 3.5\textquotesingle $\,$ to the floating point number 3.5. Try it. While this may seem like something you would never do, it is very common task when you read numeric data from a text file. The number is read in as a string and needs to be converted to a number. 
+  \item[Modulus] \texttt{\%} divides the left hand operand by the right hand
+    operand and gives you the remainder.
 
-%What is the 7 divided by 3 in python? Think of the answer before you type it in. 
-
-\texttt{\%} Modulus: Divides left hand operand by right hand operand and returns the remainder.
-
-\begin{lstlisting}[style=bash]
+    \begin{lstlisting}[style=bash]
 >>> 5 % 3
 2
 >>> 3 % 5
 3
-\end{lstlisting}
+    \end{lstlisting}
 
-\texttt{**} Exponent: Performs exponential (power) calculation on operator. \texttt{a ** b} means a raised to b.
+    This is as it was in elementary school: If you divide 7 by 3, 3 goes into 7
+    twice with a remainder of one. Modulus will become more important later in
+    your CS life.
 
-\begin{lstlisting}[style=bash]
+  \item[Exponentiation] \texttt{**} performs exponential (power) calculation.
+    \texttt{a ** b} means a raised to b.
+
+    \begin{lstlisting}[style=bash]
 >>> 10 ** 5
 100000
 >>> 5 ** 10 
@@ -289,19 +303,30 @@ Using \texttt{/} will always include the decimal portion of the answer. If you w
 3.0
 >>> 5.5 ** 6.8
 108259.56770464421
-\end{lstlisting}
+    \end{lstlisting}
 
-Besides fractional powers, python can handle very large numbers. Try raising 10 to the 100th power (a googol)
+%    Besides fractional powers, Python can handle very large numbers. Try raising
+%    10 to the 100th power (a googol)
+%
+%    \begin{lstlisting}[style=bash]
+%>>> 10 ** 100
+%10000000000000000000000000000000000000000000000000000000
+%000000000000000000000000000000000000000000000L
+%    \end{lstlisting}
+%
+%    The \texttt{L} at the end of the number indicates it is a long. Long
+%    integers are integers that are too big to represent with a normal integer.
+%    In general you are able to treat integers and longs as equivalent data
+%    types.
+\end{description}
 
-\begin{lstlisting}[style=bash]
->>> 10 ** 100
-10000000000000000000000000000000000000000000000000000000
-000000000000000000000000000000000000000000000L
-\end{lstlisting}
 
-The \texttt{L} at the end of the number indicates it is a long. Long integers are integers that are too big to represent with a normal integer. In general you are able to treat integers and longs as equivalent data types.
-
-Of course these commands can be combined to form more complex expressions. They follow typical precedence rules, with \texttt{**} having higher precedence than \texttt{*} \texttt{/} \texttt{\%} \texttt{//}, which have higher precedence than \texttt{+} \texttt{-}. If operators have equal precedence they execute left to right. You can always use parenthesis to change the precedence.
+Of course, these commands can be combined to form more complex expressions. They
+follow typical precedence rules, with \texttt{**} having higher precedence than
+\texttt{*}, \texttt{/}, \texttt{\%}, and \texttt{//}, which have higher
+precedence than \texttt{+} and \texttt{-}. If operators have equal precedence
+they execute left to right. You can always use parentheses to change the
+precedence.
 
 \begin{lstlisting}[style=bash]
 >>> 6 * 5 % 4 - 6 ** 7 + 80 / 3 #((6 * 5) % 4) - (6 ** 7) + (80 / 3)
@@ -314,18 +339,26 @@ Of course these commands can be combined to form more complex expressions. They 
 2
 \end{lstlisting}
 
-The \texttt{\#} indicates the start of a comment. Comments are ignored by the interpreter and can be used to provide reminders to yourself as to what a section of code does.
+The \texttt{\#} indicates the start of a comment. Comments are ignored by the
+interpreter and can be used to provide reminders to yourself as to what a
+section of code does.
 
-The real power of python as a calculator comes when you add variables. Using \texttt{=} allows you to assign a value to a variable. A variable can have any name consisting of letters, numbers, and underscores. Once a variable has been assigned, it can be used in future computations.
+The real power of Python as a calculator comes when you add variables. Using
+\texttt{=} allows you to assign a value to a variable. A variable can have any
+name consisting of letters, numbers, and underscores. Once a variable has been
+assigned, it can be used in future computations.
 
 \begin{lstlisting}[style=bash]
 >>> x = 7
->>> y = 3 * x ** 2 + 7 * x + 6
+>>> y = 5 + x
 >>> y
-202
+12
+>>> x
+7
 \end{lstlisting}
 
-In general you should try to give your variables descriptive names so that it is clear what a section of code does.
+In general, you should try to give your variables descriptive names so that it is
+clear what they are meant to store; for example:
 
 \begin{lstlisting}[style=bash]
 >>> food_price = 4.50
@@ -340,33 +373,40 @@ In general you should try to give your variables descriptive names so that it is
 \pagebreak
 \section{Running Python programs} 
 
-So far, you have been running Python interactively. This is a nice feature as it lets you test ideas quickly and easily. However, there are times you want to save your ideas to a text file and to run the code as a program. Your programs will be almost identical to what you enter when using the Python interpreter, though you will have to use the \texttt{print} function in order to display output.
+So far, you have been running Python interactively. This is a nice feature as it
+lets you test ideas quickly and easily. However, there are times you want to
+save your ideas to a text file and to run the code as a program. Your programs
+will be almost identical to what you enter when using the Python interpreter,
+though you will have to use the \texttt{print} function in order to display
+output.
 
 %Open a text editor (e.g. gedit) and create a one line python program:
-Open IDLE's text editor from \texttt{File > New File} or with \texttt{Ctrl + N} and create a one line Python program:
-
+Open IDLE's text editor from \texttt{File > New File} or with \texttt{Ctrl + N}
+and create a one line Python program as following. On Linux, open a text editor
+(e.g. gedit) and create the one line Python program:
 \begin{lstlisting}[style=python]
 print('Hello, world!')
 \end{lstlisting}
 
-\texttt{print} is a function. It will print the value of whatever is within its parentheses. In order to print plaintext (not variables), you must additionally surround it with quotes. This is called a string. It is important to note that
-
+\texttt{print} is a function. It will print the value of whatever is within its
+parentheses. In order to print plaintext (not variables), you must additionally
+surround it with quotes. This is called a string. It is important to note that
 \begin{lstlisting}[style=python]
 print("Hello, world!")
 \end{lstlisting}
-
 is equivalent to the first example.
 
-\texttt{\textbackslash n} prints a newline. This means that the text following the \texttt{\textbackslash n} will start on a new line. Test this with the following example.
-
+\texttt{\textbackslash n} prints a newline. This means that the text following
+the \texttt{\textbackslash n} will start on a new line. Test this with the
+following example:
 \begin{lstlisting}[style=python]
 print('Hello, world!\nHow are you?')
 \end{lstlisting}
 
-Save your file as \texttt{hello.py}. The \texttt{py} extension indicates it is a Python file.
+Save your file as \texttt{hello.py}. The \texttt{py} extension indicates it is a
+Python file.
 
-To run the program, press \texttt{F5}.
-
+To run the program in IDLE, press \texttt{F5}. 
 \begin{lstlisting}[style=bash]
 Python 3.4.1 (v3.4.1:c0e311e010fc, May 18 2014, 10:38:22) [MSC v.1600 32 bit (Intel)] on win32
 Type "copyright", "credits" or "license()" for more information.
@@ -376,8 +416,18 @@ How are you?
 >>> 
 \end{lstlisting}
 
-You can also print out the values of variable that you may have assigned earlier in the program.
+If you are using Linux, type \texttt{python3 hello.py} to run from a program
+from a file.
+\begin{lstlisting}[style=bash]
+$ python3 hello.py
+Hello, world!
+How are you?
+$
+\end{lstlisting}
+Notice that this is slightly different than in IDLE.
 
+You can also print out the values of variable that you may have assigned earlier
+in the program.
 \begin{lstlisting}[style=python]
 x = 5
 y = 4
