@@ -261,7 +261,17 @@ The real power of python as a calculator comes when you add variables. Using \te
 202
 \end{lstlisting}
 
-%Now enter \texttt{Ctrl + d}. This will exit the python interpreter.
+In general you should try to give your variables descriptive names so that it is clear what a section of code does.
+
+\begin{lstlisting}[style=bash]
+>>> food_price = 4.50
+>>> drink_price = 1.00
+>>> subtotal = food_price + drink_price
+>>> tax = subtotal * 0.07
+>>> total = subtotal + tax
+>>> total
+5.885
+\end{lstlisting}
 
 \section{Running Python programs} 
 
@@ -341,7 +351,8 @@ At this point it is not necessary to completely understand the differences betwe
 
 \pagebreak
 
-\section{Conversions}
+\section{Exercises}
+\subsection{Conversions}
 Download \texttt{conversions.py}. It is a simple Python program for converting temperatures from Celsius to Kelvin. We would like to modify it to also convert the temperatures to Fahrenheit. Currently, the output of the program is something like this:
 
 \begin{lstlisting}[style=c]
@@ -360,7 +371,9 @@ Fahrenheit temperature: 50.0
 %\section{ASCII Art} % Maybe?
 
 
-\section{Creating Tar archives}
+\section{Submitting}
+
+You may submit your code as either a tarball (instructions below) or as a .zip file. Either one should contain all files used in the exercises for this lab. The submitted file should end with either \texttt{.zip} or \texttt{.tar.gz} depending on which you used.
 
 Tar is used much the same way that Zip is used in Windows: it combines many files and/or directories into a single file. Gzip is used in Linux to compress a single file, so the combination of Tar and Gzip do what Zip does. However, Tar deals with Gzip for you, so you will only need to learn and understand one command for zipping and extracting.
 
@@ -380,7 +393,7 @@ tar tf cse107_firstname_lastname_lab1.tar.gz *.py
 
 You should see a list of your Python source code files.
 
-Upload your tarball in Moodle
+Upload your tarball or .zip file to Canvas.
 
 
 \end{document}
