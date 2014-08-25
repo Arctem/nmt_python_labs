@@ -145,11 +145,12 @@ Forgot ever using your calculator! Python rocks as a calculator.
 
 When you first open IDLE, you should see something like this
 \begin{lstlisting}[style=bash]
-Python 2.7.6 (default, Feb 26 2014, 12:07:17) 
-[GCC 4.8.2 20140206 (prerelease)] on linux2
+Python 3.4.1 (v3.4.1:c0e311e010fc, May 18 2014, 10:38:22) [MSC v.1600 32 bit (Intel)] on win32
 Type "copyright", "credits" or "license()" for more information.
 >>> 
 \end{lstlisting}
+
+Note the first line thing printed out: \texttt{Python 3.4.1}. This is the version of Python IDLE is running. Make sure you have Python 3 or higher. If you do not, check for another program called IDLE (or IDLE 3) or, if on your own computer, install Python 3.
 
 At the Python prompt \texttt{>>>} you can type in Python statements. For instance, to add 2 + 3 
 \begin{lstlisting}[style=bash]
@@ -180,24 +181,6 @@ The \texttt{+} is the addition operator. Other basic math operators in python in
 \texttt{/} Division, \texttt{//} Floor division - Divides left hand operand by right hand operand
 \\
 
-\begin{minipage}{.5\linewidth}
-Python 2
-\begin{lstlisting}[style=bash]
->>> 2 / 3
-0
->>> 2 // 3
-0
->>> 2 / 3.0
-0.6666666666666666
->>> 2 // 3.0
-0.0
->>> 2. / 3.
-0.6666666666666666
->>> 2 / float(3)
-0.6666666666666666
-\end{lstlisting}
-\end{minipage}
-\begin{minipage}{.5\linewidth}
 Python 3
 \begin{lstlisting}[style=bash]
 >>> 2 / 3
@@ -213,11 +196,10 @@ Python 3
 >>> 2 / float(3)
 0.6666666666666666
 \end{lstlisting}
-\end{minipage}
 
-Notice the difference between Python 2 and 3 when using \texttt{/}. When Python 2 divides two integers using \texttt{/}, the decimal portion of the answer is dropped. If you want the answer you expect from a typical calculator when you divide, you have to change one or both of the numbers to a floating point number. There are a number of ways to have a floating point number in python. Add a decimal point or use the built-in class \texttt{float(x)}, where x is the number you wish to convert. The zero after the decimal point is not required. Some programmers add it as a matter of style as it clearly identifies the number has a decimal point and is a floating point number.
+This is an example of a major difference between Python 2 and Python 3. If you are using Python 2 some of these calculations will give different results. Make sure you are using Python 3.
 
-In Python 3, using \texttt{/} will always include the decimal portion of the answer. If you wish to drop the decimal portion, you must use \texttt{//}. Dropping the decimal portion of the answer is called integer or floor division, since your answer will always be an integer. In this class, we will always use \texttt{/} to refer to floating point division and \texttt{//} to refer to integer division. If you are using Python 2, be you will need to be aware of the inconsistent behavior of \texttt{/}.
+Using \texttt{/} will always include the decimal portion of the answer. If you wish to drop the decimal portion, you must use \texttt{//}. Dropping the decimal portion of the answer is called integer division (since your answer will always be an integer) or floor division (since it will always round down).
 
 %A string in python is a list of characters enclosed in single or double quotes. For example, \texttt{float(\textquotesingle 3.5\textquotesingle)} will convert the string \textquotesingle 3.5\textquotesingle $\,$ to the floating point number 3.5. Try it. While this may seem like something you would never do, it is very common task when you read numeric data from a text file. The number is read in as a string and needs to be converted to a number. 
 
@@ -255,7 +237,7 @@ Besides fractional powers, python can handle very large numbers. Try raising 10 
 
 The \texttt{L} at the end of the number indicates it is a long. Long integers are integers that are too big to represent with a normal integer. In general you are able to treat integers and longs as equivalent data types.
 
-Of course these commands can be combined to form more complex expressions. They follow typical precedence rules, with \texttt{**} having higher precedence than \texttt{*} \texttt{/} \texttt{\%} \texttt{//}, which have higher precedence than \texttt{+} \texttt{-}. If operators have equal precedence they associate left to right. You can always use parenthesis to change the precedence.
+Of course these commands can be combined to form more complex expressions. They follow typical precedence rules, with \texttt{**} having higher precedence than \texttt{*} \texttt{/} \texttt{\%} \texttt{//}, which have higher precedence than \texttt{+} \texttt{-}. If operators have equal precedence they execute left to right. You can always use parenthesis to change the precedence.
 
 \begin{lstlisting}[style=bash]
 >>> 6 * 5 % 4 - 6 ** 7 + 80 / 3 #((6 * 5) % 4) - (6 ** 7) + (80 / 3)
@@ -268,9 +250,9 @@ Of course these commands can be combined to form more complex expressions. They 
 2
 \end{lstlisting}
 
-The \texttt{\#} indicates the start of a comment. Comments are ignored by the interpreter.
+The \texttt{\#} indicates the start of a comment. Comments are ignored by the interpreter and can be used to provide reminders to yourself as to what a section of code does.
 
-Now the real power of python as a calculator comes when you add variables and make assignments. Using \texttt{=} allows you to assign a value to a variable. A variable can have any name consisting of letters, numbers, and underscores. Once a variable has been assigned, it can be used in future computations.
+The real power of python as a calculator comes when you add variables. Using \texttt{=} allows you to assign a value to a variable. A variable can have any name consisting of letters, numbers, and underscores. Once a variable has been assigned, it can be used in future computations.
 
 \begin{lstlisting}[style=bash]
 >>> x = 7
@@ -289,28 +271,34 @@ So far, you have been running Python interactively. This is a nice feature as it
 Open IDLE's text editor from \texttt{File > New File} or with \texttt{Ctrl + N} and create a one line Python program:
 
 \begin{lstlisting}[style=c]
-print('hello, world!\n')
+print('Hello, world!')
 \end{lstlisting}
 
 \texttt{print} is a function. It will print the value of whatever is within its parentheses. In order to print plaintext (not variables), you must additionally surround it with quotes. This is called a string. It is important to note that
 
 \begin{lstlisting}[style=c]
-print("hello, world!\n")
+print("Hello, world!")
 \end{lstlisting}
 
-is equivalent to the above.
+is equivalent to the first example.
 
-The \texttt{\textbackslash n} prints a newline. Save your file as \texttt{hello.py}. The \texttt{py} extension indicates it is a Python file.
+\texttt{\textbackslash n} prints a newline. This means that the text following the \texttt{\textbackslash n} will start on a new line. Test this with the following example.
+
+\begin{lstlisting}[style=c]
+print('Hello, world!\nHow are you?')
+\end{lstlisting}
+
+Save your file as \texttt{hello.py}. The \texttt{py} extension indicates it is a Python file.
 
 To run the program, press \texttt{F5}.
 
 \begin{lstlisting}[style=bash]
-Python 2.7.6 (default, Feb 26 2014, 12:07:17) 
-[GCC 4.8.2 20140206 (prerelease)] on linux2
+Python 3.4.1 (v3.4.1:c0e311e010fc, May 18 2014, 10:38:22) [MSC v.1600 32 bit (Intel)] on win32
 Type "copyright", "credits" or "license()" for more information.
->>> ========================= RESTART =========================
+>>>  ========================= RESTART =========================
 >>> 
 Hello, world!
+How are you?
 >>> 
 \end{lstlisting}
 
@@ -335,11 +323,10 @@ But what if you wish to print a variable's value on the same line as another str
 \begin{lstlisting}[style=bash]
 >>> x = 5
 >>> print('x = ' + x)
-
 Traceback (most recent call last):
-  File "<pyshell#3>", line 1, in <module>
+  File "<pyshell#9>", line 1, in <module>
     print('x = ' + x)
-TypeError: cannot concatenate 'str' and 'int' objects
+TypeError: Can't convert 'int' object to str implicitly
 \end{lstlisting}
 
 However, we can get around this by converting \texttt{x} into a string using \texttt{str()}.
