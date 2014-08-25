@@ -3,10 +3,11 @@
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
 % 
-% Prepared by Cynthia Veitch, William Kwan, Scott Chadde, Kaley Goatcher, and Russell White
+% Prepared by Cynthia Veitch, William Kwan, Scott Chadde, Kaley Goatcher,
+% Russell White, and Christopher Koch
 % Fall 2013
 
-\documentclass[12pt]{article}
+\documentclass[12pt,hidelinks]{article}
 
 
 
@@ -38,8 +39,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Color support
-\usepackage{color}
+\usepackage{color,xcolor}
 \definecolor{light-gray}{gray}{0.9}
+\definecolor{green}{RGB}{0,127,0}
 % Outline support
 %\usepackage{outlines}
 % URL formatting
@@ -47,7 +49,8 @@
 % Image/graphic support
 \usepackage{graphicx}
 % Supports in-document hyperlinks
-\usepackage[pdfborder=0in]{hyperref}
+\usepackage[pdfborder=0in,bookmarks=true]{hyperref}
+\usepackage[numbered]{bookmark}
 % List compression
 \usepackage{mdwlist}
 \usepackage{enumerate}
@@ -58,13 +61,45 @@
 \usepackage{multirow}
 % Supports code formatting/highlighting
 \usepackage{listings}
-\lstset{basicstyle=\ttfamily, keywordstyle=\bfseries\color{black}, stringstyle=\color{black}, commentstyle=\color{blue}, showstringspaces=false, numbers=none}
-\lstdefinestyle{bash}{language=bash, backgroundcolor=\color{light-gray}}
-\lstdefinestyle{c}{language=C, frame=single}
+\lstset{language=c, basicstyle=\ttfamily, keywordstyle=\bfseries\color{black}, stringstyle=\color{blue}, commentstyle=\color{green}, showstringspaces=false, numbers=none}
+\lstdefinestyle{bash}{language=bash, basicstyle=\small\ttfamily, backgroundcolor=\color{light-gray}}
+
+% I wanted bash to have the breaklines stuff, too, but the typesetting is having
+% problems with my prebreak and postbreak symbols and boxes. I have to
+% investigate (it always worked in the C labs..) -Chris
+\usepackage{MnSymbol}
+\lstdefinestyle{c}{
+  language=C,
+  basicstyle=\small\ttfamily,
+  frame=single,
+  prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rhookswarrow}},
+  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rcurvearrowse\space}}
+  breaklines=true,
+  breakatwhitespace=true,
+  numbers=left,
+  numberstyle=\scriptsize
+}
+\lstdefinestyle{python}{
+  language=Python,
+  basicstyle=\small\ttfamily,
+  frame=single,
+  prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rhookswarrow}},
+  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rcurvearrowse\space}}
+  breaklines=true,
+  breakatwhitespace=true,
+  numbers=left,
+  numberstyle=\scriptsize
+}
+
+% caption formatting
+\usepackage[format=plain,font=small,labelfont=bf]{caption}
+
+% if MnSymbol is too much a hassle, I can find other symbols
+\usepackage[toc,page]{appendix}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Replace with title for lab
-\title{Lab 1: An Introduction to Linux and Python}
+\title{Lab 1: An Introduction to IDLE and Python}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \author{CSE/IT 107}
 \date{NMT Computer Science}
@@ -77,7 +112,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
-The purpose of this lab is to introduce you to the Linux environment (including some common, useful commands) and to the Python programming environment. In this lab, you will learn how to
+The purpose of this lab is to introduce you to the Python programming environment. In this
+lab, you will learn how to 
 \begin{enumerate*}
 \item Log into Linux at the Tech Computer Center (TCC).
 \item Learn to use IDLE as an interpreter.
@@ -90,18 +126,24 @@ Throughout this semester's labs, we will be using specially formatted text to ai
 \begin{lstlisting}[style=bash]
 text in a console font within a gray box
 \end{lstlisting}
-is text that either appears in the terminal or is to be typed into the terminal verbatim. Even the case is important, so be sure to keep it the same! If a \$ is used that indicates the terminal prompt. You do not type the \$.
+is text that either appears in the terminal or is to be typed into the terminal
+verbatim. Even the case is important, so be sure to keep it the same! If a \$ is
+used that indicates the terminal prompt (Linux only, see
+Appendix~\ref{sec:linux}). You do not type the \$.
 
 \vspace{12pt}
 
-\begin{lstlisting}[style=c]
+\begin{lstlisting}[style=python]
 Text that appears in console font within a framed box is 
 sample Python code or program output.
 \end{lstlisting}
 
 \vspace{12pt}
 
-Text in a \texttt{simple console font}, without a frame or background, indicates the name of a file, a function, or some action you need to perform, but not necessarily type into the terminal. Don't worry: as you become familiar with both the terminal and Python, it will become obvious which is being described!
+Text in a \texttt{simple console font}, without a frame or background, indicates
+the name of a file, a function, or some action you need to perform, but not
+necessarily type into the terminal. Don't worry: as you become familiar with
+both the terminal and Python, it will become obvious which is being described!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -119,28 +161,44 @@ Text in a \texttt{simple console font}, without a frame or background, indicates
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
 \section{Instructions}
 
 The following instructions will guide you through this lab. Because this is an introductory lab, the instructions are rather detailed and specific. However, it is important that you understand the concepts behind the actions you take---you will be repeating them throughout the semester. If you have any questions, ask the instructor, teaching assistant, or lab assistant.
 
 \subsection{Log in}
-To log into a TCC machine, you must use your TCC username and password. If you do not have a TCC account, you must visit the TCC Office to have one activated.
+To log into a TCC machine, you must use your TCC username and password. If you
+do not have a TCC account, you must visit the TCC Office to have one activated.
 
-\begin{enumerate}
-\item First, sit down at a computer. If you're looking at some flavor of Linux (such as Fedora), skip forward to Step \ref{login}. If you're looking at Windows, press \texttt{Ctrl+Alt+Delete}.
-\item Click on the \texttt{Shutdown...} button.
-\item Select \texttt{Restart} from the menu and click \texttt{OK}. Wait for Windows to shutdown and for the computer to restart.
-\item When the computer reboots, you will be presented with a menu to select the operating system you prefer. Select \texttt{Fedora} or the flavor of Linux installed on the computer you are using.
-\item Wait while the Linux operating system boots.
-\item \label{login} When the login screen comes up, type your username and your password followed by \texttt{Enter}.
-\end{enumerate}
+You can choose to use Linux or Windows in this class. 
 
-It should be noted that most of these instructions will work on Windows or Mac OS with Python installed, though we recommend using Linux simply to gain familiarity, as later Computer Science classes will require it.
+It should be noted that most of these instructions will work on Windows or Mac
+OS with Python installed, though we recommend using Linux simply to gain
+familiarity, as later Computer Science classes will require it.
 
-\subsection{Open IDLE}
-Throughout this semester, we will primarily be working with IDLE. IDLE is an integrated development environment included with every Python installation. In this lab we will cover how to use it as a calculator, as well as how to use it to write simple programs.
+\subsection{Windows: Open IDLE}
+Throughout this semester, we will primarily be working with IDLE. IDLE is an
+integrated development environment included with every Python installation. In
+this lab we will cover how to use it as a calculator, as well as how to use it
+to write simple programs.
 
+\subsection{Linux: Intro to Linux}
+
+You can use IDLE in Linux just like you can in Windows and move on to
+Section~\ref{sec:python-calc} or you can learn the usage of the command line.
+Future CS classes will make extensive use of the command line.
+
+If you wish to use the Linux command line for this class, find the introduction
+to Linux in Appendix~\ref{sec:linux}. Skip to the appendix and then come back
+here to follow Section~\ref{sec:python-calc}.
+
+It may be that the Linux instructions will take longer than the alloted lab
+time. You would have to work out some of the material after lab is over. (This
+will be the case for all future labs anyway.)
+
+\pagebreak
 \section{Python as a calculator}
+\label{sec:python-calc}
 Forgot ever using your calculator! Python rocks as a calculator.
 
 When you first open IDLE, you should see something like this
@@ -150,7 +208,10 @@ Type "copyright", "credits" or "license()" for more information.
 >>> 
 \end{lstlisting}
 
-Note the first line thing printed out: \texttt{Python 3.4.1}. This is the version of Python IDLE is running. Make sure you have Python 3 or higher. If you do not, check for another program called IDLE (or IDLE 3) or, if on your own computer, install Python 3.
+Note the first line thing printed out: \texttt{Python 3.4.1}. This is the
+version of Python IDLE is running. Make sure you have \emph{Python 3} or higher.
+If you do not, check for another program called IDLE (or IDLE 3) or, if on your
+own computer, install Python 3.
 
 At the Python prompt \texttt{>>>} you can type in Python statements. For instance, to add 2 + 3 
 \begin{lstlisting}[style=bash]
@@ -273,6 +334,7 @@ In general you should try to give your variables descriptive names so that it is
 5.885
 \end{lstlisting}
 
+\pagebreak
 \section{Running Python programs} 
 
 So far, you have been running Python interactively. This is a nice feature as it lets you test ideas quickly and easily. However, there are times you want to save your ideas to a text file and to run the code as a program.
@@ -280,13 +342,13 @@ So far, you have been running Python interactively. This is a nice feature as it
 %Open a text editor (e.g. gedit) and create a one line python program:
 Open IDLE's text editor from \texttt{File > New File} or with \texttt{Ctrl + N} and create a one line Python program:
 
-\begin{lstlisting}[style=c]
+\begin{lstlisting}[style=python]
 print('Hello, world!')
 \end{lstlisting}
 
 \texttt{print} is a function. It will print the value of whatever is within its parentheses. In order to print plaintext (not variables), you must additionally surround it with quotes. This is called a string. It is important to note that
 
-\begin{lstlisting}[style=c]
+\begin{lstlisting}[style=python]
 print("Hello, world!")
 \end{lstlisting}
 
@@ -294,7 +356,7 @@ is equivalent to the first example.
 
 \texttt{\textbackslash n} prints a newline. This means that the text following the \texttt{\textbackslash n} will start on a new line. Test this with the following example.
 
-\begin{lstlisting}[style=c]
+\begin{lstlisting}[style=python]
 print('Hello, world!\nHow are you?')
 \end{lstlisting}
 
@@ -305,7 +367,6 @@ To run the program, press \texttt{F5}.
 \begin{lstlisting}[style=bash]
 Python 3.4.1 (v3.4.1:c0e311e010fc, May 18 2014, 10:38:22) [MSC v.1600 32 bit (Intel)] on win32
 Type "copyright", "credits" or "license()" for more information.
->>>  ========================= RESTART =========================
 >>> 
 Hello, world!
 How are you?
@@ -314,7 +375,7 @@ How are you?
 
 You can also print out the values of variable that you may have assigned earlier in the program.
 
-\begin{lstlisting}[style=c]
+\begin{lstlisting}[style=python]
 x = 5
 y = 4
 print(y)
@@ -355,14 +416,14 @@ At this point it is not necessary to completely understand the differences betwe
 \subsection{Conversions}
 Download \texttt{conversions.py}. It is a simple Python program for converting temperatures from Celsius to Kelvin. We would like to modify it to also convert the temperatures to Fahrenheit. Currently, the output of the program is something like this:
 
-\begin{lstlisting}[style=c]
+\begin{lstlisting}[style=bash]
 Please input a temperature in Celsius: 10
 Kelvin temperature: 283.15
 \end{lstlisting}
 
 Add code (you should not need to modify the existing lines, though you are free to) so that its output is as follows:
 
-\begin{lstlisting}[style=c]
+\begin{lstlisting}[style=bash]
 Please input a temperature in Celsius: 10
 Kelvin temperature: 283.15
 Fahrenheit temperature: 50.0
@@ -374,6 +435,15 @@ Fahrenheit temperature: 50.0
 \section{Submitting}
 
 You may submit your code as either a tarball (instructions below) or as a .zip file. Either one should contain all files used in the exercises for this lab. The submitted file should end with either \texttt{.zip} or \texttt{.tar.gz} depending on which you used.
+
+For Windows, use a tool you like to create a \texttt{.zip} file. The TCC computers should
+have \texttt{7z} installed.
+
+\begin{center}
+  \textbf{Upload your tarball or .zip file to Canvas.}
+\end{center}
+
+\subsection{Linux}
 
 Tar is used much the same way that Zip is used in Windows: it combines many files and/or directories into a single file. Gzip is used in Linux to compress a single file, so the combination of Tar and Gzip do what Zip does. However, Tar deals with Gzip for you, so you will only need to learn and understand one command for zipping and extracting.
 
@@ -393,7 +463,340 @@ tar tf cse107_firstname_lastname_lab1.tar.gz *.py
 
 You should see a list of your Python source code files.
 
-Upload your tarball or .zip file to Canvas.
 
+\pagebreak
+
+\begin{appendices}
+  \section{Linux environment}
+  \label{sec:linux}
+
+\subsection{Open a terminal}
+
+If you choose to use Linux throughout this semester, you will perform most
+actions from the command line. In order to do this, you must first open a
+terminal. There are many methods for opening a terminal; the following is just
+one.
+
+\begin{enumerate}
+\item Click on the \texttt{Activities} button at the top left of the screen.
+\item In the text box in the upper right hand corner, type in
+  \texttt{Terminal} and hit return.
+\end{enumerate}
+
+\subsection{Change your password (optional)}
+In order to protect the work that you do this semester, it is important that you
+have strong password protection of your TCC account.
+See Microsoft's article ``Strong Passwords and Password Security''
+(\url{http://www.microsoft.com/protect/fraud/passwords/create.aspx}) for advice
+on creating strong passwords.
+
+The following instructions are optional; however, they are a useful way to
+become familiar with command line actions.
+
+\begin{enumerate}
+
+\item In the terminal, type the following command:
+\begin{lstlisting}[style=bash]
+$ passwd
+\end{lstlisting}
+\item Follow the prompts to change your password.
+\end{enumerate}
+
+\subsection{Shell}
+At the terminal prompt you are using what is called a shell. A shell
+provides a means to interact with the operating system. The shell also provides
+the command line for you: a means to type in commands and receive feedback from
+the operating system, shell, or program behind that command.
+
+\subsection{File Hierarchy}
+
+Unix has a logical file system, which means as an end user you don't care about the
+actual physical layout and can focus on navigating the file system.
+
+Key: Everything begins at the root directory
+\texttt{/} and all other directories are children of the root directory. The
+file system forms a tree.
+
+A path consists of the names of directories and is a way to navigate from the root file system to the
+desired directory. If you include the root directory in the path this
+is called an absolute path. Another way to navigate the tree is to use
+relative paths, which navigate the tree based on where you currently are.
+
+To navigate the file system, there are a couple of useful commands:
+
+\subsubsection{pwd - \textbf{p}rint \textbf{w}orking \textbf{d}irectory}
+
+\textbf{p}rint \textbf{w}orking \textbf{d}irectory displays the
+directory you are in.  
+
+\begin{lstlisting}[style=bash]
+$ pwd
+/home/cse
+\end{lstlisting}
+
+The directory you are currently in is called your ``working'' directory.
+
+\subsubsection{cd - change directory}
+\texttt{cd} allows you to change your working directory to another location.
+
+Syntax:
+
+\begin{lstlisting}[style=bash]
+$ cd <path_name>
+\end{lstlisting}
+
+% where the $<$path\_name$>$ is either relative or absolute.
+% They don't know what that means.
+
+\begin{lstlisting}[style=bash]
+$ cd /usr/local/bin
+$ pwd
+/usr/local/bin
+$ cd -
+\end{lstlisting}
+
+Where are you?
+
+\begin{lstlisting}[style=bash]
+cd -
+\end{lstlisting}
+
+Now where are you? The command \texttt{cd -} returns you to your previous
+working directory.
+
+The \texttt{-} is called a command line argument or option. To view
+the list of options for a command, use the manual.
+
+\begin{lstlisting}[style=bash]
+$ man cd
+\end{lstlisting}
+
+\texttt{man} is short for manual.
+
+To move up one directory (one node) level use dot-dot:
+\begin{lstlisting}[style=bash]
+$ cd ..
+\end{lstlisting}
+Where are you?
+
+To move up two levels use dot-dot slash dot-dot:
+\begin{lstlisting}[style=bash]
+$ cd ../..
+\end{lstlisting}
+
+To go to your home directory you can type
+\begin{lstlisting}[style=bash]
+$ cd /u/<user>
+\end{lstlisting}
+
+where $<$user$>$ is your user name. Alternatively, use a tilde
+\begin{lstlisting}[style=bash]
+$ cd ~
+\end{lstlisting}
+
+or you can use
+\begin{lstlisting}[style=bash]
+$ cd $HOME
+\end{lstlisting}
+
+where \$HOME is an environment variable that stores the path to your
+home directory. This is more useful in shell scripting than path
+navigation. Use tilde instead.
+
+Even easier than all these options is to just type \texttt{cd} without any
+options. This always takes you to your home directory.
+\begin{lstlisting}[style=bash]
+$ cd
+\end{lstlisting}
+
+\subsubsection{ls - listing the contents of a directory}
+\texttt{ls} allows you to list the contents of a directory: the files and
+directories that are located there.
+
+\begin{lstlisting}[style=bash]
+$ cd 
+$ ls
+<a list of file names and directories contained 
+with your working directory, which is currently
+your home directory>
+\end{lstlisting}
+
+Adding some command options let you see other file information
+
+\begin{lstlisting}[style=bash]
+$ ls -alFh 
+...
+-rwxr-x---.  1 scott scott  1.0K Jan 12 14:56 down_and_out*
+drwxr-xr-x.  5 scott scott  4.0K Jan 21 17:04 Downloads/
+-rw-r-x---.  1 scott scott  2.2K Jan 12 11:31 .emacs
+...
+ \end{lstlisting}
+
+
+The \texttt{a} option show hidden files (aka dot-files), the
+\texttt{l} option produces a long
+listing format of file names and directories, the \texttt{F} option
+adds a \texttt{*} to the end of the file if is an executable and a
+\texttt{/} if it is a directory, and the \texttt{h} option prints out the size of the
+file in human readable format.
+
+\subsection*{Understanding the long format option}
+
+The \texttt{-l} option of \texttt{ls} tells you quite a bit about a file. The first character of the line indicates the file type. Some file type options are:
+\\\texttt{-} ordinary file
+\\\texttt{d} directory
+\\\texttt{l} symbolic link
+
+There are other file types.
+
+The next three groups of three letters indicate the file permissions for the \emph{user}, \emph{group}, and \emph{others} (aka ugo). Common letters are \texttt{r} for the ability to read the file; \texttt{w} for the ability to write or change the contents of the file on disk; and \texttt{x} for executable or the ability to run the file. There are other file permissions.
+
+The next item indicates how many links the file has. A directory often has several links, because each of its subdirectories includes an entry for its parent directory and that entry counts as a link to the parent.
+
+The next two items indicate the user and the group that own the file.
+
+The next item indicates the file size in characters (1 character = 1 byte). Use the -h option to get this in human readable format (K for kilobytes, M for megabytes, and G for gigabytes)
+
+The next two items indicate the date and time when the file was last modified.
+
+The last item is the file name. If you use the \texttt{-F} option, a \texttt{*} at the end of the file indicates it is an executable file and a \texttt{/} indicates it is a directory.
+
+
+\subsection*{Finding more information}
+
+How can you see more command line options for \texttt{ls}? What is the option to sort by file size?
+
+
+\subsection{Other directory commands}
+
+\begin{lstlisting}[style=bash]
+mkdir 
+cp
+mv
+rm
+touch
+cat
+less
+script
+\end{lstlisting}
+
+\subsection{Creating directories}
+Directories are very important for organizing your work, and you should get in the habit of creating a new directory for every lab this semester.
+
+\begin{enumerate}
+
+\item In the terminal, change your current working directory to your home directory by typing the following command:
+\begin{lstlisting}[style=bash]
+cd
+\end{lstlisting}
+
+\item Create a \texttt{cse107} directory by typing the following command;
+\begin{lstlisting}[style=bash]
+mkdir cse107
+\end{lstlisting}
+
+\item Change your current working directory to the \texttt{cse107} directory by typing the following command:
+\begin{lstlisting}[style=bash]
+cd cse107
+\end{lstlisting}
+
+\item Create a subdirectory for this lab in your \texttt{cse107} directory by typing the following command:
+\begin{lstlisting}[style=bash]
+mkdir lab1
+\end{lstlisting}
+
+\item Change your current working directory to the \texttt{lab1} directory by typing the following command:
+\begin{lstlisting}[style=bash]
+cd lab1
+\end{lstlisting}
+
+\end{enumerate}
+
+
+
+\subsection{Using the file system}
+The following instructions will show you how to maneuver in the Unix file system. For more information on these commands, review the TCC publications ``Summary of common Unix commands'' (\url{http://infohost.nmt.edu/tcc/help/pubs/unixcrib/}) and ``Customizing your Unix account'' (\url{http://infohost.nmt.edu/tcc/help/pubs/dotfiles/}).
+
+\begin{enumerate}
+
+\item In the terminal, type the following command:
+\begin{lstlisting}[style=bash]
+$ pwd
+\end{lstlisting}
+
+\texttt{pwd} stands for `print working directory,' and the result is called the \textit{absolute path} to this location. In this instance, the result should be something similar to
+
+\begin{lstlisting}[style=bash]
+/u/username/cse107/lab1
+\end{lstlisting}
+
+where \texttt{username} is your TCC account username.
+
+\item Type the following command:
+\begin{lstlisting}[style=bash]
+$ ls
+\end{lstlisting}
+
+\texttt{ls} stands for `list segments' (a carry over from Multics) and it prints to the screen, \textit{standard out}, a list of files in the current directory. At this point, you should see nothing, because you have not put any files into your \texttt{lab1} directory. If, instead, you type the following command:
+\begin{lstlisting}[style=bash]
+$ ls -a
+\end{lstlisting}
+
+you should see two entries: \texttt{.} and \texttt{..}, which exist in every directory. The \texttt{.} stands for `this directory' and the \texttt{..} stands for the `parent directory.'
+
+\item Try the following commands to move within your directory structures:
+\begin{lstlisting}[style=bash]
+$ cd .
+$ pwd
+$ cd ..
+$ pwd
+\end{lstlisting}
+
+\item To return to your \texttt{lab1} directory, type the following command:
+\begin{lstlisting}[style=bash]
+$ cd lab1
+\end{lstlisting}
+
+\item Now type the following commands:
+\begin{lstlisting}[style=bash]
+$ cd
+$ pwd
+\end{lstlisting}
+Typing \texttt{cd} without any parameters should take you to your `home directory.'
+
+\item Using the commands you've just learned, return to your \texttt{lab1} directory. There is more than one way to get to the directory.
+
+\item In your \texttt{lab1} directory, type the following command, and then find out where it takes you:
+\begin{lstlisting}[style=bash]
+$ cd ../..
+$ pwd
+\end{lstlisting}
+
+\item From your current directory, type the following command:
+\begin{lstlisting}[style=bash]
+$ cd cse107/lab1
+$ pwd
+\end{lstlisting}
+Notice that you can use multiple paths at once on the command line, separated by \texttt{/}. If you've used Windows for some time, you will notice that this differs from Windows path designations where the directory separator is \texttt{\textbackslash}.
+
+\end{enumerate}
+
+\subsection{Start Python}
+
+In the shell, type \texttt{python3}. It is important that you not use
+\texttt{python}, but \texttt{python3}! It should look something like this:
+\begin{lstlisting}[style=bash]
+$ python3
+Python 3.3.2 (default, Jun 30 2014, 12:45:18) 
+[GCC 4.8.2 20131212 (Red Hat 4.8.2-7)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 
+\end{lstlisting}
+
+From this point on, you can follow instructions in
+Section~\ref{sec:python-calc} by replacing ``open IDLE'' or ``type in IDLE''
+with using \texttt{python3} and \texttt{gedit} in the terminal.
+
+\end{appendices}
 
 \end{document}
