@@ -35,7 +35,7 @@
 \fancyhead[L]{CSE 107}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Replace with title for lab
-\fancyhead[R]{Lab 1: An Introduction to Linux and Python}
+\fancyhead[R]{Lab 1: An Introduction to IDLE and Python}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Color support
@@ -96,6 +96,8 @@
 
 % if MnSymbol is too much a hassle, I can find other symbols
 \usepackage[toc,page]{appendix}
+\usepackage{tikz}
+\usetikzlibrary{trees}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Replace with title for lab
@@ -522,6 +524,36 @@ desired directory. If you include the root directory in the path this
 is called an absolute path. Another way to navigate the tree is to use
 relative paths, which navigate the tree based on where you currently are.
 
+For example, this is a typical file system tree close to what the TCC has with
+absolute file paths shown on the right:
+\tikzstyle{every node}=[draw=black,thick,anchor=west]
+\tikzstyle{selected}=[draw=red,fill=red!30]
+\tikzstyle{optional}=[dashed,fill=gray!50]
+
+\begin{tikzpicture}[
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node {/}
+  child { node [label={[xshift=4.0cm, yshift=-0.58cm] /bin}] {bin} }
+  child { node [label={[xshift=4.0cm, yshift=-0.58cm] /dev}] {dev} }
+  child { node [label={[xshift=4.0cm, yshift=-0.58cm] /tmp}] {tmp} }
+  child { node [label={[xshift=4.0cm, yshift=-0.58cm] /u}] {u}
+    child { node [label={[xshift=3.4cm, yshift=-0.58cm] /u/ckoch}] {ckoch} }
+    child { node [label={[xshift=3.4cm, yshift=-0.58cm] /u/jgordon}] {jgordon}}
+    child { node [label={[xshift=3.4cm, yshift=-0.58cm]
+    /u/yourusername},optional] {yourusername}}
+  }
+  child [missing] {}
+  child [missing] {}
+  child [missing] {}
+  child { node [label={[xshift=4.0cm, yshift=-0.58cm] /usr}] {usr}
+    child { node [label={[xshift=3.4cm, yshift=-0.58cm] /usr/bin}] {bin} }
+  }
+  child [missing] {}
+  ;
+\end{tikzpicture}
+  
 To navigate the file system, there are a couple of useful commands:
 
 \subsubsection{pwd - \textbf{p}rint \textbf{w}orking \textbf{d}irectory}
