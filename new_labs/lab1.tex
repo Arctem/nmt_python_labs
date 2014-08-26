@@ -335,7 +335,6 @@ operators in python include:
 %    types.
 \end{description}
 
-
 Of course, these commands can be combined to form more complex expressions. They
 follow typical precedence rules, with \texttt{**} having higher precedence than
 \texttt{*}, \texttt{/}, \texttt{\%}, and \texttt{//}, which have higher
@@ -454,7 +453,7 @@ print(y)
 \begin{lstlisting}[style=bash]
 >>> 
 4
-5
+9
 \end{lstlisting}
 
 But what if you wish to print a variable's value on the same line as another string? Unfortunately, the simplest method of doing this does not work:
@@ -477,6 +476,37 @@ x = 5
 \end{lstlisting}
 
 At this point it is not necessary to completely understand the differences between a string and an actual number, just remember that \texttt{x = '5'} and \texttt{x = 5} denote different things.
+
+\pagebreak
+
+\section{More Math}
+
+In Python, you can do many more things mathematical. Python can be your
+replacement for a TI-89!
+
+It is as simple as the following line of code:
+\begin{lstlisting}[style=bash]
+>>> import math
+>>>
+\end{lstlisting}
+
+Then, try out some of the functions:
+\begin{lstlisting}[style=bash]
+>>> math.sqrt(16)
+4.0
+>>> math.log(8, 2) # log with base 2 of 8
+3.0
+>>> math.pow(2, 3) # 2 raised to the 3rd power
+8.0
+>>> math.pi
+3.14...
+>>>
+\end{lstlisting}
+
+There are more functions in the math library, you can find them documented here:
+\begin{center}
+\url{https://docs.python.org/3.0/library/math.html}
+\end{center}
 
 \pagebreak
 
@@ -509,7 +539,7 @@ The area of the circle is 28.26
 Please input the width of the box: 2
 Please input the height of the box: 6
 Please input the length of the box: 4
-The surface area of the box is 44.0
+The surface area of the box is 88.0
 The volume of the box is 48.0
 \end{lstlisting}
 

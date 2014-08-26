@@ -1,7 +1,8 @@
-pi = 3.14
+import math
 
 radius = input('Please input the radius of the circle: ') #Get input from user.
 radius = float(radius)
+# use math.pi for pi
 
 #Calculate and display the circumference and area of the circle.
 
