@@ -1,0 +1,171 @@
+% LAB 0: An Introduction to Linux and Python
+% 
+% CSE/IT 107: Introduction to Programming
+% New Mexico Tech
+% 
+% Prepared by Cynthia Veitch, William Kwan, Scott Chadde, Kaley Goatcher,
+% Russell White, and Christopher Koch
+% Fall 2013
+
+\documentclass[12pt,hidelinks]{article}
+
+
+
+% Allows for bold tele-type
+\DeclareFontShape{OT1}{cmtt}{bx}{n}{
+  <5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
+
+
+% AMS math formatting
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}     
+\usepackage{textcomp}
+% Indention formatting
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Margin support
+\usepackage[margin=1in]{geometry}
+
+% Header/footer support
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{CSE 107}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Replace with title for lab
+\fancyhead[R]{Lab 2: Basic Flow Control}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Color support
+\usepackage{color,xcolor}
+\definecolor{light-gray}{gray}{0.9}
+\definecolor{green}{RGB}{0,127,0}
+% Outline support
+%\usepackage{outlines}
+% URL formatting
+\usepackage{}\usepackage{url}
+% Image/graphic support
+\usepackage{graphicx}
+% Supports in-document hyperlinks
+\usepackage[pdfborder=0in,bookmarks=true]{hyperref}
+\usepackage[numbered]{bookmark}
+% List compression
+\usepackage{mdwlist}
+\usepackage{enumerate}
+% Support long tables across pages
+\usepackage{longtable}
+\setlength{\LTcapwidth}{6in}
+\usepackage{array}
+\usepackage{multirow}
+% Supports code formatting/highlighting
+\usepackage{listings}
+\lstset{language=c, basicstyle=\ttfamily, keywordstyle=\bfseries\color{black}, stringstyle=\color{blue}, commentstyle=\color{green}, showstringspaces=false, numbers=none}
+\lstdefinestyle{bash}{language=bash, basicstyle=\small\ttfamily, backgroundcolor=\color{light-gray}}
+
+% I wanted bash to have the breaklines stuff, too, but the typesetting is having
+% problems with my prebreak and postbreak symbols and boxes. I have to
+% investigate (it always worked in the C labs..) -Chris
+\usepackage{MnSymbol}
+\lstdefinestyle{c}{
+  language=C,
+  basicstyle=\small\ttfamily,
+  frame=single,
+  prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rhookswarrow}},
+  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rcurvearrowse\space}}
+  breaklines=true,
+  breakatwhitespace=true,
+  numbers=left,
+  numberstyle=\scriptsize
+}
+\lstdefinestyle{python}{
+  language=Python,
+  basicstyle=\small\ttfamily,
+  frame=single,
+  prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rhookswarrow}},
+  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rcurvearrowse\space}}
+  breaklines=true,
+  breakatwhitespace=true,
+  numbers=left,
+  numberstyle=\scriptsize
+}
+
+% caption formatting
+\usepackage[format=plain,font=small,labelfont=bf]{caption}
+
+% if MnSymbol is too much a hassle, I can find other symbols
+\usepackage[toc,page]{appendix}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Replace with title for lab
+\title{Lab 2: Basic Flow Control}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author{CSE/IT 107}
+\date{NMT Computer Science}
+
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+The purpose of this lab is to introduce you to the Python programming
+environment. In this lab, you will learn how to 
+\begin{enumerate*}
+\item Log into a computer of the Tech Computer Center (TCC).
+\item Learn to use IDLE as an interpreter.
+\item Edit and run a few short Python programs.
+\item Create a tarball or zip file and submit a lab to Canvas.
+\end{enumerate*}
+
+
+\section{Boolean logic, \texttt{if}, and \texttt{else}}
+%Cover basic boolean logic with compairsons and whatnot, then use those to drive if and else statements.
+
+\section{\texttt{while} loops}
+%Apply the above to while loops.
+
+\section{Turtle}
+%Cover how to use turtle, give an example of a program to use a while loop to draw a hexagon or something.
+
+\pagebreak
+\section{Exercises}
+
+\pagebreak
+\section{Submitting}
+
+You may submit your code as either a tarball (instructions below) or as a .zip file. Either one should contain all files used in the exercises for this lab. The submitted file should be named either \texttt{cse107\_firstname\_lastname\_lab1.zip} or \texttt{cse107\_firstname\_lastname\_lab1.tar.gz} depending on which method you used.
+
+For Windows, use a tool you like to create a \texttt{.zip} file. The TCC computers should
+have \texttt{7z} installed.
+
+\begin{center}
+  \textbf{Upload your tarball or .zip file to Canvas.}
+\end{center}
+
+\subsection{Linux}
+
+Tar is used much the same way that Zip is used in Windows: it combines many files and/or directories into a single file. Gzip is used in Linux to compress a single file, so the combination of Tar and Gzip do what Zip does. However, Tar deals with Gzip for you, so you will only need to learn and understand one command for zipping and extracting.
+
+In the terminal (ensure you are in your \texttt{lab1} directory), type the following command, replacing \texttt{firstname} and \texttt{lastname} with your first and last names:
+
+\begin{lstlisting}[style=bash]
+tar czvf cse107_firstname_lastname_lab1.tar.gz *.py
+\end{lstlisting}
+
+This creates the file \texttt{cse107\_firstname\_lastname\_lab1.tar.gz} in the directory. The resulting archive, which includes every python file in your \texttt{lab1} directory, is called a tarball. 
+
+To check the contents of your tarball, run the following command:
+
+\begin{lstlisting}[style=bash]
+tar tf cse107_firstname_lastname_lab1.tar.gz *.py
+\end{lstlisting}
+
+You should see a list of your Python source code files.
+
+\end{document}
