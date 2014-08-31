@@ -1,4 +1,4 @@
-% LAB 0: An Introduction to Linux and Python
+% LAB 2: Basic Flow Control
 % 
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
@@ -9,12 +9,9 @@
 
 \documentclass[12pt,hidelinks]{article}
 
-
-
 % Allows for bold tele-type
 \DeclareFontShape{OT1}{cmtt}{bx}{n}{
   <5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
-
 
 % AMS math formatting
 \usepackage{amsmath}
@@ -61,15 +58,10 @@
 \usepackage{multirow}
 % Supports code formatting/highlighting
 \usepackage{listings}
-\lstset{language=c, basicstyle=\ttfamily, keywordstyle=\bfseries\color{black}, stringstyle=\color{blue}, commentstyle=\color{green}, showstringspaces=false, numbers=none}
-\lstdefinestyle{bash}{language=bash, basicstyle=\small\ttfamily, backgroundcolor=\color{light-gray}}
 
-% I wanted bash to have the breaklines stuff, too, but the typesetting is having
-% problems with my prebreak and postbreak symbols and boxes. I have to
-% investigate (it always worked in the C labs..) -Chris
 \usepackage{MnSymbol}
-\lstdefinestyle{c}{
-  language=C,
+\lstdefinestyle{python}{
+  language=Python,
   basicstyle=\small\ttfamily,
   frame=single,
   prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rhookswarrow}},
@@ -79,8 +71,21 @@
   numbers=left,
   numberstyle=\scriptsize
 }
-\lstdefinestyle{python}{
-  language=Python,
+\lstset{
+  style=python,
+  basicstyle=\small\ttfamily,
+  keywordstyle=\bfseries\color{black},
+  stringstyle=\color{blue},
+  commentstyle=\color{green},
+  showstringspaces=false,
+}
+\lstdefinestyle{bash}{language=bash, basicstyle=\small\ttfamily, backgroundcolor=\color{light-gray}}
+
+% I wanted bash to have the breaklines stuff, too, but the typesetting is having
+% problems with my prebreak and postbreak symbols and boxes. I have to
+% investigate (it always worked in the C labs..) -Chris
+\lstdefinestyle{c}{
+  language=C,
   basicstyle=\small\ttfamily,
   frame=single,
   prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rhookswarrow}},
@@ -93,8 +98,6 @@
 
 % caption formatting
 \usepackage[format=plain,font=small,labelfont=bf]{caption}
-
-% if MnSymbol is too much a hassle, I can find other symbols
 \usepackage[toc,page]{appendix}
 \usepackage{tikz}
 \usetikzlibrary{trees}
@@ -110,19 +113,36 @@
 
 \maketitle
 
+\hrule
+
+\begin{quotation}
+``When you come to a fork in the road, take it."
+\end{quotation}
+\begin{flushright}
+--- Attributed to Yogi Berra
+\end{flushright}
+
+\begin{quotation}
+``Simplicity is the ultimate sophistication.''
+\end{quotation}
+\begin{flushright}
+--- Leonardo Da Vinci
+\end{flushright}
+
+\begin{quotation}
+``How do we convince people that in programming simplicity and clarity -- in
+short: what mathematicians call "elegance'' -- are not a dispensable luxury, but
+a crucial matter that decides between success and failure?''
+\end{quotation}
+\begin{flushright}
+--- Edsger Dijkstra
+\end{flushright}
+
+\hrule
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
-
-The purpose of this lab is to introduce you to the Python programming
-environment. In this lab, you will learn how to 
-\begin{enumerate*}
-\item Log into a computer of the Tech Computer Center (TCC).
-\item Learn to use IDLE as an interpreter.
-\item Edit and run a few short Python programs.
-\item Create a tarball or zip file and submit a lab to Canvas.
-\end{enumerate*}
-
 
 \section{Boolean logic, \texttt{if}, and \texttt{else}}
 %Cover basic boolean logic with compairsons and whatnot, then use those to drive if and else statements.
@@ -139,7 +159,12 @@ environment. In this lab, you will learn how to
 \pagebreak
 \section{Submitting}
 
-You may submit your code as either a tarball (instructions below) or as a .zip file. Either one should contain all files used in the exercises for this lab. The submitted file should be named either \texttt{cse107\_firstname\_lastname\_lab1.zip} or \texttt{cse107\_firstname\_lastname\_lab1.tar.gz} depending on which method you used.
+You may submit your code as either a tarball (instructions below) or as a .zip
+file. Either one should contain all files used in the exercises for this lab.
+The submitted file should be named either
+\texttt{cse107\_firstname\_lastname\_lab2.zip} or
+\texttt{cse107\_firstname\_lastname\_lab2.tar.gz} depending on which method you
+used.
 
 For Windows, use a tool you like to create a \texttt{.zip} file. The TCC computers should
 have \texttt{7z} installed.
@@ -155,7 +180,7 @@ Tar is used much the same way that Zip is used in Windows: it combines many file
 In the terminal (ensure you are in your \texttt{lab1} directory), type the following command, replacing \texttt{firstname} and \texttt{lastname} with your first and last names:
 
 \begin{lstlisting}[style=bash]
-tar czvf cse107_firstname_lastname_lab1.tar.gz *.py
+tar czvf cse107_firstname_lastname_lab2.tar.gz *.py
 \end{lstlisting}
 
 This creates the file \texttt{cse107\_firstname\_lastname\_lab1.tar.gz} in the directory. The resulting archive, which includes every python file in your \texttt{lab1} directory, is called a tarball. 
@@ -163,7 +188,7 @@ This creates the file \texttt{cse107\_firstname\_lastname\_lab1.tar.gz} in the d
 To check the contents of your tarball, run the following command:
 
 \begin{lstlisting}[style=bash]
-tar tf cse107_firstname_lastname_lab1.tar.gz *.py
+tar tf cse107_firstname_lastname_lab2.tar.gz *.py
 \end{lstlisting}
 
 You should see a list of your Python source code files.
