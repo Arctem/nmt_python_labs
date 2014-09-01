@@ -222,6 +222,17 @@ if x < 0:
 print("x = " + str(x))
 \end{lstlisting}
 
+You can perform other operations as part of a boolean statement, such as this convenient way to check if a number is even:
+
+\begin{lstlisting}[style=python]
+x = 5
+
+if x % 2 == 0:
+    print("x is even.")
+else:
+    print("x is odd.")
+\end{lstlisting}
+
 When using \texttt{if} and \texttt{else}, you will generally be dealing with user input. This is done using the function \texttt{input}, which you can see used in the above examples. When you use \texttt{input} it will display whatever string you pass to it, then pause while it waits for the user to type something and then hit enter. It will return whatever was entered as a string. We will be learning more about strings in future labs, but for now just know that they are basically groups of letters, like what you pass to a \texttt{print} statement, and are declared by surrounding something in quotes.
 
 The main thing to know about strings for now is that they cannot be used as numbers. This is why we use the \texttt{float} function to convert the value the user gives us into a number.
