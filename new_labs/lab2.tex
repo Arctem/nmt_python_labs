@@ -194,7 +194,60 @@ False
 
 It is important to remember that we use \texttt{=} to assign a value to a variable and \texttt{==} to test if two values are equal.
 
+The primary use for boolean values is to determine which branch in your code to follow. This is accomplished using \texttt{if} and \texttt{else}, as shown in the program below.
 
+\begin{lstlisting}[style=python]
+x = 1
+y = float(input("Please input a number: "))
+
+if x == y:
+    print("x and y are equal.")
+else:
+    print("x and y are not equal")
+\end{lstlisting}
+
+Try running the above program, inputting different numbers for \texttt{y}. If the number input is 1, then the first \texttt{print} statement will output. If not, then the second one will.
+
+The way this works is very simple: when Python sees an \texttt{if} statement, it checks if the boolean statement immediately following it is \texttt{True}. If it is, then it will run indented section of code starting on the next line. Once that section is done, it will skip past the indented \texttt{else} block of code (if the \texttt{else} exists -- it is optional), and continue running the rest of the program. If the statement was \texttt{False}, then it will skip the block of indented code, run the \texttt{else} block if it exists, and then continue running the rest of the program.
+
+There are many uses for branching statements, such as to ensure that a given variable is not negative:
+
+\begin{lstlisting}[style=python]
+x = float(input("Please input a number: "))
+
+if x < 0:
+    x = 0
+
+print("x = " + str(x))
+\end{lstlisting}
+
+When using \texttt{if} and \texttt{else}, you will generally be dealing with user input. This is done using the function \texttt{input}, which you can see used in the above examples. When you use \texttt{input} it will display whatever string you pass to it, then pause while it waits for the user to type something and then hit enter. It will return whatever was entered as a string. We will be learning more about strings in future labs, but for now just know that they are basically groups of letters, like what you pass to a \texttt{print} statement, and are declared by surrounding something in quotes.
+
+The main thing to know about strings for now is that they cannot be used as numbers. This is why we use the \texttt{float} function to convert the value the user gives us into a number.
+
+\begin{lstlisting}[style=python]
+>>> 5.5 == "5.5"
+False
+>>> 5.5 == float("5.5")
+True
+\end{lstlisting}
+
+It is important to understand the order that things happen in a statement like \texttt{x = float(input("Please input a number: "))}. Though both \texttt{x = } and \texttt{float} appear first in the line, the first statement to execute is \texttt{input}. This is because \texttt{input} is inside of \texttt{float}'s parentheses and is therefore being passed as a parameter to \texttt{float}. Therefore, \texttt{float} cannot run until \texttt{input} is finished and has returned a value to be used by \texttt{float}. Similarly, \texttt{x = } will not happen until \texttt{float} has finished converting the value into a number.
+
+If you are comparing strings, then you do not need to go through the extra step of converting the user's input into a number:
+
+\begin{lstlisting}[style=python]
+password = "hunter2"
+
+user_pass = input("Please input the password: ")
+
+if password == user_pass:
+    print("Password is correct. Welcome!")
+else:
+    print("Invalid password.")
+\end{lstlisting}
+
+%Example using input and a password.
 
 \section{\texttt{while} loops}
 %Apply the above to while loops.
