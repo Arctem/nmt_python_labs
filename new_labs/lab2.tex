@@ -259,13 +259,60 @@ else:
     print("Invalid password.")
 \end{lstlisting}
 
-%Example using input and a password.
 
 \section{\texttt{while} loops}
 %Apply the above to while loops.
+The syntax of a \texttt{while} loop is very similar to that of an \texttt{if} statement, but instead of only running the indented block of code once, the \texttt{while} loop will continue running it until the given boolean statement is no longer true.
+
+\begin{lstlisting}[style=python]
+x = 10
+
+while x > 0:
+    print(x)
+    x = x - 1
+\end{lstlisting}
+
+The above program will print out the numbers 10 to 1. Try stepping through this program on paper, writing out the value of \texttt{x} at each time through the loop. Then repeat for this modified version of the program:
+
+\begin{lstlisting}[style=python]
+x = 10
+
+while x > 0:
+    x = x - 1
+    print(x)
+\end{lstlisting}
+
+This version of the program will print out the numbers 9 to 0. This might seem a bit strange, since the condition of the loop says it will stop when \texttt{x} is no longer larger than 0. And yet, it prints out the value 0 before the loop ends. This is because the loop condition is only checked whenever the end of the indented section is looped. If the condition is \texttt{True}, then the indented section will be executed again. If the condition is \texttt{False}, then the loop will end.
+
+If the condition starts out \texttt{False}, then the loop will never execute. The following program will not print anything:
+
+\begin{lstlisting}[style=python]
+x = 0
+
+while x > 0:
+    x = x - 1
+    print(x)
+\end{lstlisting}
+
+\texttt{if} and \texttt{else} can be combined with \texttt{while}, as shown below:
+
+\begin{lstlisting}[style=python]
+x = 10
+
+while x > 0:
+    if x % 2 == 0:
+        print(str(x) + " is even.")
+    else:
+        print(str(x) + " is odd.")
+    x = x - 1
+\end{lstlisting}
+
 
 \section{Turtle}
 %Cover how to use turtle, give an example of a program to use a while loop to draw a hexagon or something.
+
+
+\section{\texttt{.format()}}
 
 \pagebreak
 \section{Exercises}
