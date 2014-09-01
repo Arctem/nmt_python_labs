@@ -143,9 +143,58 @@ a crucial matter that decides between success and failure?''
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
+The purpose of this lab is to introduce you to the fundamentals of flow control - if, else, and while loops.
 
 \section{Boolean logic, \texttt{if}, and \texttt{else}}
-%Cover basic boolean logic with compairsons and whatnot, then use those to drive if and else statements.
+%Cover basic boolean logic with comparisons and whatnot, then use those to drive if and else statements.
+A common activity when programming is determining if something value is true or false. For example, if a variable is less than five or if the user entered the correct password. Any statement that can be resolved into a true or a false value is called a boolean statement, the value it resolves into (true or false) is called a boolean value.
+
+\begin{lstlisting}[style=bash]
+>>> x = 5
+>>> print(x < 3)
+False
+>>> print(x < 6)
+True
+\end{lstlisting}
+
+In the above example, the boolean values are \texttt{True} and \texttt{False}. The boolean statements are \texttt{x < 3} and \texttt{x < 6}.
+
+In addition to \texttt{<}, we can also test for other inequalities.
+
+\begin{lstlisting}[style=bash]
+>>> x = 3
+>>> y = 6
+>>> print(x < y)
+True
+>>> print(x > y)
+False
+>>> print(x <= y)
+True
+>>> print(x >= y)
+False
+\end{lstlisting}
+
+Note that \texttt{<=} means ``less than or equal to'' and \texttt{>=} means ``greater than or equal to''.
+
+Finally, we can test if two values are equal (\texttt{==}) or not equal (\texttt{!=}).
+
+\begin{lstlisting}[style=bash]
+>>> x = 3
+>>> y = 3
+>>> z = 4
+>>> print(x == y)
+True
+>>> print(x == z)
+False
+>>> print(y != 5)
+True
+>>> print(y != x)
+False
+\end{lstlisting}
+
+It is important to remember that we use \texttt{=} to assign a value to a variable and \texttt{==} to test if two values are equal.
+
+
 
 \section{\texttt{while} loops}
 %Apply the above to while loops.
