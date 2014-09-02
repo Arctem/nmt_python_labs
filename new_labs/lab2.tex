@@ -460,7 +460,7 @@ else:
 \label{subsec:ifex}
 
 \begin{description}
-  \item[conversions.py] Use \texttt{conversions.py} from last time and add a
+  \item[conversions.py] Use your \texttt{conversions.py} from last time and add a
     prompt asking the user whether to convert to Kelvin or Fahrenheit. It should
     look like this when it is run:
 
@@ -551,6 +551,24 @@ while x > 0:
 
 \section{Turtle}
 %Cover how to use turtle, give an example of a program to use a while loop to draw a hexagon or something.
+Some of the exercises for this lab will use Turtle, a simple graphics library. It can be accessed by using \lstinline{import turtle} in Python. From there you have access to a group of functions for controlling the ``turtle'', a simple arrow that moves around at your command, drawing a line where it goes. The primary commands to control the turtle are:
+
+\begin{table}
+  \centering
+  \begin{tabular}{ll}
+    \toprule
+    Operator & What it does\\
+    \midrule
+    \lstinline!turtle.forward(x)! & move the turtle forward \lstinline!x! pixels \\
+    \lstinline!turtle.left(x)! & turn the turtle left \lstinline!x! degrees \\
+    \lstinline!turtle.right(x)! & turn the turtle right \lstinline!x! degrees \\
+    \bottomrule
+  \end{tabular}
+  \caption{Turtle commands}
+  \label{tab:turtle}
+\end{table}
+
+Did it work?
 
 
 \section{\texttt{.format()}}
