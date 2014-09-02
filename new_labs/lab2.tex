@@ -604,6 +604,7 @@ primary commands to control the turtle are shown in Table \ref{tab:turtle}.
     Operator & What it does\\
     \midrule
     \lstinline!turtle.forward(x)! & move the turtle forward \lstinline!x! pixels \\
+    \lstinline!turtle.backward(x)! & move the turtle backward \lstinline!x! pixels \\
     \lstinline!turtle.left(x)! & turn the turtle left \lstinline!x! degrees \\
     \lstinline!turtle.right(x)! & turn the turtle right \lstinline!x! degrees \\
     \bottomrule
@@ -611,6 +612,9 @@ primary commands to control the turtle are shown in Table \ref{tab:turtle}.
   \caption{Turtle commands}
   \label{tab:turtle}
 \end{table}
+
+It should be noted that giving a negative value to these commands is allowed, so
+\lstinline!turtle.left(-30)! is equivalent to \lstinline!turtle.right(30)!.
 
 Combining these commands will let you draw potentially complex shapes. For
 example, the following program will draw a hexagon.
@@ -663,6 +667,7 @@ How many sides? 3
     Output:
     \begin{figure}[h]
       \centering
+      \vspace{-10mm}
       \includegraphics[width=2.0in]{img/triangle}
     \vspace{-10mm}
     \end{figure}
@@ -672,6 +677,7 @@ How many sides? 3
     ``stop''. Left and right turn the turtle left or right however many degrees
     are entered, forward moves the turtle forward, and stop ends the program.
     Please check the degrees for errors: they must be between 0 and 360 degrees!
+    (Yes, Turtle could handle negative degrees, but we would like you to check.)
     Also, just pick a number of pixels that forward should move forward.
 
     Input:
@@ -701,8 +707,9 @@ Please enter a direction: stop
     Output:
   \begin{figure}[!ht]
     \centering
+    \vspace{-5mm}
     \includegraphics[width=1.0in]{img/navigate}
-    \vspace{-8mm}
+    \vspace{-10mm}
   \end{figure}
 \end{description}
 
