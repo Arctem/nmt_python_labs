@@ -820,30 +820,11 @@ The submitted file should be named either
 used.
 
 For Windows, use a tool you like to create a \texttt{.zip} file. The TCC computers should
-have \texttt{7z} installed.
+have \texttt{7z} installed. For Linux, look at lab 1 for instructions on how to
+create a tarball or use the ``Archive Manager'' graphical tool.
 
 \begin{center}
   \textbf{Upload your tarball or .zip file to Canvas.}
 \end{center}
-
-\subsection{Linux}
-
-Tar is used much the same way that Zip is used in Windows: it combines many files and/or directories into a single file. Gzip is used in Linux to compress a single file, so the combination of Tar and Gzip do what Zip does. However, Tar deals with Gzip for you, so you will only need to learn and understand one command for zipping and extracting.
-
-In the terminal (ensure you are in your \texttt{lab1} directory), type the following command, replacing \texttt{firstname} and \texttt{lastname} with your first and last names:
-
-\begin{lstlisting}[style=bash]
-tar czvf cse107_firstname_lastname_lab2.tar.gz *.py
-\end{lstlisting}
-
-This creates the file \texttt{cse107\_firstname\_lastname\_lab1.tar.gz} in the directory. The resulting archive, which includes every python file in your \texttt{lab1} directory, is called a tarball. 
-
-To check the contents of your tarball, run the following command:
-
-\begin{lstlisting}[style=bash]
-tar tf cse107_firstname_lastname_lab2.tar.gz *.py
-\end{lstlisting}
-
-You should see a list of your Python source code files.
 
 \end{document}
