@@ -446,7 +446,7 @@ You entered a letter I do not recognize.
   \item[calculator.py] Write a small calculator that can compute arcsin, arccos,
     arctan and square root of a number. Use \lstinline!math.sqrt()!,
     \lstinline!math.asin()!, \lstinline!math.acos()!, and
-    \lstinline!math.atan()!.
+    \lstinline!math.atan()!. Remember to import \lstinline!math!.
 
     \emph{Make sure to check for each function that the input is valid.} For
     example, for square root the input cannot be negative. For arcsin, the input
@@ -600,9 +600,9 @@ x = 10
 
 while x > 0:
     if x % 2 == 0:
-        print(str(x) + " is even.")
+        print("{} is even.".format(x))
     else:
-        print(str(x) + " is odd.")
+        print("{} is odd.".format(x))
     x = x - 1
 \end{lstlisting}
 
@@ -669,6 +669,16 @@ Enter a number: 16
 Enter a number: -1
 Not a positive number!
     \end{lstlisting}
+
+  \item[primes.py] (Think Python \#2.15) Write a program that checks if a number
+    $N$ is prime. You have to ask the user for the number. Remember that a prime
+    number is a number that is divisible only by $1$ and itself.
+
+    A simple approach checks all numbers from $2$ up to $N$.
+
+    Try to improve on the simple approach, though: do we really need to check
+    all those numbers? At which point do you know that you can stop? Remember to
+    import \lstinline!math!.
 
 \end{description}
 
@@ -807,6 +817,7 @@ Files to submit:
   \item conversions.py (see Section~\ref{subsec:ifex})
   \item calculator.py (see Section~\ref{subsec:ifex})
   \item fizzbuzz.py (see Section~\ref{subsec:whileex})
+  \item primes.py (see Section~\ref{subsec:whileex})
   \item polygons.py (see Section~\ref{subsec:turtleex})
   \item navigate.py (see Section~\ref{subsec:turtleex})
 \end{itemize}
