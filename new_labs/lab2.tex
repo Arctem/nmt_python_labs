@@ -599,6 +599,7 @@ Some of the exercises for this lab will use Turtle, a simple graphics library. I
     Operator & What it does\\
     \midrule
     \lstinline!turtle.forward(x)! & move the turtle forward \lstinline!x! pixels \\
+    \lstinline!turtle.backward(x)! & move the turtle backward \lstinline!x! pixels \\
     \lstinline!turtle.left(x)! & turn the turtle left \lstinline!x! degrees \\
     \lstinline!turtle.right(x)! & turn the turtle right \lstinline!x! degrees \\
     \bottomrule
@@ -606,6 +607,8 @@ Some of the exercises for this lab will use Turtle, a simple graphics library. I
   \caption{Turtle commands}
   \label{tab:turtle}
 \end{table}
+
+It should be noted that giving a negative value to these commands is allowed, so \lstinline!turtle.left(-30)! is equivalent to \lstinline!turtle.right(30)!.
 
 Combining these commands will let you draw potentially complex shapes. For example, the following program will draw a Hexagon.
 
