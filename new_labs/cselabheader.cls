@@ -18,6 +18,9 @@
 \DeclareFontShape{OT1}{cmtt}{bx}{n}{
   <5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
 
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathpazo}
 % AMS math formatting
 \usepackage{amsmath}
 \usepackage{amssymb}
