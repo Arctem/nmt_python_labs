@@ -204,13 +204,13 @@ is run in the Python interactive interpreter is on grey background.
 %\end{lstlisting}
 
 \pagebreak
-\section{Boolean logic}
+\section{Boolean Logic}
 %Cover basic boolean logic with comparisons and whatnot, then use those to drive if and else statements.
-A common activity when programming is determining if something value is true or
-false. For example, if a variable is less than five or if the user entered the
-correct password. Any statement that can be resolved into a true or a false
-value is called a boolean statement, the value it resolves into (true or false)
-is called a boolean value.
+A common activity when programming is determining if some value is true or
+false. For example, checking if a variable is less than five or if the user
+entered the correct password. Any statement that can be resolved into a true or
+a false value is called a boolean statement, the value it resolves into (true or
+false) is called a boolean value.
 
 \begin{lstlisting}[style=ipython]
 >>> x = 5
@@ -227,8 +227,7 @@ In the above example, the boolean values are \lstinline{True} and
 In addition to \lstinline{<}, we can also test for other
 inequalities.
 \begin{lstlisting}[style=ipython]
->>> x = 3
->>> y = 6
+>>> x = 3; y = 6
 >>> print(x < y)
 True
 >>> print(x > y)
@@ -245,9 +244,7 @@ means ``greater than or equal to''.
 Finally, we can test if two values are equal
 (\lstinline{==}) or not equal (\lstinline{!=}).
 \begin{lstlisting}[style=ipython]
->>> x = 3
->>> y = 3
->>> z = 4
+>>> x = 3; y = 3; z = 4
 >>> print(x == y)
 True
 >>> print(x == z)
@@ -260,14 +257,62 @@ False
 
 It is important to remember that we use \lstinline{=} to assign a value to a variable and \lstinline{==} to test if two values are equal.
 
-\pagebreak
+We can also combine boolean statements using \lstinline!and! and \lstinline!or!
+as such:
+\begin{lstlisting}[style=ipython]
+>>> x = 3; y = 5; z = 8
+>>> print(x < y and y < z)
+True
+>>> print(x > y and y < z)
+False
+>>> print(x > y or y < z)
+True
+>>> print(True and False)
+False
+>>> print(True or False)
+True
+\end{lstlisting}
+If you combine two boolean statements that are true using \lstinline!and!, the
+result will be true. In all other cases the result is false. Since 
+\lstinline!x < y! is true and \lstinline!y < z! is true, we have that 
+\lstinline!x < y and y < z! is true. See Table~\ref{tab:truth} for a ``truth
+table'' showing what combinations are true or false -- it should make sense
+though.
+
+In addition to this, there is the \lstinline!not! operator to negate a boolean
+statement. You can also put a boolean statement in parentheses to do more
+complicated combinations:
+\begin{lstlisting}[style=ipython]
+>>> x = 3; y = 5; z = 8
+>>> print(not True)
+False
+>>> print(not (x > y and y < z))
+True
+\end{lstlisting}
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{ll | lll}
+    \toprule
+    \lstinline!A! & \lstinline!B! & \lstinline!A and B! & \lstinline!A or B! & \lstinline!not A! \\
+    \midrule
+    True & True & True & True & False\\
+    True & False & False & True & False\\
+    False & True & False & True & True\\
+    False & False & False & False & True \\
+    \bottomrule
+  \end{tabular}
+  \caption{Truth table}
+  \label{tab:truth}
+\end{table}
+
 \subsection{Summary}
 
 \begin{table}[!ht]
   \centering
   \begin{tabular}{ll}
     \toprule
-    Operator & What it tests\\
+    Comparison operator & What it tests\\
     \midrule
     \lstinline!a < b! & is $a$ less than $b$ \\
     \lstinline!a > b! & is $a$ greater than $b$ \\
@@ -282,8 +327,23 @@ It is important to remember that we use \lstinline{=} to assign a value to a var
   \label{tab:cmpops}
 \end{table}
 
+\begin{table}
+  \centering
+  \begin{tabular}{ll}
+    \toprule
+    Boolean combination operator & What it does \\
+    \midrule
+    \lstinline!a and b! & true if both $a$ and $b$ are true \\
+    \lstinline!a or b! & true if either $a$ or $b$ are true or both\\
+    \lstinline!not a! & true if $a$ is false\\
+    \bottomrule
+  \end{tabular}
+  \caption{Combination operators}
+  \label{tab:cmbops}
+\end{table}
+
 \pagebreak
-\section{Conditional statements}
+\section{Conditional Statements}
 
 The primary use for boolean values is to determine which branch in your code to
 follow. This is accomplished using \lstinline{if} and \lstinline{else}, as shown
@@ -331,16 +391,6 @@ else:
     print("x and y are not equal.")
     print("When do I print?")
 \end{lstlisting}
-
-%when Python sees an \lstinline{if} statement,
-%it checks if the boolean statement immediately following it is \lstinline{True}.
-%If it is, then it will run the indented section of code starting on the next
-%line.  Once that section is done, it will skip past the indented
-%\lstinline{else} block of code (if the \lstinline{else} exists -- it is
-%optional), and continue running the rest of the program. If the statement was
-%\lstinline{False}, then it will skip the block of indented code, run the
-%\lstinline{else} block if it exists, and then continue running the rest of the
-%program.
 
 There are many uses for conditional statements, such as to ensure that a given
 variable is not negative:
@@ -426,11 +476,11 @@ another_password = "hunter4"
 user_pass = input("Please input the password: ")
 
 if password == user_pass:
-    print("This is one correct password.")
+    print("Welcome, administrator.")
 elif user_pass == also_password:
-    print("Another correct password.")
+    print("Welcome, administrator.")
 elif user_pass == another_password:
-    print("You entered a correct password.")
+    print("Welcome, manager.")
 else:
     print("Wrong password.")
 \end{lstlisting}
@@ -441,6 +491,20 @@ following \lstinline!if! turns out to be false, Python will then check the first
 the code following that \lstinline!elif! statement or move on to the next
 \lstinline!elif!. Only if none of the conditions turned out to be true, the code
 following \lstinline!else! will be run.
+
+If you remember the boolean logic section, this problem could have been solved
+more efficiently: two passwords are resulting in the same code. You could
+rewrite the code like this:
+\begin{lstlisting}
+user_pass = input("Please input the password: ")
+
+if user_pass == "hunter2" or user_pass == "hunter3":
+    print("Welcome, administrator.")
+elif user_pass == "hunter4":
+    print("Welcome, manager.")
+else:
+    print("Wrong password.")
+\end{lstlisting}
 
 You can also nest the statements you just learned about. Try running the
 following code, trying multiple values:
@@ -524,7 +588,7 @@ The square root of 16 is 4.0.
 \end{description}
 
 \pagebreak
-\section{\lstinline{while} loops}
+\section{Loops}
 %Apply the above to while loops.
 The syntax of a \lstinline{while} loop is very similar to that of an
 \lstinline{if} statement, but instead of only running the indented block of code
@@ -703,7 +767,7 @@ while counter < 6:
 \end{lstlisting}
 
 \pagebreak
-\section{\texttt{.format()}}
+\section{Formatting Strings}
 Previously when we have wanted to print to print out both a number and a string, we have had to resort to this:
 
 \begin{lstlisting}[style=ipython]
