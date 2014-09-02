@@ -626,16 +626,16 @@ turtle.forward(100)
 turtle.left(60)
 \end{lstlisting}
 
-However, this code is a big longer than it needs to be. Let's clean it up a bit using \lstinline{while}.
+However, this code is a bit longer than it needs to be. Let's clean it up a bit using \lstinline{while}.
 
 \begin{lstlisting}[style=python]
 import turtle
 
 counter = 0
 
-while counter < 6:
+while counter < sides:
     turtle.forward(100)
-    turtle.left(60)
+    turtle.left(angle)
     counter = counter + 1
 \end{lstlisting}
 
@@ -648,6 +648,17 @@ while counter < 6:
     regular polygon is one where each side is the same length and each corner is
     the same angle. For example, the sample code given in the section draws a
     regular hexagon.
+
+    Input:
+    \begin{lstlisting}[style=ipython]
+How many sides? 3
+    \end{lstlisting}
+
+    Output:
+    \begin{figure}[h]
+      \centering
+      \includegraphics[width=2.0in]{img/triangle}
+    \end{figure}
 \end{description}
 
 
