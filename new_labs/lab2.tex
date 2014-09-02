@@ -626,9 +626,9 @@ Not a positive number!
 
 \section{Turtle}
 %Cover how to use turtle, give an example of a program to use a while loop to draw a hexagon or something.
-Some of the exercises for this lab will use Turtle, a simple graphics library. It can be accessed by using \lstinline{import turtle} in Python. From there you have access to a group of functions for controlling the ``turtle'', a simple arrow that moves around at your command, drawing a line where it goes. The primary commands to control the turtle are:
+Some of the exercises for this lab will use Turtle, a simple graphics library. It can be accessed by using \lstinline{import turtle} in Python. From there you have access to a group of functions for controlling the ``turtle'', a simple arrow that moves around at your command, drawing a line where it goes. The primary commands to control the turtle are shown in Table \ref{tab:turtle}.
 
-\begin{table}
+\begin{table}[h]
   \centering
   \begin{tabular}{ll}
     \toprule
@@ -643,7 +643,39 @@ Some of the exercises for this lab will use Turtle, a simple graphics library. I
   \label{tab:turtle}
 \end{table}
 
-Did it work?
+Combining these commands will let you draw potentially complex shapes. For example, the following program will draw a Hexagon.
+
+\begin{lstlisting}[style=python]
+import turtle
+
+turtle.forward(100)
+turtle.left(60)
+turtle.forward(100)
+turtle.left(60)
+turtle.forward(100)
+turtle.left(60)
+turtle.forward(100)
+turtle.left(60)
+turtle.forward(100)
+turtle.left(60)
+turtle.forward(100)
+turtle.left(60)
+\end{lstlisting}
+
+However, this code is a big longer than it needs to be. Let's clean it up a bit using \lstinline{while}.
+
+\begin{lstlisting}[style=python]
+import turtle
+
+sides = 6
+angle = 360 / 6
+counter = 0
+
+while counter < 6:
+    turtle.forward(100)
+    turtle.left(60)
+    counter = counter + 1
+\end{lstlisting}
 
 
 \section{\texttt{.format()}}
