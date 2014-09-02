@@ -487,10 +487,10 @@ You entered a letter I do not recognize.
     \lstinline!math.asin()!, \lstinline!math.acos()!, and
     \lstinline!math.atan()!.
 
-    Make sure to check for each function that the input is valid. For example,
-    for square root the input cannot be negative. For arcsin, the input must be
-    between -1 and 1 inclusive. Try to figure out what the input must be for
-    arccos and arctan yourself!
+    \emph{Make sure to check for each function that the input is valid.} For
+    example, for square root the input cannot be negative. For arcsin, the input
+    must be between -1 and 1 inclusive. Try to figure out what the input must be
+    for arccos and arctan yourself!
 
     \begin{lstlisting}[style=bash]
 Enter a number to use: 16
@@ -498,12 +498,14 @@ Which operation? sqrt (s), arcsin (a), arccos (c), arctan (t): s
 The square root of 16 is 4.0.
     \end{lstlisting}
 
-  \item[modulus.py] Write 
 \end{description}
 
-\section{\texttt{while} loops}
+\section{\lstinline{while} loops}
 %Apply the above to while loops.
-The syntax of a \texttt{while} loop is very similar to that of an \texttt{if} statement, but instead of only running the indented block of code once, the \texttt{while} loop will continue running it until the given boolean statement is no longer true.
+The syntax of a \lstinline{while} loop is very similar to that of an
+\lstinline{if} statement, but instead of only running the indented block of code
+once, the \lstinline{while} loop will continue running it until the given
+boolean statement is no longer true.
 
 \begin{lstlisting}[style=python]
 x = 10
@@ -513,7 +515,9 @@ while x > 0:
     x = x - 1
 \end{lstlisting}
 
-The above program will print out the numbers 10 to 1. Try stepping through this program on paper, writing out the value of \texttt{x} at each time through the loop. Then repeat for this modified version of the program:
+The above program will print out the numbers 10 to 1. Try stepping through this
+program on paper, writing out the value of \lstinline{x} at each time through
+the loop. Then repeat for this modified version of the program:
 
 \begin{lstlisting}[style=python]
 x = 10
@@ -523,9 +527,16 @@ while x > 0:
     print(x)
 \end{lstlisting}
 
-This version of the program will print out the numbers 9 to 0. This might seem a bit strange, since the condition of the loop says it will stop when \texttt{x} is no longer larger than 0. And yet, it prints out the value 0 before the loop ends. This is because the loop condition is only checked whenever the end of the indented section is looped. If the condition is \texttt{True}, then the indented section will be executed again. If the condition is \texttt{False}, then the loop will end.
+This version of the program will print out the numbers 9 to 0. This might seem a
+bit strange, since the condition of the loop says it will stop when
+\lstinline{x} is no longer larger than 0. And yet, it prints out the value 0
+before the loop ends. This is because the loop condition is only checked
+whenever the end of the indented section is reached. If the condition is
+\lstinline{True}, then the indented section will be executed again. If the
+condition is \lstinline{False}, then the loop will end.
 
-If the condition starts out \texttt{False}, then the loop will never execute. The following program will not print anything:
+If the condition starts out \lstinline{False}, then the loop will never execute.
+The following program will not print anything:
 
 \begin{lstlisting}[style=python]
 x = 0
@@ -535,7 +546,8 @@ while x > 0:
     print(x)
 \end{lstlisting}
 
-\texttt{if} and \texttt{else} can be combined with \texttt{while}, as shown below:
+\lstinline{if} and \lstinline{else} can be combined with \lstinline{while}, as
+shown below:
 
 \begin{lstlisting}[style=python]
 x = 10
@@ -548,6 +560,69 @@ while x > 0:
     x = x - 1
 \end{lstlisting}
 
+Of course, they can be nested the other way around, too, with a
+\lstinline!while! inside conditional statements.
+
+There can also be infinite while loops. Try the following:
+\begin{lstlisting}
+while True:
+    print("Printing forever")
+\end{lstlisting}
+
+Press \emph{Ctrl+C} to stop the execution of this.
+
+\subsection{Summary}
+
+\begin{itemize}
+  \item Syntax:
+    \begin{lstlisting}
+while condition:
+    # code to be repeated
+    \end{lstlisting}
+
+    This will repeat the indented code following the \lstinline!while! until the
+    condition is not true anymore. It checks the condition first, then runs the
+    indented code, then checks the condition again, etc. Thus, if the condition
+    is wrong in the first place, it will never run.
+
+  \item There can be infinite while loops.
+\end{itemize}
+
+\subsection{Exercises}
+\label{subsec:whileex}
+
+\begin{description}
+  \item[fizzbuzz.py] Have the user enter a positive integer number. Then, print
+    the numbers from 1 to that number each on a line. When the printed number is
+    divisible by 3, print ``Fizz'', and when the number is divisible by 5, print
+    ``Buzz'', and when it is divisible by both, print ``FizzBuzz''.
+
+    Should look like this when run:
+    \begin{lstlisting}[style=bash]
+Enter a number: 16
+1
+2
+3 Fizz
+4
+5 Buzz
+6 Fizz
+7
+8
+9 Fizz
+10 Buzz
+11
+12 Fizz
+13
+14
+15 FizzBuzz
+16
+    \end{lstlisting}
+    \begin{lstlisting}[style=bash]
+Enter a number: -1
+Not a positive number!
+    \end{lstlisting}
+
+\end{description}
 
 \section{Turtle}
 %Cover how to use turtle, give an example of a program to use a while loop to draw a hexagon or something.
@@ -556,17 +631,14 @@ while x > 0:
 \section{\texttt{.format()}}
 
 \pagebreak
-\section{Exercises}
 
-\pagebreak
 \section{Submitting}
 
 Files to submit:
 \begin{itemize}
   \item conversions.py (see Section~\ref{subsec:ifex})
   \item calculator.py (see Section~\ref{subsec:ifex})
-  \item modulus.py (see Section~\ref{subsec:ifex})
-  \item 
+  \item fizzbuzz.py (see Section~\ref{subsec:whileex})
 \end{itemize}
 
 You may submit your code as either a tarball (instructions below) or as a .zip
