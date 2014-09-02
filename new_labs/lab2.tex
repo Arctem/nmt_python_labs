@@ -86,6 +86,21 @@
   commentstyle=\color{green},
   showstringspaces=false,
 }
+% interpreted python -- with gray background.
+\lstdefinestyle{ipython}{
+  backgroundcolor=\color{light-gray},
+  language=Python,
+  basicstyle=\small\ttfamily,
+  frame=single,
+  prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rhookswarrow}},
+  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rcurvearrowse\space}}
+  breaklines=true,
+  breakatwhitespace=true,
+  numbers=left,
+  numberstyle=\scriptsize,
+  morekeywords={True,False},
+  identifierstyle=\color{black},
+}
 \lstdefinestyle{bash}{
   language=bash,
   basicstyle=\small\ttfamily,
@@ -178,15 +193,17 @@ repeat code.
 \subsection{New Code Coloring in PDFs}
 % also function names that are self-defined, but let's not talk about that..
 In the new code style, all variable names will be black, all keywords will be
-blue, all strings will be maroon (red), while comments are green.
+blue, all strings will be maroon (red), while comments are green. Any code that
+is run in the Python interactive interpreter is on grey background.
 
-\begin{lstlisting}
-x = 5
-print(x)
-print("string")
-# I'm a comment
-\end{lstlisting}
+%\begin{lstlisting}
+%x = 5
+%print(x)
+%print("string")
+%# I'm a comment
+%\end{lstlisting}
 
+\pagebreak
 \section{Boolean logic}
 %Cover basic boolean logic with comparisons and whatnot, then use those to drive if and else statements.
 A common activity when programming is determining if something value is true or
@@ -195,7 +212,7 @@ correct password. Any statement that can be resolved into a true or a false
 value is called a boolean statement, the value it resolves into (true or false)
 is called a boolean value.
 
-\begin{lstlisting}
+\begin{lstlisting}[style=ipython]
 >>> x = 5
 >>> print(x < 3)
 False
@@ -203,11 +220,13 @@ False
 True
 \end{lstlisting}
 
-In the above example, the boolean values are \lstinline{True} and \lstinline{False}. The boolean statements are \lstinline{x < 3} and \lstinline{x < 6}.
+In the above example, the boolean values are \lstinline{True} and
+\lstinline{False}. The boolean statements are \lstinline{x < 3} and 
+\lstinline{x < 6}. 
 
-In addition to \lstinline{<}, we can also test for other inequalities.
-
-\begin{lstlisting}
+In addition to \lstinline{<}, we can also test for other
+inequalities.
+\begin{lstlisting}[style=ipython]
 >>> x = 3
 >>> y = 6
 >>> print(x < y)
@@ -220,11 +239,12 @@ True
 False
 \end{lstlisting}
 
-Note that \lstinline{<=} means ``less than or equal to'' and \lstinline{>=} means ``greater than or equal to''.
+Note that \lstinline{<=} means ``less than or equal to'' and \lstinline{>=}
+means ``greater than or equal to''. 
 
-Finally, we can test if two values are equal (\lstinline{==}) or not equal (\lstinline{!=}).
-
-\begin{lstlisting}
+Finally, we can test if two values are equal
+(\lstinline{==}) or not equal (\lstinline{!=}).
+\begin{lstlisting}[style=ipython]
 >>> x = 3
 >>> y = 3
 >>> z = 4
@@ -240,7 +260,10 @@ False
 
 It is important to remember that we use \lstinline{=} to assign a value to a variable and \lstinline{==} to test if two values are equal.
 
-\begin{table}
+\pagebreak
+\subsection{Summary}
+
+\begin{table}[!ht]
   \centering
   \begin{tabular}{ll}
     \toprule
@@ -259,7 +282,7 @@ It is important to remember that we use \lstinline{=} to assign a value to a var
   \label{tab:cmpops}
 \end{table}
 
-%\section{\lstinline!if!, \lstinline!elif!, and \lstinline!else!}
+\pagebreak
 \section{Conditional statements}
 
 The primary use for boolean values is to determine which branch in your code to
@@ -359,7 +382,7 @@ The main thing to know about strings for now is that they cannot be used as
 numbers. This is why we use the \lstinline{float} function to convert the value
 the user gives us into a number.
 
-\begin{lstlisting}[style=python]
+\begin{lstlisting}[style=ipython]
 >>> 5.5 == "5.5"
 False
 >>> 5.5 == float("5.5")
@@ -500,6 +523,7 @@ The square root of 16 is 4.0.
 
 \end{description}
 
+\pagebreak
 \section{\lstinline{while} loops}
 %Apply the above to while loops.
 The syntax of a \lstinline{while} loop is very similar to that of an
@@ -624,6 +648,7 @@ Not a positive number!
 
 \end{description}
 
+\pagebreak
 \section{Turtle}
 %Cover how to use turtle, give an example of a program to use a while loop to draw a hexagon or something.
 Some of the exercises for this lab will use Turtle, a simple graphics library. It can be accessed by using \lstinline{import turtle} in Python. From there you have access to a group of functions for controlling the ``turtle'', a simple arrow that moves around at your command, drawing a line where it goes. The primary commands to control the turtle are shown in Table \ref{tab:turtle}.
@@ -685,11 +710,11 @@ while counter < 6:
 \end{description}
 
 
-
+\pagebreak
 \section{\texttt{.format()}}
 Previously when we have wanted to print to print out both a number and a string, we have had to resort to this:
 
-\begin{lstlisting}[style=bash]
+\begin{lstlisting}[style=ipython]
 >>> x = 5
 >>> print("x is equal to " + str(x))
 x is equal to 5
@@ -697,7 +722,7 @@ x is equal to 5
 
 However, there is an easier way to accomplish the same thing. By using the format command, as shown below, we can have far more options for how we format our output.
 
-\begin{lstlisting}[style=bash]
+\begin{lstlisting}[style=ipython]
 >>> x = 5
 >>> print("x is equal to {}".format(x))
 x is equal to 5
@@ -707,7 +732,7 @@ Rather than leaving a gap in our string then using \lstinline{+} to add on our v
 
 If we include multiple instances of \lstinline!{}! in our string, we can then pass multiple variable to \lstinline{format}. It will place them in the string in the order provided.
 
-\begin{lstlisting}[style=bash]
+\begin{lstlisting}[style=ipython]
 >>> x = 5
 >>> y = 6
 >>> print("x is equal to {} and y is equal to {}.".format(x, y))
@@ -716,7 +741,7 @@ x is equal to 5 and y is equal to 6.
 
 We can also use format to control our output. For example, we can restrict how many decimal places a number is printed with. To do this, we add \lstinline{:.2f} inside of the \lstinline!{}!. The \lstinline{.2f} specifies that we want 2 digits to follow the decimal point. If we wanted to, we could add an extra number before the colon to specify which of the arguments we want in this position. We don't want to mess with the order of the arguments, so we leave the position before the colon blank.
 
-\begin{lstlisting}[style=bash]
+\begin{lstlisting}[style=ipython]
 >>> import math
 >>> print(math.pi)
 3.141592653589793
@@ -724,7 +749,13 @@ We can also use format to control our output. For example, we can restrict how m
 3.14
 \end{lstlisting}
 
-For more format options, see \url{https://docs.python.org/3.1/library/string.html#format-string-syntax}.
+For more format options, see
+\begin{center}
+  \vspace{-2mm}
+\url{https://docs.python.org/3.1/library/string.html#format-string-syntax}
+\vspace{-2mm}
+
+\end{center}
 
 \subsection{Summary}
 
