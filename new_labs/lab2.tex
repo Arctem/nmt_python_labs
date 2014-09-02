@@ -679,6 +679,60 @@ while counter < 6:
 
 
 \section{\texttt{.format()}}
+Previously when we have wanted to print to print out both a number and a string, we have had to resort to this:
+
+\begin{lstlisting}[style=bash]
+>>> x = 5
+>>> print("x is equal to " + str(x))
+x is equal to 5
+\end{lstlisting}
+
+However, there is an easier way to accomplish the same thing. By using the format command, as shown below, we can have far more options for how we format our output.
+
+\begin{lstlisting}[style=bash]
+>>> x = 5
+>>> print("x is equal to {}".format(x))
+x is equal to 5
+\end{lstlisting}
+
+Rather than leaving a gap in our string then using \lstinline{+} to add on our variable, we instead include \lstinline!{}! where we wish to place our variable, then at the end of the string add on \lstinline{.format(x)}. This replaces \lstinline!{}! with the value of \lstinline{x}.
+
+If we include multiple instances of \lstinline!{}! in our string, we can then pass multiple variable to \lstinline{format}. It will place them in the string in the order provided.
+
+\begin{lstlisting}[style=bash]
+>>> x = 5
+>>> y = 6
+>>> print("x is equal to {} and y is equal to {}.".format(x, y))
+x is equal to 5 and y is equal to 6.
+\end{lstlisting}
+
+We can also use format to control our output. For example, we can restrict how many decimal places a number is printed with. To do this, we add \lstinline{:.2f} inside of the \lstinline!{}!. The \lstinline{.2f} specifies that we want 2 digits to follow the decimal point. If we wanted to, we could add an extra number before the colon to specify which of the arguments we want in this position. We don't want to mess with the order of the arguments, so we leave the position before the colon blank.
+
+\begin{lstlisting}[style=bash]
+>>> import math
+>>> print(math.pi)
+3.141592653589793
+>>> print("{:.2f}".format(math.pi))
+3.14
+\end{lstlisting}
+
+For more format options, see \url{https://docs.python.org/3.1/library/string.html#format-string-syntax}.
+
+\subsection{Summary}
+
+\begin{itemize}
+  \item Syntax:
+    \begin{lstlisting}
+print("string containing {}".format(variable))
+    \end{lstlisting}
+    
+    This will replace the \lstinline!{}! with the value of \lstinline{variable}.
+    
+  \item You can include multiple \lstinline!{}! in a string and pass multiple values to \lstinline{format}.
+
+  \item You can specify advanced formatting options, such as number of digits after the decimal point.
+\end{itemize}
+
 
 \pagebreak
 
