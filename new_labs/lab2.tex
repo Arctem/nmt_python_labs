@@ -589,8 +589,13 @@ Not a positive number!
 
 \pagebreak
 \section{Turtle}
+
 %Cover how to use turtle, give an example of a program to use a while loop to draw a hexagon or something.
-Some of the exercises for this lab will use Turtle, a simple graphics library. It can be accessed by using \lstinline{import turtle} in Python. From there you have access to a group of functions for controlling the ``turtle'', a simple arrow that moves around at your command, drawing a line where it goes. The primary commands to control the turtle are shown in Table \ref{tab:turtle}.
+Some of the exercises for this lab will use Turtle, a simple graphics library.
+It can be accessed by using \lstinline{import turtle} in Python. From there you
+have access to a group of functions for controlling the ``turtle'', a simple
+arrow that moves around at your command, drawing a line where it goes. The
+primary commands to control the turtle are shown in Table \ref{tab:turtle}.
 
 \begin{table}[h]
   \centering
@@ -607,7 +612,8 @@ Some of the exercises for this lab will use Turtle, a simple graphics library. I
   \label{tab:turtle}
 \end{table}
 
-Combining these commands will let you draw potentially complex shapes. For example, the following program will draw a Hexagon.
+Combining these commands will let you draw potentially complex shapes. For
+example, the following program will draw a hexagon.
 
 \begin{lstlisting}[style=python]
 import turtle
@@ -658,30 +664,45 @@ How many sides? 3
     \begin{figure}[h]
       \centering
       \includegraphics[width=2.0in]{img/triangle}
+    \vspace{-10mm}
     \end{figure}
 
-\item[navigate.py] Write a program that takes directions from the command line to draw a line. Let the user input ``left'', ``right'', ``forward'', or ``stop''. Left and right turn the turtle left or right 45 degrees, forward moves the turtle forward, and stop ends the program.
+  \item[navigate.py] Write a program that takes directions from the command line
+    to draw a line. Let the user input ``left'', ``right'', ``forward'', or
+    ``stop''. Left and right turn the turtle left or right however many degrees
+    are entered, forward moves the turtle forward, and stop ends the program.
+    Please check the degrees for errors: they must be between 0 and 360 degrees!
+    Also, just pick a number of pixels that forward should move forward.
 
-  Input:
-  \begin{lstlisting}[style=ipython]
-Please input a direction: forward
-Please input a direction: left
-Please input a direction: forward
-Please input a direction: left
-Please input a direction: forward
-Please input a direction: forward
-Please input a direction: left
-Please input a direction: left
-Please input a direction: forward
-Please input a direction: right
-Please input a direction: forward
-Please input a direction: stop
+    Input:
+  \begin{lstlisting}[style=bash]
+Please enter a direction: forward
+Please enter a direction: left
+How many degrees? 45
+Please enter a direction: forward
+Please enter a direction: left
+How many degrees? -1
+Invalid number, not moving.
+Please enter a direction: left
+How many degrees? 45
+Please enter a direction: forward
+Please enter a direction: forward
+Please enter a direction: left
+How many degrees? 45
+Please enter a direction: left
+How many degrees? 45
+Please enter a direction: forward
+Please enter a direction: right
+How many degrees? 45
+Please enter a direction: forward
+Please enter a direction: stop
   \end{lstlisting}
 
-  Output:
-  \begin{figure}[h]
+    Output:
+  \begin{figure}[!ht]
     \centering
     \includegraphics[width=1.0in]{img/navigate}
+    \vspace{-8mm}
   \end{figure}
 \end{description}
 
@@ -759,6 +780,7 @@ Files to submit:
   \item calculator.py (see Section~\ref{subsec:ifex})
   \item fizzbuzz.py (see Section~\ref{subsec:whileex})
   \item polygons.py (see Section~\ref{subsec:turtleex})
+  \item navigate.py (see Section~\ref{subsec:turtleex})
 \end{itemize}
 
 You may submit your code as either a tarball (instructions below) or as a .zip
