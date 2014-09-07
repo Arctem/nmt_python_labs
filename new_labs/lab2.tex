@@ -254,7 +254,8 @@ indented code between \lstinline!if! and \lstinline!else!.
 It is important to note that the code that follows \lstinline!if! or
 \lstinline!else! \textbf{must} be indented.
 
-See what happens when you run this compared to the other piece of code:
+See what happens when you run the code below compared to the other piece of code
+above:
 \begin{lstlisting}
 x = 1
 y = float(input("Please input a number: "))
@@ -298,12 +299,12 @@ can see used in the above examples. When you use \lstinline{input} it will
 display whatever string you pass to it, then pause while it waits for the user
 to type something and then hit enter. It will give whatever was entered as a
 string back to the variable that it is assigned to. We will be learning more
-about strings in future labs, but for now just know that they are basically
+about strings in future labs, but for now just know that strings are basically
 groups of letters, like what you pass to a \lstinline{print} statement, and are
 declared by surrounding something in quotes.
 
 The main thing to know about strings for now is that they cannot be used as
-numbers. This is why we use the \lstinline{float} function to convert the value
+numbers. This is why we use the \lstinline{float} function to convert the string
 the user gives us into a number.
 
 \begin{lstlisting}[style=ipython]
@@ -471,7 +472,7 @@ Which operation? sqrt (s), arcsin (a), arccos (c), arctan (t): a
 \pagebreak
 \section{Formatting Strings}
 
-Previously, when we wanted to print to print out both a number and a string, we
+Previously, when we wanted to print out both a number and a string, we
 had to resort to this:
 \begin{lstlisting}[style=ipython]
 >>> x = 5
@@ -770,7 +771,7 @@ Not a positive number!
     \lstinline!for! loop and \lstinline!range()! this time. Using
     \lstinline!.format()! is still required.
 
-  \item[primes.py] (Think Python \#2.15) Write a program that checks if a number
+  \item[primes.py] (Practice of Computing Using Python \#2.15) Write a program that checks if a number
     $N$ is prime. You have to ask the user for the number. Remember that a prime
     number is a number that is divisible only by $1$ and itself.
 
@@ -855,7 +856,7 @@ import turtle
 
 counter = 0
 
-while counter < sides:
+while counter < 6:
     turtle.forward(100)
     turtle.left(angle)
     counter = counter + 1
