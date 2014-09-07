@@ -41,6 +41,11 @@
 \hrule
 
 \section{Introduction}
+In the first two labs, we showed you how to generally use Python and how to
+have your programs make decisions based on what the user entered. With this
+lab, we will be starting to show you how to do some useful things in Python:
+how to make lists and manipulate them and how to deal with strings. You have
+seen strings before, but we will be showing you how to do neat things to them.
 
 \section{Lists}
 \subsection{Summary}
@@ -49,6 +54,97 @@
 \label{subsec:listsex}
 
 \section{Strings}
+
+You have seen strings in Python before. They are sequences of characters
+enclosed by either double quotes or single quotes; for example:
+\begin{lstlisting}[style=ipython,language=Octave] % string escaping issues with Python style
+>>> s = "I'm a string."
+>>> print(s)
+I'm a string.
+>>> r = 'I am also a string.'
+>>> print(r)
+I'm also a string.
+\end{lstlisting}
+
+Notice how we did not use a single quote in the second string because it was
+enclosed (\emph{delimited}) by single quotes. The proper way to use a single
+quote in a single quoted string or a double quote in a double quoted string
+goes like this:
+\begin{lstlisting}[style=ipython,language=Octave]
+>>> s = "Previously, we said \"I'm a string.\"."
+>>> print(s)
+Previously, we said "I'm a string.".
+>>> r = 'I\'m also a string.'
+>>> print(r)
+I'm also a string.
+\end{lstlisting}
+This is called \emph{escaping} a character. We \emph{escaped} the double quotes
+and single quote respectively so that Python did not think it was the end of
+the string.
+
+% show ' in "
+% show " in '
+% show \n in '
+% show raw for \n
+
+We also saw indirectly and previously that we can concatenate strings together
+using the addition operator \lstinline!+!:
+\begin{lstlisting}[style=ipython,language=Octave] % octave doesn't have in
+keyword
+>>> s = "The cat"
+>>> r = " in the hat"
+>>> t = s+r
+>>> print(t)
+The cat in the hat
+\end{lstlisting}
+
+In addition to that, we can repeat strings using the multiplication operator
+\lstinline!*!: 
+\begin{lstlisting}[style=ipython]
+>>> s = "Hi"
+>>> r = 5*s
+>>> print(r)
+HiHiHiHiHi
+\end{lstlisting}
+
+% literals next to each other concat
+% strings immutable
+% create new string if need change
+% len()
+
+You previously saw \emph{slicing} in the section on lists. Slicing works on strings, too!
+\begin{lstlisting}[style=ipython]
+>>> s = "The cat in the hat"
+>>> print(s[4:7])
+cat
+>>> print(s[15:18])
+hat
+>>> print(s[14:18])
+ hat
+>>> print(s[17:14:-1])
+tah
+>>> print(s[17::-1])
+tah eht ni tac ehT
+\end{lstlisting}
+
+
+If you want strings to go on for multiple lines, you have to use three double
+quotes:
+\begin{lstlisting}
+weizsaecker = """We in the older generation owe to young people not the 
+fulfillment of dreams but honesty. We must help younger people to 
+understand why it is vital to keep memories alive. We want to help them 
+to accept historical truth soberly, not one-sidedly, without taking 
+refuge in utopian doctrines, but also without moral arrogance. From our
+own history we learn what man is capable of. For that reason we must not
+imagine that we are quite different and have become better. There is no
+ultimately achievable moral perfection. We have learned as human beings,
+and as human beings we remain in danger. But we have the strength to 
+overcome such danger again and again."""
+\end{lstlisting} 
+
+
+
 \subsection{Summary}
 
 \subsection{Exercises}
