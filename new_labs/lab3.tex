@@ -167,6 +167,34 @@ else:
     print('Incorrect password.')
 \end{lstlisting}
 
+\subsection{Slicing}
+Often we will want to make a new list out of part of a larger list. We do this using slicing. To do this, we specify the first and last indices we want to include in our new list, separated by a colon. The last index is used as a bookend -- that is, values up to but not including that index are included in the new list. If one of the values is omitted, then Python will act as if the most extreme index on that side was enterred. Omitting both values will use the full list.
+
+\begin{lstlisting}[style=ipython]
+>>> values = [1, 2, 3, 4, 5]
+>>> print(values[1:3])
+[2, 3]
+>>> print(values[:3])
+[1, 2, 3]
+>>> print(values[1:])
+[2, 3, 4, 5]
+>>> print(values[:])
+[1, 2, 3, 4, 5]
+\end{lstlisting}
+
+If we include an additional colon and value, we can include a step size. For example, a step size of two will create the list from every other value in the original list. A negative step size allows the list to be reversed.
+
+\begin{lstlisting}[style=ipython]
+>>> values = [1, 2, 3, 4, 5]
+>>> print(values[::2])
+[1, 3, 5]
+>>> print(values[1:4:2])
+[2, 4]
+>>> print(values[4:1:-1])
+[5, 4, 3]
+\end{lstlisting}
+
+\subsection{List Functions}
 
 %TODO: slicing, pop, append, len, adding lists, sum
 
