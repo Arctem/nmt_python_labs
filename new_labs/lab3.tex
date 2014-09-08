@@ -57,6 +57,7 @@ One of the most important data types in Python is the list. A list is an ordered
 [1, 2, 3, 4, 5]
 \end{lstlisting}
 
+\subsection{Indices}
 Once we put a value in a list, we can treat the list as a single entity or access individual values. In order to access an individual element, we need to use the index of the value we want to access. The index is the position of the element in the list if we start numbering the elements from 0. When we are accessing list elements by index we can use them in any way we might use a normal variable.
 
 \begin{lstlisting}[style=ipython]
@@ -77,6 +78,17 @@ Once we put a value in a list, we can treat the list as a single entity or acces
 [30, 7, 18, 7.5, 91]
 \end{lstlisting}
 
+If we wish, we can use negative array indices to reference elements starting at the end of the list. For example, -1 is the last element, -2 is the second to last element, and so on.
+
+\begin{lstlisting}[style=ipython]
+>>> values = [32, 1, 54, -3, 6]
+>>> print(values[-1])
+6
+>>> print(values[-2])
+-3
+\end{lstlisting}
+
+\subsection{Values in Arrays}
 We can use an existing variable when creating a list. If we change the value of the variable, the value in the list will stay the same.
 
 \begin{lstlisting}[style=ipython]
@@ -91,7 +103,7 @@ We can use an existing variable when creating a list. If we change the value of 
 [35, 19, 5]
 \end{lstlisting}
 
-All values in a list do not need to be the same type. If we want, we can create a list with both numbers and strings (though this is almost never done).
+All values in a list do not need to be the same type. If we want, we can create a list with both numbers and strings (though this is usually a poor idea).
 
 \begin{lstlisting}[style=ipython]
 >>> values = [2, 'hello', 5.3]
@@ -127,6 +139,7 @@ Note that, unlike with other variables, changing an element of a list inside ano
 
 You generally won't have to worry about this, though the reason is because we are modifying the existing value rather than create a new list. When we reassign \lstinline{values}, it no longer changes the values inside inside \lstinline{more_values}. This is because we are creating a new list for \lstinline{values} rather than modifying the existing list.
 
+\subsection{Testing List Contents}
 A common operation is to test if a list contains a given value. We can do this using the \lstinline{in} keyword. We can also test if a list does not contain a value using \lstinline{not in}.
 
 \begin{lstlisting}[style=ipython]
@@ -154,7 +167,8 @@ else:
     print('Incorrect password.')
 \end{lstlisting}
 
-%TODO: in/not in, slicing, pop, append, len, adding lists, sum
+
+%TODO: slicing, pop, append, len, adding lists, sum
 
 \subsection{Summary}
 
