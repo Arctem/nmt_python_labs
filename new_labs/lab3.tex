@@ -127,6 +127,33 @@ Note that, unlike with other variables, changing an element of a list inside ano
 
 You generally won't have to worry about this, though the reason is because we are modifying the existing value rather than create a new list. When we reassign \lstinline{values}, it no longer changes the values inside inside \lstinline{more_values}. This is because we are creating a new list for \lstinline{values} rather than modifying the existing list.
 
+A common operation is to test if a list contains a given value. We can do this using the \lstinline{in} keyword. We can also test if a list does not contain a value using \lstinline{not in}.
+
+\begin{lstlisting}[style=ipython]
+>>> values = [1, 'test', 30, 20]
+>>> print(1 in values)
+True
+>>> print('test' in values)
+True
+>>> print(2 in values)
+False
+>>> print(2 not in values)
+True
+\end{lstlisting}
+
+This could be used to simplify the example from Lab 2 involving checking user input against multiple valid passwords.
+
+\begin{lstlisting}[style=python]
+passwords = ['hunter2', 'hunter3', 'hunter4']
+
+user_in = input('Please enter your password: ')
+
+if user_in in passwords:
+    print('Correct password. Welcome!')
+else:
+    print('Incorrect password.')
+\end{lstlisting}
+
 %TODO: in/not in, slicing, pop, append, len, adding lists, sum
 
 \subsection{Summary}
