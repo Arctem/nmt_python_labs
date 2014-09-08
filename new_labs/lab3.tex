@@ -195,8 +195,50 @@ If we include an additional colon and value, we can include a step size. For exa
 \end{lstlisting}
 
 \subsection{List Functions}
+Many functions exist to help manipulate lists. The first of these is \lstinline{.append()}. This adds a new value onto the end of an existing list.
 
-%TODO: slicing, pop, append, len, adding lists, sum
+\begin{lstlisting}[style=ipython]
+>>> values = [1, 2, 3]
+>>> values.append(12)
+>>> values.append(123)
+>>> print(values)
+[1, 2, 3, 12, 123]
+\end{lstlisting}
+
+The \lstinline{.pop()} function functions similarly to accessing list values by index, but also removes the element from a list. If given a value, then \lstinline{.pop()} will remove the value at that index. If not, it will remove the last value in the list.
+
+\begin{lstlisting}[style=ipython]
+>>> values = [1, 2, 3, 12, 123]
+>>> print(values.pop())
+123
+>>> print(values.pop(0))
+1
+>>> print(values)
+[2, 3, 12]
+\end{lstlisting}
+
+Using \lstinline{len} returns the length of the list passed to it.
+
+\begin{lstlisting}[style=ipython]
+>>> values = [1, 2, 3, 12, 123]
+>>> print(len(values))
+5
+\end{lstlisting}
+
+\lstinline{sum} allows the easy summing of every value in a list, so long as every value in the list is a number. If any values are not, an error will occur.
+
+\begin{lstlisting}[style=ipython]
+>>> values = [1, 2, 3, 12, 123]
+>>> print(sum(values))
+141
+>>> values.append('test')
+>>> print(sum(values))
+Traceback (most recent call last):
+  File ``<stdin>'', line 1, in <module>
+TypeError: unsupported operand type(s) for +: 'int' and 'str'
+\end{lstlisting}
+
+%TODO: adding lists, sum
 
 \subsection{Summary}
 
