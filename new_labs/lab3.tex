@@ -462,6 +462,31 @@ for i in range(10):
 
 \begin{description}
   \item[navigate2.py] Modify that \lstinline{navigate.py} from last week so that, rather than performing each action as it is input, it stores the inputs in a list and runs them all at once after the ``stop'' command has been given.
+  \item[parity.py] Take in numbers as input until ``stop'' is entered. Then split the numbers into three lists: one containing all the numbers, one containing all even values, and one containing all odd. Print out all three lists, as well as each list's sum and average. Assume all input values are integers.
+
+    Sample:
+\begin{lstlisting}[style=ipython]
+Input a number: 1
+Input a number: 5
+Input a number: 8
+Input a number: 2
+Input a number: 8
+Input a number: 100
+Input a number: 3
+Input a number: 7
+Input a number: 27
+Input a number: 5
+Input a number: stop
+All numbers: [1, 5, 8, 2, 8, 100, 3, 7, 27, 5]
+Average of all numbers: 16.6
+Sum of all numbers: 166
+Even numbers: [8, 2, 8, 100]
+Average of even numbers: 29.5
+Sum of even numbers: 118
+Odd numbers: [1, 5, 3, 7, 27, 5]
+Average of odd numbers: 8.0
+Sum of odd numbers: 48
+\end{lstlisting}
 \end{description}
 
 \pagebreak
@@ -471,6 +496,7 @@ Files to submit:
 \begin{itemize}
   \item average.py (see Section~\ref{subsec:listsex})
   \item navigate2.py (see Section~\ref{subsec:forex})
+  \item parity.py (see Section~\ref{subsec:forex})
 \end{itemize}
 
 You may submit your code as either a tarball (instructions below) or as a .zip
