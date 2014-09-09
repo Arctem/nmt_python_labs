@@ -205,6 +205,15 @@ Many functions exist to help manipulate lists. The first of these is \lstinline{
 [1, 2, 3, 12, 123]
 \end{lstlisting}
 
+\lstinline{.insert()} also inserts a value, but it allows you to choose where it goes. The argument of the function is the index you want your new value to be located. Other values will be moved to make room.
+
+\begin{lstlisting}[style=ipython]
+>>> values = [1, 2, 3, 4]
+>>> values.insert(2, 10)
+>>> print(values)
+[1, 2, 10, 3, 4]
+\end{lstlisting}
+
 The \lstinline{.pop()} function functions similarly to accessing list values by index, but also removes the element from a list. If given a value, then \lstinline{.pop()} will remove the value at that index. If not, it will remove the last value in the list.
 
 \begin{lstlisting}[style=ipython]
@@ -256,26 +265,52 @@ Two lists can be added together in order to combine them into one list.
   \item An element in an array can be referenced and manipulated using its index. The first element has an index of 0. Negative indices can be used to reference elements from the end of the list, with the last element having an index of -1.
   \item The \lstinline{in} keyword can be used to test if a value exists in a list.
   \item Slicing can be used to create a new list from an existing one.
-  \item \lstinline{.append()} adds an item to the end of a list, \lstinline{.pop()} returns and removes a value from the list, \lstinline{len()} will give the length of a list, and \lstinline{sum} sums all values in a list.
+  \item \lstinline{.append()} adds an item to the end of a list, \lstinline{.insert()} adds an item at a given index, \lstinline{.pop()} returns and removes a value from the list, \lstinline{len()} will give the length of a list, and \lstinline{sum} sums all values in a list.
 \end{itemize}
 
 \subsection{Exercises}
 \label{subsec:listsex}
 
 \begin{description}
-  \item[average.py] Take in numerical values until ``quit'' is entered. Then print out the sum and average of all the values entered. Use a \lstinline{while} loop to take input until ``quit'' is entered.
+  \item[sorted.py] Take in numbers as input until ``stop'' is entered. As you take in each number, insert it into a list so that the list is sorted in ascending order. That is, look through the list until you find the place where the new element belongs, then use \lstinline{.insert()} to place it there. If the number is already in the list, do not add it again. After ``stop'' is entered, print out the list. Do not use any of Python's built-in sorting functions.
 
     Sample:
-    \begin{lstlisting}[style=ipython]
-Enter a value ("quit" to end): 1
-Enter a value ("quit" to end): 2
-Enter a value ("quit" to end): 3
-Enter a value ("quit" to end): 4
-Enter a value ("quit" to end): 5
-Enter a value ("quit" to end): quit
-Sum: 15.0
-Average: 3.0
-    \end{lstlisting}
+\begin{lstlisting}[style=ipython]
+Input a number: 12
+Input a number: 5.2
+Input a number: 73
+Input a number: 100
+Input a number: -5
+Input a number: 2.3
+Input a number: stop
+[-5.0, 2.3, 5.2, 12.0, 73.0, 100.0]
+\end{lstlisting}
+
+  \item[parity.py] Take in numbers as input until ``stop'' is entered. Then split the numbers into three lists: one containing all the numbers, one containing all even values, and one containing all odd. Print out all three lists, as well as each list's sum and average. Assume all input values are integers.
+
+    Sample:
+\begin{lstlisting}[style=ipython]
+Input a number: 1
+Input a number: 5
+Input a number: 8
+Input a number: 2
+Input a number: 8
+Input a number: 100
+Input a number: 3
+Input a number: 7
+Input a number: 27
+Input a number: 5
+Input a number: stop
+All numbers: [1, 5, 8, 2, 8, 100, 3, 7, 27, 5]
+Average of all numbers: 16.6
+Sum of all numbers: 166
+Even numbers: [8, 2, 8, 100]
+Average of even numbers: 29.5
+Sum of even numbers: 118
+Odd numbers: [1, 5, 3, 7, 27, 5]
+Average of odd numbers: 8.0
+Sum of odd numbers: 48
+\end{lstlisting}
 \end{description}
 
 
@@ -462,31 +497,6 @@ for i in range(10):
 
 \begin{description}
   \item[navigate2.py] Modify that \lstinline{navigate.py} from last week so that, rather than performing each action as it is input, it stores the inputs in a list and runs them all at once after the ``stop'' command has been given.
-  \item[parity.py] Take in numbers as input until ``stop'' is entered. Then split the numbers into three lists: one containing all the numbers, one containing all even values, and one containing all odd. Print out all three lists, as well as each list's sum and average. Assume all input values are integers.
-
-    Sample:
-\begin{lstlisting}[style=ipython]
-Input a number: 1
-Input a number: 5
-Input a number: 8
-Input a number: 2
-Input a number: 8
-Input a number: 100
-Input a number: 3
-Input a number: 7
-Input a number: 27
-Input a number: 5
-Input a number: stop
-All numbers: [1, 5, 8, 2, 8, 100, 3, 7, 27, 5]
-Average of all numbers: 16.6
-Sum of all numbers: 166
-Even numbers: [8, 2, 8, 100]
-Average of even numbers: 29.5
-Sum of even numbers: 118
-Odd numbers: [1, 5, 3, 7, 27, 5]
-Average of odd numbers: 8.0
-Sum of odd numbers: 48
-\end{lstlisting}
 \end{description}
 
 \pagebreak
@@ -494,7 +504,7 @@ Sum of odd numbers: 48
 
 Files to submit:
 \begin{itemize}
-  \item average.py (see Section~\ref{subsec:listsex})
+  \item sorted.py (see Section~\ref{subsec:listsex})
   \item navigate2.py (see Section~\ref{subsec:forex})
   \item parity.py (see Section~\ref{subsec:forex})
 \end{itemize}
