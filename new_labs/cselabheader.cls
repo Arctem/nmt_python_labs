@@ -89,6 +89,7 @@
   stringstyle=\color{Maroon},
   commentstyle=\color{green},
   showstringspaces=false,
+  captionpos=b,
 }
 % interpreted python -- with gray background.
 \lstdefinestyle{ipython}{
