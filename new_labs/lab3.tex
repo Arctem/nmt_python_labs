@@ -378,7 +378,84 @@ overcome such danger again and again."""
 \section{For Loops Again}
 %usage with for lists and strings more in depth
 %using range in combination with a list
+\subsection{Lists}
+\lstinline{for} loops in python are designed to primarily work with lists. A \lstinline{for} loop iterates through each element in a list in order, performing the same operation for each element. The following program is a simple \lstinline{for} loop that prints out every element of a list.
+
+\begin{lstlisting}[style=python]
+values = [1, 2, 3, 4, 5]
+
+for i in values:
+    print(i)
+\end{lstlisting}
+
+This example uses one list as input to create another list consisting of the initual list's squares.
+
+\begin{lstlisting}[style=python]
+values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+squares = []
+
+for i in values:
+    squares.append(i ** 2)
+
+print("Initial values: {}".format(values))
+print("Squares: {}".format(squares))
+\end{lstlisting}
+
+One limitation of this approach is that we cannot easily manipulate multiple values of a list at once. We can get around this using \lstinline{range}. \lstinline{range} produces a list of the numbers 0 up to and not including the number passed as an argument. If given two arguments, the first is used as the lower bound rather than zero.
+
+\begin{lstlisting}[style=ipython]
+>>> for i in range(5):
+...   print(i)
+... 
+0
+1
+2
+3
+4
+\end{lstlisting}
+
+If we use \lstinline{range} to produce a list of elements the same length as the array being looped over, we can use its values as indices. Here is the squares example redone using \lstinline{range}.
+
+\begin{lstlisting}[style=python]
+values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+squares = []
+
+for i in range(len(values)):
+    squares.append(values[i] ** 2)
+
+print("Initial values: {}".format(values))
+print("Squares: {}".format(squares))
+\end{lstlisting}
+
+In this example, using \lstinline{range} does not help us a significant amount. In this next example, it allows us to sum every adjacent pair of values to create a new list.
+
+\begin{lstlisting}[style=python]
+values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+sums = []
+
+for i in range(len(values)):
+    if i != 0:
+        sums.append(values[i] + values[i - 1])
+
+print("Initial values: {}".format(values))
+print("Sums: {}".format(sums))
+\end{lstlisting}
+
+If we simply want to do something a fixed number of times, we pass that number to \lstinline{range} and put it in a loop.
+
+\begin{lstlisting}[style=python]
+for i in range(10):
+    print("Hello.")
+\end{lstlisting}
+
+
+\subsection{Strings}
+
 \subsection{Summary}
+\begin{itemize}
+  \item A \lstinline{for} loop can be used to iterate through every value in a list.
+  \item If we want access to the index number of the current value, we need to use a \lstinline{range} of the same length as the list.
+\end{itemize}
 
 \subsection{Exercises}
 \label{subsec:forex}
