@@ -208,7 +208,8 @@ full list.
 Thus, for a list \lstinline!L! and two positions (indices) \lstinline!B! and
 \lstinline!E! within that list, the expression \lstinline!L[ B : E ]! produces a
 new list containing the elements in \lstinline!L! between those two positions
-not including \lstinline!E!.
+not including \lstinline!E!. Notice that \lstinline!B! and \lstinline!E! must be
+indices -- whole numbers.
 
 \begin{lstlisting}[style=ipython]
 >>> L = [1, 2, 3, 4, 5]
@@ -417,7 +418,7 @@ enclosed by either double quotes or single quotes; for example:
 I'm a string.
 >>> r = 'I am also a string.'
 >>> print(r)
-I'm also a string.
+I am also a string.
 \end{lstlisting}
 
 Notice how we did not use a single quote in the second string because it was
@@ -545,7 +546,7 @@ True
 True
 \end{lstlisting}
 
-If you want strings to go on for multiple lines, you have to use three double
+If you want strings to go on for two or more lines of Python code, you have to use three double
 quotes:
 \begin{lstlisting}[caption={Excerpt of Richard von Weizs\"{a}cker's speech in
 the Bundestag to commemorate the 40th anniversary of the end of World War II.}]
@@ -674,7 +675,8 @@ Ends are: spng
 
   \item[mix.py] Write a program that takes two strings
     \lstinline!a! and \lstinline!b! and prints the two strings concatenated, but
-    with the first two characters swapped. For example:
+    with the first two characters of each word swapped with the other word's
+    first two characters. For example:
 
     \begin{lstlisting}[style=bash]
 String a: german
@@ -743,6 +745,12 @@ print("Initial values: {}".format(values))
 print("Squares: {}".format(squares))
 \end{lstlisting}
 
+This prints:
+\begin{lstlisting}[style=bash]
+Initial values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+Squares: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+\end{lstlisting}
+
 One limitation of this approach is that we cannot easily manipulate multiple
 values of a list at once. We can get around this using \lstinline{range}.
 \lstinline{range} produces a list of the numbers 0 up to and not including the
@@ -808,22 +816,29 @@ create a new list.
 
 \begin{lstlisting}[style=python]
 values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-sums = []
+adjacent_sums = []
 
 for i in range(len(values)):
     if i != 0:
-        sums.append(values[i] + values[i - 1])
+        adjacent_sums.append(values[i] + values[i - 1])
 
 print("Initial values: {}".format(values))
-print("Sums: {}".format(sums))
+print("Sums: {}".format(adjacent_sums))
 \end{lstlisting}
 
 If we simply want to do something a fixed number of times, we pass that number
 to \lstinline{range} and put it in a loop.
 
 \begin{lstlisting}[style=python]
-for i in range(10):
+for i in range(3):
     print("Hello.")
+\end{lstlisting}
+
+Output of this would be:
+\begin{lstlisting}[style=bash]
+Hello.
+Hello.
+Hello.
 \end{lstlisting}
 
 \subsection{Strings}
