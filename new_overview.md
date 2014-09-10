@@ -12,7 +12,6 @@
 	- both while waiting for something and doing a set number of times - poor man's for loop)
 - input()
 - Turtle
-- Comments
 - Calling functions inside one another
 
 ##Lab 3 - Lists and Strings
@@ -24,6 +23,8 @@
 ##Lab 4 - Functions
 - Functions
 - main() boilerplate
+- Comments
+
 
 ##Lab 5 - Advanced Lists and Strings
 - String/list slicing.
