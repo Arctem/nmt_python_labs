@@ -1,0 +1,127 @@
+% LAB 3: Lists and Strings
+% 
+% CSE/IT 107: Introduction to Programming
+% New Mexico Tech
+% 
+% Prepared by Russell White and Christopher Koch
+% Fall 2014
+\documentclass[11pt]{cselabheader}
+
+%%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
+\fancyhead[R]{Lab 4: Functions}
+\title{Lab 4: Functions}
+
+\begin{document}
+
+\maketitle
+
+\hrule
+\begin{quotation}
+``If you don't think carefully, you might believe that programming is just
+typing statements in a programming language.''
+\end{quotation}
+\begin{flushright}
+--- W. Cunningham
+\end{flushright}
+
+\begin{quotation}
+``Only ugly languages become popular. Python is the exception.''
+\end{quotation}
+\begin{flushright}
+--- Donald Knuth
+\end{flushright}
+
+\hrule
+
+\section{Introduction}
+
+This lab will mainly not contain a lot of text, but instead point you to places
+in your text book to read. While we think that repetition is useful, the book
+often does a better job of explaining concepts and certainly does a better job
+with graphics than we do in the labs. 
+
+\section{Turtle}
+
+Please see pages 711-719 in \emph{The Practice of Computing Using Python} for
+more turtle commands that you will need in this lab; for example, those
+involving color.
+
+\begin{warningbox}{Warning}
+  The book lists a lot of turtle commands, but does so without prepending the
+  method name with \lstinline!turtle.!. This is because instead of using
+  \lstinline!import turtle!, they write \lstinline!from turtle import *!. 
+
+  We will not be using this method; please continue to use 
+  \lstinline!import turtle! and \lstinline!turtle.method()!. For example, use 
+  \lstinline!turtle.begin_fill()! instead of \lstinline!begin_fill()!.
+\end{warningbox}
+
+\section{Functions}
+
+Functions are covered by \emph{Chapter 6} in \emph{The Practice of Computing
+Using Python}.
+
+\section{Exercises}
+\label{sec:ex}
+
+\begin{description}
+  \item[functions.py] \hfill
+    
+    \begin{enumerate}
+      % Computing Python ex 6.9
+      \item Write a function that takes as input a string and prints the total
+        number of vowels and the total number of consonants in the sentence. The
+        function returns nothing. Note that the sentence could have special
+        characters like dots, dashes, and so on.
+
+      % Computing Python ex 6.12
+      \item 
+
+    \end{enumerate}
+
+  \item[hailstone.py]
+
+  % Computing Python Project 1
+  \item[flags.py] 
+
+        Write a function that 
+    
+    
+    Draw the United States flag using at least \emph{four}
+    functions. The regular polygons in the US flag are natural candidates for
+    functions.
+    
+    Hint: Take a look at polygons.py and star.py from previous labs.
+
+    \begin{enumerate}[(a)]
+      \item Draw the flag with the 13 stars arranged in rows as shown on page
+        276 in your book.
+      \item Draw the flag with the 14 stars in a circle. (Hint: Is it really a
+        circle or is it some other \emph{regular} figure?)
+    \end{enumerate}
+\end{description} 
+
+\section{Submitting}
+
+Files to submit:
+\begin{itemize}
+  \item See all files of Section~\ref{sec:ex}.
+\end{itemize}
+
+You may submit your code as either a tarball (instructions below) or as a .zip
+file. Either one should contain all files used in the exercises for this lab.
+The submitted file should be named either
+\texttt{cse107\_firstname\_lastname\_lab4.zip} or
+\texttt{cse107\_firstname\_lastname\_lab4.tar.gz} depending on which method you
+used.
+
+For Windows, use a tool you like to create a \texttt{.zip} file. The TCC
+computers should have \texttt{7z} installed. For Linux, look at lab 1 for
+instructions on how to create a tarball or use the ``Archive Manager'' graphical
+tool.
+
+\begin{center}
+  \textbf{Upload your tarball or .zip file to Canvas.}
+\end{center}
+
+\end{document}
