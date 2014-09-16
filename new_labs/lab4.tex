@@ -17,18 +17,18 @@
 
 \hrule
 \begin{quotation}
-``If you don't think carefully, you might believe that programming is just
-typing statements in a programming language.''
+  ``If you don't think carefully, you might believe that programming is just
+  typing statements in a programming language.''
 \end{quotation}
 \begin{flushright}
---- W. Cunningham
+  --- W. Cunningham
 \end{flushright}
 
 \begin{quotation}
-``Only ugly languages become popular. Python is the exception.''
+  ``Only ugly languages become popular. Python is the exception.''
 \end{quotation}
 \begin{flushright}
---- Donald Knuth
+  --- Donald Knuth
 \end{flushright}
 
 \hrule
@@ -39,7 +39,7 @@ This lab will mainly not contain a lot of text, but instead point you to places
 in your text book to read. While we think that repetition is useful, the book
 often does a better job of explaining concepts and certainly does a better job
 with graphics than we do in the labs. We will call \emph{The Practice of
-Computing Using Python} the \emph{Computing Python} book from now on.
+  Computing Using Python} the \emph{Computing Python} book from now on.
 
 \section{Turtle}
 
@@ -60,54 +60,91 @@ involving color.
 \section{Functions}
 
 Functions are covered by \emph{Chapter 6} in \emph{The Practice of Computing
-Using Python}.
+  Using Python}.
 
 \section{Exercises}
 \label{sec:ex}
 
 \begin{description}
-  \item[functions.py] \hfill
-    
-    \begin{enumerate}
-      % Computing Python ex 6.9
-      \item Write a function that takes as input a string and prints the total
-        number of vowels and the total number of consonants in the sentence. The
-        function returns nothing. Note that the sentence could have special
-        characters like dots, dashes, and so on. (\emph{Computing Python} 6.9)
+\item[functions.py] \hfill
+  
+  \begin{enumerate}
+    % Computing Python ex 6.9
+  \item Write a function that takes as input a string and prints the total
+    number of vowels and the total number of consonants in the sentence. The
+    function returns nothing. Note that the sentence could have special
+    characters like dots, dashes, and so on. (\emph{Computing Python} 6.9)
 
-      \item \emph{Computing Python} 6.10
-      % Computing Python ex 6.12
-      \item \emph{Computing Python} 6.12
+  \item \emph{Computing Python} 6.10
+    % Computing Python ex 6.12
+  \item \emph{Computing Python} 6.12
 
-      \item \emph{Computing Python} 6.17
-    \end{enumerate}
+  \item \emph{Computing Python} 6.17
+  \end{enumerate}
 
   % Computing Python Project 1
-  \item[flag.py] \emph{Computing Python} Project 1 (a), (b) \hfill
+\item[flag.py] \emph{Computing Python} Project 1 (a), (b) \hfill
 
-    Write two functions that draw the United States flag using Turtle.
-    These functions must use at least 2 other functions that you write
-    to help draw the repetitive parts of the flag.
+  Write two functions that draw the United States flag using Turtle.
+  These functions must use at least 2 other functions that you write
+  to help draw the repetitive parts of the flag.
 
-    One of the functions should draw the flag with the 13 stars arranged
-    in rows as shown on page 276 in your book.
+  One of the functions should draw the flag with the 13 stars arranged
+  in rows as shown on page 276 in your book.
 
-    One of the functions should draw the flag with the 13 stars in a circle.
-    (Hint: Is it really a circle or is it some other \emph{regular} figure?)
-    
-    Hint: Take a look at polygons.py and star.py from previous labs.
+  One of the functions should draw the flag with the 13 stars in a circle.
+  (Hint: Is it really a circle or is it some other \emph{regular} figure?)
+  
+  Hint: Take a look at polygons.py and star.py from previous labs.
 
-  \item[find.py] \emph{Computing Python} Project 2 (a)
+\item[find.py] \emph{Computing Python} Project 2 (a)
 
-  \item[hailstone.py] Will be expanded upon later, please wait for a new PDF of
-    this lab.
+\item[hailstone.py] The Collatz Conjecture states that, for any given $n$,
+  you will always reach 1 if you repeat the following steps for long enough:
+  \begin{itemize}
+  \item If $n$ is odd, multiply it by 3 and add 1.
+  \item If $n$ is even, divide it by 2.
+  \end{itemize}
+  The sequence of values you have along the way is referred to as the hailstone
+  sequence for the starting number. For example, the process performed on an initial $n$ of 3 is shown in Table \ref{ex:hailstone}.
+
+  \begin{table}[!ht]
+    \centering
+    \begin{tabular}{ll}
+      \toprule
+      $n$ & Rule performed\\
+      \midrule
+      3 & $3n + 1$\\
+      10 & $\frac{n}{2}$\\
+      5 & $3n + 1$\\
+      16 & $\frac{n}{2}$\\
+      8 & $\frac{n}{2}$\\
+      4 & $\frac{n}{2}$\\
+      2 & $\frac{n}{2}$\\
+      1 & Done\\
+      \bottomrule
+    \end{tabular}
+    \caption{Hailstone Sequence for $n = 3$}
+    \label{ex:hailstone}
+  \end{table}
+
+  The number of steps that must be performed before
+  reaching 1 is called the stopping distance. The stopping
+  time of 3 in the above example is 7. The stopping
+  time of $n = 1$ would be 0.
+
+  Write a function that takes in a starting $n$ for the
+  hailstone sequence. The function should then calculate the
+  stopping time for that number as well as the largest value
+  passed on the way to 1. The above example in Table \ref{ex:hailstone}
+  would report a stopping time of 7 and a maximum value of 16.
 \end{description} 
 
 \section{Submitting}
 
 Files to submit:
 \begin{itemize}
-  \item See all files of Section~\ref{sec:ex}.
+\item See all files of Section~\ref{sec:ex}.
 \end{itemize}
 
 You may submit your code as either a tarball (instructions below) or as a .zip
