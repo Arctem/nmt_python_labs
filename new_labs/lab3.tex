@@ -380,28 +380,6 @@ Two lists can be added together in order to combine them into one list.
 \label{subsec:listsex}
 
 \begin{description}
-  \item[sorted.py] Take in numbers as input until ``stop'' is entered. As you
-    take in each number, insert it into a list so that the list is sorted in
-    ascending order. That is, look through the list until you find the place
-    where the new element belongs, then use \lstinline{.insert()} to place it
-    there. If the number is already in the list, do not add it again. After
-    ``stop'' is entered, print out the list. Do not use any of Python's built-in
-    sorting functions.
-
-    You cannot use \lstinline!.sort()! for this exercise.
-
-    Sample:
-\begin{lstlisting}[style=ipython]
-Input a number: 12
-Input a number: 5.2
-Input a number: 73
-Input a number: 100
-Input a number: -5
-Input a number: 2.3
-Input a number: stop
-[-5.0, 2.3, 5.2, 12.0, 73.0, 100.0]
-\end{lstlisting}
-
   \item[parity.py] Take in numbers as input until ``stop'' is entered. Then split the numbers into three lists: one containing all the numbers, one containing all even values, and one containing all odd. Print out all three lists, as well as each list's sum and average. Assume all input values are integers.
 
     Sample:
@@ -911,6 +889,29 @@ This will print:
   \item[navigate2.py] Modify \texttt{navigate.py} from last week so that,
     rather than performing each action as it is entered, it stores the inputs in a
     list and runs them all at once after the ``stop'' command has been given.
+
+  \item[sorted.py] Take in numbers as input until ``stop'' is entered. As you
+    take in each number, insert it into a list so that the list is sorted in
+    ascending order. That is, look through the list until you find the place
+    where the new element belongs, then use \lstinline{.insert()} to place it
+    there. If the number is already in the list, do not add it again. After
+    ``stop'' is entered, print out the list. Do not use any of Python's built-in
+    sorting functions.
+
+    You cannot use \lstinline!.sort()! for this exercise.
+
+    Sample:
+\begin{lstlisting}[style=ipython]
+Input a number: 12
+Input a number: 5.2
+Input a number: 73
+Input a number: 100
+Input a number: -5
+Input a number: 2.3
+Input a number: stop
+[-5.0, 2.3, 5.2, 12.0, 73.0, 100.0]
+\end{lstlisting}
+
 \end{description}
 
 \pagebreak
@@ -918,13 +919,13 @@ This will print:
 
 Files to submit:
 \begin{itemize}
-  \item sorted.py (see Section~\ref{subsec:listsex})
   \item parity.py (see Section~\ref{subsec:listsex})
   \item splitit.py (see Section~\ref{subsec:stringsex})
   \item ends.py (see Section~\ref{subsec:stringsex})
   \item mix.py (see Section~\ref{subsec:stringsex})
-  \item navigate2.py (see Section~\ref{subsec:forex})
   \item spiral.py (see Section~\ref{subsec:forex})
+  \item navigate2.py (see Section~\ref{subsec:forex})
+  \item sorted.py (see Section~\ref{subsec:forex})
 \end{itemize}
 
 You may submit your code as either a tarball (instructions below) or as a .zip
