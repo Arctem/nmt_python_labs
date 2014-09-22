@@ -77,15 +77,14 @@ The additional concepts introduced in these examples are:
 >>> print(contents)
 filename = input("What file should be read? ")
 
-try:
-    input_file = open(filename, "r")
-    for line in input_file:
-        print(line, end="")
+input_file = open(filename, "r")
+for line in input_file:
+    print(line, end="")
 
-    input_file.close()
-except FileNotFoundError:
-    print("Could not find file {}.".format(filename))
+input_file.close()
   \end{lstlisting}
+
+\item \lstinline{.readlines()} can be used to read all of a file at once, though it splits the file into a list. Each element of the list will be one line of the file being read.
 \end{itemize}
 
 
