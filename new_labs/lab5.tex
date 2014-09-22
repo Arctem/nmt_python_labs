@@ -37,6 +37,43 @@
 
 
 \section{File I/O}
+Knowing how to work with files is important, since it lets us store and retrieve data beyond the scope of a single execution of a program. To open a file for reading or writing we will use the \lstinline{open} function. The following example opens a file and writes ``Hello World'' to it.
+
+\begin{lstlisting}[style=python]
+output_file = open("hello.txt", "w")
+
+print("Hello World", file=output_file)
+output_file.close()
+\end{lstlisting}
+
+The arguments to the \lstinline{open} function are, in order, the name of the file to open and the mode in which to open the file. ``w'' means that the file is to be opened in write mode. If the file does not exist, this will create the file. If it does exist, then the contents of the file will be cleared in preparation for the new ones.
+
+Other options include ``a'', which is similar to ``w'' but will not clear the contents of an existing file and will instead append the new data to the end, and ``r'' which will read the file instead. If ``r'' is used and the file does not exist, then an error will occur. The following code takes a filename as user input, then prints out the entire contents of that file.
+
+\begin{lstlisting}[style=python]
+filename = input("What file should be read? ")
+
+input_file = open(filename, "r")
+for line in input_file:
+    print(line, end="")
+
+input_file.close()
+\end{lstlisting}
+
+The additional concepts introduced in these examples are:
+
+\begin{itemize}
+\item The \lstinline{print} function can have an additional ``file'' parameter passed to it to allow writing to a file. This causes it to send its output to the file rather than the screen, though otherwise it performs identically.
+
+\item The \lstinline{print} function has an additional optional ``end'' parameter. This allows you to specify what should be printed after the main string given to it. This is important because it defaults to \lstinline{"\n"}, which causes a newline after every print statement. By changing ``end'' to \lstinline{""} we prevent a newline from being added after every line of the file is printed. This is because each line in the file already has a newline at the end of it, so we don't need \lstinline{print} to add its own.
+
+\item \lstinline{.close()} is used to properly tell Python that you are done with a file and close your connection to it. This isn't \emph{strictly} required, but without it you risk the file being corrupted or other programs being unable to access that file.
+
+\item When reading from a file, Python can use a \lstinline{for} loop to go through each line in sequence. This identically to if you think of the file as a list with every line being a different element of the list.
+\end{itemize}
+
+
+\subsection{Error Handling}
 
 
 \section{Program Boilerplate}
@@ -49,7 +86,8 @@
 \label{sec:ex}
 
 \begin{description}
-  \item[something.py] test
+  \item[save.py]
+  \item[load.py]
 \end{description}
 
 \section{Submitting}
