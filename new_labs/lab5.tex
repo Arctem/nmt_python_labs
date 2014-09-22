@@ -69,7 +69,23 @@ The additional concepts introduced in these examples are:
 
 \item \lstinline{.close()} is used to properly tell Python that you are done with a file and close your connection to it. This isn't \emph{strictly} required, but without it you risk the file being corrupted or other programs being unable to access that file.
 
-\item When reading from a file, Python can use a \lstinline{for} loop to go through each line in sequence. This works identically to if you think of the file as a list with every line being a different element of the list.
+\item When reading from a file, Python can use a \lstinline{for} loop to go through each line in sequence. This works identically to if you think of the file as a list with every line being a different element of the list. The entirety of the file can also be read into a single string using the \lstinline{.read()} function.
+
+  \begin{lstlisting}[style=ipython]
+>>> input_file = open("test.py", "r")
+>>> contents = input_file.read()
+>>> print(contents)
+filename = input("What file should be read? ")
+
+try:
+    input_file = open(filename, "r")
+    for line in input_file:
+        print(line, end="")
+
+    input_file.close()
+except FileNotFoundError:
+    print("Could not find file {}.".format(filename))
+  \end{lstlisting}
 \end{itemize}
 
 
