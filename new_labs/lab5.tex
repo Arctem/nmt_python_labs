@@ -126,9 +126,6 @@ except FileNotFoundError:
 
 If you wish to catch an error, check the error message for the name of the error that you need to catch with your \lstinline{except} statement. If the specified error does not occur inside the \lstinline{try} block, then the \lstinline{except} block will be skipped. A single \lstinline{try} block can have several \lstinline{except} statements following it for catching multiple types of errors.
 
-%\section{Program Boilerplate}
-
-
 %\section{Recursion}
 
 \section{Instantiating Turtles}
@@ -193,9 +190,40 @@ for i in range(200):
   \includegraphics[width=2.0in]{img/fancy_spiral}
 \end{figure}
 
+\section{Program Boilerplate}
+\label{sec:boil}
+
+Most Python programs will have a standard format to them that looks something like this:
+
+\begin{lstlisting}[style=python]
+#import statements
+
+#other function declarations
+
+#Program starting point - first function run
+def main():
+    #All function calls and program logic should start here
+
+#Boilerplate that must be at the very end of your program
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+
+All program logic should exist inside functions. That is: the only code that exists at the lowest level of indentation should be imports, function declarations, and the \lstinline{if __main__ == '__main__':} statement.
+
+There are several reasons for this boilerplate code. Primarily, it provides a common structure to your programs -- when trying to determine what a program does, you can know to look for the \lstinline{main()} function first.
+
+Additionally, this format will be useful once you start writing programs that consist of more than one file. Without this syntax, a file's code will execute when it is imported, while with this syntax importing the file will only allow its functions to be used.
+
+You are required to use this format on all future labs in this class.
+
 
 \section{Exercises}
 \label{sec:ex}
+
+\begin{warningbox}{Boilerplate}
+  Remember that all future labs (including these) \emph{must} use the boilerplate syntax introduced in Section \ref{sec:boil}.
+\end{warningbox}
 
 \begin{description}
 \item[save.py] Write a program that takes in a filename as input, then takes in a series of lines of input until a blank line is entered, writing each line to the file with the given name. After the blank line is entered, properly close the file before ending the program.
@@ -217,6 +245,7 @@ for i in range(200):
 ['this', 'is', 'a', 'phrase']
   \end{lstlisting}
 
+  \emph{Suggestion:} Split each command into a different function to help keep their logic separate.
 
   Sample Input File:
   \begin{lstlisting}[style=python]
