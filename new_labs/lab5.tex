@@ -154,9 +154,7 @@ second.forward(50)
 
 \begin{figure}[h]
   \centering
-  %      \vspace{-10mm}
   \includegraphics[width=1.0in]{img/turtle_prong}
-  %    \vspace{-10mm}
 \end{figure}
 
 If we add a group of turtles to a list, we can easily apply the same commands to all of them, as in this example:
@@ -214,6 +212,11 @@ for i in range(200):
   In order to properly implement split, you will probably need to look up the turtle functions \lstinline{.position()}, \lstinline{.setposition()}, \lstinline{.setheading()}, \lstinline{.heading()}, \lstinline{.penup()}, and \lstinline{.pendown()}. Turtle documentation is available at \url{https://docs.python.org/3/library/turtle.html}.
 
   You will also likely use the \lstinline{.split()} command when getting input, which splits a single string into an array around the string's spaces.
+  \begin{lstlisting}[style=ipython]
+>>> print("this is a phrase".split())
+['this', 'is', 'a', 'phrase']
+  \end{lstlisting}
+
 
   Sample Input File:
   \begin{lstlisting}[style=python]
@@ -234,17 +237,10 @@ left 20
   \end{lstlisting}
 
   Sample Output:
-  \begin{figure}[h]
+  \begin{figure}[!h]
     \centering
-    \includegraphics[width=2.0in]{img/nav3_example}
+    \includegraphics[width=1.0in]{img/nav3_example}
   \end{figure}
-
-
-  \begin{lstlisting}[style=ipython]
->>> print("this is a phrase".split())
-['this', 'is', 'a', 'phrase']
-  \end{lstlisting}
-
 \end{description}
 
 \section{Submitting}
