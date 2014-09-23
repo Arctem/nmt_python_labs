@@ -300,37 +300,39 @@ You are required to use this format on all future labs in this class.
   for a filename until one is given that exists. Use your source code file as
   test input.
 
-\item[navigate3.py] Modify navigate.py so that, rather than take instructions
-  from the command line, it reads from a file (specified by user input) to
-  determine what the turtle will do. Additionally, you will be adding the
-  ``split'' command. This command will use instantiation of new turtles in order
-  to draw multiple lines at once. Every new command will apply to every turtle
-  that currently exists. The file will have on instruction per line. The
-  possible instructions are:
+  \item[navigate3.py] Modify navigate.py so that, rather than take instructions
+    from the command line, it reads from a file (specified by user input) to
+    determine what the turtle will do. Additionally, you will be adding the
+    ``split'' command. This command will use instantiation of new turtles in order
+    to draw multiple lines at once. Every new command will apply to every turtle
+    that currently exists. The file will have on instruction per line. The
+    possible instructions are:
 
-  \begin{description}
-    \item[forward X] Move all turtles forward X.
-    \item[left X] Turn all turtles X degrees to the left.
-    \item[right X] Turn all turtles X degrees to the right.
-    \item[split X] Split all turtles into new turtles. Each new turtle will be turned X degrees to the right.
-  \end{description}
+    \begin{description}
+      \item[forward X] Move all turtles forward X.
+      \item[left X] Turn all turtles X degrees to the left.
+      \item[right X] Turn all turtles X degrees to the right.
+      \item[split X] Split all turtles into new turtles. Each new turtle will be turned X degrees to the right.
+    \end{description}
 
-  In order to properly implement split, you will probably need to look up the
-  turtle functions \lstinline{.position()}, \lstinline{.setposition()},
-  \lstinline{.setheading()}, \lstinline{.heading()}, \lstinline{.penup()}, and
-  \lstinline{.pendown()}. Turtle documentation is available at
-  \url{https://docs.python.org/3/library/turtle.html}.
+    In order to properly implement split, you will probably need to look up the
+    turtle functions \lstinline{.position()}, \lstinline{.setposition()},
+    \lstinline{.setheading()}, \lstinline{.heading()}, \lstinline{.penup()}, and
+    \lstinline{.pendown()}. Turtle documentation is available at
+    \url{https://docs.python.org/3/library/turtle.html}.
 
-  You will also likely use the \lstinline{.split()} command when getting input, which splits a single string into an array around the string's spaces.
-  \begin{lstlisting}[style=ipython]
+    You will also likely use the \lstinline{.split()} command when getting input, which splits a single string into an array around the string's spaces.
+    \begin{lstlisting}[style=ipython]
 >>> print("this is a phrase".split())
 ['this', 'is', 'a', 'phrase']
-  \end{lstlisting}
+>>> print("hi,hi,hi".split(",")
+['hi', 'hi', 'hi']
+    \end{lstlisting}
 
-  \emph{Suggestion:} Split each command into a different function to help keep their logic separate.
+    \emph{Suggestion:} Split each command into a different function to help keep their logic separate.
 
-  Sample Input File:
-  \begin{lstlisting}[style=python]
+    Sample Input File:
+    \begin{lstlisting}[style=python]
 forward 50
 left 20
 split 40
@@ -345,15 +347,15 @@ left 20
 split 40
 forward 50
 left 20
-  \end{lstlisting}
+    \end{lstlisting}
 
-  Sample Output (Figure~\ref{fig:nav})
-  \begin{figure}[!h]
-    \centering
-    \includegraphics[width=1.0in]{img/nav3_example}
-    \caption{navigate3.py}
-    \label{fig:nav}
-  \end{figure}
+    Sample Output (Figure~\ref{fig:nav})
+    \begin{figure}[!h]
+      \centering
+      \includegraphics[width=1.0in]{img/nav3_example}
+      \caption{navigate3.py}
+      \label{fig:nav}
+    \end{figure}
 
   \item[states.py]
     Look at the file \texttt{states.csv} given. It has the following columns, in
