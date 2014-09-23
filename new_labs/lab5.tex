@@ -44,21 +44,46 @@ scientist.''
 \hrule
 
 \section{Introduction}
-
+In previous labs, we taught you how to use functions, math, lists, strings, and
+the like. We will combine all that in this lab and teach you how to interact
+with files. This will lead us to do some exciting data analysis!
 
 \section{File I/O}
-Knowing how to work with files is important, since it lets us store and retrieve data beyond the scope of a single execution of a program. To open a file for reading or writing we will use the \lstinline{open} function. The following example opens a file and writes ``Hello World'' to it.
+Knowing how to work with files is important, since it lets us store and retrieve
+data beyond the scope of the single execution of a program. To open a file for
+reading or writing we will use the \lstinline{open} function. The following
+example opens a file and writes ``Hello World'' to it.
 
 \begin{lstlisting}[style=python]
- utput_file = open("hello.txt", "w")
+output_file = open("hello.txt", "w")
 
 print("Hello World", file=output_file)
 output_file.close()
 \end{lstlisting}
 
-The arguments to the \lstinline{open} function are, in order, the name of the file to open and the mode in which to open the file. ``w'' means that the file is to be opened in write mode. If the file does not exist, this will create the file. If it does exist, then the contents of the file will be cleared in preparation for the new ones.
+The arguments to the \lstinline{open} function are, in order, the name of the
+file to open and the mode in which to open the file. ``w'' means that the file
+is to be opened in write mode. If the file does not exist, this will create the
+file. If it does exist, then the contents of the file will be cleared in
+preparation for the new ones.
 
-Other options include ``a'', which is similar to ``w'' but will not clear the contents of an existing file and will instead append the new data to the end, and ``r'' which will read the file instead. If ``r'' is used and the file does not exist, then an error will occur. The following code takes a filename as user input, then prints out the entire contents of that file.
+Other options include ``a'', which is similar to ``w'' but will not clear the
+contents of an existing file and will instead append the new data to the end,
+and ``r'' which will read the file instead. If ``r'' is used and the file does
+not exist, then an error will occur. The following code takes a filename as user
+input, then prints out the entire contents of that file.
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{ll}
+    Mode & What it does \\
+    \midrule
+    a & Create file if does not exist, open file, append contents to the end \\
+    w & Create file if does not exist, open file, write contents to the beginning
+    of file \\
+    r & Open file, permit reading only \\
+  \end{tabular}
+\end{table}
 
 \begin{lstlisting}[style=python]
 filename = input("What file should be read? ")
@@ -73,13 +98,28 @@ input_file.close()
 The additional concepts introduced in these examples are:
 
 \begin{itemize}
-\item The \lstinline{print} function can have an additional ``file'' parameter passed to it to allow writing to a file. This causes it to send its output to the file rather than the screen, though otherwise it performs identically.
+\item The \lstinline{print} function can have an additional ``file'' parameter
+  passed to it to allow writing to a file. This causes it to send its output to
+  the file rather than the screen, though otherwise it performs identically.
 
-\item The \lstinline{print} function has an additional optional ``end'' parameter. This allows you to specify what should be printed after the main string given to it. This is important because it defaults to \lstinline{"\n"}, which causes a newline after every print statement. By changing ``end'' to \lstinline{""} we prevent a newline from being added after every line of the file is printed. This is because each line in the file already has a newline at the end of it, so we don't need \lstinline{print} to add its own.
+\item The \lstinline{print} function has an additional optional ``end''
+  parameter. This allows you to specify what should be printed after the main
+  string given to it. This is important because it defaults to \lstinline{"\n"},
+  which causes a newline after every print statement. By changing ``end'' to
+  \lstinline{""} we prevent a newline from being added after every line of the
+  file is printed. This is because each line in the file already has a newline
+  at the end of it, so we don't need \lstinline{print} to add its own.
 
-\item \lstinline{.close()} is used to properly tell Python that you are done with a file and close your connection to it. This isn't \emph{strictly} required, but without it you risk the file being corrupted or other programs being unable to access that file.
+\item \lstinline{.close()} is used to properly tell Python that you are done
+  with a file and close your connection to it. This isn't \emph{strictly}
+  required, but without it you risk the file being corrupted or other programs
+  being unable to access that file.
 
-\item When reading from a file, Python can use a \lstinline{for} loop to go through each line in sequence. This works identically to if you think of the file as a list with every line being a different element of the list. The entirety of the file can also be read into a single string using the \lstinline{.read()} function.
+\item When reading from a file, Python can use a \lstinline{for} loop to go
+  through each line in sequence. This works identically to if you think of the
+  file as a list with every line being a different element of the list. The
+  entirety of the file can also be read into a single string using the
+  \lstinline{.read()} function.
 
 \begin{lstlisting}[style=ipython]
 >>> input_file = open("test.py", "r")
@@ -94,22 +134,28 @@ for line in input_file:
 input_file.close()
 \end{lstlisting}
 
-\item \lstinline{.readlines()} can be used to read all of a file at once, though it splits the file into a list. Each element of the list will be one line of the file being read.
+\item \lstinline{.readlines()} can be used to read all of a file at once, though
+  it splits the file into a list. Each element of the list will be one line of
+  the file being read.
 \end{itemize}
 
 
 \subsection{Error Handling}
-If you try to open a file that does not exist for reading, Python will display an error message:
+If you try to open a file that does not exist for reading, Python will display
+an error message:
 
 \begin{lstlisting}[style=ipython]
->>> open("not_a_file.txt", "r")9
+>>> open("not_a_file.txt", "r")
 Traceback (most recent call last):
 File "<pyshell#0>", line 1, in <module>
 open("not_a_file.txt", "r")
 FileNotFoundError: [Errno 2] No such file or directory: 'not_a_file.txt'
 \end{lstlisting}
 
-In this case, the error is \lstinline{FileNotFoundError}. Normally having an error occur will end your program, but we can use \lstinline{try-except} in order to perform a special action in case of an error. The following program uses this to display an error message rather than crashing.
+In this case, the error is \lstinline{FileNotFoundError}. Normally having an
+error occur will end your program, but we can use \lstinline{try-except} in
+order to perform a special action in case of an error. The following program
+uses this to display an error message rather than crashing.
 
 \begin{lstlisting}[style=python]
 filename = input("What file should be read? ")
@@ -124,15 +170,23 @@ except FileNotFoundError:
   print("Could not find file {}.".format(filename))
 \end{lstlisting}
 
-If you wish to catch an error, check the error message for the name of the error that you need to catch with your \lstinline{except} statement. If the specified error does not occur inside the \lstinline{try} block, then the \lstinline{except} block will be skipped. A single \lstinline{try} block can have several \lstinline{except} statements following it for catching multiple types of errors.
+If you wish to catch an error, check the error message for the name of the error
+that you need to catch with your \lstinline{except} statement. If the specified
+error does not occur inside the \lstinline{try} block, then the
+\lstinline{except} block will be skipped. A single \lstinline{try} block can
+have several \lstinline{except} statements following it for catching multiple
+types of errors.
 
 %\section{Program Boilerplate}
 
 
 %\section{Recursion}
-
+\pagebreak
 \section{Instantiating Turtles}
-Similarly to being able to open multiple files, we can also create multiple turtles to draw more complex designs. This is done using the \lstinline{turtle.Turtle()} function. This function returns a turtle object, which we can call every other normal turtle function on.
+Similarly to being able to open multiple files, we can also create multiple
+turtles to draw more complex designs. This is done using the
+\lstinline{turtle.Turtle()} function. This function returns a turtle object,
+which we can call every other normal turtle function on.
 
 \begin{lstlisting}[style=python]
 import turtle
@@ -193,14 +247,29 @@ for i in range(200):
   \includegraphics[width=2.0in]{img/fancy_spiral}
 \end{figure}
 
-
+\pagebreak
 \section{Exercises}
 \label{sec:ex}
 
 \begin{description}
-\item[save.py] Write a program that takes in a filename as input, then takes in a series of lines of input until a blank line is entered, writing each line to the file with the given name. After the blank line is entered, properly close the file before ending the program.
-\item[word\_count.py] Write a program that takes in a filename and string as input. Then print how many times that string appears inside the chosen file. If the file does not exist, continue asking for a filename until one is given that exists. Use your source code file as test input.
-\item[navigate3.py] Modify navigate.py so that, rather than take instructions from the command line, it reads from a file (specified by user input) to determine what the turtle will do. Additionally, you will be adding the ``split'' command. This command will use instantiation of new turtles in order to draw multiple lines at once. Every new command will apply to every turtle that currently exists. The file will have on instruction per line. The possible instructions are:
+\item[save.py] Write a program that takes in a filename as input, then takes in
+  a series of lines of input until a blank line is entered, writing each line to
+  the file with the given name. After the blank line is entered, properly close
+  the file before ending the program.  
+
+\item[word\_count.py] Write a program that
+  takes in a filename and string as input. Then print how many times that string
+  appears inside the chosen file. If the file does not exist, continue asking
+  for a filename until one is given that exists. Use your source code file as
+  test input.
+
+\item[navigate3.py] Modify navigate.py so that, rather than take instructions
+  from the command line, it reads from a file (specified by user input) to
+  determine what the turtle will do. Additionally, you will be adding the
+  ``split'' command. This command will use instantiation of new turtles in order
+  to draw multiple lines at once. Every new command will apply to every turtle
+  that currently exists. The file will have on instruction per line. The
+  possible instructions are:
 
   \begin{description}
     \item[forward X] Move all turtles forward X.
@@ -209,7 +278,11 @@ for i in range(200):
     \item[split X] Split all turtles into new turtles. Each new turtle will be turned X degrees to the right.
   \end{description}
 
-  In order to properly implement split, you will probably need to look up the turtle functions \lstinline{.position()}, \lstinline{.setposition()}, \lstinline{.setheading()}, \lstinline{.heading()}, \lstinline{.penup()}, and \lstinline{.pendown()}. Turtle documentation is available at \url{https://docs.python.org/3/library/turtle.html}.
+  In order to properly implement split, you will probably need to look up the
+  turtle functions \lstinline{.position()}, \lstinline{.setposition()},
+  \lstinline{.setheading()}, \lstinline{.heading()}, \lstinline{.penup()}, and
+  \lstinline{.pendown()}. Turtle documentation is available at
+  \url{https://docs.python.org/3/library/turtle.html}.
 
   You will also likely use the \lstinline{.split()} command when getting input, which splits a single string into an array around the string's spaces.
   \begin{lstlisting}[style=ipython]
@@ -236,13 +309,43 @@ forward 50
 left 20
   \end{lstlisting}
 
-  Sample Output:
+  Sample Output (Figure~\ref{fig:nav})
   \begin{figure}[!h]
     \centering
     \includegraphics[width=1.0in]{img/nav3_example}
+    \caption{navigate3.py}
+    \label{fig:nav}
   \end{figure}
+
+  \pagebreak
+  \item[states.py]
+    Look at the file \texttt{states.csv} given. It has the following columns, in
+    the following order:
+    \begin{itemize}
+      \item State name
+      \item Population in thousands
+      \item Life expectation in years
+      \item Murder rate per 1,000,000 people
+      \item High school graduation rate
+      \item Area in square miles
+    \end{itemize}
+
+    Write a program that reads in all this data to a list of lists and then
+    \emph{write a function} for each of the following:
+    \begin{itemize}
+      \item Find the murder rate per 1,000,000 people for the United States.
+      \item Find the murder rate per square mile for each state and then the
+        United States.
+      \item Find the high school graduation rate per area for each state.
+      \item Find the total area of the United States.
+      \item Find the population density (population per area) of the United
+        States.
+    \end{itemize}
+
+    Print the per state information in a table.
 \end{description}
 
+\pagebreak
 \section{Submitting}
 
 Files to submit:
@@ -250,6 +353,7 @@ Files to submit:
 \item save.py
 \item word\_count.py
 \item navigate3.py
+\item states.py
 \end{itemize}
 
 You may submit your code as either a tarball (instructions below) or as a .zip
