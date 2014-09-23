@@ -50,10 +50,10 @@ scientist.''
 Knowing how to work with files is important, since it lets us store and retrieve data beyond the scope of a single execution of a program. To open a file for reading or writing we will use the \lstinline{open} function. The following example opens a file and writes ``Hello World'' to it.
 
 \begin{lstlisting}[style=python]
-  output_file = open("hello.txt", "w")
+ utput_file = open("hello.txt", "w")
 
-  print("Hello World", file=output_file)
-  output_file.close()
+print("Hello World", file=output_file)
+output_file.close()
 \end{lstlisting}
 
 The arguments to the \lstinline{open} function are, in order, the name of the file to open and the mode in which to open the file. ``w'' means that the file is to be opened in write mode. If the file does not exist, this will create the file. If it does exist, then the contents of the file will be cleared in preparation for the new ones.
@@ -61,13 +61,13 @@ The arguments to the \lstinline{open} function are, in order, the name of the fi
 Other options include ``a'', which is similar to ``w'' but will not clear the contents of an existing file and will instead append the new data to the end, and ``r'' which will read the file instead. If ``r'' is used and the file does not exist, then an error will occur. The following code takes a filename as user input, then prints out the entire contents of that file.
 
 \begin{lstlisting}[style=python]
-  filename = input("What file should be read? ")
+filename = input("What file should be read? ")
 
-  input_file = open(filename, "r")
-  for line in input_file:
+input_file = open(filename, "r")
+for line in input_file:
   print(line, end="")
 
-  input_file.close()
+input_file.close()
 \end{lstlisting}
 
 The additional concepts introduced in these examples are:
@@ -81,18 +81,18 @@ The additional concepts introduced in these examples are:
 
 \item When reading from a file, Python can use a \lstinline{for} loop to go through each line in sequence. This works identically to if you think of the file as a list with every line being a different element of the list. The entirety of the file can also be read into a single string using the \lstinline{.read()} function.
 
-  \begin{lstlisting}[style=ipython]
-    >>> input_file = open("test.py", "r")
-    >>> contents = input_file.read()
-    >>> print(contents)
-    filename = input("What file should be read? ")
+\begin{lstlisting}[style=ipython]
+>>> input_file = open("test.py", "r")
+>>> contents = input_file.read()
+>>> print(contents)
+filename = input("What file should be read? ")
 
-    input_file = open(filename, "r")
-    for line in input_file:
-    print(line, end="")
+input_file = open(filename, "r")
+for line in input_file:
+  print(line, end="")
 
-    input_file.close()
-  \end{lstlisting}
+input_file.close()
+\end{lstlisting}
 
 \item \lstinline{.readlines()} can be used to read all of a file at once, though it splits the file into a list. Each element of the list will be one line of the file being read.
 \end{itemize}
@@ -102,25 +102,25 @@ The additional concepts introduced in these examples are:
 If you try to open a file that does not exist for reading, Python will display an error message:
 
 \begin{lstlisting}[style=ipython]
-  >>> open("not_a_file.txt", "r")9
-  Traceback (most recent call last):
-  File "<pyshell#0>", line 1, in <module>
-  open("not_a_file.txt", "r")
-  FileNotFoundError: [Errno 2] No such file or directory: 'not_a_file.txt'
+>>> open("not_a_file.txt", "r")9
+Traceback (most recent call last):
+File "<pyshell#0>", line 1, in <module>
+open("not_a_file.txt", "r")
+FileNotFoundError: [Errno 2] No such file or directory: 'not_a_file.txt'
 \end{lstlisting}
 
 In this case, the error is \lstinline{FileNotFoundError}. Normally having an error occur will end your program, but we can use \lstinline{try-except} in order to perform a special action in case of an error. The following program uses this to display an error message rather than crashing.
 
 \begin{lstlisting}[style=python]
-  filename = input("What file should be read? ")
+filename = input("What file should be read? ")
 
-  try:
+try:
   input_file = open(filename, "r")
   for line in input_file:
-  print(line, end="")
+    print(line, end="")
 
   input_file.close()
-  except FileNotFoundError:
+except FileNotFoundError:
   print("Could not find file {}.".format(filename))
 \end{lstlisting}
 
