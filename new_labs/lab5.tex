@@ -122,7 +122,7 @@ If you wish to catch an error, check the error message for the name of the error
 %\section{Recursion}
 
 \section{Instantiating Turtles}
-Similarly to being able to open multiple files, we can also create multiple turtles to draw more complex designs. This is done using the \lstinline{turtle.Turtle()} function.
+Similarly to being able to open multiple files, we can also create multiple turtles to draw more complex designs. This is done using the \lstinline{turtle.Turtle()} function. This function returns a turtle object, which we can call every other normal turtle function on.
 
 \begin{lstlisting}[style=python]
 import turtle
@@ -186,15 +186,13 @@ for i in range(200):
 \end{figure}
 
 
-
-
 \section{Exercises}
 \label{sec:ex}
 
 \begin{description}
 \item[save.py] Write a program that takes in a filename as input, then takes in a series of lines of input until a blank line is entered, writing each line to the file with the given name. After the blank line is entered, properly close the file before ending the program.
 \item[word\_count.py] Write a program that takes in a filename and string as input. Then print how many times that string appears inside the chosen file. If the file does not exist, continue asking for a filename until one is given that exists. Use your source code file as test input.
-\item[navigate3.py] Modify navigate.py so that, rather than take instructions from the command line, it reads from a file to determine what the turtle will do. Additionally, you will be adding on the ``split'' command. This command will use instantiation of new turtles in order to draw multiple lines at once. Every new command will apply to every turtle that currently exists. The file will have on instruction per line. The possible instructions are:
+\item[navigate3.py] Modify navigate.py so that, rather than take instructions from the command line, it reads from a file (specified by user input) to determine what the turtle will do. Additionally, you will be adding the ``split'' command. This command will use instantiation of new turtles in order to draw multiple lines at once. Every new command will apply to every turtle that currently exists. The file will have on instruction per line. The possible instructions are:
 
   \begin{description}
     \item[forward X] Move all turtles forward X.
@@ -203,7 +201,39 @@ for i in range(200):
     \item[split X] Split all turtles into new turtles. Each new turtle will be turned X degrees to the right.
   \end{description}
 
-  In order to properly implement split, you will probably need to look up the turtle functions \lstinline{.position()}, \lstinline{.setposition()}, \lstinline{.penup()}, and \lstinline{.pendown()}. Turtle documentation is available at \url{https://docs.python.org/3/library/turtle.html}
+  In order to properly implement split, you will probably need to look up the turtle functions \lstinline{.position()}, \lstinline{.setposition()}, \lstinline{.setheading()}, \lstinline{.heading()}, \lstinline{.penup()}, and \lstinline{.pendown()}. Turtle documentation is available at \url{https://docs.python.org/3/library/turtle.html}.
+
+  You will also likely use the \lstinline{.split()} command when getting input, which splits a single string into an array around the string's spaces.
+
+  Sample Input File:
+  \begin{lstlisting}[style=python]
+forward 50
+left 20
+split 40
+forward 50
+left 20
+split 40
+forward 50
+left 20
+split 40
+forward 50
+left 20
+split 40
+forward 50
+left 20
+  \end{lstlisting}
+
+  Sample Output:
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=2.0in]{img/nav3_example}
+  \end{figure}
+
+
+  \begin{lstlisting}[style=ipython]
+>>> print("this is a phrase".split())
+['this', 'is', 'a', 'phrase']
+  \end{lstlisting}
 
 \end{description}
 
