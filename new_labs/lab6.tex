@@ -18,7 +18,7 @@
 
 \hrule
 \begin{quotation}
-``All thought is a kind of computaton.''
+``All thought is a kind of computation.''
 \end{quotation}
 \begin{flushright}
 --- D. Hobbes
@@ -32,7 +32,7 @@
 \end{flushright}
 
 \begin{quotation}
-``It's [programming] the only job I can think of where I get to be both an
+``It [programming] is the only job I can think of where I get to be both an
 engineer and artist. There's an incredible, rigorous, technical element to it,
 which I like because you have to do very precise thinking. On the other hand, it
 has a wildly creative side where the boundaries of imagination are the only real
@@ -47,20 +47,25 @@ limitation.''
 \section{Introduction}
 
 In previous labs, we have used lists to be able to enclose data in a certain
-structure and be able to refer to it later. Other structures like this are
+structure and manipulate it. Lists gave us an easy way to find sums of numbers,
+to store things, to sort things, and much more. Other structures like this are
 commonly referred to as collections: collections collect data and encapsulate
-it.
+it. They give us useful methods to manipulate that data.
 
-A list in python is an ordered container of any elements you want to add to it
-indexed by whole numbers starting at 0. Lists are mutable: this means you can
-add elements, change elements, and remove elements in a list. In this lab, we
-will introduce you to three other collections: Sets, tuples, and
-dictionaries. 
+A list in Python is an ordered container of any elements you want indexed by
+whole numbers starting at 0. Lists are mutable: this means you can add elements,
+change elements, and remove elements from a list. In this lab, we will introduce
+you to three other collections: Sets, tuples, and dictionaries. 
 
-Please read Chapters 7 and 9 for this lab.
+Please read Chapters 7 and 9 for this lab. Another great resource on lists,
+sets, tuples, and dictionaries is the Python Tutorial:
+\begin{center}
+  \url{https://docs.python.org/3.3/tutorial/datastructures.html}
+\end{center}
+Be sure to use the Python 3 version of the Python Tutorial.
 
-This lab will be due in \emph{two} weeks, so you have time to study for your
-midterm.
+\textbf{This lab will be due in \emph{two} weeks, so you have time to study for your
+midterm.}
 
 %\section{Sets}
 %Sets and tuples are a lot like lists; but their properties are a bit different.
@@ -101,7 +106,7 @@ midterm.
 
 \begin{table}[!ht]
   \centering
-  \begin{tabular}{p{1.6cm}lp{1.6cm}p{3cm}lp{5cm}}
+  \begin{tabular}{p{1.6cm}lp{1.6cm}p{3.5cm}lp{4.5cm}}
     \toprule
     Data Structure & Mutable & Mutable elements & Indexing & Ordered
     & Other
@@ -111,7 +116,8 @@ midterm.
     Sets & yes & no & not indexable & no & no element can appear twice\\
     Tuples & no & yes & by whole numbers & yes & can contain elements more than
     once\\
-    Dictionary & yes & yes & by anything immutable & no & \\
+    Dictionary & yes & yes & by anything ``hashable'' (immutable collections or
+    basic types) & no & \\
     \bottomrule
   \end{tabular}
   \caption{Summary of Data Structures in Python}
@@ -120,18 +126,29 @@ midterm.
 
 \subsection{List Syntax}
 
-\begin{lstlisting}
-semester_gpas = [4.0, 3.5, 2.0, 1.5, 4.0, 3.7]
-if 4.0 in semester_gpas:
-  print("There was a 4.0 in the semester_gpas list.")
-if 1.0 not in semester_gpas:
-  print("1.0 is not in the semester_gpas list.")
-sum_gpas = 0
-for gpa in semester_gpas:
-  sum_gpas += gpa
-third_semester = semester_gpas[2] # 2.0
-first_two_gpas = semester_gpas[:2] # [4.0, 3.5]
+\begin{lstlisting}[style=ipython]
+>>> semester_gpas = [4.0, 3.5, 2.0, 1.5, 4.0, 3.7]
+>>> 4.0 in semester_gpas
+True
+>>> 1.0 not in semester_gpas
+True
+>>> 2.0 not in semester_gpas
+False
+>>> mult_gpas = 1
+>>> for gpa in semester_gpas:
+      mult_gpas += gpa
+>>> print(mult_gpas)
+621.6
+>>> semester_gpas[2]
+2.0
+>>> semester_gpas[:2]
+[4.0, 3.5]
+>>> semester_gpas.append(3.4)
+>>> semester_gpas
+[4.0, 3.5, 2.0, 1.5, 4.0, 3.7, 3.4]
 \end{lstlisting}
+
+Refer to lab 3 for more list functions and the slicing notation.
 
 \subsection{Set Syntax}
 
@@ -210,11 +227,22 @@ element of the list. For example:
 
 \pagebreak
 
-\section{Plotting in Python}
+\section{A Note on Sequence Types}
 
-
+% talk about sequence types and what they are
+% standard sequence type operations
+% refer to https://docs.python.org/3.3/library/stdtypes.html
+% list sequence types -- range, list, str, tuple
 
 \pagebreak
+
+%\section{Plotting in Python}
+
+% matplotlib
+% maybe fill in for second week
+
+
+%\pagebreak
 \section{Exercises}
 \label{sec:ex}
 
@@ -347,8 +375,10 @@ Date is: Sunday, September 28, 2014
       \item MORE
     \end{enumerate}
 
-  \item[data.py] Some data analysis exercise. Chris will fill in. Use tuples,
-    use matplotlib. Use set to remove duplicates in data.
+  %\item[data.py] Some data analysis exercise. Chris will fill in. Use tuples,
+  %  use matplotlib. Use set to remove duplicates in data.
+  % exercise will be made available in the second week. no time to write about
+  % matplotlib.
 
   \item[rpn\_calculator.py] Your task is to write a reverse Polish notation
     calculator. In reverse Polish notation (also HP
@@ -431,7 +461,7 @@ Files to submit:
   \item luhns.py (Section~\ref{subsec:reviewex})
   \item anagrams.py (Section~\ref{subsec:reviewex})
   \item fractions.py (Section~\ref{subsec:reviewex})
-  \item days.py (Section~\ref{subsec:newex})
+  %\item days.py (Section~\ref{subsec:newex})
   \item addresses.py (Section~\ref{subsec:newex})
   \item zombies.py (Section~\ref{subsec:newex})
   \item words.py (Section~\ref{subsec:newex})
