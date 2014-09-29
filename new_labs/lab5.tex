@@ -266,7 +266,7 @@ if __name__ == '__main__':
 
 All program logic should exist inside functions. That is: the only code that
 exists at the lowest level of indentation should be imports, function
-declarations, and the \lstinline{if __main__ == '__main__':} statement.
+declarations, and the \lstinline{if __name__ == '__main__':} statement.
 
 There are several reasons for this boilerplate code. Primarily, it provides a
 common structure to your programs: when trying to determine what a program
@@ -289,7 +289,7 @@ You are required to use this format on all future labs in this class.
 \end{warningbox}
 
 \begin{description}
-\item[save.py] Write a program that takes in a filename as input, then takes in
+\item[save.py] Write a program that takes in a filename, then takes in
   a series of lines of input until a blank line is entered, writing each line to
   the file with the given name. After the blank line is entered, properly close
   the file before ending the program.  
