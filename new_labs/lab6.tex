@@ -191,6 +191,7 @@ ages = {'chris': 20, 'tyler': 22, 'randomperson': 34} # dictionary
 
 \pagebreak
 \section{Stacks}
+\label{sec:stacks}
 
 Stacks are an important data structure in the world of computer
 science. They are at the heart of every operating system and used in many, many
@@ -338,8 +339,9 @@ Reviewing: for, while, if, if-elif-else, functions, file I/O, strings, lists.
         smallest in value.
     \end{enumerate}
 
-    (For midterm review, you can do this problem using a list instead of a
-    tuple. When you turn it in, please have it use a tuple though.)
+    (For midterm review, you can do this problem using lists instead of 
+    tuples to represent fractions. When you turn it in, please have it use
+    tuples though.)
 
 \end{description}
 
@@ -407,13 +409,13 @@ Date is: Sunday, September 28, 2014
     Writing this algorithm for evaluating RPN in pseudo code, we get:
 
 \begin{enumerate}
-  \item Read next value in expression
-  \item If number, store
+  \item Read next value in expression.
+  \item If number, store.
   \item If operator:
     \begin{enumerate}
-      \item Remove last two numbers stored
-      \item Do operation with these last two numbers
-      \item Store the result of the operation as last number
+      \item Remove last two numbers stored.
+      \item Do operation with these last two numbers.
+      \item Store the result of the operation as last number.
     \end{enumerate}
 \end{enumerate}
 
@@ -422,7 +424,8 @@ Date is: Sunday, September 28, 2014
 
     Your task is to write an RPN calculator which asks the user for an RPN
     expression and prints the result of that expression. You \emph{must} use a
-    stack. The RPN algorithm has to be in a separate function (not main).
+    stack (see Section~\ref{sec:stacks}). The RPN algorithm has to be in a
+    separate function (not main).
 
     Please see the example file and output below for expressions you can test
     with.
