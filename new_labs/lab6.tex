@@ -124,70 +124,80 @@ midterm.}
   \label{tab:sum}
 \end{table}
 
-\subsection{List Syntax}
+For syntax, please refer to the Python Tutorial or Chapters 7 and 9 in your
+book.
+\begin{center}
+  \url{https://docs.python.org/3.3/tutorial/datastructures.html}
+\end{center}
+Be sure to use the Python 3 version of the Python Tutorial.
 
-\begin{lstlisting}[style=ipython]
->>> semester_gpas = [4.0, 3.5, 2.0, 1.5, 4.0, 3.7]
->>> 4.0 in semester_gpas
-True
->>> 1.0 not in semester_gpas
-True
->>> 2.0 not in semester_gpas
-False
->>> mult_gpas = 1
->>> for gpa in semester_gpas:
-      mult_gpas += gpa
->>> print(mult_gpas)
-621.6
->>> semester_gpas[2]
-2.0
->>> semester_gpas[:2]
-[4.0, 3.5]
->>> semester_gpas.append(3.4)
->>> semester_gpas
-[4.0, 3.5, 2.0, 1.5, 4.0, 3.7, 3.4]
-\end{lstlisting}
 
-Refer to lab 3 for more list functions and the slicing notation.
 
-\subsection{Set Syntax}
+%\subsection{List Syntax}
+%
+%\begin{lstlisting}[style=ipython]
+%>>> semester_gpas = [4.0, 3.5, 2.0, 1.5, 4.0, 3.7]
+%>>> 4.0 in semester_gpas
+%True
+%>>> 1.0 not in semester_gpas
+%True
+%>>> 2.0 not in semester_gpas
+%False
+%>>> mult_gpas = 1
+%>>> for gpa in semester_gpas:
+%      mult_gpas += gpa
+%>>> print(mult_gpas)
+%621.6
+%>>> semester_gpas[2]
+%2.0
+%>>> semester_gpas[:2]
+%[4.0, 3.5]
+%>>> semester_gpas.append(3.4)
+%>>> semester_gpas
+%[4.0, 3.5, 2.0, 1.5, 4.0, 3.7, 3.4]
+%\end{lstlisting}
+%
+%Refer to lab 3 for more list functions and the slicing notation.
+%
+%\subsection{Set Syntax}
+%
+%\begin{lstlisting}[style=ipython]
+%>>> companions_nine = {'rose', 'jack'}
+%>>> companions_ten = {'rose', 'mickey', 'jack', 'donna', 'martha', 'wilf'}
+%# intersection
+%>>> companions_of_both = companions_nine & companions_ten
+%>>> print(companions_of_both)
+%{'jack', 'rose'}
+%# union
+%>>> print(companions_nine | companions_ten)
+%{'donna', 'wilf', 'rose', 'martha', 'mickey', 'jack'}
+%# testing membership
+%>>> 'rose' in companions_nine
+%True
+%# iterating over elements
+%>>> for companion in companions_nine:
+%      print(companion)
+%
+%rose
+%jack
+%# adding an element to set
+%>>> companions_ten.add('sarah jane')
+%>>> print(companions_ten)
+%{'donna', 'sarah jane', 'wilf', 'rose', 'martha', 'mickey', 'jack'}
+%\end{lstlisting}
+%
+%\subsection{Tuple Syntax}
+%
+%\begin{lstlisting}[style=ipython]
+%>>> ordered_pairs = [(1,2), (2,1), (3,3), (4,5), (5,4)] # list of tuples
+%\end{lstlisting}
+%
+%\subsection{Dictionary Syntax}
+%
+%\begin{lstlisting}[style=ipython]
+%ages = {'chris': 20, 'tyler': 22, 'randomperson': 34} # dictionary
+%\end{lstlisting}
 
-\begin{lstlisting}[style=ipython]
->>> companions_nine = {'rose', 'jack'}
->>> companions_ten = {'rose', 'mickey', 'jack', 'donna', 'martha', 'wilf'}
-# intersection
->>> companions_of_both = companions_nine & companions_ten
->>> print(companions_of_both)
-{'jack', 'rose'}
-# union
->>> print(companions_nine | companions_ten)
-{'donna', 'wilf', 'rose', 'martha', 'mickey', 'jack'}
-# testing membership
->>> 'rose' in companions_nine
-True
-# iterating over elements
->>> for companion in companions_nine:
-      print(companion)
-
-rose
-jack
-# adding an element to set
->>> companions_ten.add('sarah jane')
->>> print(companions_ten)
-{'donna', 'sarah jane', 'wilf', 'rose', 'martha', 'mickey', 'jack'}
-\end{lstlisting}
-
-\subsection{Tuple Syntax}
-
-\begin{lstlisting}[style=ipython]
->>> ordered_pairs = [(1,2), (2,1), (3,3), (4,5), (5,4)] # list of tuples
-\end{lstlisting}
-
-\subsection{Dictionary Syntax}
-
-\begin{lstlisting}[style=ipython]
-ages = {'chris': 20, 'tyler': 22, 'randomperson': 34} # dictionary
-\end{lstlisting}
 
 \pagebreak
 \section{Stacks}
