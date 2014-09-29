@@ -229,8 +229,39 @@ Review exercises. Roadmap: need for, while, if, ifelse,
 functions, file IO, strings, lists. Do simple algorithms combining these.
 Look at scott's old labs to find some good ones, or google python class.
 
-
 \begin{description}
+  \item[piglatin.py] Write a program that will take a string of words and
+    convert each word to pig latin. 
+
+    The rules for pig latin are as follows:
+
+    For a word that begins with consonant sounds, the initial consonant or
+    consonant cluster is moved to the end of the word and ``ay'' is added as a
+    suffix:
+    \begin{itemize}
+      \item ``happy'' $\to$ ``appyhay''
+      \item ``glove'' $\to$ ``oveglay''
+    \end{itemize}
+
+    For words that begin with vowels or silent letters, you add ``way'' to the
+    end of the word:
+    \begin{itemize}
+      \item ``egg'' $\to$ ``eggway''
+      \item ``inbox'' $\to$ ``inboxway''
+    \end{itemize}
+
+    For your program, you \emph{must} write a function that takes in one
+    individual word and returns the translation to pig latin. Write another
+    function that takes a string, which may be sentences (may contain the
+    characters ``a-zA-Z,.-;!?()'' and space), and returns the translation of the
+    sentence to pig latin.
+
+  \item[piglatin\_file.py] Use the two functions you previously wrote for
+    \texttt{piglatin.py} and write a program that asks the user for a filename,
+    reads the contents of that file and translates it to pig latin. The pig
+    latin must be written to a file name
+    \texttt{originalfilename\_piglatin.txt}.
+
   \item[luhns.py] Luhn's algorithm
     (\url{http://en.wikipedia.org/wiki/Luhn_algorithm}) provides a quick way to
     check if a credit card is valid or not. The algorithm consists of three
