@@ -6,6 +6,7 @@
 % Prepared by Russell White and Christopher Koch
 % Fall 2014
 \documentclass[11pt]{cselabheader}
+\usepackage{IEEEtrantools}
 
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
 \fancyhead[R]{Lab 6: Collections}
@@ -230,13 +231,57 @@ Look at scott's old labs to find some good ones, or google python class.
 
 
 \begin{description}
-  \item[luhns.py] Copy from lab4 of old labs, Luhn's algorithm. (Reword.)
+  \item[luhns.py] Luhn's algorithm
+    (\url{http://en.wikipedia.org/wiki/Luhn_algorithm}) provides a quick way to
+    check if a credit card is valid or not. The algorithm consists of three
+    steps:
+
+    \begin{enumerate}
+      \item Starting with the second to last digit (ten's column digit),
+        multiply every other digit by two.
+      \item Sum all the digits of the resulting number.
+      \item If the total sum modulo by 10 is zero, then the card is valid;
+        otherwise it is invalid.
+    \end{enumerate}
+
+    For example, to check that the Diners Club card 38520000023237 is valid, you
+    would start at 3, double it and double every other digit to give, writing
+    the credit card number as separate digits: 
+    \begin{IEEEeqnarray*}{RCCRCCRCCRCCRCCRCCRCCRCCRCCRCCRCCRCCR}
+3 &~& 8 &~& 5  &~& 2 &~& 0 &~& 0 &~& 0 &~& 0 &~& 0 &~& 2 &~& 3 &~& 2 &~& 3 &~& 7\\
+6 &~& 8 &~& 10 &~& 2 &~& 0 &~& 0 &~& 0 &~& 0 &~& 0 &~& 2 &~& 6 &~& 2 &~& 6 &~& 7
+    \end{IEEEeqnarray*}
+    Next you would sum all the digits of the resulting number:
+    \[ 6 + 8 + (1 + 0) + 2 + 0 + 0 + 0 + 0 + 0 + 2 + 6 + 2 + 6 + 7 = 40 \]
+
+    Note that for 10, you also sum its digits  -- $(1 + 0)$.
+
+    The last step is to check if $40\mod{10} = 0$, which is true. So the
+    card is valid.
+
+    Write a program that implements Luhn's Algorithm for validating credit
+    cards. It should ask the user to enter a credit card number and tell the
+    user whether it is valid or not. It should also have a separate function to
+    validate the card number.
 
   \item[anagrams.py] Do this. Make sure not in book?
 
-  \item[caesar.py] Caesar cipher on strings. Write encrypt and decrypt function.
+  \item[fractions.py] Any fraction can be written as the division of two
+    integers. You could express this in Python as a tuple -- 
+    (numerator, denominator).
 
-  \item[fractions.py] Express a fraction as a list -- [numerator, denominator].
+    Write functions for each of the following. They must use the tuple
+    representation to return fractions.
+    \begin{enumerate}
+      \item Given two fractions as tuples, multiply them.
+      \item Given two fractions as tuples, divide them.
+      \item Given a list of fractions as a tuple, return the one that is
+        smallest in value.
+    \end{enumerate}
+
+    (For midterm review, you can do this problem using a list instead of a
+    tuple. When you turn it in, please have it use a tuple though.)
+
 \end{description}
 
 \subsection{New Material}
