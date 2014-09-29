@@ -224,10 +224,9 @@ element of the list. For example:
 \end{warningbox}
 
 \subsection{Review for Midterm}
+\label{subsec:reviewex}
 
-Review exercises. Roadmap: need for, while, if, ifelse,
-functions, file IO, strings, lists. Do simple algorithms combining these.
-Look at scott's old labs to find some good ones, or google python class.
+Reviewing: for, while, if, if-elif-else, functions, file I/O, strings, lists. 
 
 \begin{description}
   \item[piglatin.py] Write a program that will take a string of words and
@@ -316,6 +315,7 @@ Look at scott's old labs to find some good ones, or google python class.
 \end{description}
 
 \subsection{New Material}
+\label{subsec:newex}
 
 \begin{description}
   \item[days.py] Write a function that takes four arguments -- day, month, and
@@ -391,14 +391,15 @@ Date is: Sunday, September 28, 2014
 
     Your task is to write an RPN calculator which asks the user for an RPN
     expression and prints the result of that expression. You \emph{must} use a
-    stack.
+    stack. The RPN algorithm has to be in a separate function (not main).
 
     Please see the example file and output below for expressions you can test
     with.
 
   \item[rpn\_file.py] Write another version of the RPN calculator that reads
     RPN expressions from a file (one per line) and prints the answers to them
-    (one per line). You must ask the user which file they want to read from.
+    (one per line). Use the function you previously wrote. You must ask the user
+    which file they want to read from.
 
     Example file:
     \begin{lstlisting}
@@ -425,8 +426,18 @@ Date is: Sunday, September 28, 2014
 
 Files to submit:
 \begin{itemize}
-  \item rpn\_calculator.py (Section~\ref{sec:ex})
-  \item rpn\_file.py (Section~\ref{sec:ex})
+  \item piglatin.py (Section~\ref{subsec:reviewex})
+  \item piglatin\_file.py (Section~\ref{subsec:reviewex})
+  \item luhns.py (Section~\ref{subsec:reviewex})
+  \item anagrams.py (Section~\ref{subsec:reviewex})
+  \item fractions.py (Section~\ref{subsec:reviewex})
+  \item days.py (Section~\ref{subsec:newex})
+  \item addresses.py (Section~\ref{subsec:newex})
+  \item zombies.py (Section~\ref{subsec:newex})
+  \item words.py (Section~\ref{subsec:newex})
+  \item data.py (Section~\ref{subsec:newex})
+  \item rpn\_calculator.py (Section~\ref{subsec:newex})
+  \item rpn\_file.py (Section~\ref{subsec:newex})
 \end{itemize}
 
 You may submit your code as either a tarball (instructions below) or as a .zip
