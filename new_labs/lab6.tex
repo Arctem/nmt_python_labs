@@ -114,7 +114,7 @@ midterm.}
     properties\\
     \midrule
     List \lstinline![]! & yes & yes & by whole numbers & yes & can contain elements more than once\\
-    Sets \lstinline!{}! & yes & no & not indexable & no & no element can appear twice\\
+    Sets \lstinline!{}! & yes & no & not indexable & no & no element can appear more than once\\
     Tuples \lstinline!()! & no & yes & by whole numbers & yes & can contain elements more than
     once\\
     Dictionary \lstinline!{}! & yes & yes & by anything ``hashable'' (immutable collections or
@@ -216,9 +216,9 @@ one you remove.
 Similar to that, in Python you can say that a stack
 is a list where you can only add elements to the end or remove elements from the
 end. In Python, this is accomplished using the
-\lstinline!.pop()! and \lstinline!.append(element)! methods on lists. The pop
-method will remove the last element of the list and return it. The append method
-will add an element to the end of the list.
+\lstinline!.pop()! and \lstinline!.append(element)! methods on lists. When given
+no arguments, the pop method will remove the last element of the list and return
+it. The append method will add an element to the end of the list.
 
 When we ask you to use a stack in Python, you should use a list and only use
 these two methods and the array index \lstinline![-1]! to inspect the last
