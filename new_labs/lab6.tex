@@ -238,9 +238,80 @@ element of the list. For example:
 4
 \end{lstlisting}
 
+Interacting with the elements of the list in any other way violates the
+idea of the list being a stack.
+
 \pagebreak
 
 \section{A Note on Sequence Types}
+A sequence is a data type that stores data in a structured order. The most familiar example of a sequence is the list, but other sequences include tuples, strings, and the value given by \lstinline{range()}. For the most part we will care only about lists, strings, and tuples. Lists and strings have already been covered fairly heavily in previous labs, so for this section we will be focusing on tuples.
+
+In many ways, tuples behave similarly to lists. We create a tuple in the same way that we would create a list, though we use parentheses instead of square brackets to surround the elements of the tuple.
+
+\begin{lstlisting}[style=ipython]
+>>> tup = (1, 7, 3, 2, 6)
+>>> print(tup)
+(1, 7, 3, 2, 6)
+\end{lstlisting}
+
+The primary difference between a list and a tuple is that a tuple is immutable. This means that, once it has been created, its elements cannot be added, removed, or replaced.
+
+\begin{lstlisting}[style=ipython]
+>>> tup = (1, 7, 3, 2, 6)
+>>> tup[0] = 5
+Traceback (most recent call last):
+  File ``<stdin>'', line 1, in <module>
+TypeError: 'tuple' object does not support item assignment
+>>> tup.append(10)
+Traceback (most recent call last):
+  File ``<stdin>'', line 1, in <module>
+AttributeError: 'tuple' object has no attribute 'append'
+\end{lstlisting}
+
+Beyond this change, most list operations will work perfectly normally on tuples.
+
+\begin{lstlisting}[style=ipython]
+>>> tup = (1, 7, 3, 2, 6)
+>>> tup[2:5]
+(3, 2, 6)
+>>> tup += (2, 3, 4)
+>>> tup
+(1, 7, 3, 2, 6, 2, 3, 4)
+>>> min(tup)
+1
+>>> 5 in tup
+False
+>>> len(tup)
+8
+\end{lstlisting}
+
+It should be noted that in the case of \lstinline{tup += (2, 3, 4)} we are not modifying the existing tuple. Instead, we are creating a new tuple that contains the elements of the two tuples we are joining, then assigning it to the same variable as the original tuple.
+
+It should also be noted that we need a bit of special syntax to create a tuple with only one element. If we want a tuple that only contains \lstinline{2}, then we must say \lstinline{(2, )} rather than simply \lstinline{(2)}. This is because Python will interpret \lstinline{(2)} as a simple mathematical statement and simplify it to \lstinline{2} rather than a tuple containing \lstinline{2}.
+
+Knowing when to use a tuple and when to use a list can sometimes be difficult. The general rule is that a list should be used when the elements are homogeneous (meaning they represent the same type of data) while a tuple should be used when the data being stored is heterogeneous.
+
+As an example, let's assume we want to store birthdays. In order to store a single person's birthday, we need three integers. Even though all three values are integers, they are not homogeneous: one integer represents a day, one represents a month, and one represents a year. Therefore, a tuple is a better choice than a list.
+
+\begin{lstlisting}[style=ipython]
+>>> birthday = (21, 12, 1948)
+\end{lstlisting}
+
+Now assume we want to store a large number of birthdays. Since each element of this collection will be of the same type -- a birthday -- we can consider them to be homogeneous. Therefore, we will use a list.
+
+\begin{lstlisting}[style=ipython]
+>>> birthday = (21, 12, 1948)
+>>> birthdays = []
+>>> birthdays.append(birthday)
+>>> birthdays.append((27, 3, 1963))
+>>> birthdays.append((19, 3, 1955))
+>>> birthdays.append((14, 4, 1961))
+>>> birthdays.append((13, 12, 1957))
+>>> print(birthdays)
+[(21, 12, 1948), (27, 3, 1963), (19, 3, 1955), (14, 4, 1961), (13, 12, 1957)]
+\end{lstlisting}
+
+In each tuple that we created, each index represents the same value as in the other tuples. This is important since they represent different data types: changing the order of the elements in a tuple would ruin our interpretation of that data. In the list, however, the order would not significantly impact how we view the data. Sorting or reversing the list would not change what is being represented, since all of the data is of the same type.
 
 % talk about sequence types and what they are
 % standard sequence type operations
