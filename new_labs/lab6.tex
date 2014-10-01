@@ -356,8 +356,7 @@ Reviewing: for, while, if, if-elif-else, functions, file I/O, strings, lists.
       \item ``glove'' $\to$ ``oveglay''
     \end{itemize}
 
-    For words that begin with vowels or silent letters, you add ``way'' to the
-    end of the word:
+    For words that begin with vowels, you add ``way'' to the end of the word:
     \begin{itemize}
       \item ``egg'' $\to$ ``eggway''
       \item ``inbox'' $\to$ ``inboxway''
@@ -367,7 +366,8 @@ Reviewing: for, while, if, if-elif-else, functions, file I/O, strings, lists.
     individual word and returns the translation to pig latin. Write another
     function that takes a string, which may be sentences (may contain the
     characters ``a-zA-Z,.-;!?()'' and space), and returns the translation of the
-    sentence to pig latin.
+    sentence to pig latin. Strip out any punctuation. For example, ``Hello, how
+    are you?'' would translate into ``elloHay owhay areway ouyay''.
 
   \item[piglatin\_file.py] Use the two functions you previously wrote for
     \texttt{piglatin.py} and write a program that asks the user for a filename,
