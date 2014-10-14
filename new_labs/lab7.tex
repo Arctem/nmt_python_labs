@@ -167,7 +167,7 @@ A number: 23
 		% todo: check if there are other possible bases. if there are, make the
 		% program look for all of them?
 
-	\item \cop{Fractions}{15}{fractions.py}
+	\item \cop{Fractions}{10}{fractions.py}
 		% Source: ACM Freshman Coding Competition, Fall 2013 (Russell White)
 		
 		Write a program that reads both the numerator and denominator of
@@ -193,34 +193,7 @@ Result: 5/1
 		\textit{Scoreboard submission:} There is none. You have to get this one
 		looked at and tested by a TA.
 
-	\item \cop{Coins}{20}{coins.py}
-		% source: nothing. this is a popular problem.
-
-		Write a program that determines the minimum amount of (dollar) coins 
-		and bills to be used to change a certain amount of money. That is, find
-		the largest number of 100s, then 50s, then 20s, then 10s, etc for the
-		change. Assume that you are changing less than $\$500$. Assume that
-		you are using the following denominations:
-		\begin{itemize}
-			\item Bills: 100, 50, 20, 10, 5, 2, 1 dollars
-			\item Coins: 25, 10, 5, 1 cents
-		\end{itemize}
-
-		For example:
-		\begin{lstlisting}[style=bash]
-Enter an amount of money (dollars): 10.33
-Change:
-10 dollar bill: 1
-25 cent coin: 1
-5 cent coin: 1
-1 cent coin: 3
-		\end{lstlisting}
-
-		\textit{Scoreboard submission:} Find the optimal amount of change for
-		$\$76.23$. 
-
-
-	\item \cop{Crossing Hands}{25}{hands.py}
+        \item \cop{Crossing Hands}{20}{hands.py}
 		% source: http://programmingpraxis.com/2014/02/25/crossing-hands/
 
 		The hands of an analog clock occassionally cross as they revolve around
@@ -232,6 +205,60 @@ Change:
 		\textit{Scoreboard submission} Add up the hours, minutes, and seconds
 		of the times separately and submit it in the format \texttt{H-M-S}, 
 		for example \texttt{30-167-421}.
+
+        \item \cop{Finding a Path}{25}{path.py}
+          %Source: ENMY Codecomp, Spring 2014 (Tyler Cecil)
+          Write a program that finds the shortest valid path between two nodes in a graph.
+          Each of the lines of input will be the name of a node (a single, upper-case
+          character), followed by a list of the nodes connected to that node. The final
+          line of input will a single upper-case letter, designating the destination node.
+          You must output a sequence of letters that represents the shortest path to the
+          destination. Assume you start at the first given node. You can assume a path will
+          always exist. There will be less than 10 nodes given. If multiple valid paths
+          exist, any will be accepted.
+          
+          For example:\\
+          \begin{minipage}{.33\linewidth}
+            \begin{minipage}{.8\linewidth}
+              \begin{lstlisting}[style=bash]
+A B D
+B C D
+C
+
+A B C
+              \end{lstlisting}
+            \end{minipage}
+          \end{minipage}
+          \begin{minipage}{.33\linewidth}
+            \begin{minipage}{.8\linewidth}
+              \begin{lstlisting}[style=bash]
+A B C D
+B F
+D B C
+F E
+E
+
+A B F E
+              \end{lstlisting}
+            \end{minipage}
+          \end{minipage}
+          \begin{minipage}{.33\linewidth}
+            \begin{minipage}{.8\linewidth}
+              \begin{lstlisting}[style=bash]
+A B C D E
+B C D E F
+C D E F
+D E F
+E F
+F
+
+A B F
+              \end{lstlisting}
+            \end{minipage}
+          \end{minipage}
+
+          \textit{Scoreboard submission:} There is none. You have to get this
+          one looked at and tested by a TA.
 
 	\item \cop{Block Areas}{35}{blocks.py}
 		% Source: ACM Freshman Coding Competition, Fall 2013 (Russell White)
