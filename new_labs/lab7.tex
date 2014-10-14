@@ -354,7 +354,67 @@ Area: 7
 			\caption{Scoreboard submission shape}
 		\end{figure}
 
+        \item \cop{Nontransitive Dice}{100}{dice.py}
+          %Source: ACM Freshman Coding Competition, Fall 2013 (Rob Kelly)
+          
+          A set of dice is called nontransitive if it contains three dice,
+          A, B, and C, with the property that A rolls higher than B more
+          than half the time, and B rolls higher than C more than half
+          the time, but it's not true that A rolls higher than C more than
+          half the time. Intuitively, the existence of such a set might not
+          seem possible - If $A > B > C$, how could it be true that $C > A$?
+          But consider the following set of dice:
+          
+          \begin{itemize}
+	  \item Die A has sides 3, 3, 3, 3, 3, and 6
+	  \item Die B has sides 2, 2, 2, 5, 5, and 5
+	  \item Die C has sides 1, 4, 4, 4, 4, and 4
+          \end{itemize}
+          By checking all possible die-rolls, we can see that A will roll
+          higher than B 21 out of 36 times, and likewise B will roll higher
+          than C 21 out of 36 times, but C will roll higher than A 25 out
+          of 36 times. Neat, right?
+          
+          Write a program that reads an arbitrary number of six-sided dice
+          configurations followed by a single 0, and displays
+          ``Nontransitive'' if there exists a subset of at least three
+          nontransitive dice in the set, or ``Transitive'' if no such
+          nontransitive subset exists. One die will be input per line,
+          with the numbers of each side seperated by spaces. All side
+          numbers will be between 0 and 999. The order of the input dice
+          does not matter.
 
+          \begin{minipage}{.5\linewidth}
+            \begin{minipage}{.9\linewidth}
+              \begin{lstlisting}[style=bash]
+5 5 5 1 1 1
+3 3 3 3 3 3
+4 4 4 4 0 0
+6 6 2 2 2 2
+8 6 7 5 3 0
+0
+
+Nontransitive
+              \end{lstlisting}
+            \end{minipage}
+          \end{minipage}
+          \begin{minipage}{.5\linewidth}
+            \begin{minipage}{.9\linewidth}
+              \begin{lstlisting}[style=bash]
+1 2 3 4 5 6
+7 8 9 10 11 12
+10 20 30 40 50 60
+100 200 300 400 500 600
+0
+
+Transitive
+              \end{lstlisting}
+            \end{minipage}
+          \end{minipage}
+
+          \textit{Scoreboard submission:} There is none. You have to get this
+          one looked at and tested by a TA.
+          
 \end{enumerate}
 \pagebreak
 %\section{Submission guidelines}
