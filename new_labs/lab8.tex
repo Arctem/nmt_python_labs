@@ -317,7 +317,40 @@ data = functools.reduce(combine, data)
 print("Final value: {}".format(data))
 \end{lstlisting}
 
-Note that we need to run \lstinline{import functools} in order to have access to \lstinline{reduce}.
+\begin{lstlisting}
+Adding this to is
+Adding thisis to a
+Adding thisisa to test
+Final value: thisisatest
+\end{lstlisting}
+
+Note that we need to run \lstinline{import functools} in order to have access to
+\lstinline{reduce}.
+
+Let's take a simpler example:
+\begin{lstlisting}
+import functools
+
+def add(x, y):
+  return x + y
+
+numbers = [1, 3, 4, 6, 7]
+s = functools.reduce(add, numbers)
+\end{lstlisting}
+
+\lstinline!s! is the sum of the values in the list \lstinline!numbers!. The way
+\lstinline!reduce! works is that it takes the first two values, calls the
+\lstinline!add! function on them, returns the result, and then takes that result
+and the next number. In essence, the example above expands to this:
+\begin{lstlisting}
+s = add(add(add(add(1, 3), 4), 6), 7)
+\end{lstlisting}
+
+This shows that at each step, you get to see an intermediate value: The first
+call to \lstinline!add! gets the first two values, $1$ and $3$, while the second
+call gets the addition of those, $4$ and the next value in the list, $4$. The
+third call to \lstinline!add! gets the result of that, $8$, and the next number,
+$6$. This will go on until the list is exhausted.
 
 \subsection{Filter}
 \label{subsec:filter}
@@ -457,6 +490,21 @@ print(m(4))
 If you check the answers, you will find that $\sqrt{ 6! } = \sqrt{ 720 } =
 26.832\cdots$ and similarly for the others.
 
+Continuing the code, we could now compose $h$ and \lstinline!math.log10!
+(Logarithm with base 10):
+\begin{lstlisting}
+logh = compose(math.log10, h)
+print(logh(6)) # 1.4286662482156343
+\end{lstlisting}
+
+We can also plug in a lambda function of our choice to the composition function.
+For example, if we wanted a function $p(x) = \sqrt{ x^3 }$:
+\begin{lstlisting}
+p = compose(math.sqrt, lambda x: x**3)
+print(p(100)) # 1000.0
+print(p(10)) # 31.622776601683793
+\end{lstlisting}
+
 \subsection{Summary}
 
 \begin{description}
@@ -486,16 +534,72 @@ If you check the answers, you will find that $\sqrt{ 6! } = \sqrt{ 720 } =
     Lab~6, do the following:
 
     \begin{enumerate}
+      \item Write a function \lstinline!prompt_fractions()! that implements the
+        following interface that prompts the user for as many fractions as
+        he/she wants to enter:
+        \begin{lstlisting}[style=bash]
+Enter fraction: 10/2
+Enter fraction: 5/7
+Enter fraction: 3/8
+Enter fraction: stop
+        \end{lstlisting}
+
+        Use \lstinline!map! to do convert each string, such as ``10/2'' to a
+        tuple of integers.
+
+        The function should return a list of tuples. In the example, it would
+        return:
+        \begin{lstlisting}
+[(10, 2), (5, 7), (3, 8)]
+        \end{lstlisting}
+
       \item Write a function \lstinline{min_frac} such that calling
         \lstinline{functools.reduce(min_frac, list_of_fractions)} will return
         the smallest value fraction in the list.
       \item Write a function \lstinline{sum_frac} such that calling
         \lstinline{functools.reduce(sum_frac, list_of_fractions)} will return
         the sum of all the fractions in the list.
-      \item Write a function \lstinline{reduce_frac} that takes in a fraction and
-        returns that fraction reduced to its lowest terms. Use this function with
-        \lstinline{map} to reduce a list of fractions.
+      \item Write a function \lstinline{reduce_frac} that takes in a fraction
+        and returns that fraction reduced to its lowest terms. Use this function
+        with \lstinline{map} to reduce a list of fractions.
+      \item Write a function \lstinline!sort_frac! that takes in a list of
+        fractions and uses \lstinline{sorted}
+        and a lambda \lstinline{key} function to sort a list of fractions from
+        smallest to largest.
     \end{enumerate}
+
+    You should use the following boilerplate code for \texttt{fractions2.py}:
+    \begin{lstlisting}
+import functools
+
+# ADD YOUR FUNCTIONS HERE
+
+def main():
+  list_fractions = prompt_fractions()
+
+  format_frac = lambda frac : "{}/{}".format(frac[0], frac[1])
+
+  smallest = functools.reduce(min_frac, list_fractions)
+  print("Smallest fraction:", format_frac(smallest))
+
+  sumfrac = functools.reduce(sum_frac, list_fractions)
+  print("Sum of fractions:", format_frac(sumfrac))
+
+  # reducedfrac = map() ??? You fill in!
+  # print("Reduced fractions:", reducedfrac)
+
+  fracsorted = sort_frac(list_fraction)
+  print("Sorted fractions:", fracsorted)
+
+if __name__ == '__main__':
+  main()
+    \end{lstlisting}
+
+  \item[rpn.py] Take \texttt{rpn.py} from one of your previous labs and rewrite
+    it to use a dictionary of lambda functions to do the actual operation.
+    Operations you should support are $+ - * /$. Also, add a $\sin$ and $\cos$
+    operation. For example: $0 \sin$ should give $0$, while $1~2~+~\sin$ should
+    give $0.1411200080598672$ (this is $\sin(3)$).
 \end{description}
 
 \pagebreak
@@ -504,6 +608,7 @@ If you check the answers, you will find that $\sqrt{ 6! } = \sqrt{ 720 } =
 Files to submit:
 \begin{itemize}
   \item fractions2.py (Section~\ref{sec:ex})
+  \item rpn.py (Section~\ref{sec:ex})
 \end{itemize}
 
 You may submit your code as either a tarball (instructions below) or as a .zip
