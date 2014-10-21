@@ -163,7 +163,43 @@ Why do you want me to print 'Hello, World!'?
 
 \subsection{Map}
 \label{subsec:map}
+A common operation in Python is to call the same function for every element in a list, then create a new list with the results. Previously, we would have accomplished this with a \lstinline{for} loop:
 
+\begin{lstlisting}[style=python]
+def double(x):
+    return x * 2
+
+data = [5, 23, 76]
+new_data = []
+
+for i in data:
+    new_data.append(double(i))
+
+print(new_data)
+\end{lstlisting}
+
+\begin{lstlisting}[style=bash]
+[10, 46, 152]
+\end{lstlisting}
+
+If we use the \lstinline{map} function, we can make this code much more simple:
+
+\begin{lstlisting}[style=python]
+def double(x):
+    return x * 2
+
+data = [5, 23, 76]
+data = list(map(double, data))
+print(data)
+\end{lstlisting}
+
+\begin{lstlisting}[style=bash]
+[10, 46, 152]
+\end{lstlisting}
+
+The \lstinline{map} function takes in a function and any iterable data type (such as a list, tuple, set, etc.) as arguments. It calls that function for every element of the other value passed, then returns a new data type containing all of those results. This new data type is a special map object, but in most cases we are fine with instantly converting it back to our initial data type (in the above example, a list).
+
+%List comprehensions?
 
 \subsection{Reduce}
 \label{subsec:reduce}
