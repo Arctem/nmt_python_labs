@@ -607,11 +607,11 @@ if __name__ == '__main__':
     operation. For example: $0 \sin$ should give $0$, while $1~2~+~\sin$ should
     give $0.1411200080598672$ (this is $\sin(3)$).
 
-  \item[wrapper.py] Write a function \lstinline!wrapper! that takes a function,
-    prints its name, calls the function, prints its result, and then says
-    ``Done.'' Given a function \lstinline!f!, you can get its name using
-    \lstinline!f.__name__!. For
-    example:
+  \item[wrapper.py] Write a function \lstinline!wrapper! that takes two
+    functions, prints their names, calls the first function, prints its result,
+    calls the second function with the first function's result as an argument,
+    prints its result, and then says ``Done.'' Given a function \lstinline!f!,
+    you can get its name using \lstinline!f.__name__!. For example:
 
     \begin{lstlisting}
 import math
@@ -620,11 +620,16 @@ print(math.sqrt.__name__) # sqrt
 def five():
   return 5
 
-wrapper(five)
+def square(x):
+  return x**2
+
+wrapper(five, square)
     \end{lstlisting}
     \begin{lstlisting}[style=bash]
 Calling function 'five'
 5
+Calling function 'square'
+25
 Done.
     \end{lstlisting}
 \end{description}
