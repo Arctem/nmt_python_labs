@@ -546,7 +546,7 @@ Enter fraction: 3/8
 Enter fraction: stop
         \end{lstlisting}
 
-        Use \lstinline!map! to do convert each string, such as ``10/2'' to a
+        Use \lstinline!map! to convert each string, such as ``10/2'' to a
         tuple of integers.
 
         The function should return a list of tuples. In the example, it would
@@ -564,6 +564,9 @@ Enter fraction: stop
       \item Write a function \lstinline{reduce_frac} that takes in a fraction
         and returns that fraction reduced to its lowest terms. Use this function
         with \lstinline{map} to reduce a list of fractions.
+      \item Write a function \lstinline{reduced} such that calling
+        \lstinline{filter(reduced, list_of_fractions)} will return a list consisting
+        of only fractions that are reduced to their lowest terms.
       \item Write a function \lstinline!sort_frac! that takes in a list of
         fractions and uses \lstinline{sorted}
         and a lambda \lstinline{key} function to sort a list of fractions from
