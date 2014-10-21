@@ -429,6 +429,12 @@ for func in print_functions:
     func("Hello, World!")
 \end{lstlisting}
 
+Lambda functions can take more than one argument as well:
+\begin{lstlisting}
+multiply = lambda x, y: x * y
+print(multiply(3, 5)) # 15
+\end{lstlisting}
+
 One extra use for lambda functions is to modify default sorting behavior. For
 example, if we have a list of tuples and try to sort them, Python will sort them
 based on their first element, then second if the first elements are the same,
@@ -505,20 +511,6 @@ print(p(100)) # 1000.0
 print(p(10)) # 31.622776601683793
 \end{lstlisting}
 
-\subsection{Summary}
-
-\begin{description}
-  \item[First-Class Functions]
-
-  \item[Map]
-
-  \item[Reduce]
-
-  \item[Filter]
-
-  \item[Lambdas]
-\end{description}
-
 \pagebreak
 
 \section{Exercises}
@@ -530,6 +522,13 @@ print(p(10)) # 31.622776601683793
 \end{warningbox}
 
 \begin{description}
+  \item[sum.py] Write a recursive function that computes the sum of all the
+    numbers from 1 to $n$, where $n$ is the given parameter.
+
+  \item[palindrome.py] Write a recursive function that determines whether a
+    string is a palindrome. A palindrome is a word that is the same forwards and
+    backwards, for example ``abba''.
+
   \item[expo.py] Write a recursive function that takes in a base and an exponent
     and returns the value of that base taken to that exponent. You are not
     allowed to use \lstinline{**} or any built-in exponentiation functions.
@@ -603,6 +602,27 @@ if __name__ == '__main__':
     Operations you should support are $+ - * /$. Also, add a $\sin$ and $\cos$
     operation. For example: $0 \sin$ should give $0$, while $1~2~+~\sin$ should
     give $0.1411200080598672$ (this is $\sin(3)$).
+
+  \item[wrapper.py] Write a function \lstinline!wrapper! that takes a function,
+    prints its name, calls the function, prints its result, and then says
+    ``Done.'' Given a function \lstinline!f!, you can get its name using
+    \lstinline!f.__name__!. For
+    example:
+
+    \begin{lstlisting}
+import math
+print(math.sqrt.__name__) # sqrt
+
+def five():
+  return 5
+
+wrapper(five)
+    \end{lstlisting}
+    \begin{lstlisting}[style=bash]
+Calling function 'five'
+5
+Done.
+    \end{lstlisting}
 \end{description}
 
 \pagebreak
@@ -610,8 +630,12 @@ if __name__ == '__main__':
 
 Files to submit:
 \begin{itemize}
+  \item sum.py (Section~\ref{sec:ex}) 
+  \item palindrome.py (Section~\ref{sec:ex})
+  \item expo.py (Section~\ref{sec:ex})
   \item fractions2.py (Section~\ref{sec:ex})
   \item rpn.py (Section~\ref{sec:ex})
+  \item wrapper.py (Section~\ref{sec:ex})
 \end{itemize}
 
 You may submit your code as either a tarball (instructions below) or as a .zip
