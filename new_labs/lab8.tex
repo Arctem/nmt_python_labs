@@ -242,9 +242,20 @@ Note that we need to run \lstinline{import functools} in order to have access to
 \end{warningbox}
 
 \begin{description}
-  \item[exercise.py]
+  \item[fractions2.py] Using the same tuple representation of fractions as least
+    week, do the following:
 
-%fractions (sorting, sum list, etc)
+    \begin{enumerate}
+      \item Write a function \lstinline{min_frac} such that calling
+        \lstinline{functools.reduce(min_frac, list_of_fractions)} will return
+        the smallest value fraction in the list.
+      \item Write a function \lstinline{sum_frac} such that calling
+        \lstinline{functools.reduce(sum_frac, list_of_fractions)} will return
+        the sum of all the fractions in the list.
+      \item Write a function \lstinline{reduce_frac} that takes in a fraction and
+        returns that fraction reduced to its lowest terms. Use this function with
+        \lstinline{map} to reduce a list of fractions.
+    \end{enumerate}
 \end{description}
 
 \pagebreak
@@ -257,7 +268,7 @@ Note that we need to run \lstinline{import functools} in order to have access to
 
 Files to submit:
 \begin{itemize}
-  \item exercise.py (Section~\ref{sec:ex})
+  \item fractions2.py (Section~\ref{sec:ex})
 \end{itemize}
 
 You may submit your code as either a tarball (instructions below) or as a .zip
