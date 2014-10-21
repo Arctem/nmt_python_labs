@@ -268,6 +268,18 @@ print(data)
 
 This program works just like the example shown in the section on \lstinline{filter}, but it does not require us to declare the separate \lstinline{is_even} function. Instead, we simply define a lambda inside the call to \lstinline{filter}, accomplishing the same thing.
 
+We can similarly use lambda functions to shorten our initial example of first-class functions:
+
+\begin{lstlisting}[style=python]
+print_functions = [print,
+    lambda string: print(string[::-1]),
+    lambda string: print(string[:len(string)//2]),
+    lambda string: print("Why do you want me to print '{}'?".format(string))]
+
+for func in print_functions:
+    func("Hello, World!")
+\end{lstlisting}
+
 
 \pagebreak
 
