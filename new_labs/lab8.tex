@@ -280,6 +280,23 @@ for func in print_functions:
     func("Hello, World!")
 \end{lstlisting}
 
+One extra use for lambda functions is to modify default sorting behavior. For example, if we have a list of tuples and try to sort them, Python will sort them based on their first element, then second if the first elements are the same, and so on:
+
+\begin{lstlisting}[style=ipython]
+>>> data = [(5, 2, 4), (6, 3, 2), (4, 4, 4), (3, 3, 3), (5, 3, 10)]
+>>> sorted(data)
+[(3, 3, 3), (4, 4, 4), (5, 2, 4), (5, 3, 10), (6, 3, 2)]
+\end{lstlisting}
+
+However, what if we want to sort these tuples based on their last element? To do this, we define a special \lstinline{key} value for \lstinline{sorted}. Each value of the tuple will be passed to this function, and then the return values will be used when sorting in place of the actual value of the tuple:
+
+\begin{lstlisting}[style=ipython]
+>>> data = [(5, 2, 4), (6, 3, 2), (4, 4, 4), (3, 3, 3), (5, 3, 10)]
+>>> sorted(data, key=lambda x: x[-1])
+[(6, 3, 2), (3, 3, 3), (5, 2, 4), (4, 4, 4), (5, 3, 10)]
+\end{lstlisting}
+
+
 
 \pagebreak
 
@@ -294,8 +311,8 @@ for func in print_functions:
 \end{warningbox}
 
 \begin{description}
-  \item[fractions2.py] Using the same tuple representation of fractions as least
-    week, do the following:
+  \item[fractions2.py] Using the same tuple representation of fractions as in
+    Lab~6, do the following:
 
     \begin{enumerate}
       \item Write a function \lstinline{min_frac} such that calling
