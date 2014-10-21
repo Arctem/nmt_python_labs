@@ -222,7 +222,20 @@ Note that we need to run \lstinline{import functools} in order to have access to
 
 \subsection{Filter}
 \label{subsec:filter}
+\lstinline{filter} is a function that allows easy removal of some elements from a list. It works similarly to \lstinline{map}, but the function used needs to return either \lstinline{True} or \lstinline{False}. If it returns \lstinline{True} then the given element is included in the final list. If \lstinline{False} is returned, then it is not. As an example, here is a short program that removes all odd elements from a list:
 
+\begin{lstlisting}[style=python]
+def iseven(x):
+    return x % 2 == 0
+
+data = [5, 3, 34, 36, 38, 1, 0, 0, 2]
+data = list(filter(iseven, data))
+print(data)
+\end{lstlisting}
+
+\begin{lstlisting}[style=bash]
+[34, 36, 38, 0, 0, 2]
+\end{lstlisting}
 
 \subsection{Lambda Functions}
 \label{subsec:lambda}
