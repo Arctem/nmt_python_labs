@@ -202,9 +202,23 @@ The \lstinline{map} function takes in a function and any iterable data type (suc
 %List comprehensions?
 
 %Reduce has been removed as of Python 3: https://docs.python.org/3.0/whatsnew/3.0.html#builtins
-%\subsection{Reduce}
-%\label{subsec:reduce}
-%\lstinline{reduce} is a similar function to \lstinline{map}, but rather than create a new list with the modified values, \lstinline{reduce} should be used to simplify a list into a single value. Similarly to \lstinline{map}, \lstinline{reduce} takes in a function and an iterable data type. The difference is that, rather than taking and returning a single value, the function passed to \lstinline{reduce} takes in two arguments and returns their combination. As an example, here is an example of using \lstinline{reduce} to join a list of strings into a single larger string.
+\subsection{Reduce}
+\label{subsec:reduce}
+\lstinline{reduce} is a similar function to \lstinline{map}, but rather than create a new list with the modified values, \lstinline{reduce} should be used to simplify a list into a single value. Similarly to \lstinline{map}, \lstinline{reduce} takes in a function and an iterable data type. The difference is that, rather than taking and returning a single value, the function passed to \lstinline{reduce} takes in two arguments and returns their combination. As an example, here is an example of using \lstinline{reduce} to join a list of strings into a single larger string.
+
+\begin{lstlisting}[style=python]
+import functools
+
+def combine(glob, new):
+    print("Adding {} to {}.".format(new, glob))
+    return glob + new
+
+data = ['this', 'is', 'a', 'test']
+data = functools.reduce(combine, data)
+print("Final value: {}".format(data))
+\end{lstlisting}
+
+Note that we need to run \lstinline{import functools} in order to have access to \lstinline{reduce}.
 
 \subsection{Filter}
 \label{subsec:filter}
@@ -212,10 +226,6 @@ The \lstinline{map} function takes in a function and any iterable data type (suc
 
 \subsection{Lambda Functions}
 \label{subsec:lambda}
-
-
-
-
 
 
 
@@ -233,6 +243,8 @@ The \lstinline{map} function takes in a function and any iterable data type (suc
 
 \begin{description}
   \item[exercise.py]
+
+%fractions (sorting, sum list, etc)
 \end{description}
 
 \pagebreak
