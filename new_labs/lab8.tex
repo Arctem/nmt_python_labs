@@ -134,12 +134,32 @@ print(sum_lists(data))
 
 This program outputs \lstinline{45}, which is the sum of all the elements of the list, including all of the lists inside it. Notice that the base case in this function is if every element of the list passed to \lstinline{sum_lists} is an \lstinline{int}.
 
-\subsection{Lambda Functions}
-\label{subsec:lambda}
+\section{First-class Functions}
+\label{subsec:first}
+In Python, functions are ``first-class citizens''. This means, essentially that they can be used in the same way as variables: they can be assigned to variables, passed to and returned from functions, and stored in data structures. As an example, here is a short program that stores functions inside of a list, then calls each one of those functions with the same argument.
 
+\begin{lstlisting}[style=python]
+def print_backwards(string):
+    print(string[::-1])
 
-\section{Iterables}
-\label{subsec:iter}
+def print_half(string):
+    print(string[:len(string)])
+
+def print_question(string):
+    print("Why do you want me to print '{}'?".format(string))
+
+print_functions = [print, print_backwards, print_half, print_question]
+
+for func in print_functions:
+    func("Hello, World!")
+\end{lstlisting}
+
+\begin{lstlisting}[style=bash]
+Hello, World!
+!dlroW ,olleH
+Hello, World!
+Why do you want me to print 'Hello, World!'?
+\end{lstlisting}
 
 \subsection{Map}
 \label{subsec:map}
@@ -147,6 +167,11 @@ This program outputs \lstinline{45}, which is the sum of all the elements of the
 
 \subsection{Reduce}
 \label{subsec:reduce}
+
+
+\subsection{Lambda Functions}
+\label{subsec:lambda}
+
 
 
 
