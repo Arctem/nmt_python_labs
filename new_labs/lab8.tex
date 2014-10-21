@@ -101,7 +101,38 @@ Sometimes we might want to include some default arguments while excluding others
 
 \subsection{Recursion}
 \label{subsec:recur}
+Recursion is the idea of a function calling itself. This can be useful in a wide variety of situations, but it can also be easy to misuse. As an example, see this simple case of recursion:
 
+\begin{lstlisting}[style=ipython]
+def test():
+    test()
+\end{lstlisting}
+
+If this function is called, it will continue to call itself infinitely until Python prints out an error message and quits. This is because the function calls itself every time it is called -- there is no case where the function ends without calling itself again. This case is called a base case, and it is important to include one in every recursive function. Here is a modified version of the above code that allows the initial call to specify a value limiting how many times the recursive call should be made:
+
+\begin{lstlisting}[style=ipython]
+def test(x):
+    if x > 0:
+        test(x - 1)
+\end{lstlisting}
+
+As an example of a more complex way of using recursion to solve a problem, here is an example of a recursive function that will sum a list where each element is either an integer or another list containing integers and lists:
+
+\begin{lstlisting}[style=ipython]
+def sum_lists(x):
+    total = 0
+    for i in x:
+        if type(i) == int:
+            total += i
+        else:
+            total += sum_lists(i)
+    return total
+
+data = [1, 2, [3, 4, [5, 6], 7], 8, 9]
+print(sum_lists(data))
+\end{lstlisting}
+
+This program outputs \lstinline{45}, which is the sum of all the elements of the list, including all of the lists inside it. Notice that the base case in this function is if every element of the list passed to \lstinline{sum_lists} is an \lstinline{int}.
 
 \subsection{Lambda Functions}
 \label{subsec:lambda}
