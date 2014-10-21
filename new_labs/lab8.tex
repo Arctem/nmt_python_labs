@@ -41,7 +41,15 @@
 \hrule
 
 \section{Introduction}
+\emph{Congratulations!} In your last three weeks of lab, you have reached the
+basic knowledge required to work with Python in a useful way. You have learned
+all the tools required to write basic programs in Python and you have applied
+them successfully in the programming competition.
 
+This week, we will teach you a bit more about functions and give you a small
+window to a different kind of programming: functional programming. Here, the
+word ``functional'' is not to mean ``practical'' (although it is very
+practical!), but that it has to do with a lot of functions.
 
 \pagebreak
 \section{Advanced Functions}
@@ -49,7 +57,9 @@
 
 \subsection{Default Arguments}
 \label{subsec:arg}
-Many of the built-in functions we have been using, such as \lstinline{range} or \lstinline{input}, accept a variable number of arguments. We can do the same thing with our own funcitions by specifying default values for our arguments:
+Many of the built-in functions we have been using, such as \lstinline{range} or
+\lstinline{input}, accept a variable number of arguments. We can do the same
+thing with our own funcitions by specifying default values for our arguments:
 
 \begin{lstlisting}[style=python]
 def celebrate(times=1):
@@ -62,9 +72,19 @@ print("Second call:")
 celebrate(5)
 \end{lstlisting}
 
-Note what happens for each call of this function. The first time it only prints \lstinline{"Yay!"} once, since the default argument is \lstinline{1}, while the second call overwrites the default value and prints it five times.
+Here, we have a function called \lstinline!celebrate! which takes the parameter
+variable \lstinline!times!. If that parameter is left unspecified in a function
+call, it will take the \emph{default value} of 1.
 
-While you are allowed to have a function that has some arguments with default values and some without, you must always put those with default values after those without any, so that Python will know which arguments go into which values if you don't include all of them when calling the function:
+Note what happens for each call of this function. The first time it only prints
+\lstinline{"Yay!"} once, since the default argument is \lstinline{1}, while the
+second call overwrites the default value and prints it five times.
+
+While you are allowed to have a function that has some arguments with default
+values and some without, you must always put those with default values after
+those without any, so that Python will know which arguments go into which values
+if you do not include all of them when calling the function. This is because
+arguments from a function call are usually matched in order by their position.
 
 \begin{lstlisting}[style=ipython]
 >>> def test(a, b=5, c, d=6):
@@ -83,7 +103,9 @@ SyntaxError: non-default argument follows default argument
 2 10 3 100
 \end{lstlisting}
 
-Sometimes we might want to include some default arguments while excluding others. We do this by specifying which of the arguments we wish to pass a value to:
+Sometimes we might want to include some default arguments while excluding
+others. We do this by specifying which of the arguments we wish to pass a value
+to:
 
 \begin{lstlisting}[style=ipython]
 >>> def test(a=0, b=0, c=0, d=0):
@@ -97,14 +119,35 @@ Sometimes we might want to include some default arguments while excluding others
 
 \subsection{Recursion}
 \label{subsec:recur}
-Recursion is the idea of a function calling itself. This can be useful in a wide variety of situations, but it can also be easy to misuse. As an example, see this simple case of recursion:
+Recursion is the idea of a function calling itself. This can be useful in a wide
+variety of situations, but it can also be easy to misuse. Let us first look at a
+good example:
+\begin{lstlisting}[style=python]
+def factorial(n):
+  if n <= 1:
+    return 1
+  else
+    return n * factorial(n-1)
+\end{lstlisting}
+
+Notice that this is just another way to repeat a statement, similar to a loop.
+In a loop, we have to specify when to stop repeating something, and we have to
+do the same thing with recursion; otherwise, it would run forever.
+
+As an example, see this simple \emph{bad} case of recursion:
 
 \begin{lstlisting}[style=python]
 def test():
     test()
 \end{lstlisting}
 
-If this function is called, it will continue to call itself infinitely until Python prints out an error message and quits. This is because the function calls itself every time it is called -- there is no case where the function ends without calling itself again. This case is called a base case, and it is important to include one in every recursive function. Here is a modified version of the above code that allows the initial call to specify a value limiting how many times the recursive call should be made:
+If this function is called, it will continue to call itself infinitely until
+Python prints out an error message and quits. This is because the function calls
+itself every time it is called -- there is no case where the function ends
+without calling itself again. The case in which the recursion ends is called a
+\emph{base case} and it is important to include one in every recursive function.
+Here is a modified version of the above code that allows the initial call to
+specify a value limiting how many times the recursive call should be made:
 
 \begin{lstlisting}[style=python]
 def test(x):
@@ -112,7 +155,9 @@ def test(x):
         test(x - 1)
 \end{lstlisting}
 
-As an example of a more complex way of using recursion to solve a problem, here is an example of a recursive function that will sum a list where each element is either an integer or another list containing integers and lists:
+As an example of a more complex way of using recursion to solve a problem, here
+is an example of a recursive function that will sum a list where each element is
+either an integer or another list containing integers and lists:
 
 \begin{lstlisting}[style=python]
 def sum_lists(x):
@@ -128,11 +173,41 @@ data = [1, 2, [3, 4, [5, 6], 7], 8, 9]
 print(sum_lists(data))
 \end{lstlisting}
 
-This program outputs \lstinline{45}, which is the sum of all the elements of the list, including all of the lists inside it. Notice that the base case in this function is if every element of the list passed to \lstinline{sum_lists} is an \lstinline{int}.
+This program outputs \lstinline{45}, which is the sum of all the elements of the
+list, including all of the lists inside it. Notice that the base case in this
+function is if every element of the list passed to \lstinline{sum_lists} is an
+\lstinline{int}.
 
+\pagebreak
+\subsection{Summary}
+
+\begin{description}
+\item[Default arguments] Function arguments may have a default value, for
+    example:
+    \begin{lstlisting}[style=python]
+import time
+def print_error(message, now = time.time()):
+  print("Error: {} at time {}!".format(message, now))
+
+print_error('All wrong')
+print_error('All more wrong', now = 1.5)
+    \end{lstlisting}
+
+    Default arguments must be specified after arguments that do not have
+    defaults.
+
+  \item[Recursion] Recursion occurs when a function calls itself. There must be
+    a base case to stop the recursion!
+\end{description}
+
+\pagebreak
 \section{First-class Functions}
 \label{subsec:first}
-In Python, functions are ``first-class citizens''. This means, essentially that they can be used in the same way as variables: they can be assigned to variables, passed to and returned from functions, and stored in data structures. As an example, here is a short program that stores functions inside of a list, then calls each one of those functions with the same argument.
+In Python, functions are so-called ``first-class citizens''. This means
+essentially that they can be used in the same way as variables: they can be
+assigned to variables, passed to, and returned from functions, as well as stored
+in collections. As an example, here is a short program that stores functions
+inside of a list, then calls each one of those functions with the same argument.
 
 \begin{lstlisting}[style=python]
 def print_backwards(string):
@@ -144,6 +219,7 @@ def print_half(string):
 def print_question(string):
     print("Why do you want me to print '{}'?".format(string))
 
+# Just use the name of the function!
 print_functions = [print, print_backwards, print_half, print_question]
 
 for func in print_functions:
@@ -157,9 +233,24 @@ Hello,
 Why do you want me to print 'Hello, World!'?
 \end{lstlisting}
 
+This can lead to cool pieces of code where a function takes another function as
+an argument and uses it in some way. For example, we can use it to write a
+function that composes two other functions and calls them with a given $x$. In
+math, this would be like taking a function $f(x)$ and a function $g(x)$ and
+composing them to be $h(x) = f(g(x))$. The function below takes $f$ and $g$ and
+finds the value of $h$ at a $x$.
+
+\begin{lstlisting}[style=python]
+def h(f, g, x):
+  return f(g(x))
+\end{lstlisting}
+
 \subsection{Map}
 \label{subsec:map}
-A common operation in Python is to call the same function for every element in a list, then create a new list with the results. Previously, we would have accomplished this with a \lstinline{for} loop:
+A common operation in Python is to call the same function for every element in a
+collection, such as a list or a tuple and then create a new list with the
+results. Previously, we would have accomplished this with a \lstinline{for}
+loop:
 
 \begin{lstlisting}[style=python]
 def double(x):
@@ -193,14 +284,26 @@ print(data)
 [10, 46, 152]
 \end{lstlisting}
 
-The \lstinline{map} function takes in a function and any iterable data type (such as a list, tuple, set, etc.) as arguments. It calls that function for every element of the other value passed, then returns a new data type containing all of those results. This new data type is a special map object, but in most cases we are fine with instantly converting it back to our initial data type (in the above example, a list).
+The \lstinline{map} function takes in a function and any iterable data type
+(such as a list, tuple, set, etc.) as arguments. It calls that function for
+every element of the other value passed, then returns a new data type containing
+all of those results. This new data type is a special map object, but in most
+cases we are fine with instantly converting it back to our initial data type (in
+the above example, a list).
 
 %List comprehensions?
 
 %Reduce has been removed as of Python 3: https://docs.python.org/3.0/whatsnew/3.0.html#builtins
 \subsection{Reduce}
 \label{subsec:reduce}
-\lstinline{reduce} is a similar function to \lstinline{map}, but rather than create a new list with the modified values, \lstinline{reduce} should be used to simplify a list into a single value. Similarly to \lstinline{map}, \lstinline{reduce} takes in a function and an iterable data type. The difference is that, rather than taking and returning a single value, the function passed to \lstinline{reduce} takes in two arguments and returns their combination. As an example, here is an example of using \lstinline{reduce} to join a list of strings into a single larger string.
+\lstinline{reduce} is a similar function to \lstinline{map}, but rather than
+create a new list with the modified values, \lstinline{reduce} should be used to
+simplify a list into a single value. Similarly to \lstinline{map},
+\lstinline{reduce} takes in a function and an iterable data type. The difference
+is that rather than taking and returning a single value, the function passed to
+\lstinline{reduce} takes in two arguments and returns their combination. As an
+example, here is an example of using \lstinline{reduce} to join a list of
+strings into a single larger string.
 
 \begin{lstlisting}[style=python]
 import functools
@@ -218,7 +321,12 @@ Note that we need to run \lstinline{import functools} in order to have access to
 
 \subsection{Filter}
 \label{subsec:filter}
-\lstinline{filter} is a function that allows easy removal of some elements from a list. It works similarly to \lstinline{map}, but the function used needs to return either \lstinline{True} or \lstinline{False}. If it returns \lstinline{True} then the given element is included in the final list. If \lstinline{False} is returned, then it is not. As an example, here is a short program that removes all odd elements from a list:
+\lstinline{filter} is a function that allows easy removal of some elements from
+a list. It works similarly to \lstinline{map}, but the function used needs to
+return either \lstinline{True} or \lstinline{False}. If it returns
+\lstinline{True} then the given element is included in the final list. If
+\lstinline{False} is returned, then it is not. As an example, here is a short
+program that removes all odd elements from a list:
 
 \begin{lstlisting}[style=python]
 def is_even(x):
@@ -235,7 +343,9 @@ print(data)
 
 \subsection{Lambda Functions}
 \label{subsec:lambda}
-Lambda functions are anonymous functions that are created while the program is running that are not assigned to a name like normal functions. They can be used very similarly to normal functions if assigned to a variable:
+Lambda functions are anonymous functions that are created while the program is
+running and are not assigned to a name like normal functions. They can be used
+very similarly to normal functions if assigned to a variable:
 
 \begin{lstlisting}[style=ipython]
 >>> def f(x):
@@ -248,9 +358,15 @@ Lambda functions are anonymous functions that are created while the program is r
 6
 \end{lstlisting}
 
-In the above case, \lstinline{f} and \lstinline{g} are functionally equivalent. Both are functions that take in a single value and return that value increased by one. The primary difference is in syntax: note that the lambda function does not have a return statement: it will simply return the value computed after the colon.
+In the above case, \lstinline{f} and \lstinline{g} are functionally equivalent;
+we have just used a different syntax to describe them. 
+Both are functions that take in a single value and return that value increased
+by one. The primary difference is in syntax: note that the lambda function does
+not have a return statement: it will simply return the value computed after the
+colon.
 
-Lambda functions are commonly used in conjunction with \lstinline{map}, \lstinline{reduce}, and \lstinline{filter} as shown below:
+Lambda functions are commonly used in conjunction with \lstinline{map},
+\lstinline{reduce}, and \lstinline{filter} as shown below:
 
 \begin{lstlisting}[style=python]
 data = [5, 3, 34, 36, 38, 1, 0, 0, 2]
@@ -262,9 +378,13 @@ print(data)
 [34, 36, 38, 0, 0, 2]
 \end{lstlisting}
 
-This program works just like the example shown in the section on \lstinline{filter}, but it does not require us to declare the separate \lstinline{is_even} function. Instead, we simply define a lambda inside the call to \lstinline{filter}, accomplishing the same thing.
+This program works just like the example shown in the section on
+\lstinline{filter}, but it does not require us to declare the separate
+\lstinline{is_even} function. Instead, we simply define a lambda inside the call
+to \lstinline{filter}, accomplishing the same thing.
 
-We can similarly use lambda functions to shorten our initial example of first-class functions:
+We can similarly use lambda functions to shorten our initial example of
+first-class functions:
 
 \begin{lstlisting}[style=python]
 print_functions = [print,
@@ -276,7 +396,10 @@ for func in print_functions:
     func("Hello, World!")
 \end{lstlisting}
 
-One extra use for lambda functions is to modify default sorting behavior. For example, if we have a list of tuples and try to sort them, Python will sort them based on their first element, then second if the first elements are the same, and so on:
+One extra use for lambda functions is to modify default sorting behavior. For
+example, if we have a list of tuples and try to sort them, Python will sort them
+based on their first element, then second if the first elements are the same,
+and so on:
 
 \begin{lstlisting}[style=ipython]
 >>> data = [(5, 2, 4), (6, 3, 2), (4, 4, 4), (3, 3, 3), (5, 3, 10)]
@@ -284,7 +407,10 @@ One extra use for lambda functions is to modify default sorting behavior. For ex
 [(3, 3, 3), (4, 4, 4), (5, 2, 4), (5, 3, 10), (6, 3, 2)]
 \end{lstlisting}
 
-However, what if we want to sort these tuples based on their last element? To do this, we define a special \lstinline{key} value for \lstinline{sorted}. Each value of the tuple will be passed to this function, and then the return values will be used when sorting in place of the actual value of the tuple:
+However, what if we want to sort these tuples based on their last element? To do
+this, we define a special \lstinline{key} value for \lstinline{sorted}. Each
+value of the tuple will be passed to this function, and then the return values
+will be used when sorting in place of the actual value of the tuple:
 
 \begin{lstlisting}[style=ipython]
 >>> data = [(5, 2, 4), (6, 3, 2), (4, 4, 4), (3, 3, 3), (5, 3, 10)]
@@ -292,12 +418,61 @@ However, what if we want to sort these tuples based on their last element? To do
 [(6, 3, 2), (3, 3, 3), (5, 2, 4), (4, 4, 4), (5, 3, 10)]
 \end{lstlisting}
 
+Notice that \lstinline!key! is just a default argument to the function 
+\lstinline!sorted!. The default value would be a function that sorts based on
+the first element.
 
+Lambda functions also allow us to create functions on the fly. In the
+first-class functions section, we composed two functions $f$ and $g$ and found
+the value at a point $x$. However, sometimes we do not want the value at $x$, we
+want a function that takes in a parameter $x$ and returns the composition. Let's
+say, for example, that we want a function $h(x) = sqrt(factorial(x))$. Take
+a look at the following code:
+\begin{lstlisting}[style=python]
+import math
+
+def compose(f, g):
+  # Creates another function that is the composition of f and g and returns it
+  return lambda x: f(g(x))
+
+# Using math.sin and math.cos as first-class citizens
+h = compose(math.sqrt, math.factorial)
+
+# compose returns a function, so we can use h like a function!
+print(h(6))
+print(h(10))
+
+m = compose(math.sin, math.cos)
+print(m(3))
+print(m(4))
+\end{lstlisting}
+
+\begin{lstlisting}[style=bash]
+26.832815729997478
+1904.9409439665053
+-0.8360218615377305
+-0.6080830096407656
+\end{lstlisting}
+
+If you check the answers, you will find that $\sqrt{ 6! } = \sqrt{ 720 } =
+26.832\cdots$ and similarly for the others.
+
+\subsection{Summary}
+
+\begin{description}
+  \item[First-Class Functions]
+
+  \item[Map]
+
+  \item[Reduce]
+
+  \item[Filter]
+
+  \item[Lambdas]
+\end{description}
 
 \pagebreak
 
-
-%\pagebreak
 \section{Exercises}
 \label{sec:ex}
 
@@ -325,11 +500,6 @@ However, what if we want to sort these tuples based on their last element? To do
 
 \pagebreak
 \section{Submitting}
-
-\begin{center}
-  \textbf{We will be adding more exercises later. We have just not had the time
-  to finish them. You will get an email about them.}
-\end{center}
 
 Files to submit:
 \begin{itemize}
