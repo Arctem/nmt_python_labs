@@ -55,7 +55,7 @@ limitation.''
 \label{subsec:arg}
 Many of the built-in functions we have been using, such as \lstinline{range} or \lstinline{input}, accept a variable number of arguments. We can do the same thing with our own funcitions by specifying default values for our arguments:
 
-\begin{lstlisting}[style=ipython]
+\begin{lstlisting}[style=python]
 def celebrate(times=1):
     for i in range(times):
         print("Yay!")
@@ -103,14 +103,14 @@ Sometimes we might want to include some default arguments while excluding others
 \label{subsec:recur}
 Recursion is the idea of a function calling itself. This can be useful in a wide variety of situations, but it can also be easy to misuse. As an example, see this simple case of recursion:
 
-\begin{lstlisting}[style=ipython]
+\begin{lstlisting}[style=python]
 def test():
     test()
 \end{lstlisting}
 
 If this function is called, it will continue to call itself infinitely until Python prints out an error message and quits. This is because the function calls itself every time it is called -- there is no case where the function ends without calling itself again. This case is called a base case, and it is important to include one in every recursive function. Here is a modified version of the above code that allows the initial call to specify a value limiting how many times the recursive call should be made:
 
-\begin{lstlisting}[style=ipython]
+\begin{lstlisting}[style=python]
 def test(x):
     if x > 0:
         test(x - 1)
@@ -118,7 +118,7 @@ def test(x):
 
 As an example of a more complex way of using recursion to solve a problem, here is an example of a recursive function that will sum a list where each element is either an integer or another list containing integers and lists:
 
-\begin{lstlisting}[style=ipython]
+\begin{lstlisting}[style=python]
 def sum_lists(x):
     total = 0
     for i in x:
