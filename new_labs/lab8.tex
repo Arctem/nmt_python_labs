@@ -53,7 +53,51 @@ limitation.''
 
 \subsection{Default Arguments}
 \label{subsec:arg}
+Many of the built-in functions we have been using, such as \lstinline{range} or \lstinline{input}, accept a variable number of arguments. We can do the same thing with our own funcitions by specifying default values for our arguments:
 
+\begin{lstlisting}[style=ipython]
+def celebrate(times=1):
+    for i in range(times):
+        print("Yay!")
+
+print("First call:")
+celebrate()
+print("Second call:")
+celebrate(5)
+\end{lstlisting}
+
+Note what happens for each call of this function. The first time it only prints \lstinline{"Yay!"} once, since the default argument is \lstinline{1}, while the second call overwrites the default value and prints it five times.
+
+While you are allowed to have a function that has some arguments with default values and some without, you must always put those with default values after those without any, so that Python will know which arguments go into which values if you don't include all of them when calling the function:
+
+\begin{lstlisting}[style=ipython]
+>>> def test(a, b=5, c, d=6):
+...   print(a, b, c, d)
+... 
+  File "<stdin>", line 1
+SyntaxError: non-default argument follows default argument
+>>> def test(a, c, b=5, d=6):
+...   print(a, b, c, d)
+... 
+>>> test(2, 3)
+2 5 3 6
+>>> test(2, 3, 10)
+2 10 3 6
+>>> test(2, 3, 10, 100)
+2 10 3 100
+\end{lstlisting}
+
+Sometimes we might want to include some default arguments while excluding others. We do this by specifying which of the arguments we wish to pass a value to:
+
+\begin{lstlisting}[style=ipython]
+>>> def test(a=0, b=0, c=0, d=0):
+...   print(a, b, c, d)
+... 
+>>> test(c=10)
+0 0 10 0
+>>> test(d=5, c=6)
+0 0 6 5
+\end{lstlisting}
 
 \subsection{Recursion}
 \label{subsec:recur}
