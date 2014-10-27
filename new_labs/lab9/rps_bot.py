@@ -59,7 +59,7 @@ def main():
                             if msg:
                                 msg += '\n'
                                 sock.sendall(msg.encode())
-                    print("Received: {}".format(data))
+                    #print("Received: {}".format(data))
             elif s == sys.stdin:
                 msg = sys.stdin.readline().strip()
                 if msg == 'quit':
