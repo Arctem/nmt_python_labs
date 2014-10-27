@@ -11,6 +11,7 @@ class User:
         self.request_name()
 
     def send(self, msg):
+        msg += '\n'
         self.socket.sendall(msg.encode())
         self.last = msg
 
