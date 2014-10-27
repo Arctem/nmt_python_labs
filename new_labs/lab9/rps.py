@@ -14,17 +14,16 @@ def main():
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server.bind((host, port))
     server.listen(backlog)
-    inputs = [server, sys.stdin]
+    mom.inputs.append(server)
+    mom.inputs.append(sys.stdin)
     running = True
     while running:
-        input_ready, output_ready, except_ready = select.select(inputs, [], [])
+        input_ready, output_ready, except_ready = select.select(mom.inputs, [], [])
         
         for s in input_ready:
             if s == server:
                 client, address = server.accept()
                 print("Received connection from {}.".format(address))
-                inputs.append(client)
-                
                 mom.add_client(client)
 
             elif s == sys.stdin:
@@ -36,12 +35,11 @@ def main():
             else:
                 #handle other sockets
                 data = s.recv(size)
-                print(data)
+                #print(data)
                 if not mom.users[s].recv(data):
                     #this socket closed
                     print("Connection {} closed remotely.".format(s.getpeername()))
                     s.close()
-                    inputs.remove(s)
                     mom.remove_client(s)
 
     server.close()
