@@ -8,28 +8,41 @@ class User:
         self.last = None
         self.opponent = None
         self.play = None
+        self.partial_msg = None
         self.request_name()
 
     def send(self, msg):
         msg += '\n'
         self.socket.sendall(msg.encode())
-        self.last = msg
+        self.last = msg.strip()
 
     def recv(self, msg):
         if not msg:
             return False
         msg = msg.decode()
-
+        #print(repr(msg))
+        
         if msg == '':
             #self.send(self.last)
             return
 
-        if self.last == 'name' or self.last == 'taken':
-            self.set_name(msg)
-        if self.last == 'play':
-            self.make_play(msg)
-        if self.last in ['win', 'lose', 'disconnect']:
-            self.play_again(msg)
+        if self.partial_msg:
+            msg = self.partial_msg + msg
+        
+        msg = msg.split('\n')
+        if msg[-1] == '':
+            self.partial_msg = None
+            msg.pop(-1)
+        else:
+            self.partial_msg = msg.pop(-1)
+
+        for m in msg:
+            if self.last == 'name' or self.last == 'taken':
+                self.set_name(m)
+            elif self.last == 'play':
+                self.make_play(m)
+            elif self.last in ['win', 'lose', 'disconnect']:
+                self.play_again(m)
 
         return True
 
@@ -37,7 +50,7 @@ class User:
         self.send('name')
 
     def set_name(self, msg):
-        if mom.name_available(msg):
+        if len(msg) > 3 and mom.name_available(msg):
             self.name = msg
             print("{} has identified as {}.".format(self.socket.getpeername(), self.name))
             self.find_game()
@@ -65,14 +78,15 @@ class User:
             oppo_play = self.opponent.play
             if oppo_play:
                 if self.play == oppo_play:
-                    self.send('tie')
-                    self.send('play')
+                    self.tie()
+                    self.opponent.tie()
+                    
                 elif mom.wins[self.play] == oppo_play:
-                    self.win()
                     self.opponent.lose()
+                    self.win()
                 else:
-                    self.lose()
                     self.opponent.win()
+                    self.lose()
                     
     def play_again(self, msg):
         if len(msg) < 1 or msg[0] not in 'yn':
@@ -89,8 +103,15 @@ class User:
 
     def win(self):
         self.send('win')
+        self.play = None
         self.opponent = None
 
     def lose(self):
         self.send('lose')
+        self.play = None
         self.opponent = None
+
+    def tie(self):
+        self.send('tie')
+        self.play = None
+        self.send('play')

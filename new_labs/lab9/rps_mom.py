@@ -1,16 +1,19 @@
 from rps_user import User
 
 wins = {'r' : 's', 's' : 'p', 'p' : 'r'}
+inputs = []
 users = {}
 waiting = []
 
 def add_client(client):
     users[client] = User(client)
+    inputs.append(client)
 
 def remove_client(client):
     if users[client].opponent:
         users[client].opponent.end_game()
     del users[client]
+    inputs.remove(client)
 
 def name_available(name):
     for u in users:
