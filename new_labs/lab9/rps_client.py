@@ -24,12 +24,13 @@ def main():
                     running = False
                 else:
                     data = data.decode()
-                    print("Received: {}".format(data))
+                    print("Received: {}".format(data.strip()))
             elif s == sys.stdin:
                 msg = sys.stdin.readline().strip()
                 if msg == 'quit':
                     running = False
-                else:
+                elif msg != '':
+                    msg += '\n'
                     msg = msg.encode()
                     sock.sendall(msg)
         
