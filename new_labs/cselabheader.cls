@@ -26,6 +26,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{textcomp}
+\usepackage{IEEEtrantools}
 % Indention formatting
 \setlength{\parindent}{0.0in}
 \setlength{\parskip}{0.05in}
