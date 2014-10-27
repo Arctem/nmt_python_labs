@@ -58,10 +58,10 @@
 
 \begin{description}
 \item[rps.py] Write a program that connects to the server running at 104.131.56.87
-  port 50000 and plays a game of rock, paper, scissors. The server will send the
+  port 50001 and plays a game of rock, paper, scissors. The server will send the
   following messages:
   \begin{description}
-  \item[username] Next message sent will be your client's display name.
+  \item[name] Next message sent will be your client's display name.
   \item[taken] The name sent is already in use. Repeat sending a name.
   \item[wait] Game has not yet been found (waiting for another player). No response
     required.
@@ -73,7 +73,7 @@
   \item[disconnect] Your opponent disconnected at an unexpected time. The next message should consist solely of ``y'' or ``n'', indicating your desire to find a new opponent.
   \end{description}
 
-  For each of these server responses, you need to display an appropriate message with a prompt for input if appropriate. For example, a ``win'' message might output ``Congratulations, you beat <otherplayer>! Do you want to play again?''
+  For each of these server responses, you need to display an appropriate message with a prompt for input if appropriate. For example, a ``win'' message might output ``Congratulations, you scissors beat otherplayer's paper! Do you want to play again?''
 \end{description}
 
 \pagebreak
