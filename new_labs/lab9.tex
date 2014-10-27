@@ -18,21 +18,23 @@
 
 \hrule
 \begin{quotation}
-``I think there is a world market for maybe five computers.''
+``Today, most software exists not to solve a problem, but to interface with other
+software.''
 \end{quotation}
 \begin{flushright}
---- Thomas J. Watson (Founder and Chairman, IBM)
+--- Ian O. Angell
 \end{flushright}
 
 \begin{quotation}
-``Judge a man by his questions, rather than his answers.''
+``Computer Science is no more about computers than astronomy is about
+telescopes.''
 \end{quotation}
 \begin{flushright}
---- Voltaire
+--- Edsger W. Dijkstra
 \end{flushright}
 
 \begin{quotation}
-``The limits of your language are the limits of your world.''
+``If people never did silly things, nothing intelligent would ever get done.''
 \end{quotation}
 \begin{flushright}
 --- Ludwig Wittgenstein
@@ -44,7 +46,7 @@
 
 \pagebreak
 \section{Sockets}
-\label{sec:advfun}
+\label{sec:sock}
 
 \pagebreak
 
@@ -53,27 +55,39 @@
 
 \begin{warningbox}{Boilerplate}
   Remember that this lab \emph{must} use the
-  boilerplate syntax introduced in Lab~5, including the review exercises.
+  boilerplate syntax introduced in Lab~5.
 \end{warningbox}
 
 \begin{description}
-\item[rps.py] Write a program that connects to the server running at 104.131.56.87
-  port 50001 and plays a game of rock, paper, scissors. The server will send the
-  following messages:
+\item[rps.py] Write a program that connects to the server running at
+  104.131.56.87 port 50001 and plays a game of rock, paper, scissors. The server
+  will send the following messages:
+
   \begin{description}
-  \item[name] Next message sent will be your client's display name.
-  \item[taken] The name sent is already in use. Repeat sending a name.
-  \item[wait] Game has not yet been found (waiting for another player). No response
-    required.
-  \item[opponent <name>] A game has been found. The opponent's name will be inserted for ``<name>''. No response required.
-  \item[play] The next message sent should consist solely of ``r'', ``p'', or ``s'', depending on whether you wish to play rock, paper, or scissors.
-  \item[tie] Your opponent played the same as you, causing a tie. No response required.
-  \item[win] Your play beat your opponent's, so you won. The next message should consist solely of ``y'' or ``n'', indicating your desire to play again.
-  \item[lose] Your opponent's play beat yours, so you lost. The next message should consist solely of ``y'' or ``n'', indicating your desire to play again.
-  \item[disconnect] Your opponent disconnected at an unexpected time. The next message should consist solely of ``y'' or ``n'', indicating your desire to find a new opponent.
+    \item[username] Next message sent will be your client's display name.
+    \item[taken] The name sent is already in use. Repeat sending a name.
+    \item[wait] Game has not yet been found (waiting for another player). No
+      response required.
+    \item[opponent <name>] A game has been found. The opponent's name will be
+      inserted for ``<name>''. No response required.
+    \item[play] The next message sent should consist solely of ``r'', ``p'', or
+      ``s'', depending on whether you wish to play rock, paper, or scissors.
+    \item[tie] Your opponent played the same as you, causing a tie. No response
+      required.
+    \item[win] Your play beat your opponent's, so you won. The next
+      message should consist solely of ``y'' or ``n'', indicating your desire to
+      play again.
+    \item[lose] Your opponent's play beat yours, so you lost. The next message
+      should consist solely of ``y'' or ``n'', indicating your desire to play
+      again.  
+    \item[disconnect] Your opponent disconnected at an unexpected time.  The
+      next message should consist solely of ``y'' or ``n'', indicating your
+      desire to find a new opponent.
   \end{description}
 
-  For each of these server responses, you need to display an appropriate message with a prompt for input if appropriate. For example, a ``win'' message might output ``Congratulations, you scissors beat otherplayer's paper! Do you want to play again?''
+  For each of these server responses, you need to display an appropriate message
+  with a prompt for input if appropriate. For example, a ``win'' message might
+  output ``Congratulations, you beat <otherplayer>! Do you want to play again?''
 \end{description}
 
 \pagebreak
@@ -81,14 +95,14 @@
 
 Files to submit:
 \begin{itemize}
-  \item sum.py (Section~\ref{sec:ex})
+  \item rps.py (Section~\ref{sec:ex})
 \end{itemize}
 
 You may submit your code as either a tarball (instructions below) or as a .zip
 file. Either one should contain all files used in the exercises for this lab.
 The submitted file should be named either
-\texttt{cse107\_firstname\_lastname\_lab8.zip} or
-\texttt{cse107\_firstname\_lastname\_lab8.tar.gz} depending on which method you
+\texttt{cse107\_firstname\_lastname\_lab9.zip} or
+\texttt{cse107\_firstname\_lastname\_lab9.tar.gz} depending on which method you
 used.
 
 For Windows, use a tool you like to create a \texttt{.zip} file. The TCC
