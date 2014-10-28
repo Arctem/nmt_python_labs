@@ -98,7 +98,10 @@ def main():
                         
                 else:
                     #this socket closed
-                    print("Connection {} closed remotely.".format(names[s]))
+                    if s in names.keys():
+                        print("Connection {} closed remotely.".format(names[s]))
+                    else:
+                        print("An unidentified client disconnected.")
                     s.close()
                     del names[s]
                     del mazes[s]
