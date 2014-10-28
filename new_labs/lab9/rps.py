@@ -34,11 +34,15 @@ def main():
                     running = False
             else:
                 #handle other sockets
-                data = s.recv(size)
+                try:
+                    data = s.recv(size)
+                except ConnectionResetError:
+                    #count as closed if other connection terminated early
+                    data = None
                 #print(data)
                 if not mom.users[s].recv(data):
                     #this socket closed
-                    print("Connection {} closed remotely.".format(s.getpeername()))
+                    print("Connection {} closed remotely.".format(mom.users[s].name))
                     s.close()
                     mom.remove_client(s)
 

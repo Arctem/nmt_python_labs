@@ -13,8 +13,11 @@ class User:
 
     def send(self, msg):
         msg += '\n'
-        self.socket.sendall(msg.encode())
-        self.last = msg.strip()
+        try:
+            self.socket.sendall(msg.encode())
+            self.last = msg.strip()
+        except OSError:
+            print('Connection to {} terminated before message could send.'.format(self.name))
 
     def recv(self, msg):
         if not msg:
