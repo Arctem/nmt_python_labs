@@ -6,7 +6,6 @@
 % Prepared by Russell White and Christopher Koch
 % Fall 2014
 \documentclass[11pt]{cselabheader}
-\usepackage{IEEEtrantools}
 
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
 \fancyhead[R]{Lab 9: Sockets}
@@ -65,8 +64,99 @@ with each other. Our protocol will have things like this: If you receive
 ``wait'' from the server, you have to wait for another player to connect and
 just try to keep receiving messages until another one arrives.
 
+\pagebreak
 \section{Sockets}
 \label{sec:sock}
+
+Sockets are really just simple network connections. To use sockets in Python,
+you have to \lstinline!import socket!. We will use the following vocabulary
+here: the program accepting network connections from others is called a
+\emph{server}, while the program trying to conncet to that is called a
+\emph{client}.
+
+In this section, we will only talk about programming a client. The server
+program will already be running on a remote computer.
+
+To initiate a network connection, use \lstinline!socket.socket()!:
+\begin{lstlisting}
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+\end{lstlisting}
+
+Do not mind the arguments to this function. For now, you have to use them and
+assume they are black necessary magic.
+
+Just like with files and \lstinline!open!, the variable \lstinline!s! is now
+your reference to this network connection. You have to use it every time you are
+trying to receive or send something on that network connection.
+
+To then actually connect to a server, use \lstinline!.connect()! and give it a
+tuple of hostname or IP \emph{and} port.
+\begin{lstlisting}
+s.connect( ('arctem.com', 50000) )
+\end{lstlisting}
+Now this is weird. What are those things? 
+
+Generally, we can say that every computer on the internet has its own IP. An IP
+consists of four numbers joined by periods which can go between 0 and 255. For
+example, Chris's laptop has the IP \texttt{129.138.6.38} when he is connected to
+the WiFi in the computer science department. A lab computer in the last row of 
+Speare 23 has the IP \texttt{129.138.47.83}. The computer (``server'') that
+hosts Russell's website and some of this lab has the IP \texttt{104.131.56.87}.
+
+A hostname, such as \texttt{arctem.com} (you have seen this in your web
+browser!), is just something that is more legible and that translates to an IP.
+For example, \texttt{arctem.com} translates to \texttt{104.131.56.87}.
+\texttt{paul.kochris.com} translates to \texttt{178.62.37.44}.
+
+Now given this information, you can connect to any computer that is actually
+online. But there could be many many programs running on that computer that
+accept network connections. If now you connected to that computer, it has to
+figure out which program you wanted to connect to. But just the IP does not give
+you that information -- the remote computer has no idea.
+
+This is where the port comes in: A server on a remote computer will say ``I
+listen to \emph{port} $X$,'' where $X$ is any number between 0 and 65535. Then,
+when a client tries to connect to a computer, that machine will look at the port
+and ``route'' your connection to the correct program.
+
+For example, when you open a web browser and go to a web page, you are
+connecting to the hostname you typed in (for example, \texttt{google.com}) at
+port $80$, because that is the standard for HTTP connections. At port $80$ there
+is a program that handles the messages for requesting a web page. If you are
+using secure browsing, you are connecting to $443$, because that is the standard
+for HTTPS connections.
+
+\begin{lstlisting}[style=python,label={lst:sock},caption={Code that shows usage, but does not
+actually make sense}]
+import socket
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect( ('arctem.com', 50000) )
+
+data = s.recv(1024)
+if data:
+  data = data.decode()
+msg = "Stuff"
+msg = msg.encode()
+s.sendall(msg)
+\end{lstlisting}
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{p{2.5cm} p{3.3cm} p{10cm}}
+    \toprule
+    \bfseries Function & \bfseries Arguments & \bfseries Purpose \\
+    \midrule
+    \lstinline!socket.socket! & \lstinline!socket.AF_INET!, \lstinline!socket.SOCK_STREAM! &
+    Creates a network connection. Don't alter the arguments. Returns a socket
+    reference.\\
+    \lstinline!s.socket()! & \lstinline!(host, port)! & Connect to
+    \lstinline!host! at \lstinline!port!. \lstinline!s! has to be created by a
+    call to \lstinline!socket.socket! (see Listing~\ref{lst:sock})\\
+    \bottomrule
+  \end{tabular}
+  \caption{Summary of socket functions \& methods}
+  \label{tab:sum}
+\end{table}
 
 \pagebreak
 
