@@ -10,16 +10,18 @@ def add_client(client):
     inputs.append(client)
 
 def remove_client(client):
+    if users[client] in waiting:
+        waiting.remove(users[client])
     if users[client].opponent:
         users[client].opponent.end_game()
     del users[client]
     inputs.remove(client)
 
+def get_names():
+    return list(map(lambda u: users[u].name, users))
+
 def name_available(name):
-    for u in users:
-        if name == users[u].name:
-            return False
-    return True
+    return name not in get_names()
 
 def start_game(seeker):
     if waiting:

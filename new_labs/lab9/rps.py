@@ -32,6 +32,8 @@ def main():
                 if junk == 'quit':
                     print("Closing server.")
                     running = False
+                if junk == 'users':
+                    print("Users: {}".format(mom.get_names()))
             else:
                 #handle other sockets
                 try:
