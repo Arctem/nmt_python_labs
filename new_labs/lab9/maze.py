@@ -27,7 +27,7 @@ class Maze:
 
     #Note that the dimensions are counted in terms of number of possible spaces, so the
     #internal size is different.
-    def __init__(self, width=4, height=4, seed=None):
+    def __init__(self, width=10, height=10, seed=None):
         if not seed:
             seed = random.randint(0, 2**16)
         self.rand = random.Random(seed)
@@ -41,7 +41,7 @@ class Maze:
         self.end = (self.width - 2, self.height - 2)
         self.facing = DOWN
         self.steps = 0
-        self.start_time = time.clock()
+        self.start_time = time.perf_counter()
         
 
     def build_maze(self):
@@ -116,6 +116,7 @@ class Maze:
         return "{} {} {}".format(left, front, right)
 
     def make_move(self, move):
+        self.steps += 1
         if move == 'left':
             self.facing -= 1
             self.facing %= 4
@@ -136,6 +137,9 @@ class Maze:
             else:
                 return False
         return False
+    
+    def get_elapsed(self):
+        return time.perf_counter() - self.start_time
 
     def success(self):
         return self.pos == self.end

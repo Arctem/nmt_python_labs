@@ -3,6 +3,7 @@
 import select
 import socket
 import sys
+import pickle
 from maze import Maze
 
 def main():
@@ -47,13 +48,19 @@ def main():
                 if data:
                     data = data.decode().strip()
                     if s not in names.keys():
+                        print("{} identified as {}.".format(s.getpeername(), data))
                         names[s] = data
                         mazes[s] = Maze()
                         s.sendall(mazes[s].look_around().encode())
                     else:
                         if mazes[s].make_move(data):
                             if mazes[s].success():
-                                s.sendall(b'win')
+                                time = mazes[s].get_elapsed()
+                                steps = mazes[s].steps
+                                print("{} won with {} steps in {} seconds.".format(names[s], steps, time))
+                                win_string = 'win {} {}'.format(steps, time)
+                                manage_records(names[s], steps, time)
+                                s.sendall(win_string.encode())
                                 s.close()
                                 del names[s]
                                 del mazes[s]
@@ -74,6 +81,33 @@ def main():
 
     server.close()
 
+
+time_records = []
+step_records = []
+MAX_RECORDS = 50
+
+try:
+    time_records = pickle.load(open('time_records.dmp', 'rb'))
+except FileNotFoundError:
+    print("Could not load time records file.")
+
+try:
+    step_records = pickle.load(open('step_records.dmp', 'rb'))
+except FileNotFoundError:
+    print("Could not load step records file.")
+
+def manage_records(name, steps, time):
+    time_records.append((time, name))
+    step_records.append((steps, name))
+
+    time_records.sort()
+    step_records.sort()
+
+    time_records = time_records[:MAX_RECORDS]
+    step_records = step_records[:MAX_RECORDS]
+
+    pickle.dump(time_records, open('time_records.dmp', 'wb'))
+    pickle.dump(step_records, open('step_records.dmp', 'wb'))
 
 if __name__ == '__main__':
     main()
