@@ -27,7 +27,7 @@ class Maze:
 
     #Note that the dimensions are counted in terms of number of possible spaces, so the
     #internal size is different.
-    def __init__(self, width=10, height=10, seed=None):
+    def __init__(self, width=4, height=4, seed=None):
         if not seed:
             seed = random.randint(0, 2**16)
         self.rand = random.Random(seed)
@@ -88,11 +88,11 @@ class Maze:
         #to left, in front, and to right of player
         left = 0
         off = offset[(self.facing-1)%4]
-        print(off)
+        #print(off)
         x, y = self.pos[0] + off[0], self.pos[1] + off[1]
-        print(x, y)
+        #print(x, y)
         while 0 <= x < self.width and 0 <= y < self.height and self.maze[x][y]:
-            print(x, y)
+            #print(x, y)
             left += 1
             x += off[0] * 2
             y += off[1] * 2
@@ -114,3 +114,30 @@ class Maze:
             y += off[1] * 2
 
         return "{} {} {}".format(left, front, right)
+
+    def make_move(self, move):
+        if move == 'left':
+            self.facing -= 1
+            self.facing %= 4
+            return True
+        elif move == 'right':
+            self.facing += 1
+            self.facing %= 4
+            return True
+        elif move == 'forward' or move == 'backward':
+            off = offset[self.facing]
+            if move == 'backward':
+                off = (-off[0], -off[1])
+            x, y = self.pos[0] + off[0], self.pos[1] + off[1]
+            if 0 != x < self.width - 1 and 0 != y < self.height - 1 and\
+               self.maze[x][y]:
+                self.pos = (self.pos[0] + 2 * off[0], self.pos[1] + 2 * off[1])
+                return True
+            else:
+                return False
+        return False
+
+    def success(self):
+        return self.pos == self.end
+                
+            

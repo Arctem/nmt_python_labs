@@ -51,7 +51,17 @@ def main():
                         mazes[s] = Maze()
                         s.sendall(mazes[s].look_around().encode())
                     else:
-                        pass
+                        if mazes[s].make_move(data):
+                            if mazes[s].success():
+                                s.sendall(b'win')
+                                s.close()
+                                del names[s]
+                                del mazes[s]
+                                inputs.remove(s)
+                            else:
+                                s.sendall(mazes[s].look_around().encode())
+                        else:
+                            s.sendall(b'invalid')
                         
                 else:
                     #this socket closed
