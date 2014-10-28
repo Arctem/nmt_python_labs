@@ -44,7 +44,27 @@ telescopes.''
 
 \section{Introduction}
 
-\pagebreak
+This lab will be two small fun projects involving what computer scientists call
+sockets. Really, sockets are network connections: For a computer to be able to
+receive a connection, it would open a socket and wait for incoming connections
+on that socket (this program would be a server). Another computer (or, perhaps,
+the same) may open another socket to connect to the ``remote'' socket (this
+program would be the client). Once that has happened, the two machines are
+connected. 
+
+Today, you will implement two small programs that connect to a server and solve
+a problem. First, you will play a game of Rock Paper Scissor. When you connect
+to the server, you will be matched with another program that connected -- this
+may take a little while, because you have to wait for someone else to connect.
+Once you connect, your program will play Rock Paper Scissors with the other
+program. 
+
+In order to communicate, we give you a small ``protocol.'' Generally, a protocol
+is just a convention or standard that determines how two programs communicate
+with each other. Our protocol will have things like this: If you receive
+``wait'' from the server, you have to wait for another player to connect and
+just try to keep receiving messages until another one arrives.
+
 \section{Sockets}
 \label{sec:sock}
 
@@ -56,6 +76,13 @@ telescopes.''
 \begin{warningbox}{Boilerplate}
   Remember that this lab \emph{must} use the
   boilerplate syntax introduced in Lab~5.
+\end{warningbox}
+
+\begin{warningbox}{Linux}
+  Please use Linux in this lab. Below, we will tell you to type in commands to
+  the command line -- remember that in Lab 1, you had to type \texttt{idle3} in
+  the command line to start Python? Use that same command line to type the
+  commands given.
 \end{warningbox}
 
 \begin{description}
