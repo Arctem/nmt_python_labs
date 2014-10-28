@@ -50,13 +50,16 @@ def main():
                     print("Remote server closed connection.")
                     running = False
                 else:
-                    data = data.decode()
-                    cmd = data.split()[0]
-                    if cmd in funcs.keys():
-                        msg = funcs[cmd](data.split()[1:])
-                        if msg:
-                            sock.sendall(msg.encode())
-                    print("Received: {}".format(data))
+                    data = data.decode().strip().split('\n')
+                    for d in data:
+                        d = d.strip()
+                        cmd = d.split()[0]
+                        if cmd in funcs.keys():
+                            msg = funcs[cmd](d.split()[1:])
+                            if msg:
+                                msg += '\n'
+                                sock.sendall(msg.encode())
+                    #print("Received: {}".format(data))
             elif s == sys.stdin:
                 msg = sys.stdin.readline().strip()
                 if msg == 'quit':
