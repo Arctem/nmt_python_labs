@@ -28,7 +28,8 @@ funcs = {
     'tie' : lambda x: None,
     'win' : lambda x: win(),
     'lose' : lambda x: lose(),
-    'disconnect' : lambda x: dc()
+    'disconnect' : lambda x: dc(),
+    'again' : lambda x: 'y'
 }
 
 def main():

@@ -83,6 +83,11 @@ telescopes.''
     \item[disconnect] Your opponent disconnected at an unexpected time.  The
       next message should consist solely of ``y'' or ``n'', indicating your
       desire to find a new opponent.
+    \item[again] The next message should consist solely of ``y'' or ``n'',
+      indicating your desire to play again. This message will only occur if
+      invalid input is given for ``win'', ``lose'', or ``disconnect'', so if
+      you can be sure that will not occur you do not necessarily need this
+      case.
   \end{description}
 
   Every message sent will be terminated with a ``\textbackslash{}n''. Every message you send

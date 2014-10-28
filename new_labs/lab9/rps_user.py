@@ -31,7 +31,7 @@ class User:
 
         if self.partial_msg:
             msg = self.partial_msg + msg
-        
+
         msg = msg.split('\n')
         if msg[-1] == '':
             self.partial_msg = None
@@ -93,7 +93,7 @@ class User:
                     
     def play_again(self, msg):
         if len(msg) < 1 or msg[0] not in 'yn':
-            self.send(self.last)
+            self.send('again')
         elif msg == 'y':
             self.find_game()
         else:
