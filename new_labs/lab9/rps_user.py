@@ -44,7 +44,7 @@ class User:
                 self.set_name(m)
             elif self.last == 'play':
                 self.make_play(m)
-            elif self.last in ['win', 'lose', 'disconnect']:
+            elif self.last in ['win', 'lose', 'disconnect', 'again']:
                 self.play_again(m)
 
         return True
