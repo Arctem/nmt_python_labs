@@ -126,6 +126,45 @@ is a program that handles the messages for requesting a web page. If you are
 using secure browsing, you are connecting to $443$, because that is the standard
 for HTTPS connections.
 
+\begin{lstlisting}
+data = s.recv(1024)
+\end{lstlisting}
+
+This is how we read data from a socket. \lstinline{s.recv()} is a function that returns
+a byte array of the data received at socket \lstinline{s}, with the argument being the
+maximum number of bytes received at once. Now, we don't want a byte array. Byte arrays
+are weird and scary things (not really, but just pretend for now -- it's about being
+in the Halloween spirit!). Instead, we want a string version of \lstinline{data}. We do
+this using:
+
+\begin{lstlisting}
+data = data.decode()
+\end{lstlisting}
+
+This converts \lstinline{data} into a string. It is important, however, that we don't
+immediately do this after reading from the socket. First we want to make sure we actually
+got something from the socket -- if the other end of the socket closed and we try to use
+the data from it, our program will crash!
+
+\begin{lstlisting}
+if data:
+  data = data.decode()
+else:
+  print('Remote socket closed.')
+\end{lstlisting}
+
+If we want to send our own message, we need to do the reverse of decoding it. Instead, we
+need to encode our string into a byte array!
+
+\begin{lstlisting}
+msg = "Stuff"
+msg = msg.encode()
+s.sendall(msg)
+\end{lstlisting}
+
+This snippet of code takes our string \lstinline{msg}, encodes it as a byte array, and then
+uses \lstinline{s.sendall()} to send it to the socket we're connected to! Simple!
+
 \begin{lstlisting}[style=python,label={lst:sock},caption={Code that shows usage, but does not
 actually make sense}]
 import socket
@@ -135,6 +174,8 @@ s.connect( ('arctem.com', 50000) )
 data = s.recv(1024)
 if data:
   data = data.decode()
+else:
+  print('Remote socket closed.')
 msg = "Stuff"
 msg = msg.encode()
 s.sendall(msg)
@@ -152,6 +193,9 @@ s.sendall(msg)
     \lstinline!s.socket()! & \lstinline!(host, port)! & Connect to
     \lstinline!host! at \lstinline!port!. \lstinline!s! has to be created by a
     call to \lstinline!socket.socket! (see Listing~\ref{lst:sock})\\
+    \lstinline!msg.encode()! & & Convert the string \lstinline{msg} into a byte array
+    that is compatible with sockets.\\
+    \lstinline!data.encode()! & & Convert the byte array \lstinline{data} into a string.\\
     \bottomrule
   \end{tabular}
   \caption{Summary of socket functions \& methods}
