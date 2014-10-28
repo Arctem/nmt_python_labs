@@ -5,7 +5,7 @@ import socket
 import sys
 
 def main():
-    HOST = 'localhost'
+    HOST = 'arctem.com'
     PORT = 50002
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((HOST, PORT))
