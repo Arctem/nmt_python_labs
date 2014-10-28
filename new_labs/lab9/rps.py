@@ -38,7 +38,7 @@ def main():
                 #handle other sockets
                 try:
                     data = s.recv(size)
-                except ConnectionResetError:
+                except (ConnectionResetError, TimeoutError) as e:
                     #count as closed if other connection terminated early
                     data = None
                 #print(data)
