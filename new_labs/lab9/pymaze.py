@@ -16,7 +16,17 @@ def main():
     server.bind((host, port))
     server.listen(backlog)
 
-    inputs = [server, sys.stdin]
+    step_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    step_server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    step_server.bind((host, port + 1))
+    step_server.listen(backlog)
+
+    time_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    time_server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    time_server.bind((host, port + 2))
+    time_server.listen(backlog)
+
+    inputs = [server, step_server, time_server, sys.stdin]
     mazes = {}
     names = {}
     running = True
@@ -28,6 +38,22 @@ def main():
                 client, address = server.accept()
                 print("Received connection from {}.".format(address))
                 inputs.append(client)
+
+            elif s == step_server:
+                client, address = s.accept()
+                print("Received step leaderboard request from {}.".format(address))
+                for line in get_step_leaderboard():
+                    line += "\n"
+                    client.sendall(line.encode())
+                client.close()
+
+            elif s == time_server:
+                client, address = s.accept()
+                print("Received time leaderboard request from {}.".format(address))
+                for line in get_time_leaderboard():
+                    line += "\n"
+                    client.sendall(line.encode())
+                client.close()
 
             elif s == sys.stdin:
                 #handle standard input
@@ -108,6 +134,20 @@ def manage_records(name, steps, time):
 
     pickle.dump(time_records, open('time_records.dmp', 'wb'))
     pickle.dump(step_records, open('step_records.dmp', 'wb'))
+
+def get_step_leaderboard():
+    if step_records:
+        for s in step_records:
+            yield "{}:\t{}".format(s[1], s[0])
+    else:
+         yield "No records yet."
+
+def get_time_leaderboard():
+    if time_records:
+        for t in time_records:
+            yield "{}:\t{}".format(t[1], t[0])
+    else:
+         yield "No records yet."
 
 if __name__ == '__main__':
     main()
