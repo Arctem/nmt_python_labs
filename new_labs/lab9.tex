@@ -169,6 +169,16 @@ This snippet of code takes our string \lstinline{msg}, encodes it as a byte
 array, and then uses \lstinline{s.sendall()} to send it to the socket we're
 connected to! Simple!
 
+Finally, we need to be able to end our connection:
+
+\begin{lstlisting}
+s.close()
+\end{lstlisting}
+
+This closes the socket, ending the connection. If the other end of the socket
+attempts to read from it, then they will get no data, indicating that we have
+closed our socket. This is why we did \lstinline{if data} up above!
+
 \begin{lstlisting}[style=python,label={lst:sock},caption={Code that shows usage, but does not
 actually make sense}]
 import socket
@@ -188,9 +198,9 @@ s.sendall(msg)
 
 \begin{warningbox}{Working sockets example}
   To see a working sockets client program, look at
-  \texttt{echo\_client.py}. Run it, too! It will, by default, connect to a
-  server that will simply send back what you sent it. Send ``echo'', it'll send
-  back ``echo''.
+  \texttt{echo\_client.py} on Canvas. Run it, too! It will, by default, connect
+  to a server that will simply send back what you sent it. Send ``echo'', it'll
+  send back ``echo''.
 \end{warningbox}
 
 \pagebreak
@@ -211,9 +221,10 @@ s.sendall(msg)
     \lstinline{s.recv()} & \lstinline{size} & Return a byte array of data read from the
     socket with maximum size \lstinline{size}.\\
     \lstinline{s.sendall()} & \lstinline{data} & Send a byte array to the remote socket.\\
+    \lstinline{s.close()} & & Close the socket, ending the connection.\\
     \lstinline!msg.encode()! & & Convert the string \lstinline{msg} into a byte array
     that is compatible with sockets.\\
-    \lstinline!data.encode()! & & Convert the byte array \lstinline{data} into a string.\\
+    \lstinline!data.decode()! & & Convert the byte array \lstinline{data} into a string.\\
     \bottomrule
   \end{tabular}
   \caption{Summary of socket-related functions \& methods}
