@@ -6,9 +6,6 @@ import sys
 from maze import Maze
 
 def main():
-    m = Maze(10, 10)
-    return
-    
     host = ''
     port = 50002
     backlog = 5
@@ -17,17 +14,19 @@ def main():
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server.bind((host, port))
     server.listen(backlog)
-    mom.inputs.append(server)
-    mom.inputs.append(sys.stdin)
+
+    inputs = [server, sys.stdin]
+    mazes = {}
+    names = {}
     running = True
     while running:
-        input_ready, output_ready, except_ready = select.select(mom.inputs, [], [])
+        input_ready, output_ready, except_ready = select.select(inputs, [], [])
         
         for s in input_ready:
             if s == server:
                 client, address = server.accept()
                 print("Received connection from {}.".format(address))
-                mom.add_client(client)
+                inputs.append(client)
 
             elif s == sys.stdin:
                 #handle standard input
@@ -36,7 +35,7 @@ def main():
                     print("Closing server.")
                     running = False
                 if junk == 'users':
-                    print("Users: {}".format(mom.get_names()))
+                    print("Users: {}".format(list(map(lambda u: names[u], names))))
             else:
                 #handle other sockets
                 try:
@@ -44,12 +43,24 @@ def main():
                 except ConnectionResetError:
                     #count as closed if other connection terminated early
                     data = None
-                #print(data)
-                if not mom.users[s].recv(data):
+
+                if data:
+                    data = data.decode().strip()
+                    if s not in names.keys():
+                        names[s] = data
+                        mazes[s] = Maze()
+                        s.sendall(mazes[s].look_around().encode())
+                    else:
+                        pass
+                        
+                else:
                     #this socket closed
-                    print("Connection {} closed remotely.".format(mom.users[s].name))
+                    print("Connection {} closed remotely.".format(names[s]))
                     s.close()
-                    mom.remove_client(s)
+                    del names[s]
+                    del mazes[s]
+                    inputs.remove(s)
+
 
     server.close()
 

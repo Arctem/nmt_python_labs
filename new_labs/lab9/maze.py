@@ -1,4 +1,12 @@
 import random
+import time
+
+UP = 0
+RIGHT = 1
+DOWN = 2
+LEFT = 3
+
+offset = [(0, -1), (1, 0), (0, 1), (-1, 0)]
 
 class Maze:
     #Each tile in the maze is either open or shut, with no data on walls in each direction
@@ -19,7 +27,7 @@ class Maze:
 
     #Note that the dimensions are counted in terms of number of possible spaces, so the
     #internal size is different.
-    def __init__(self, width, height, seed=None):
+    def __init__(self, width=10, height=10, seed=None):
         if not seed:
             seed = random.randint(0, 2**16)
         self.rand = random.Random(seed)
@@ -31,7 +39,9 @@ class Maze:
         #player info
         self.pos = (1, 1)
         self.end = (self.width - 2, self.height - 2)
-        self.facing = 'down'
+        self.facing = DOWN
+        self.steps = 0
+        self.start_time = time.clock()
         
 
     def build_maze(self):
@@ -68,8 +78,39 @@ class Maze:
         self.print_maze()
 
     def print_maze(self):
-        for x in range(self.width):
-            for y in range(self.height):
+        for y in range(self.width):
+            for x in range(self.height):
                 print(' ' if self.maze[x][y] else 'X', end='')
             print()
 
+    def look_around(self):
+        #return string of 3 space-separated numbers, representing clear distance
+        #to left, in front, and to right of player
+        left = 0
+        off = offset[(self.facing-1)%4]
+        print(off)
+        x, y = self.pos[0] + off[0], self.pos[1] + off[1]
+        print(x, y)
+        while 0 <= x < self.width and 0 <= y < self.height and self.maze[x][y]:
+            print(x, y)
+            left += 1
+            x += off[0] * 2
+            y += off[1] * 2
+        
+        front = 0
+        off = offset[self.facing%4]
+        x, y = self.pos[0] + off[0], self.pos[1] + off[1]
+        while 0 <= x < self.width and 0 <= y < self.height and self.maze[x][y]:
+            front += 1
+            x += off[0] * 2
+            y += off[1] * 2
+        
+        right = 0
+        off = offset[(self.facing+1)%4]
+        x, y = self.pos[0] + off[0], self.pos[1] + off[1]
+        while 0 <= x < self.width and 0 <= y < self.height and self.maze[x][y]:
+            right += 1
+            x += off[0] * 2
+            y += off[1] * 2
+
+        return "{} {} {}".format(left, front, right)
