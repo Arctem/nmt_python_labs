@@ -126,25 +126,28 @@ is a program that handles the messages for requesting a web page. If you are
 using secure browsing, you are connecting to $443$, because that is the standard
 for HTTPS connections.
 
+Now that we have connected to a program, we can either receive data or send data
+on that connection. 
+
 \begin{lstlisting}
 data = s.recv(1024)
 \end{lstlisting}
 
-This is how we read data from a socket. \lstinline{s.recv()} is a function that returns
-a byte array of the data received at socket \lstinline{s}, with the argument being the
-maximum number of bytes received at once. Now, we don't want a byte array. Byte arrays
-are weird and scary things (not really, but just pretend for now -- it's about being
-in the Halloween spirit!). Instead, we want a string version of \lstinline{data}. We do
-this using:
+This is how we read data from a socket. \lstinline{s.recv()} is a function that
+returns a byte array of the data received at socket \lstinline{s}, with the
+argument being the maximum number of bytes received at once. Now, we don't want
+a byte array. Byte arrays are weird and scary things (not really, but just
+pretend for now -- it's about being in the Halloween spirit!). Instead, we want
+a string version of \lstinline{data}. We do this using:
 
 \begin{lstlisting}
 data = data.decode()
 \end{lstlisting}
 
-This converts \lstinline{data} into a string. It is important, however, that we don't
-immediately do this after reading from the socket. First we want to make sure we actually
-got something from the socket -- if the other end of the socket closed and we try to use
-the data from it, our program will crash!
+This converts \lstinline{data} into a string. It is important, however, that we
+don't immediately do this after reading from the socket. First we want to make
+sure we actually got something from the socket -- if the other end of the socket
+closed and we try to use the data from it, our program will crash!
 
 \begin{lstlisting}
 if data:
@@ -153,8 +156,8 @@ else:
   print('Remote socket closed.')
 \end{lstlisting}
 
-If we want to send our own message, we need to do the reverse of decoding it. Instead, we
-need to encode our string into a byte array!
+If we want to send our own message, we need to do the reverse of decoding it.
+Instead, we need to encode our string into a byte array!
 
 \begin{lstlisting}
 msg = "Stuff"
@@ -162,8 +165,9 @@ msg = msg.encode()
 s.sendall(msg)
 \end{lstlisting}
 
-This snippet of code takes our string \lstinline{msg}, encodes it as a byte array, and then
-uses \lstinline{s.sendall()} to send it to the socket we're connected to! Simple!
+This snippet of code takes our string \lstinline{msg}, encodes it as a byte
+array, and then uses \lstinline{s.sendall()} to send it to the socket we're
+connected to! Simple!
 
 \begin{lstlisting}[style=python,label={lst:sock},caption={Code that shows usage, but does not
 actually make sense}]
@@ -180,6 +184,17 @@ msg = "Stuff"
 msg = msg.encode()
 s.sendall(msg)
 \end{lstlisting}
+
+
+\begin{warningbox}{Working sockets example}
+  To see a working sockets client program, look at
+  \texttt{echo\_client.py}. Run it, too! It will, by default, connect to a
+  server that will simply send back what you sent it. Send ``echo'', it'll send
+  back ``echo''.
+\end{warningbox}
+
+\pagebreak
+\subsection{Summary}
 
 \begin{table}[!ht]
   \centering
