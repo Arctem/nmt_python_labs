@@ -257,6 +257,20 @@ s.sendall(msg)
   for ``\textbackslash{}n'' to know where each command ends. If you receive part of a command, you
   will have to store that partial command until you get the rest of it.
 
+  The valid messages you can send:
+
+  \begin{description}
+  \item[<username>] Your desired username, in response to \lstinline{name} or
+    \lstinline{taken}.
+  \item[r] A play of ``rock'', in response to \lstinline{play}.
+  \item[p] A play of ``paper'', in response to \lstinline{play}.
+  \item[s] A play of ``scissors'', in response to \lstinline{play}.
+  \item[y] Indication of desire to play again, in response to \lstinline{win},
+    \lstinline{lose}, \lstinline{disconnect}, or \lstinline{again}.
+  \item[y] Indication of desire to not play again, in response to \lstinline{win},
+    \lstinline{lose}, \lstinline{disconnect}, or \lstinline{again}.
+  \end{description}
+
   For each of these server responses, you need to display an appropriate message
   with a prompt for input if appropriate. For example, a ``win'' message might
   output ``Congratulations, you beat <otherplayer>! Do you want to play again?''
