@@ -79,7 +79,7 @@ class Maze:
         #to make it more interesting
         for x in range(1, self.width - 1):
             for y in range(1, self.height - 1):
-                if random.randint(1, 10) == 1 and x % 2 != y % 2:
+                if self.rand.randint(1, 10) == 1 and x % 2 != y % 2:
                     self.maze[x][y] = True
                 
         self.print_maze()
