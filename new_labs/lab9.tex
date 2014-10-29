@@ -345,6 +345,34 @@ s.sendall(msg)
   navigating the maze, though you MUST print out the stats it receives on successful completion of
   the maze (total steps and time taken).
 
+  In order to assist with testing, if you give a display name that starts with an underscore, you
+  will always get the same maze. However, this does exempt you from the leaderboard and you must
+  be able to solve any randomly generated maze for full credit. The maze you will be given is:
+
+  \begin{lstlisting}[style=bash]
+XXXXXXXXXXXXXXXXXXXXX
+X     X       X     X
+XXXXX X X X X X X X X
+X X   X X   X   X X X
+X X XXX XXXXXXX X X X
+X X   X X     X   X X
+X X X X X XXX X XXX X
+X   X   X   X X     X
+XXX X XXXXX X X X XXX
+X   X         X X   X
+X X XXXXXXXXX XXXXX X
+X X         X X     X
+X XXXXXXXXXXX X XXX X
+X X       X   X   X X
+X X XXXXX X XXXXX X X
+X X X   X   X   X X X
+X X X XXXXXXX X X X X
+X   X         X   X X
+X XXX XXX XXXXXXXXX X
+X         X         X
+XXXXXXXXXXXXXXXXXXXXX
+  \end{lstlisting}
+
   If you connect to the server on port 50003, it will send you the leaderboard of fastest times
   measured in steps. A simple way to do this in the cmd line is to run
   \lstinline{nc arctem.com 50003}.
