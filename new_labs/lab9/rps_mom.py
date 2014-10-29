@@ -18,7 +18,7 @@ def remove_client(client):
     inputs.remove(client)
 
 def get_names():
-    return list(map(lambda u: users[u].name, users))
+    return list(filter(lambda x : x != None, list(map(lambda u: users[u].name, users))))
 
 def name_available(name):
     return name not in get_names()

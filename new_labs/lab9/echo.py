@@ -36,7 +36,10 @@ def main():
                     s.send(data)
                 else:
                     #this socket closed
-                    print("Connection {} closed remotely.".format(s.getpeername()))
+                    try:
+                        print("Connection {} closed remotely.".format(s.getpeername()))
+                    except OSError:
+                        print("A remote connection closed.")
                     s.close()
                     inputs.remove(s)
 

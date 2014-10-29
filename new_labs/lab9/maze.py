@@ -74,6 +74,13 @@ class Maze:
                 self.maze[int((x+x2)/2)][int((y+y2)/2)] = True
             else:
                 stack.pop()
+
+        #now we just poke a few random holes in the maze
+        #to make it more interesting
+        for x in range(1, self.width - 1):
+            for y in range(1, self.height - 1):
+                if random.randint(1, 10) == 1 and x % 2 != y % 2:
+                    self.maze[x][y] = True
                 
         self.print_maze()
 
@@ -143,5 +150,11 @@ class Maze:
 
     def success(self):
         return self.pos == self.end
-                
+
+
+def main():
+    m = Maze()
+
+if __name__ == '__main__':
+    main()
             
