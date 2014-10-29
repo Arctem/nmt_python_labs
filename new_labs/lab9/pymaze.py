@@ -100,11 +100,11 @@ def main():
                     #this socket closed
                     if s in names.keys():
                         print("Connection {} closed remotely.".format(names[s]))
+                        del names[s]
+                        del mazes[s]
                     else:
-                        print("An unidentified client disconnected.")
+                        print("Unnamed connection closed remotely.")
                     s.close()
-                    del names[s]
-                    del mazes[s]
                     inputs.remove(s)
 
 
@@ -126,6 +126,8 @@ except FileNotFoundError:
     print("Could not load step records file.")
 
 def manage_records(name, steps, time):
+    global time_records
+    global step_records
     time_records.append((time, name))
     step_records.append((steps, name))
 
