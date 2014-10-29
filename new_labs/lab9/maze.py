@@ -154,6 +154,7 @@ class Maze:
 
 def main():
     m = Maze()
+    m = Maze(seed=1)
 
 if __name__ == '__main__':
     main()

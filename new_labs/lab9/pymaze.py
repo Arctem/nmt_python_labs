@@ -77,6 +77,8 @@ def main():
                         print("{} identified as {}.".format(s.getpeername(), data))
                         names[s] = data
                         mazes[s] = Maze()
+                        if data.startswith('_'):
+                            mazes[s] = Maze(seed=1)
                         s.sendall(mazes[s].look_around().encode())
                     else:
                         if mazes[s].make_move(data):
@@ -126,6 +128,9 @@ except FileNotFoundError:
     print("Could not load step records file.")
 
 def manage_records(name, steps, time):
+    if name.startswith('_'):
+        print("{} is invalid name for record.".format(name))
+    
     global time_records
     global step_records
     time_records.append((time, name))
