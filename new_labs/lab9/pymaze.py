@@ -130,6 +130,7 @@ except FileNotFoundError:
 def manage_records(name, steps, time):
     if name.startswith('_'):
         print("{} is invalid name for record.".format(name))
+        return
     
     global time_records
     global step_records
