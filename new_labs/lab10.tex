@@ -71,7 +71,25 @@ The basic steps of creating Markov chains are:
 \item Continue selecting randomly from the words that can possibly follow the current last word of our sentence until either there are no possible choices or we have made a sentence as long as desired.
 \end{enumerate}
 
-As an example, let's use the input phrase ``There is a fifth dimension, beyond that which is known to man. It is a dimension as vast as space and as timeless as infinity.''. If we were to convert this sentence into a graph representing the possible choices to make at each step, it would look something like Figure \ref{twilight}.
+For a simple example, let's generate Markov phrases using inputs of ``Hello, how are you?'' and ``Where are my keys?''. If we convert these sentences into a graph showing the possible results, we would get Figure \ref{mark_ex}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.2\linewidth]{lab10/example}
+  \caption{A graphical representation of the Markov possibilities for ``Hello, how are you?'' and ``Where are my keys?''}
+  \label{mark_ex}
+\end{figure}
+
+In this graph, each arrow represents a choice we can take based on the last word we added to our sentence, continuing until there are no valid paths to take. Looking at the graph, it's pretty easy to see there are four possible outputs if we start our chain with either ``Hello,'' or ``Where'':
+
+\begin{itemize}
+\item Hello, how are you?
+\item Hello, how are my keys?
+\item Where are you?
+\item Where are my keys?
+\end{itemize}
+
+For a more complex example, let's use the input phrase ``There is a fifth dimension, beyond that which is known to man. It is a dimension as vast as space and as timeless as infinity.''. If we were to convert this sentence into a graph representing the possible choices to make at each step, it would look something like Figure \ref{twilight}.
 
 \begin{figure}[h]
   \centering
@@ -80,7 +98,7 @@ As an example, let's use the input phrase ``There is a fifth dimension, beyond t
   \label{twilight}
 \end{figure}
 
-In this graph, each arrow represents a choice we can take based on the last word we added to our sentence. For example, if we start with ``There'', our only option is ``is''. ``is'' is followed by ``a'' twice and ``known'' once, so it has two arrows to ``a'' and one to ``known''. This means that, when we randomly choose a next step, we should have a $\frac{2}{3}$ chance to choose ``a'' and a $\frac{1}{3}$ chance to choose ``known''. If we (randomly) choose to continue to ``a'', we have the choice of either ``fifth'' or ``dimension'' to continue our sentence with. A few possible new sentences we could generate from this input are:
+In this graph, if we start with ``There'', our only option for a next word is ``is''. ``is'' is followed by ``a'' twice and ``known'' once, so it has two arrows to ``a'' and one to ``known''. This means that, when we randomly choose a next step, we should have a $\frac{2}{3}$ chance to choose ``a'' and a $\frac{1}{3}$ chance to choose ``known''. If we (randomly) choose to continue to ``a'', we have the choice of either ``fifth'' or ``dimension'' to continue our sentence with. A few possible new sentences we could generate from this input are:
 \begin{itemize}
 \item There is a dimension as infinity.
 \item There is a fifth dimension, beyond that which is a fifth dimension, beyond that which is a dimension as vast as space and as infinity.
@@ -106,13 +124,6 @@ In honor of getting through 10 labs, we are allowing you to resubmit one previou
 
 \begin{description}
 \item[markov.py] Write a program that takes in a filename, reads each line of the file, converts the lines into a format convenient for making Markov chains, and then prints out a new sentence randomly generated from the data, based on the Markov algorithm. When loading the file, treat the lines as separate statements. That is, if ``Hello, how are you?'' and ``Where are my keys?'' are lines in a file, then ``you?'' should not be followed by ``Where'' when generating a chain. However, ``are'' should be allowed to be followed by either ``you?'' or ``my'', as seen in Figure \ref{mark_ex}.
-
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.2\linewidth]{lab10/example}
-    \caption{A graphical representation of the Markov possibilities for ``Hello, how are you?'' and ``Where are my keys?''}
-    \label{mark_ex}
-  \end{figure}
 
   When creating a new chain, the first element should always be a randomly selected first word of a line in the file. The chain should end when either:
   \begin{itemize}
