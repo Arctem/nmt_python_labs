@@ -80,7 +80,7 @@ As an example, let's use the input phrase ``There is a fifth dimension, beyond t
   \label{twilight}
 \end{figure}
 
-In this graph, each arrow represents a choice we can take based on the last word we added to our sentence. For example, if we start with ``There'', our only option is ``is''. ``is'' is followed by ``a'' twice, so it has two arrows to ``a'' and one to ``known''. This means that, when we randomly choose a next step, we should have a $\frac{2}{3}$ chance to choose ``a'' and a $\frac{1}{3}$ chance to choose ``known''. If we (randomly) choose to continue to ``a'', we have the choice of either ``fifth'' or ``dimension'' to continue our sentence with. A few possible new sentences we could generate from this input are:
+In this graph, each arrow represents a choice we can take based on the last word we added to our sentence. For example, if we start with ``There'', our only option is ``is''. ``is'' is followed by ``a'' twice and ``known'' once, so it has two arrows to ``a'' and one to ``known''. This means that, when we randomly choose a next step, we should have a $\frac{2}{3}$ chance to choose ``a'' and a $\frac{1}{3}$ chance to choose ``known''. If we (randomly) choose to continue to ``a'', we have the choice of either ``fifth'' or ``dimension'' to continue our sentence with. A few possible new sentences we could generate from this input are:
 \begin{itemize}
 \item There is a dimension as infinity.
 \item There is a fifth dimension, beyond that which is a fifth dimension, beyond that which is a dimension as vast as space and as infinity.
