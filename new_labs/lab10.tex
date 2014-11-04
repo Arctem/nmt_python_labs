@@ -112,6 +112,40 @@ In this graph, if we start with ``There'', our only option for a next word is ``
 
 As you can see, Markov chains have a tendency to make sentences which almost make sense. This is because every individual pairing of two words will make sense, but the combinations of the pairings might not. For example, ``as vast'' and ``vast as'' can both make sense given the right context, but ``vast as vast as vast as vast'' is nonsense. We can help alleviate this problem by taking into account the last 2 (or 3, or 4...) words when choosing the next word instead of just the last one, but this requires a far larger input or it will result in the output being the same as the input.
 
+\subsection{Random Numbers}
+\label{subsec:random}
+You may find the module \lstinline{random} to be especially useful when
+creating Markov chains. Below is a brief example of some common functions
+inside \lstinline{random}.
+
+\begin{lstlisting}[style=ipython]
+>>> import random
+>>> print(random.random())
+0.7682548548225483
+>>> print(random.uniform(1, 100))
+36.30623079969581
+>>> print(random.choice(['joe', 'moe', 'larry', 'shemp', 'curly']))
+larry
+>>> print(random.randint(1, 100))
+79
+\end{lstlisting}
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{p{3.0cm} p{2cm} p{10cm}}
+    \toprule
+    \bfseries Function & \bfseries Arguments & \bfseries Purpose \\
+    \midrule
+    \lstinline{random.random()} & & Returns a random number between 0.0 and 1.0.\\
+    \lstinline{random.uniform()} & \lstinline{a}, \lstinline{b} & Returns a random number between \lstinline{a} and \lstinline{b}.\\
+    \lstinline{random.randint()} & \lstinline{a}, \lstinline{b} & Returns a random integer between \lstinline{a} and \lstinline{b}.\\
+    \lstinline{random.choice()} & \lstinline{list} & Returns a random value from \lstinline{list}.\\
+    \bottomrule
+  \end{tabular}
+  \caption{Summary of \lstinline{random} functions.}
+  \label{tab:rand}
+\end{table}
+
 
 \section{Amnesty}
 \label{sec:amnesty}
