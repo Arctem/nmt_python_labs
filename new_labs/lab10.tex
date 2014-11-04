@@ -23,6 +23,7 @@
   --- Pam (\emph{Archer})
 \end{flushright}
 
+
 \begin{quotation}
 ``Simplicity is prerequisite for reliability.''
 \end{quotation}
@@ -50,12 +51,29 @@ the truth by capturing it, only by its capturing you.''
 \hrule
 
 \section{Introduction}
-In this lab we will have another small project. We will not be covering any new
+
+Today's lab will be just another small project.
+We will not be covering any new
 topics: this is primarily an application of what you already know. You will be
 writing a program that generates
 \href{http://en.wikipedia.org/wiki/Markov_chain}{Markov chains} from an input
-file. The majority of this lab will be covering exactly what a Markov chain is,
-followed by a description of exactly what you must accomplish.
+file. Markov chains are the simplest way for you to generate sentences that
+almost make sense, but really don't. They are based on figuring out the
+likelihood of a word following another word by looking at existing bodies of
+text (for example, Wikipedia). Then, to generate sentences you choose a starting
+word and based on a random variable as well as the probabilities that you've
+found by looking at existing text, you choose a word following that starting
+word and repeat. 
+
+This will generate sentences like this when used on conversations between
+Russell and Chris about Python lab (the starting word was ``CS''):
+\begin{quotation}
+``CS be hard!''
+\end{quotation}
+\begin{flushright}
+--- arcbot
+\end{flushright}
+\pagebreak
 
 \section{Markov Chains}
 \label{sec:markov}
@@ -156,6 +174,8 @@ Make sure it is clear from your filename which lab you are redoing.
 
 \pagebreak
 
+
+\clearpage
 \section{Exercises}
 \label{sec:ex}
 
