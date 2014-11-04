@@ -30,7 +30,10 @@ def main():
                     running = False
             else:
                 #handle other sockets
-                data = s.recv(size)
+                try:
+                    data = s.recv(size)
+                except ConnectionResetError:
+                    data = None
                 if data:
                     #do stuff
                     s.send(data)
