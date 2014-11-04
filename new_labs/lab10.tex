@@ -139,6 +139,12 @@ Make sure it is clear from your filename which lab you are redoing.
   \item The sentence has reached a length of 100 words.
   \end{itemize}
 
+  Remember that you need to account for different frequencies of possible
+  follow words. That is, a situation like in Figure \ref{twilight} where
+  there is a higher chance for ``a'' to follow ``is'' than for ``known''
+  to. You need to account for whatever probabilities might come up within
+  your input file.
+
   You may use any file you wish for test input, though \lstinline{reviews.txt} is provided for you. This is a collection of 12500 reviews from IMDB and is a subset of the data provided at \url{http://ai.stanford.edu/~amaas/data/sentiment/index.html}. When parsing the input file, you should skip any blank lines.
   
 \end{description}
