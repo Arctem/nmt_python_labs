@@ -135,6 +135,9 @@ As you can see, Markov chains have a tendency to make sentences which almost mak
 \label{sec:amnesty}
 In honor of getting through 10 labs, we are allowing you to resubmit one previous lab for a new grade. If you have a previous lab that you would like to improve your grade on, you may rewrite that lab and upload a new version to be graded. This new grade, if better than your original (hopefully we can assume that will be the case) will replace your original grade.
 
+Upload your redone assignment to the ``Amnesty'' assignment on Canvas.
+Make sure it is clear from your filename which lab you are redoing.
+
 \pagebreak
 
 
@@ -155,6 +158,12 @@ In honor of getting through 10 labs, we are allowing you to resubmit one previou
   \item There are no valid choices to continue the sentence with.
   \item The sentence has reached a length of 100 words.
   \end{itemize}
+
+  Remember that you need to account for different frequencies of possible
+  follow words. That is, a situation like in Figure \ref{twilight} where
+  there is a higher chance for ``a'' to follow ``is'' than for ``known''
+  to. You need to account for whatever probabilities might come up within
+  your input file.
 
   You may use any file you wish for test input, though \lstinline{reviews.txt} is provided for you. This is a collection of 12500 reviews from IMDB and is a subset of the data provided at \url{http://ai.stanford.edu/~amaas/data/sentiment/index.html}. When parsing the input file, you should skip any blank lines.
   
