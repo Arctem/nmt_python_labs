@@ -1,15 +1,15 @@
-% LAB 9: Sockets
+% LAB 11: Web Scraping
 %
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
 %
-% Prepared by Russell White and Christopher Koch
+% Prepared by Russell White and Christopher Koch and Tyler Cecil
 % Fall 2014
 \documentclass[11pt]{cselabheader}
 
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 9: Sockets}
-\title{Lab 9: Sockets}
+\fancyhead[R]{Lab 11: Web Scraping}
+\title{Lab 11: Web Scraping}
 
 \begin{document}
 
@@ -17,26 +17,24 @@
 
 \hrule
 \begin{quotation}
-``Today, most software exists not to solve a problem, but to interface with other
-software.''
+``The sooner you start to code, the longer the program will take.''
 \end{quotation}
 \begin{flushright}
---- Ian O. Angell
+--- R. Carlson
 \end{flushright}
 
 \begin{quotation}
-``Computer Science is no more about computers than astronomy is about
-telescopes.''
+``Any sufficiently advanced technology is indistinguishable from magic.''
 \end{quotation}
 \begin{flushright}
---- Edsger W. Dijkstra
+--- A. Clarke
 \end{flushright}
 
 \begin{quotation}
-``If people never did silly things, nothing intelligent would ever get done.''
+``Imagination is more important than knowledge.''
 \end{quotation}
 \begin{flushright}
---- Ludwig Wittgenstein
+--- A. Einstein
 \end{flushright}
 
 \hrule
@@ -64,10 +62,11 @@ What do?
 
 How do?
 
-\subsection{Wikipedea}
+\subsection{Wikipedia}
 
 That one thing that russell found (about the philosophy link)
 
+\pagebreak
 \section{Exercises}
 \label{sec:ex}
 
@@ -81,36 +80,7 @@ That one thing that russell found (about the philosophy link)
 \end{warningbox}
 
 \begin{description}
-\item[rps.py] Write a program that connects to the server running at
-  \lstinline{arctem.com} port 50001 and plays a game of rock, paper, scissors. The server
-  will send the following messages:
-
-  \begin{description}
-    \item[name] Next message sent will be your client's display name.
-    \item[taken] The name sent is already in use. Repeat sending a name.
-    \item[wait] Game has not yet been found (waiting for another player). No
-      response required.
-    \item[opponent <name>] A game has been found. The opponent's name will be
-      inserted for ``<name>''. No response required.
-    \item[play] The next message sent should consist solely of ``r'', ``p'', or
-      ``s'', depending on whether you wish to play rock, paper, or scissors.
-    \item[tie] Your opponent played the same as you, causing a tie. No response
-      required.
-    \item[win] Your play beat your opponent's, so you won. The next
-      message should consist solely of ``y'' or ``n'', indicating your desire to
-      play again.
-    \item[lose] Your opponent's play beat yours, so you lost. The next message
-      should consist solely of ``y'' or ``n'', indicating your desire to play
-      again.
-    \item[disconnect] Your opponent disconnected at an unexpected time.  The
-      next message should consist solely of ``y'' or ``n'', indicating your
-      desire to find a new opponent.
-    \item[again] The next message should consist solely of ``y'' or ``n'',
-      indicating your desire to play again. This message will only occur if
-      invalid input is given for ``win'', ``lose'', or ``disconnect'', so if
-      you can be sure that will not occur you do not necessarily need this
-      case.
-  \end{description}
+  \item[file.py]
 \end{description}
 
 \pagebreak
@@ -118,15 +88,14 @@ That one thing that russell found (about the philosophy link)
 
 Files to submit:
 \begin{itemize}
-\item rps.py (Section~\ref{sec:ex})
-\item maze.py (Section~\ref{sec:ex})
+\item file.py (Section~\ref{sec:ex})
 \end{itemize}
 
 You may submit your code as either a tarball (instructions below) or as a .zip
 file. Either one should contain all files used in the exercises for this lab.
 The submitted file should be named either
-\texttt{cse107\_firstname\_lastname\_lab9.zip} or
-\texttt{cse107\_firstname\_lastname\_lab9.tar.gz} depending on which method you
+\texttt{cse107\_firstname\_lastname\_lab11.zip} or
+\texttt{cse107\_firstname\_lastname\_lab11.tar.gz} depending on which method you
 used.
 
 For Windows, use a tool you like to create a \texttt{.zip} file. The TCC
