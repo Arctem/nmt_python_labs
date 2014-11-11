@@ -332,14 +332,6 @@ want to customize more, please see the matplotlib pylab documentation at
 \end{center}
 
 \pagebreak
-\section{Wikipedia}
-
-In case you feel like wasting time, did you know that Wikipedia has some odd
-properties about the philosophy page? You should read more at:
-
-\begin{center}
-  \url{http://en.wikipedia.org/wiki/Wikipedia:Getting_to_Philosophy}
-\end{center}
 
 \section{Exercises}
 \label{sec:ex}
@@ -365,13 +357,15 @@ properties about the philosophy page? You should read more at:
     takes advantage of the ``philosophy property'' of most Wikipedia pages. The
     user will provide a list of Wikipedia article names. Your program will take
     this list, and return a list of the ``first-link-distance'' to Philosophy.
+    That is, the number of articles you must visit in order to reach Philosophy,
+    if for each article you simply follow the first link in that article.
     If the given article does not converge to Philosophy, display the string
     ``inft''.  It the given article does not exist, display the string ``N/A''.
 
     \emph{Take a look at the provided wikiclicker.py for a function that gets
     you the first link on a Wikipedia page.}
 
-    For example, see this made up input (the numbers here are just made up, don't
+    For example, see this sample input (the numbers here are just made up, don't
     worry)...
     \begin{lstlisting}[style=bash]
 Article List: NASA, Space, Grapefruit, BadArticle
@@ -393,6 +387,11 @@ Philosophy Distance: [2,1,4,5,4]
     Finally, your program must \textbf{plot a bar graph} of the distance of each
     article, with labeled axes, identifying each bar. If the distance was
     ``N/A'' or ``inft'', then do not plot that article.
+
+    \begin{center}
+      \url{http://en.wikipedia.org/wiki/Wikipedia:Getting_to_Philosophy}
+    \end{center}
+
 \end{description}
 
 \pagebreak
