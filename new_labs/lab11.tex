@@ -356,38 +356,41 @@ properties about the philosophy page? You should read more at:
 
 \begin{description}
   \item[simple\_plot.py] Using Matplotlib, make a simple plot of the function
-    $y=x^2$, to make sure that you are able to use matplotlib.
-  \item[beautiful\_title.py] Like the last exersize, just to make sure the libraries
-    are working properly, use \texttt{get\_page\_source} and \texttt{BeautifulSoup}
-    to get the title of a user-entered wikipedia page.
-  \item[wiki\_stats.py] The comprises the majority of the project. Your task takes
-    advantage of the ``philosophy property'' of most Wikipedia pages. The user
-    will provide a list of Wikipedia article names. Your program will take this
-    list, and return a list of the ``first-link-distance'' to Philosophy. If
-    the given article does not converge to Philosophy, display the string ``inft''.
-    It the given article does not exist, display the string ``N/A''.
+    $y = x^2$ to make sure that you are able to use matplotlib.
+
+  \item[beautiful\_title.py] Like the last exercise, just to make sure the
+    libraries are working properly, use \texttt{get\_page\_source} and
+    \texttt{BeautifulSoup} to get the title of a user-entered Wikipedia page.
+
+  \item[wiki\_stats.py] This comprises the majority of the project. Your task
+    takes advantage of the ``philosophy property'' of most Wikipedia pages. The
+    user will provide a list of Wikipedia article names. Your program will take
+    this list, and return a list of the ``first-link-distance'' to Philosophy.
+    If the given article does not converge to Philosophy, display the string
+    ``inft''.  It the given article does not exist, display the string ``N/A''.
 
     For example, see this made up input (the numbers here are just made up, don't
     worry)...
     \begin{lstlisting}[style=bash]
-      Article List: NASA, Space, Grapefruit, BadArticle
-      Philosophy Distance: [3, 6, inft, N/A]
+Article List: NASA, Space, Grapefruit, BadArticle
+Philosophy Distance: [3, 6, inft, N/A]
     \end{lstlisting}
-  So this means 3 clicks from ``NASA'', you can find philosophy, but ``Grapefruit''
-  never reaches philosophy. ``Bad Article'' is not found.
+    So this means that three clicks from ``NASA'', you can find ``Philosophy'',
+    but ``Grapefruit'' never reaches ``Philosophy''. ``Bad Article'' is not
+    found.
 
-  If the user list was empty, however, generate a random list of 5 articles. For
-  example (again, made up data)...
-  \begin{lstlisting}[style=bash]
-    Article List:
-    Choosing random articles...
-    Articles: Dog, Cat, Roger Ebert, Star Wars, Philosophy
-    Philosophy Distance: [2,1,4,5,4]
-  \end{lstlisting}
+    If the user list was empty, however, generate a random list of 5 articles.
+    For example (again, made up data)...
+    \begin{lstlisting}[style=bash]
+Article List:
+Choosing random articles...
+Articles: Dog, Cat, Roger Ebert, Star Wars, Philosophy
+Philosophy Distance: [2,1,4,5,4]
+    \end{lstlisting}
 
-  Finally, you're program must plot a bar graph of the distance of each article,
-  with labeled axes, identifying each bar. If the distance was ``N/A'' or ``inft'',
-  then do not plot that article.
+    Finally, your program must \textbf{plot a bar graph} of the distance of each
+    article, with labeled axes, identifying each bar. If the distance was
+    ``N/A'' or ``inft'', then do not plot that article.
 \end{description}
 
 \pagebreak
@@ -395,7 +398,9 @@ properties about the philosophy page? You should read more at:
 
 Files to submit:
 \begin{itemize}
-\item file.py (Section~\ref{sec:ex})
+\item simple\_plot.py (Section~\ref{sec:ex})
+\item beautiful\_title.py (Section~\ref{sec:ex})
+\item wiki\_stats.py (Section~\ref{sec:ex})
 \end{itemize}
 
 You may submit your code as either a tarball (instructions below) or as a .zip
