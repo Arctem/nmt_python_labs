@@ -73,7 +73,35 @@ To learn about all the various tags, see
 \section{BeautifulSoup}
 
 BeautifulSoup is a python library used to read HTML files in a nice
-and easy way.
+and easy way. In this lab, you will be using it along with urllib to
+interact with Wikipedia pages.
+
+Below is an example of a simple program using urllib. This
+program gets a random Wikipedia article and prints out its URL. This
+is identical to what would happen if you click on the Random Article button
+on the Wikipedia homepage.
+
+\lstinputlisting[style=python]{lab11/random_wikipage.py}
+
+All of the logic for this program is inside the \lstinline{get_random}
+function. First, it creates a \lstinline{Request} object. This is used
+to tell urllib what page we want to load. First, we construct our URL using
+the \lstinline{base} variable (since all of our URLs are going to start the
+same way), then we pass a special headers argument. Don't worry too much about
+what headers are -- in this case, we are only specifying a \lstinline{User-Agent}
+string in order to identify ourselves to the remote server. We need to do this
+because the default urllib \lstinline{User-Agent} string is blocked by
+Wikipedia.
+
+Once we have our \lstinline{Request} object created, we simply pass it to
+\lstinline{request.urlopen} in order to get an object representing the page
+we've loaded. Creating the \lstinline{Request} object and calling
+\lstinline{request.urlopen} will be done no matter what page we are loading.
+
+Once we have the page object, we simply check its URL (since the Wikipedia
+random article button redirects you to a new page, this will not be the
+same URL that we requested!) and strip off the beginning section, leaving
+us with only /wiki/Article.
 
 \pagebreak
 \section{Matplotlib}
