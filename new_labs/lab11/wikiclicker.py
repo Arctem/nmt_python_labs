@@ -4,7 +4,7 @@ import re
 
 #Based heavily on http://stackoverflow.com/questions/18916616/get-first-link-of-wikipedia-article-using-wikipedia-api
 
-base = 'https://wikipedia.org'
+base = 'https://en.wikipedia.org'
 
 def valid_link(ref, paragraph):
   if '.ogg' in ref:
@@ -45,18 +45,27 @@ def get_first_link(wikipage):
         return link
   return False
 
+def get_random():
+  req = request.Request(base + '/wiki/Special:Random', headers={'User-Agent' : 'Python Browser'})
+  page = request.urlopen(req)
+  url = page.geturl()
+  url = url[len(base):]
+  print(base + url)
+  return url
+
 def main():
-  visited = ['/wiki/New_Mexico_Institute_of_Mining_and_Technology']
+  #visited = ['/wiki/New_Mexico_Institute_of_Mining_and_Technology']
+  visited = [get_random()]
   while True:
     next_link = get_first_link(visited[-1]).get('href')
     if next_link in visited:
-      print('Cycled back to {}'.format(next_link))
+      print('Cycled back to {} after {} jumps.'.format(next_link, len(visited)))
       break
     elif next_link is False:
       print('Found no link in {}.'.format(visited[-1]))
     else:
       visited.append(next_link)
-  print(visited)
+  #print(visited)
 
 
 if __name__ == '__main__':
