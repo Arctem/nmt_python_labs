@@ -8,6 +8,8 @@
 quotes.tex
 # Created by https://www.gitignore.io
 
+__pycache__
+
 ### vim ###
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
