@@ -46,17 +46,32 @@ telescopes.''
 \subsection{HTML}
 
 As you may be familiar, HTML is the main formatting language of the
-Internet.
+Internet. HTML stands for HyperText Markup Language. As a language, it
+defines where content appears on a website, and how it looks. For an
+example, open up \texttt{Google Chrome} and navigate to
+\texttt{http://www.nmt.edu}. Right click on the webpage, and select
+``View Source''. What follows is the source code for \texttt{nmt.edu}!
+
+HTML is actually fairly easy to read. All content exists between
+various kinds of ``tags''. Each tag has a special kind of
+meaning. Here is a simple example:
+
+\begin{lstlisting}[style=python, language=html]
+<html>
+  <body>
+    <p> This is a paragraph in the body of the page </p>
+    <p> This text is <b> BOLD </b></p>
+  </body>
+</html>
+\end{lstlisting}
+
+To learn about all the various tags, see
+\href{http://www.w3schools.com/}{W3Schools}.
 
 \subsection{BeautifulSoup}
 
-What do?
-
-How do?
-
-We gave it to you.
-
-Example
+BeautifulSoup is a python library used to read HTML files in a nice
+and easy way.
 
 \subsection{Matplotlib}
 
