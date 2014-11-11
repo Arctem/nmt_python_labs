@@ -45,6 +45,13 @@
 In this lab, you will be extracting information from web pages and learning how
 to plot some of it.
 
+You may be familiar with the Wikipedia game of clicking on the first link and
+figuring out how long it takes you to arrive at the Philosophy page. You will be
+writing a Python script that starts at a Wikipedia page and does this to figure
+out how many clicks it takes.
+
+\pagebreak
+
 \section{HTML}
 
 As you may be familiar, HTML is the main formatting language of the
@@ -59,7 +66,11 @@ various kinds of ``tags''. Each tag has a special kind of
 meaning. Here is a simple example:
 
 \begin{lstlisting}[style=python, language=html]
+<!DOCTYPE html>
 <html>
+  <head>
+    <title>Hello!</title>
+  </head>
   <body>
     <p> This is a paragraph in the body of the page </p>
     <p> This text is <b> BOLD </b></p>
@@ -67,13 +78,180 @@ meaning. Here is a simple example:
 </html>
 \end{lstlisting}
 
+The tags \lstinline!html!, \lstinline!head!, and \lstinline!body! are required
+for a web page and just give some structure. \lstinline!head! contains
+information about the page, such as the title. \lstinline!body! contains the
+actual content of the web page. The special \lstinline{<!DOCTYPE html>} also has
+to be there.
+
 To learn about all the various tags, see
-\href{http://www.w3schools.com/}{W3Schools}.
+\begin{center}
+\url{http://www.w3schools.com/}.
+\end{center}
 
+\section{Requesting a web page}
+
+The following is an example code snippet to get the source code of a particular
+web page:
+\begin{lstlisting}
+from urllib import request
+
+def get_page_source(webpage):
+  req = request.Request(webpage, headers={'User-Agent' : 'Python Browser'})
+  page = request.urlopen(req)
+  return page.read()
+
+print(get_page_source('https://cs.nmt.edu/~ckoch/cse107/beautifulsoup.html'))
+\end{lstlisting}
+
+This will give you the HTML source of the web address you give it.
+
+Below is an example of a slightly more complex program using urllib. This
+program gets a random Wikipedia article and prints out its URL. This
+is identical to what would happen if you click on the Random Article button
+on the Wikipedia homepage.
+
+\lstinputlisting[style=python]{lab11/random_wikipage.py}
+
+All of the logic for this program is inside the \lstinline{get_random}
+function. First, it creates a \lstinline{Request} object. This is used
+to tell urllib what page we want to load. First, we construct our URL using
+the \lstinline{base} variable (since all of our URLs are going to start the
+same way), then we pass a special headers argument. Don't worry too much about
+what headers are -- in this case, we are only specifying a \lstinline{User-Agent}
+string in order to identify ourselves to the remote server. We need to do this
+because the default urllib \lstinline{User-Agent} string is blocked by
+Wikipedia.
+
+Once we have our \lstinline{Request} object created, we simply pass it to
+\lstinline{request.urlopen} in order to get an object representing the page
+we've loaded. Creating the \lstinline{Request} object and calling
+\lstinline{request.urlopen} will be done no matter what page we are loading.
+
+Once we have the page object, we simply check its URL (since the Wikipedia
+random article button redirects you to a new page, this will not be the
+same URL that we requested!) and strip off the beginning section, leaving
+us with only /wiki/Article.
+
+\pagebreak
 \section{BeautifulSoup}
+BeautifulSoup is a library that will let you ``scrape'' web pages for certain
+information. Instead of having to deal with the HTML source of a web page
+directly, you can use BeautifulSoup to find information easily.
+If, for example, I want to find all the \texttt{a} elements (link
+elements) on a web page, I could do the following:
 
-BeautifulSoup is a python library used to read HTML files in a nice
-and easy way.
+\begin{lstlisting}[caption={BeautifulSoup},label={lst:bs}]
+import bs4
+
+# Using previous function
+data = get_page_source('https://cs.nmt.edu/~ckoch/cse107/beautifulsoup.html')
+soup = bs4.BeautifulSoup(data)
+
+print(soup.prettify())
+
+elements = soup.findAll('a')
+print(elements)
+\end{lstlisting}
+
+The output of \lstinline!.prettify()! looks like this:
+\begin{lstlisting}[language=HTML]
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>
+   CSE107 BeautifulSoup Test
+  </title>
+ </head>
+ <body>
+  <p>
+   Haha
+  </p>
+  <p>
+   <a href="https://cs.nmt.edu/~ckoch/">
+    Chris's site
+   </a>
+   <a href="https://arctem.com">
+    Russell's site
+   </a>
+  </p>
+ </body>
+</html>
+\end{lstlisting}
+
+On this page, we have two \texttt{a} elements, and thus
+\lstinline!.findAll()! returns the following list:
+\begin{lstlisting}[style=bash]
+[<a href="https://cs.nmt.edu/~ckoch/">Chris's site</a>,
+<a href="https://arctem.com">Russell's site</a>]
+\end{lstlisting}
+
+Now, to find just the first element, we use the \lstinline!.find()! function.
+Also note that the above list is not a list of strings; the type of the list
+elements is a beautiful soup element tag. These tags have a few properties, as
+you can see in the following example:
+
+\begin{lstlisting}[caption={BeautifulSoup tag usage},label={lst:tag}]
+import bs4
+# calling beautiful soup with my own data
+soup = bs4.BeautifulSoup('<html><body><p>Test</p><p>T</p></body></html>')
+
+paragraph = soup.find('p') # finds <p>Test</p>
+print(paragraph)
+print(paragraph.string) # Test
+print(paragraph.contents) # ['Test']
+print(paragraph.name) # prints p
+
+body = soup.find('body') # finds <body><p>Test</p></body>
+print(body.contents) # [<p>Test</p>, <p>T</p>]
+print(body.string) # None, because there is more than one thing
+\end{lstlisting}
+
+\subsection{Summary}
+
+Tables~\ref{tab:bsmeth} and~\ref{tab:bsatt} show the BeautifulSoup methods and
+the tag attributes we will probably need in this lab. If you want to know more
+about BeautifulSoup, take a look at its documentation:
+\begin{center}
+  \url{http://www.crummy.com/software/BeautifulSoup/bs4/doc/}
+\end{center}
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{p{3cm} p{11cm}}
+    \toprule
+    \bfseries Method & \bfseries What it does \\
+    \midrule
+    \lstinline!s.find(name)! & Finds the first tag named \lstinline!name! in
+    document \lstinline!s! \\
+    \lstinline!s.findAll(name)! & Finds all tags named \lstinline!name! in
+    document \lstinline!s! \\
+    \lstinline!s.prettify()! & Returns a string of the HTML formatted prettily
+    \\
+    \bottomrule
+  \end{tabular}
+  \caption{BeautifulSoup methods, where \lstinline!s! is a BeautifulSoup object.
+    See Listings~\ref{lst:bs} and~\ref{lst:tag} for example usage.}
+  \label{tab:bsmeth}
+\end{table}
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{p{2cm} p{12cm}}
+    \toprule
+    \bfseries Attribute & \bfseries What it gives \\
+    \midrule
+    \lstinline!.contents! & List of all the things a tag contains \\
+    \lstinline!.name! & Name of the tag (e.g. \texttt{p} or \texttt{title}) \\
+    \lstinline!.string! & If \lstinline!.contents! only contains one thing,
+    return a string of that. Otherwise, \lstinline!None! since it will not know
+    which one to choose \\
+    \bottomrule
+  \end{tabular}
+  \caption{Tag attributes. See Listing~\ref{lst:tag} for example usage.}
+  \label{tab:bsatt}
+\end{table}
+
 
 \pagebreak
 \section{Matplotlib}
@@ -150,16 +328,18 @@ pl.show()
 These are the two main functions you will need for plotting in this lab. If you
 want to customize more, please see the matplotlib pylab documentation at
 \begin{center}
-  \url{http://matplotlib.org/api/pyplot_summary.html}
+  \url{http://matplotlib.org/api/pyplot_summary.html}.
 \end{center}
 
 \pagebreak
 \section{Wikipedia}
 
-In case you feel like wasting time, did you know that wikipedia has some odd
+In case you feel like wasting time, did you know that Wikipedia has some odd
 properties about the philosophy page? You should read more at:
 
-\centerline{\url{http://en.wikipedia.org/wiki/Wikipedia:Getting_to_Philosophy}.}
+\begin{center}
+  \url{http://en.wikipedia.org/wiki/Wikipedia:Getting_to_Philosophy}
+\end{center}
 
 \pagebreak
 \section{Exercises}
