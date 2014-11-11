@@ -50,15 +50,141 @@ to plot some of it.
 As you may be familiar, HTML is the main formatting language of the
 Internet.
 
+\section{Requesting a web page}
+
+The following is an example code snippet to get the source code of a particular
+web page:
+\begin{lstlisting}
+from urllib import request
+
+def get_page_source(webpage):
+  req = request.Request(webpage, headers={'User-Agent' : 'Python Browser'})
+  page = request.urlopen(req)
+  return page.read()
+
+print(get_page_source('https://cs.nmt.edu/~ckoch/cse107/beautifulsoup.html'))
+\end{lstlisting}
+
+This will give you the HTML source of the web address you give it.
+
 \section{BeautifulSoup}
 
-What do?
+BeautifulSoup is a library that will let you ``scrape'' web pages for certain
+information. Instead of having to deal with the HTML source of a web page
+directly, you can use BeautifulSoup to find information easily.
+If, for example, I want to find all the \texttt{a} elements (link
+elements) on a web page, I could do the following:
 
-How do?
+\begin{lstlisting}[caption={BeautifulSoup},label={lst:bs}]
+import bs4
 
-We gave it to you.
+# Using previous function
+data = get_page_source('https://cs.nmt.edu/~ckoch/cse107/beautifulsoup.html')
+soup = bs4.BeautifulSoup(data)
 
-Example
+print(soup.prettify())
+
+elements = soup.findAll('a')
+print(elements)
+\end{lstlisting}
+
+The output of \lstinline!.prettify()! looks like this:
+\begin{lstlisting}[language=HTML]
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>
+   CSE107 BeautifulSoup Test
+  </title>
+ </head>
+ <body>
+  <p>
+   Haha
+  </p>
+  <p>
+   <a href="https://cs.nmt.edu/~ckoch/">
+    Chris's site
+   </a>
+   <a href="https://arctem.com">
+    Russell's site
+   </a>
+  </p>
+ </body>
+</html>
+\end{lstlisting}
+
+On this page, we have two \texttt{a} elements, and thus
+\lstinline!.findAll()! returns the following list:
+\begin{lstlisting}[style=bash]
+[<a href="https://cs.nmt.edu/~ckoch/">Chris's site</a>,
+<a href="https://arctem.com">Russell's site</a>]
+\end{lstlisting}
+
+Now, to find just the first element, we use the \lstinline!.find()! function.
+Also note that the above list is not a list of strings; the type of the list
+elements is a beautiful soup element tag. These tags have a few properties, as
+you can see in the following example:
+
+\begin{lstlisting}[caption={BeautifulSoup tag usage},label={lst:tag}]
+import bs4
+# calling beautiful soup with my own data
+soup = bs4.BeautifulSoup('<html><body><p>Test</p><p>T</p></body></html>')
+
+paragraph = soup.find('p') # finds <p>Test</p>
+print(paragraph)
+print(paragraph.string) # Test
+print(paragraph.contents) # ['Test']
+print(paragraph.name) # prints p
+
+body = soup.find('body') # finds <body><p>Test</p></body>
+print(body.contents) # [<p>Test</p>, <p>T</p>]
+print(body.string) # None, because there is more than one thing
+\end{lstlisting}
+
+\subsection{Summary}
+
+Tables~\ref{tab:bsmeth} and~\ref{tab:bsatt} show the BeautifulSoup methods and
+the tag attributes we will probably need in this lab. If you want to know more
+about BeautifulSoup, take a look at its documentation:
+\begin{center}
+  \url{http://www.crummy.com/software/BeautifulSoup/bs4/doc/}
+\end{center}
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{p{3cm} p{11cm}}
+    \toprule
+    \bfseries Method & \bfseries What it does \\
+    \midrule
+    \lstinline!s.find(name)! & Finds the first tag named \lstinline!name! in
+    document \lstinline!s! \\
+    \lstinline!s.findAll(name)! & Finds all tags named \lstinline!name! in
+    document \lstinline!s! \\
+    \lstinline!s.prettify()! & Returns a string of the HTML formatted prettily
+    \\
+    \bottomrule
+  \end{tabular}
+  \caption{BeautifulSoup methods, where \lstinline!s! is a BeautifulSoup object.
+    See Listings~\ref{lst:bs} and~\ref{lst:tag} for example usage.}
+  \label{tab:bsmeth}
+\end{table}
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{p{2cm} p{12cm}}
+    \toprule
+    \bfseries Attribute & \bfseries What it gives \\
+    \midrule
+    \lstinline!.contents! & List of all the things a tag contains \\
+    \lstinline!.name! & Name of the tag (e.g. \texttt{p} or \texttt{title}) \\
+    \lstinline!.string! & If \lstinline!.contents! only contains one thing,
+    return a string of that. Otherwise, \lstinline!None! since it will not know
+    which one to choose \\
+    \bottomrule
+  \end{tabular}
+  \caption{Tag attributes. See Listing~\ref{lst:tag} for example usage.}
+  \label{tab:bsatt}
+\end{table}
 
 \pagebreak
 \section{Matplotlib}
