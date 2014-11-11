@@ -45,10 +45,49 @@
 In this lab, you will be extracting information from web pages and learning how
 to plot some of it.
 
+You may be familiar with the Wikipedia game of clicking on the first link and
+figuring out how long it takes you to arrive at the Philosophy page. You will be
+writing a Python script that starts at a Wikipedia page and does this to figure
+out how many clicks it takes.
+
+\pagebreak
+
 \section{HTML}
 
 As you may be familiar, HTML is the main formatting language of the
-Internet.
+Internet. HTML stands for HyperText Markup Language. As a language, it
+defines where content appears on a website, and how it looks. For an
+example, open up \texttt{Google Chrome} and navigate to
+\texttt{http://www.nmt.edu}. Right click on the webpage, and select
+``View Source''. What follows is the source code for \texttt{nmt.edu}!
+
+HTML is actually fairly easy to read. All content exists between
+various kinds of ``tags''. Each tag has a special kind of
+meaning. Here is a simple example:
+
+\begin{lstlisting}[style=python, language=html]
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello!</title>
+  </head>
+  <body>
+    <p> This is a paragraph in the body of the page </p>
+    <p> This text is <b> BOLD </b></p>
+  </body>
+</html>
+\end{lstlisting}
+
+The tags \lstinline!html!, \lstinline!head!, and \lstinline!body! are required
+for a web page and just give some structure. \lstinline!head! contains
+information about the page, such as the title. \lstinline!body! contains the
+actual content of the web page. The special \lstinline{<!DOCTYPE html>} also has
+to be there.
+
+To learn about all the various tags, see
+\begin{center}
+\url{http://www.w3schools.com/}.
+\end{center}
 
 \section{Requesting a web page}
 
@@ -67,6 +106,7 @@ print(get_page_source('https://cs.nmt.edu/~ckoch/cse107/beautifulsoup.html'))
 
 This will give you the HTML source of the web address you give it.
 
+\pagebreak
 \section{BeautifulSoup}
 
 BeautifulSoup is a library that will let you ``scrape'' web pages for certain
@@ -191,7 +231,7 @@ about BeautifulSoup, take a look at its documentation:
 
 Matplotlib is a neat library for plotting in Python. It works similarly to
 MATLAB plotting so that people with experience in that can easily switch over;
-however, we will give you our own introduction to it. 
+however, we will give you our own introduction to it.
 
 Let's plot the following $x$ and $y$ coordinates:
 
@@ -259,15 +299,20 @@ pl.show()
 \end{figure}
 
 These are the two main functions you will need for plotting in this lab. If you
-want to customize more, please see the matplotlib pylab documentation at 
+want to customize more, please see the matplotlib pylab documentation at
 \begin{center}
-  \url{http://matplotlib.org/api/pyplot_summary.html}
+  \url{http://matplotlib.org/api/pyplot_summary.html}.
 \end{center}
 
 \pagebreak
 \section{Wikipedia}
 
-That one thing that russell found (about the philosophy link)
+In case you feel like wasting time, did you know that Wikipedia has some odd
+properties about the philosophy page? You should read more at:
+
+\begin{center}
+  \url{http://en.wikipedia.org/wiki/Wikipedia:Getting_to_Philosophy}
+\end{center}
 
 \pagebreak
 \section{Exercises}
