@@ -358,15 +358,22 @@ want to customize more, please see the matplotlib pylab documentation at
     user will provide a list of Wikipedia article names. Your program will take
     this list, and return a list of the ``first-link-distance'' to Philosophy.
     That is, the number of articles you must visit in order to reach Philosophy,
-    if for each article you simply follow the first link in that article.
+    (\url{https://en.wikipedia.org/wiki/Philosophy})
+    if for each article you simply follow the first link in the main body of the
+    article (that is, ignoring the italicized text for the article, such as
+    ``for other uses...'' or ``did you mean...'') that is not in the pronunciation
+    guide (in which case most articles would lead to Latin) and does not lead to
+    a Wikipedia Help or Meta page.
+        
     If the given article does not converge to Philosophy, display the string
     ``inft''.  It the given article does not exist, display the string ``N/A''.
 
     \emph{Take a look at the provided wikiclicker.py for a function that gets
-    you the first link on a Wikipedia page.}
+      you the first link on a Wikipedia page, automatically applying the above
+      rules}
 
-    For example, see this sample input (the numbers here are just made up, don't
-    worry)...
+    For example, see this sample input and output (the numbers here are just
+    made up, don't worry):
     \begin{lstlisting}[style=bash]
 Article List: NASA, Space, Grapefruit, BadArticle
 Philosophy Distance: [3, 6, inft, N/A]
@@ -376,7 +383,7 @@ Philosophy Distance: [3, 6, inft, N/A]
     found.
 
     If the user list was empty, however, generate a random list of 5 articles.
-    For example (again, made up data)...
+    For example (again, made up data):
     \begin{lstlisting}[style=bash]
 Article List:
 Choosing random articles...
