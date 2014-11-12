@@ -17,6 +17,8 @@ def valid_link(ref, paragraph):
     return False
   if 'This article is about' in paragraph:
     return False
+  if 'id="coordinates"' in paragraph:
+    return False
   for paren in re.findall(r'\([^)]*\)', paragraph):
     if ref in paren:
       return False

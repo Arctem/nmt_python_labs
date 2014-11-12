@@ -19,10 +19,12 @@ def valid_link(ref, paragraph):
     return False
   if 'This article is about' in paragraph:
     return False
+  if 'id="coordinates"' in paragraph:
+    return False
   for paren in re.findall(r'\([^)]*\)', paragraph):
     if ref in paren:
       return False
-  print(base + ref)
+  #print(base + ref)
   return True
   
 
@@ -55,17 +57,22 @@ def get_random():
 
 def main():
   #visited = ['/wiki/New_Mexico_Institute_of_Mining_and_Technology']
-  visited = [get_random()]
-  while True:
-    next_link = get_first_link(visited[-1]).get('href')
-    if next_link in visited:
-      print('Cycled back to {} after {} jumps.'.format(next_link, len(visited)))
-      break
-    elif next_link is False:
-      print('Found no link in {}.'.format(visited[-1]))
-    else:
-      visited.append(next_link)
-  #print(visited)
+  #visited = [get_random()]
+  for visited in ['Dog', 'Cat', 'Roger Ebert', 'Star Wars', 'Philosophy']:
+    visited = ['/wiki/' + visited]
+    while True:
+      next_link = get_first_link(visited[-1]).get('href')
+      if 'Philosophy' in next_link:
+        print('{} reached Philosophy in {} jumps.'.format(visited[0], len(visited)))
+        break
+      elif next_link in visited:
+        print('Cycled back to {} after {} jumps.'.format(next_link, len(visited)))
+        break
+      elif next_link is False:
+        print('Found no link in {}.'.format(visited[-1]))
+      else:
+        visited.append(next_link)
+    #print(visited)
 
 
 if __name__ == '__main__':
