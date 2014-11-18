@@ -21,8 +21,15 @@ class Frame(tkinter.Frame):
     self.parent.title("Battle")
     button = tkinter.Button(self, text='Send Monster', fg='red',
     command = self.send_monster)
-    button.pack()
-    self.pack(fill=tkinter.BOTH, expand=1)
+    button.grid(row=0, column=0, columnspan=4)
+
+    switch = tkinter.Button(self, text='Switch Monster')
+    switch.grid(row=3, column=0)
+
+    move = tkinter.Button(self, text='Use Move')
+    move.grid(row=3, column=3)
+    
+    self.grid(row=0, column=0, sticky=N+S+E+W)
 
 
   def send_monster(self):
@@ -36,6 +43,9 @@ class Frame(tkinter.Frame):
     else:
       data = pickle.loads(data)
       print('Received {}'.format(data))
+
+def toggle(event):
+  event.widget.grid_remove()
 
 
 def main():
