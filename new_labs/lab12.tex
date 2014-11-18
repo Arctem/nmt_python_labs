@@ -7,6 +7,7 @@
 % Fall 2014
 \documentclass[11pt]{cselabheader}
 \usepackage{multicol,graphicx}
+\usepackage{wrapfig}
 
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
 \fancyhead[R]{Lab 12: Project}
@@ -47,29 +48,138 @@ This will be your final lab for the semster.
 
 \section{tkinter}
 \label{sec:tk}
+tkinter is a basic graphics library for Python. You will be using it as your
+user interface for this lab.
 
 \pagebreak
 
-\section{Exercises}
-\label{sec:ex}
+\section{Project}
+\label{sec:proj}
 
 \begin{warningbox}{Boilerplate}
   Remember that this lab \emph{must} use the
   boilerplate syntax introduced in Lab~5.
 \end{warningbox}
 
+For this assignment, you will be creating a multiplayer game similar to the
+combat system of the Pok\'emon or Final Fantasy games. You will be writing
+two programs, though odds are they will be sharing a decent amount of code.
+Your two main files should be named battle.py and battle\_server.py, though
+you are encouraged to have more than just those two files.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics{img/Bulbasaur_pokemon_red}
+  \caption{Pok\'emon battle screen. (from
+    \href{http://en.wikipedia.org/wiki/File:Bulbasaur_pokemon_red.png}{Wikipedia})}
+  \label{poke}
+\end{figure}
+
+\subsection{Game}
+The game you are creating will be a two-player battle game. Each player will
+have a ``party'' of monsters. At the start of the match, each player will choose
+one of their three monsters to become active. Then a series of turns will occur
+until one player's entire party of monsters has been defeated.
+
+\subsubsection{Turns}
+A turn consists of each player choosing one action to perform. The possible
+actions fall into two categories: switching the player's active monster or using
+a move from the currently active monster.
+
+If a player chooses to switch their active monster, they must then choose from
+their current inactive and undefeated monsters. The selected monster will become
+active while their current active monster will become inactive.
+
+If a player chooses to use a move from their currently active monster, they will
+then choose one of up to four moves that their monster knows.
+
+Once both players have chosen a move for the turn, the moves will be executed.
+If both players chose to switch monsters, then the order that the switches occur
+does not matter. If one player chose to switch their monster while the other chose
+to use a move, then the switching player's action will go first. If both players
+choose to use a move, then the player whose monster has a higher Speed stat (see
+Section~\ref{subsubsec:monster}) will perform its move first. The second monster
+will only perform its move if it is still undefeated after the first monster
+performs its move.
+
+If at the end of a turn either or both monsters have had their Health reduced to 0
+or less, then that monster has been defeated. Its user must immediately switch out
+their monster for one that has not been defeated. This switch occurs before the start
+of the next turn. If no undefeated monsters remain, that player has been defeated.
+If both players are defeated at once, the match ends in a draw.
+
+\subsubsection{Monsters}
+\label{subsubsec:monster}  
+Each monster will have a number of stats:
 \begin{description}
-\item[battle.py]
-\item[battle\_server.py]
+\item[Attack] Indicates attack power of the monster. The base damage of any attack
+  Move that this monster uses is modified by $$base\_damage \cdot \left(1 +
+  \frac{attack}{100}\right)$$
+\item[Defense] Indicates defensive strength of the monster. Any incoming damage to
+  the monster is reduced by $$damage \cdot \left(\frac{100 - defense}{100}\right)$$
+
+  A monster is not allowed to have a Defense greater than 75.
+\item[Health] The maximum health that a monster has. Any time it is attacked the
+  monster's current health will be reduced, thought the maximum will stay the same.
+\item[Speed] Indicates the speed of the monster. Is used to determine which of the
+  active monsters will use its Move first.
+\item[Name] Each monster must have a name so that you can properly empathize with
+  its plight.
 \end{description}
+
+
+In addition to these stats, each monster can have up to 4 moves, as defined in
+Section~\ref{subsubsec:moves}
+
+\subsubsection{Moves}
+\label{subsubsec:moves}
+A Move is an action that a monster can perform when it is active. There are four
+types of Move:
+
+\begin{description}
+\item[Offensive] An offensive Move deals damage to the opponent's active monster.
+  Each offensive Move has a base damage stat that helps determine how much damage it
+  does, based on the two formulas in Section~\ref{subsubsec:monster}.
+\item[Heal] A healing Move restores health to the monster making the Move. A healing
+  Move has a stat indicating how much health it will restore. A monster cannot be
+  healed above its maximum health.
+\item[Buff] A Move that temporarily increases one of the active monster's stats. A buff move
+  has three attributes: the stat it increases (Attack, Defense, or Speed), the
+  amount it increases that stat by, and how many turns it lasts. A buff can allow a stat
+  to be increased beyond the point it normally could be.
+\item[Debuff] A Move that temporarily decreases one of the stats of the opponent's active
+  monster. Has the same attributes as buff, but decreases instead of increases.
+\end{description}
+
+\subsection{Client (battle.py)}
+
+
+\subsection{Server (battle\_server.py)}
+
+
+\subsection{Extra Credit}
+
+
+\subsection{Terms}
+
+\begin{description}
+\item[Active] The current ``fighting'' monster. Each player can only have one
+  active monster at a time.
+\item[Defeated] A monster that has had its health points reduced to 0. A
+  defeated monster cannot be active.
+\item[Monster] A mysterious creature that we are using to fight for questionably
+  moral reasons. (Section~\ref{subsubsec{monster})
+\end{description}
+
 
 \pagebreak
 \section{Submitting}
 
 Files to submit:
 \begin{itemize}
-\item battle.py (Section~\ref{sec:ex})
-\item battle\_server.py (Section~\ref{sec:ex})
+\item battle.py (Section~\ref{sec:proj})
+\item battle\_server.py (Section~\ref{sec:proj})
+\item Any other files created. (Section~\ref{sec:proj})
 \end{itemize}
 
 You may submit your code as either a tarball (instructions below) or as a .zip
