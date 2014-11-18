@@ -82,6 +82,7 @@ one of their three monsters to become active. Then a series of turns will occur
 until one player's entire party of monsters has been defeated.
 
 \subsubsection{Turns}
+\label{subsubsec:turn}
 A turn consists of each player choosing one action to perform. The possible
 actions fall into two categories: switching the player's active monster or using
 a move from the currently active monster.
@@ -116,7 +117,7 @@ Each monster will have a number of stats:
   Move that this monster uses is modified by $$base\_damage \cdot \left(1 +
   \frac{attack}{100}\right)$$
 \item[Defense] Indicates defensive strength of the monster. Any incoming damage to
-  the monster is reduced by $$damage \cdot \left(\frac{100 - defense}{100}\right)$$
+  the monster is reduced by $$damage \cdot \left(1 - \frac{defense}{100}\right)$$
 
   A monster is not allowed to have a Defense greater than 75.
 \item[Health] The maximum health that a monster has. Any time it is attacked the
@@ -151,20 +152,66 @@ types of Move:
   monster. Has the same attributes as buff, but decreases instead of increases.
 \end{description}
 
-\subsection{Client (battle.py)}
+In addition to the above mentioned attributes, each move must have a name.
 
+\subsection{Client (battle.py)}
+You will need to write a client using tkinter that provides a nice user interface
+to those playing the game. You should model your interface off of
+Figure~\ref{poke}, though you are free to modify it as you see fit. The interface
+needs to do the following:
+\begin{itemize}
+\item Display the name, current health, max health, attack, defense, and speed of the
+  currently active monsters from both players.
+\item Display information about what is happening in the game. That is, what moves each
+  monster is using, what the results of those moves are, what monsters are switched for
+\item Allow the user to choose between their various options each turn, as shown in
+  Section~\ref{subsubsec:turn}.
+\end{itemize}
+
+In addition, your client will need to connect to your server in order to send the
+actions of its player and receive the results of each turn. It will also need to
+receive information about the opponent's monsters at the start of a game.
+
+When the client is first started, it must load the information about its party
+of monsters from a text file. This information must then be sent to the server upon
+connection.
 
 \subsection{Server (battle\_server.py)}
+You will need to write a server that allows two clients to connect to it in order
+to play the game that I really wish I had come up with a name for. This server will
+carry out the majority of the game's logic and handle sending and receiving information
+from the players. It will need to fulfill the following tasks:
+
+\begin{itemize}
+\item Receive information about each player's party, store that information, and
+  send it to the players as necessary.
+\item Wait for each player to select an action, then calculate the outcome of
+  both actions.
+\item Detect when one player has won and inform each player.
+\item Anything else you find would be handy for the server to take care of.
+\end{itemize}
+
+You are free to use whatever protocol you wish for communicating data between the
+server and the clients.
 
 
 \subsection{Extra Credit}
-
+%status effects
+%types and strengths/weaknesses
+%validate legal monsters
+%larger party size
+%client lets user select from a list of possible monsters
+%randomly generated monsters
+%client lets user create monster
 
 \subsection{Terms}
 
 \begin{description}
 \item[Active] The current ``fighting'' monster. Each player can only have one
   active monster at a time.
+\item[Damage] The amount subtracted from a monster's current health after it is
+  attacked. The full formula for damage is $$base\_damage \cdot \left(1 +
+  \frac{attack}{100}\right) \cdot \left(1 - \frac{defense}{100}\right)$$
 \item[Defeated] A monster that has had its health points reduced to 0. A
   defeated monster cannot be active.
 \item[Monster] A mysterious creature that we are using to fight for questionably
