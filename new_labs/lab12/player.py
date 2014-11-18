@@ -9,4 +9,3 @@ class Player:
     if not msg:
       return False
     #Add custom handling code here.
-    return True
