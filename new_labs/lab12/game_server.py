@@ -5,6 +5,7 @@ import socket
 import sys
 import pickle
 from player import Player
+from monster import Monster
 
 DATA_SIZE = 1024 * 10 #10 kilobytes max per message
 

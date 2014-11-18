@@ -2,6 +2,7 @@ class Player:
   def __init__(self, socket, name=None):
     self.socket = socket
     self.name = name
+    self.party = []
 
   #Returns False to indicate the connection should be terminated,
   #otherwise returns True.
