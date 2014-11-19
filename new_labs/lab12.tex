@@ -44,7 +44,7 @@
 \section{Introduction}
 This will be your final lab for the semester.
 
-\vspace{4in}
+\vspace{3in}
 How very spooky.
 
 
@@ -75,6 +75,9 @@ combat system of the Pok\'emon or Final Fantasy games. You will be writing
 two programs, though you are free to have them share some amount of code.
 Your two main files should be named battle.py and battle\_server.py, though
 you are encouraged to have more than just those two files.
+
+Some files have been provided for you on Canvas. We recommend using them as
+a starting point, though you are free to completely ignore them.
 
 \begin{figure}[h]
   \centering
@@ -205,13 +208,45 @@ server and the clients.
 
 
 \subsection{Extra Credit}
-%status effects
-%types and strengths/weaknesses
+\subsubsection{Awesome Name (5 points)}
+Give your game a REALLY AWESOME NAME!
+
+\subsubsection{Status Effects (10 points)}
+Implement status effects into some of your moves. That is, add some moves that have
+a chance to inflict effects beyond damage and debuffs onto the enemy. For example:
+\begin{description}
+\item[Poison] A poisoned monster takes some amount of damage each turn for a set
+  number of turns.
+\item[Paralyzed] A paralyzed monster has a chance to not perform a move when it is
+  selected. Additionally, a paralyzed will always move second if the other monster
+  is not paralyzed.
+\item[Scared] A scared monster has a chance to ignore a move command and instead
+  switch itself with a random inactive undefeated monster.
+\end{description}
+
+\subsubsection{Types and Strengths/Weaknesses (15 points)}
+Implement elemental types for your monsters. That is, each monster will have some
+kind of alignment. Examples might be fire, water, flying, or jello. Define
+(preferably in a file) weaknesses between the different types. For example,
+water types might deal 150\% normal damage to fire types, while only dealing
+25\% normal damage to jello types.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\linewidth]{img/typechart}
+  \caption{Type strengths and weaknesses in Pok\'emon.}
+  \label{types}
+\end{figure}
+
+
 %validate legal monsters
 %larger party size
 %client lets user select from a list of possible monsters
 %randomly generated monsters
 %client lets user create monster
+%sound
+%crits
+%other stuff
 
 \subsection{Terms}
 
