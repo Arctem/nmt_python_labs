@@ -29,7 +29,7 @@ class Frame(tkinter.Frame):
     move = tkinter.Button(self, text='Use Move')
     move.grid(row=3, column=3)
     
-    self.grid(row=0, column=0, sticky=N+S+E+W)
+    self.grid(row=0, column=0)
 
 
   def send_monster(self):

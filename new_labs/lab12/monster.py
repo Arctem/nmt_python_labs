@@ -7,3 +7,7 @@ class Monster:
     self.attack = attack
     self.defense = defense
     self.speed = speed
+
+  def deal_damage(self, damage):
+    damage = damage * (1 - self.defense/100)
+    self.current_hp -= damage

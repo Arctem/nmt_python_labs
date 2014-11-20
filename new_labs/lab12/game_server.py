@@ -65,10 +65,10 @@ def main():
           del player_data[s]
           s.close()
         else:
-          monster = pickle.loads(data)
-          print('Received monster named {}.'.format(monster.name))
+          m = pickle.loads(data)
+          print('Received monster named {}.'.format(m.name))
           s.sendall(pickle.dumps('Your monster is named {}.'.
-            format(monster.name)))
+            format(m.name)))
 
   server.close()
 
