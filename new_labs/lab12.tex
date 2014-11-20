@@ -207,7 +207,28 @@ You are free to use whatever protocol you wish for communicating data between th
 server and the clients.
 
 
+
+\subsection{Terms}
+
+\begin{description}
+\item[Active] The current ``fighting'' monster. Each player can only have one
+  active monster at a time.
+\item[Damage] The amount subtracted from a monster's current health after it is
+  attacked. The full formula for damage is $$base\_damage \cdot \left(1 +
+  \frac{attack}{100}\right) \cdot \left(1 - \frac{defense}{100}\right)$$
+\item[Defeated] A monster that has had its health points reduced to 0. A
+  defeated monster cannot be active.
+\item[Monster] A mysterious creature that we are using to fight for questionably
+  moral reasons. (Section~\ref{subsubsec{monster})
+\end{description}
+
 \subsection{Extra Credit}
+Any or all of these can be included in your lab. If you do extra credit, include a
+file called README.txt that details which extra credit opportunities you did. If
+you did something extra not mentioned here, also mention it in your README.txt.
+If you have any ideas for extra credit that aren't mentioned here, email
+\href{mailto:rwhite00@nmt.edu}{rwhite00@nmt.edu}.
+
 \subsubsection{Awesome Name (5 points)}
 Give your game a REALLY AWESOME NAME!
 
@@ -238,29 +259,65 @@ water types might deal 150\% normal damage to fire types, while only dealing
   \label{types}
 \end{figure}
 
+\subsubsection{Validate Monster Stats (10 points)}
+\label{subsubsec:valid}
+Have your server validate the monsters sent in by the client to make sure they
+aren't too overpowered. Make up your own rules for what determines if a monster
+is valid. An example might be that the sum of all monster attributes must be less
+than 250. If an invalid monster is sent to the server, send a rejection message
+and either disconnect the client or request a new valid monster.
 
-%validate legal monsters
-%larger party size
-%client lets user select from a list of possible monsters
-%randomly generated monsters
-%client lets user create monster
-%sound
-%crits
+\subsubsection{Larger Party Size (10 points)}
+Allow each player to have up to 6 monsters in their party instead of just 3.
+
+\subsubsection{Monster Select (10 points)}
+When the client starts and loads up a group of monsters, allow the users
+to select which of the monsters they wish to use in the GUI.
+
+\subsubsection{Monster Graphics (15 points)}
+Let a monster have an associated image that is displayed on both clients.
+To do this, you will need to have the client load an image, then send that
+image to the server so that the server can pass it on to the other client
+(remember that in a real online game
+your clients won't have access to the same
+files to read from, so you can't just have them both load from the same
+file).
+
+If you use images from online, make sure to cite where you got them!
+
+\subsubsection{Randomly Generated Monsters (10 points)}
+In addition to loading monsters from files, add the ability to randomly
+generate a monster. You should make your randomly generated monsters have
+some logic to how their stats are created so that they are not too over-
+or underpowered. For examples, see Section~\ref{subsubsec:valid}.
+
+\subsubsection{User-Created Monsters (15 points)}
+In addition to loading monsters from files,
+provide an interface to allow a player to create their own monsters. Let
+them choose the name, stats, and whatever else youcan think of for their
+party of monsters.
+
+\subsubsection{Sound (10 points)}
+Let sounds play in response to certain events. Have sound effects for
+different moves, monsters being defeated, switching out monsters, and
+whatever other events you want to tie sounds to.
+
+If you use sounds from online, make sure to cite where you got them!
+
+\subsubsection{Critical Hits (10 points)}
+Allow an offensive move to have a chance to make a critical hit. For
+each offensive move, give it a number from 0 to 100 indicating how
+likely it is to crit. Each time the move is performed, randomly
+determine -- based on that percentage -- to get a critical hit. If a
+move gets a critical hit, it should do twice as much damage as normal.
+
+Optionally, give each monster a built-in crit chance. That is, if a monster
+has a built-in crit chance of $5\%$, then all of its offensive moves have
+an extra $5\%$ chance to get a critical hit, even if their previous chance
+was 0\%.
+
 %other stuff
 
-\subsection{Terms}
-
-\begin{description}
-\item[Active] The current ``fighting'' monster. Each player can only have one
-  active monster at a time.
-\item[Damage] The amount subtracted from a monster's current health after it is
-  attacked. The full formula for damage is $$base\_damage \cdot \left(1 +
-  \frac{attack}{100}\right) \cdot \left(1 - \frac{defense}{100}\right)$$
-\item[Defeated] A monster that has had its health points reduced to 0. A
-  defeated monster cannot be active.
-\item[Monster] A mysterious creature that we are using to fight for questionably
-  moral reasons. (Section~\ref{subsubsec{monster})
-\end{description}
 
 
 \pagebreak
