@@ -53,12 +53,59 @@ How very spooky.
 \section{tkinter}
 \label{sec:tk}
 tkinter is a basic graphics library for Python. You will be using it as your
-user interface for this lab. Due to time reasons, we have not finished a
-tutorial for tkinter at this time. Look at the sample code and other online
-tutorials, or wait for an updated version of the lab.
+user interface for this lab. Here we will be going over a few examples of
+you can use tkinter to make some simple user interfaces. There are tons of
+options in tkinter that we will not have space to cover, so if there is
+something you want to do that is not covered here, Google around and check
+if someone's done want you want before -- just make sure to cite them in
+your comments!
 
-We recommend doing the non-tkinter parts of the lab (loading files, handling
-socket connections) first in any case.
+To start with, we need to create a Tk object. Tk is a class contained in
+the tkinter module of Python that allows us to easily open new windows.
+The simplest way to create a tkinter window is shown in the code below,
+with the result in Figure~\ref{tk_basic}.
+
+\begin{lstlisting}[style=ipython]
+>>> import tkinter
+>>> window = tkinter.Tk()
+\end{lstlisting}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.5in]{img/tk_basic}
+  \caption{Basic tkinter window.}
+  \label{tk_basic}
+\end{figure}
+
+An empty window isn't particularly impressive, so let's add some buttons
+to the window. In order to add a button, we need to instantiate a new object
+of tkinter's Button class.
+
+\begin{lstlisting}[style=ipython]
+>>> import tkinter
+>>> window = tkinter.Tk()
+>>> button = tkinter.Button(window, text='Click me!', command=lambda: print("Hi!"))
+>>> button.grid(row=0, column=0)
+>>> window.geometry("400x400")
+''
+\end{lstlisting}
+
+The button's constructor should be fairly readable: the first argument is
+the element that the button will go inside, the text option specifies what
+the button says, and the command option is the function that will be called
+when the button is clicked. In this example we've created a simple lambda
+function, but in most cases you will want something a bit too complicated
+for a lambda function. In this case you'll just want to pass an already defined
+function.
+
+The next line determines how the button should be laid out inside the window.
+tkinter provides for multiple layout methods, but for this example we will
+be using grid. grid allows us to easily specify where elements go relative
+to one another while letting tkinter handle their exact sizing for us.
+
+Finally, the \lstinline{window.geometry("400x400")} statement tells tkinter to
+make our window 400 pixels by 400 pixels. This is not strictly required, as
+otherwise tkinter will autosize our window based on how big its elements are.
 
 \pagebreak
 
