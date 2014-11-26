@@ -130,7 +130,26 @@ in different rows and columns:
   \label{tk_grid}
 \end{figure}
 
+As a final example, we will show a short program that uses Frames to swap
+between different sets of buttons. Frames are an element that can be used
+to group other elements together. We can add elements to a Frame, then add
+that Frame to the window in order to display all of the elements it contains.
 
+\lstinputlisting{lab12/frame_example.py}
+
+Try running this code to see how it behaves. Everything here has been previously
+introduced, except for the \lstinline{.grid_remove()} and \lstinline{.mainloop()}
+methods. \lstinline{.grid_remove()} removes an element from its parent without
+necessarily getting rid of the element.
+
+\lstinline{.mainloop()} is a bit more
+complicated. Basically, it waits for events to happen to your window and handles
+them as they occur. It does not end until the window is exited. If you don't
+include \lstinlinst{.mainloop()} somewhere in your program, it will simply exit
+after a moment of the window popping up. Thus, a programming using tkinter
+will generally set up the window and anything else it needs, then call
+\lstinline{.mainloop()} and handle anything else in the commands tied to
+buttons.
 
 \pagebreak
 
