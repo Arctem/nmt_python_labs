@@ -107,6 +107,31 @@ Finally, the \lstinline{window.geometry("400x400")} statement tells tkinter to
 make our window 400 pixels by 400 pixels. This is not strictly required, as
 otherwise tkinter will autosize our window based on how big its elements are.
 
+If we want to do a slightly more complex layout, we can specify multiple buttons
+in different rows and columns:
+
+\begin{lstlisting}[style=ipython]
+>>> import tkinter
+>>> window = tkinter.Tk()
+>>> tl = tkinter.Button(window, text="Top left")
+>>> tl.grid(row=0, column=0)
+>>> tr = tkinter.Button(window, text="Top right")
+>>> tr.grid(row=0, column=1)
+>>> bl = tkinter.Button(window, text="Bottom left")
+>>> bl.grid(row=1, column=0)
+>>> br = tkinter.Button(window, text="Bottom right")
+>>> br.grid(row=1, column=1)
+\end{lstlisting}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.75in]{img/tk_grid}
+  \caption{Basic tkinter window with grid layout.}
+  \label{tk_grid}
+\end{figure}
+
+
+
 \pagebreak
 
 \section{Project}
