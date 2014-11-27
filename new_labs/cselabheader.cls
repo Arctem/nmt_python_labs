@@ -85,70 +85,70 @@
   identifierstyle=\color{black},
 }
 \lstset{
-    style=python,
-    basicstyle=\small\ttfamily,
-    keywordstyle=\color{blue},
-    stringstyle=\color{Maroon},
-    commentstyle=\color{green},
-    showstringspaces=false,
-    captionpos=b,
-  }
-  % interpreted python -- with gray background.
-  \lstdefinestyle{ipython}{
-    backgroundcolor=\color{light-gray},
-    language=Python,
-    basicstyle=\small\ttfamily,
-    frame=single,
-    prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rhookswarrow}},
-    postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rcurvearrowse\space}}
-    breaklines=true,
-    breakatwhitespace=true,
-    numbers=left,
-    numberstyle=\scriptsize,
-    morekeywords={True,False},
-    identifierstyle=\color{black},
-  }
-  \lstdefinestyle{bash}{
-    language=bash,
-    basicstyle=\small\ttfamily,
-    identifierstyle=,
-    keywordstyle=,
-    backgroundcolor=\color{light-gray}
-  }
+  style=python,
+  basicstyle=\small\ttfamily,
+  keywordstyle=\color{blue},
+  stringstyle=\color{Maroon},
+  commentstyle=\color{green},
+  showstringspaces=false,
+  captionpos=b,
+}
+% interpreted python -- with gray background.
+\lstdefinestyle{ipython}{
+  backgroundcolor=\color{light-gray},
+  language=Python,
+  basicstyle=\small\ttfamily,
+  frame=single,
+  prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rhookswarrow}},
+  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rcurvearrowse\space}}
+  breaklines=true,
+  breakatwhitespace=true,
+  numbers=left,
+  numberstyle=\scriptsize,
+  morekeywords={True,False},
+  identifierstyle=\color{black},
+}
+\lstdefinestyle{bash}{
+  language=bash,
+  basicstyle=\small\ttfamily,
+  identifierstyle=,
+  keywordstyle=,
+  backgroundcolor=\color{light-gray}
+}
 
-  % I wanted bash to have the breaklines stuff, too, but the typesetting is having
-  % problems with my prebreak and postbreak symbols and boxes. I have to
-  % investigate (it always worked in the C labs..) -Chris
-  \lstdefinestyle{c}{
-    language=C,
-    basicstyle=\small\ttfamily,
-    frame=single,
-    prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rhookswarrow}},
-    postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rcurvearrowse\space}}
-    breaklines=true,
-    breakatwhitespace=true,
-    numbers=left,
-    numberstyle=\scriptsize
-  }
+% I wanted bash to have the breaklines stuff, too, but the typesetting is having
+% problems with my prebreak and postbreak symbols and boxes. I have to
+% investigate (it always worked in the C labs..) -Chris
+\lstdefinestyle{c}{
+  language=C,
+  basicstyle=\small\ttfamily,
+  frame=single,
+  prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rhookswarrow}},
+  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rcurvearrowse\space}}
+  breaklines=true,
+  breakatwhitespace=true,
+  numbers=left,
+  numberstyle=\scriptsize
+}
 
-  % caption formatting
-  \usepackage[format=plain,font=small,labelfont=bf]{caption}
-  \usepackage[toc,page]{appendix}
-  \usepackage{tikz}
-  \usetikzlibrary{trees}
+% caption formatting
+\usepackage[format=plain,font=small,labelfont=bf]{caption}
+\usepackage[toc,page]{appendix}
+\usepackage{tikz}
+\usetikzlibrary{trees}
 
-  \usepackage{mdframed}
+\usepackage{mdframed}
 
-  \newenvironment{warningbox}[1]{
+\newenvironment{warningbox}[1]{
   \mdfsetup{%
     frametitle={%
       \tikz[baseline=(current bounding box.east),outer sep=0pt]
       \node[anchor=east,rectangle,fill=red!20]
-      {\strut #1};}}
+           {\strut #1};}}
   \mdfsetup{innertopmargin=10pt, linecolor=red!20, linewidth=2pt, topline=true,
     frametitleaboveskip=\dimexpr-\ht\strutbox\relax,}
   \begin{mdframed}[]\relax
-  }{\end{mdframed}}
+}{\end{mdframed}}
 
 \author{CSE/IT 107}
 \date{NMT Computer Science}
