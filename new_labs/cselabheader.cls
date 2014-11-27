@@ -150,6 +150,8 @@
   \begin{mdframed}[]\relax
 }{\end{mdframed}}
 
+\def\Version#1{\def\version{#1}}
+
 \author{CSE/IT 107}
 \date{NMT Computer Science}
 
