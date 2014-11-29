@@ -10,9 +10,9 @@
 \usepackage{wrapfig}
 
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\Version{1.1}
+\Version{1.2}
 \fancyhead[R]{Lab 12: Project (v\version)}
-\title{Lab 12: Project (v\version)}
+\title{Lab 12: Project}
 
 \begin{document}
 
@@ -57,25 +57,26 @@ tkinter is a basic graphics library for Python. You will be using it as your
 user interface for this lab. Here we will be going over a few examples of
 you can use tkinter to make some simple user interfaces. There are tons of
 options in tkinter that we will not have space to cover, so if there is
-something you want to do that is not covered here, Google around and check
-if someone's done want you want before -- just make sure to cite them in
+something you want to do that is not covered here, google around and check
+if someone's done what you want before -- just make sure to cite them in
 your comments!
 
 To start with, we need to create a Tk object. Tk is a class contained in
 the tkinter module of Python that allows us to easily open new windows.
 The simplest way to create a tkinter window is shown in the code below,
-with the result in Figure~\ref{tk_basic}.
+with the result in Figure~\ref{fig:tk_basic}.
 
-\begin{lstlisting}[style=ipython]
+\begin{lstlisting}[style=ipython,caption={Just a tkinter window. See
+Figure~\ref{fig:tk_basic}.},label={lst:tk_basic}]
 >>> import tkinter
 >>> window = tkinter.Tk()
 \end{lstlisting}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.5in]{img/tk_basic}
-  \caption{Basic tkinter window.}
-  \label{tk_basic}
+  \includegraphics[width=1.5in]{img/tk_basic.png}
+  \caption{Basic tkinter window. See Listing~\ref{lst:tk_basic} for the code.}
+  \label{fig:tk_basic}
 \end{figure}
 
 An empty window isn't particularly impressive, so let's add some buttons
@@ -92,26 +93,28 @@ of tkinter's Button class.
 \end{lstlisting}
 
 The button's constructor should be fairly readable: the first argument is
-the element that the button will go inside, the text option specifies what
+the window or frame that the button will go inside, the text option specifies what
 the button says, and the command option is the function that will be called
-when the button is clicked. In this example we've created a simple lambda
-function, but in most cases you will want something a bit too complicated
-for a lambda function. In this case you'll just want to pass an already defined
-function.
+when the button is clicked.  In this example we've created a simple lambda
+function, but in most cases you will want something a bit more complicated than
+a lambda function. In that case you'll just want to pass an already defined
+function. 
 
 The next line determines how the button should be laid out inside the window.
 tkinter provides for multiple layout methods, but for this example we will
-be using grid. grid allows us to easily specify where elements go relative
-to one another while letting tkinter handle their exact sizing for us.
+be using \texttt{grid}. \texttt{grid} allows us to easily specify where widgets
+go relative to one another while letting tkinter handle their exact sizing for
+us. A widget can be a bunch of different tkinter objects: text, a button, a
+label, a frame, \ldots
 
 Finally, the \lstinline{window.geometry("400x400")} statement tells tkinter to
-make our window 400 pixels by 400 pixels. This is not strictly required, as
+make our window 400 pixels by 400 pixels. This is not strictly required as
 otherwise tkinter will autosize our window based on how big its elements are.
 
 If we want to do a slightly more complex layout, we can specify multiple buttons
 in different rows and columns:
 
-\begin{lstlisting}[style=ipython]
+\begin{lstlisting}[style=ipython,caption={Multiple buttons in tkinter. See Figure~\ref{fig:tk_grid}},label={lst:tk_grid}]
 >>> import tkinter
 >>> window = tkinter.Tk()
 >>> tl = tkinter.Button(window, text="Top left")
@@ -126,37 +129,82 @@ in different rows and columns:
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.75in]{img/tk_grid}
-  \caption{Basic tkinter window with grid layout.}
-  \label{tk_grid}
+  \includegraphics[width=1.75in]{img/tk_grid.png}
+  \caption{Basic tkinter window with grid layout. See Listing~\ref{lst:tk_grid}
+for the code.}
+  \label{fig:tk_grid}
 \end{figure}
 
-As a final example, we will show a short program that uses Frames to swap
-between different sets of buttons. Frames are an element that can be used
-to group other elements together. We can add elements to a Frame, then add
-that Frame to the window in order to display all of the elements it contains.
+For a more complicated example, we will show a short program that uses Frames to
+swap between different sets of buttons. A frame is a widget that can be used
+to group other widgets together. We can add widgets to a frame, then add
+that frame to the window in order to display all of the widgets it contains.
 
 \lstinputlisting{lab12/frame_example.py}
 
 Try running this code to see how it behaves. Everything here has been previously
-introduced, except for the \lstinline{.grid_remove()} and \lstinline{.mainloop()}
-methods. \lstinline{.grid_remove()} removes an element from its parent without
-necessarily getting rid of the element.
+introduced, except for the \lstinline{.grid_remove()} and
+\lstinline{.mainloop()} methods. \lstinline{.grid_remove()} removes a widget
+from its parent without necessarily getting rid of the widget.
 
-\lstinline{.mainloop()} is a bit more
+\lstinline!.mainloop()! is a bit more
 complicated. Basically, it waits for events to happen to your window and handles
 them as they occur. It does not end until the window is exited. If you don't
-include \lstinlinst{.mainloop()} somewhere in your program, it will simply exit
+include \lstinline!.mainloop()! somewhere in your program, it will simply exit
 after a moment of the window popping up. Thus, a programming using tkinter
 will generally set up the window and anything else it needs, then call
 \lstinline{.mainloop()} and handle anything else in the commands tied to
 buttons.
 
+Buttons and frames are not the only types of widgets that tkinter supports.
+There are other kinds of widgets such as text or labels. Here is an example:
+
+\lstinputlisting[caption={tkinter Hello World in two columns. See
+Figure~\ref{fig:tk_helloworld}.},label={lst:tk_helloworld}]{lab12/tk_helloworld.py}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{img/tk_helloworld.png}
+  \caption{tkinter with text. See Listing~\ref{lst:tk_helloworld} for the code.}
+  \label{fig:tk_helloworld}
+\end{figure}
+
+\pagebreak
+
 This is the basic flow to how using tkinter works. There are lots of other
-element types you may find useful, check out the official documentation
-at \url{https://docs.python.org/3/library/tkinter.html}, or the NMT-based
-semi-official documentation at
+widget types you may find useful, check out the official documentation
+at 
+\begin{center}
+  \url{https://docs.python.org/3/library/tkinter.html}, 
+\end{center}
+or the NMT-based semi-official documentation written by the wonderful John
+Shipman at
+\begin{center}
 \url{http://infohost.nmt.edu/tcc/help/pubs/tkinter/web/index.html}.
+\end{center}
+
+We recommend the official documentation for three reasons: it is authoritative,
+it is good, and it teaches you to learn how to read the official Python
+documentation. However, John Shipman's tkinter reference is also excellent and
+we would be very wrong not to mention it here.
+
+You will have to use these documentations to figure out how to display certain
+text or images to the tkinter window. This section was only intended as a small
+introduction to the principles of tkinter -- windows, frames, buttons, widgets
+and their placement -- while you will have to do just a little bit of research
+on how to do more.
+
+\begin{warningbox}{Python 2 vs Python 3}
+  tkinter changed a few small things between Python 2 and Python 3. Note that
+  when you see it called \emph{Tkinter} with a capital T, you are looking at
+  documentation about the Python 2 version, while \emph{tkinter} is the Python 3
+  version.
+
+  Most of the documentation that you will be looking up will be the same for
+  Python 2 and Python 3 tkinter though. Tkinter only changed some names between
+  the Python versions, while the usage is still the same.
+\end{warningbox}
+
 
 \pagebreak
 
@@ -180,7 +228,7 @@ a starting point, though you are free to completely ignore them.
 \begin{figure}[h]
   \centering
   \includegraphics{img/Bulbasaur_pokemon_red}
-  \caption{Pok\'emon battle screen. (from
+  \caption{Pok\'emon battle screen. (Source:
     \href{http://en.wikipedia.org/wiki/File:Bulbasaur_pokemon_red.png}{Wikipedia})}
   \label{poke}
 \end{figure}
@@ -208,12 +256,12 @@ Once both players have chosen a move for the turn, the moves will be executed.
 If both players chose to switch monsters, then the order that the switches occur
 does not matter. If one player chose to switch their monster while the other chose
 to use a move, then the switching player's action will go first. If both players
-choose to use a move, then the player whose monster has a higher Speed stat (see
+choose to use a move, then the player whose monster has a higher speed stat (see
 Section~\ref{subsubsec:monster}) will perform its move first. The second monster
 will only perform its move if it is still undefeated after the first monster
 performs its move.
 
-If at the end of a turn either or both monsters have had their Health reduced to 0
+If at the end of a turn either or both monsters have had their health reduced to 0
 or less, then that monster has been defeated. Its user must immediately switch out
 their monster for one that has not been defeated. This switch occurs before the start
 of the next turn. If no undefeated monsters remain, that player has been defeated.
@@ -223,59 +271,67 @@ If both players are defeated at once, the match ends in a draw.
 \label{subsubsec:monster}  
 Each monster will have a number of stats:
 \begin{description}
-\item[Attack] Indicates attack power of the monster. The base damage of any attack
-  Move that this monster uses is modified by $$base\_damage \cdot \left(1 +
-  \frac{attack}{100}\right)$$
-\item[Defense] Indicates defensive strength of the monster. Any incoming damage to
-  the monster is reduced by $$damage \cdot \left(1 - \frac{defense}{100}\right)$$
+\item[Attack] Indicates attack power of the monster. The base damage of any
+  attack Move that this monster uses is modified by $$base\_damage \cdot \left(1
+  + \frac{attack}{100}\right)$$
+\item[Defense] Indicates defensive strength of the monster. Any incoming damage
+  to the monster is reduced by $$damage \cdot \left(1 -
+  \frac{defense}{100}\right)$$
 
   A monster is not allowed to have a Defense greater than 75.
 \item[Health] The maximum health that a monster has. Any time it is attacked the
-  monster's current health will be reduced, thought the maximum will stay the same.
-\item[Speed] Indicates the speed of the monster. Is used to determine which of the
-  active monsters will use its Move first.
-\item[Name] Each monster must have a name so that you can properly empathize with
-  its plight.
+  monster's current health will be reduced, thought the maximum will stay the
+  same.
+\item[Speed] Indicates the speed of the monster. Is used to determine which of
+  the active monsters will use its Move first.
+\item[Name] Each monster must have a name so that you can properly empathize
+  with its plight.
 \end{description}
-
 
 In addition to these stats, each monster can have up to 4 moves, as defined in
 Section~\ref{subsubsec:moves}
 
 \subsubsection{Moves}
 \label{subsubsec:moves}
-A Move is an action that a monster can perform when it is active. There are four
-types of Move:
+A move is an action that a monster can perform when it is active. There are four
+types of move:
 
 \begin{description}
-\item[Offensive] An offensive Move deals damage to the opponent's active monster.
-  Each offensive Move has a base damage stat that helps determine how much damage it
-  does, based on the two formulas in Section~\ref{subsubsec:monster}.
-\item[Heal] A healing Move restores health to the monster making the Move. A healing
-  Move has a stat indicating how much health it will restore. A monster cannot be
-  healed above its maximum health.
-\item[Buff] A Move that temporarily increases one of the active monster's stats. A buff move
-  has three attributes: the stat it increases (Attack, Defense, or Speed), the
-  amount it increases that stat by, and how many turns it lasts. A buff can allow a stat
-  to be increased beyond the point it normally could be.
-\item[Debuff] A Move that temporarily decreases one of the stats of the opponent's active
-  monster. Has the same attributes as buff, but decreases instead of increases.
+\item[Offensive] An offensive move deals damage to the opponent's active
+  monster.  Each offensive move has a base damage stat that helps determine how
+  much damage it does, based on the two formulas in
+  Section~\ref{subsubsec:monster}.
+
+\item[Heal] A healing move restores health to the monster making the move. A
+  healing move has a stat indicating how much health it will restore. A monster
+  cannot be healed above its maximum health.
+
+\item[Buff] A move that temporarily increases one of the active monster's stats.
+  A buff move has three attributes: the stat it increases (attack, defense, or
+  speed), the amount it increases that stat by, and how many turns it lasts. A
+  buff can allow a stat to be increased beyond the point it normally could be.
+
+\item[Debuff] A move that temporarily decreases one of the stats of the
+  opponent's active monster. Has the same attributes as buff, but decreases
+  instead of increases.
 \end{description}
 
 In addition to the above mentioned attributes, each move must have a name.
 
 \subsection{Client (battle.py)}
-You will need to write a client using tkinter that provides a nice user interface
-to those playing the game. You should model your interface off of
-Figure~\ref{poke}, though you are free to modify it as you see fit. The interface
-needs to do the following:
+You will need to write a client using tkinter that provides a nice user
+interface to those playing the game. You should model your interface off of
+Figure~\ref{poke}, though you are free to modify it as you see fit. The
+interface needs to do the following:
+
 \begin{itemize}
-\item Display the name, current health, max health, attack, defense, and speed of the
-  currently active monsters from both players.
-\item Display information about what is happening in the game. That is, what moves each
-  monster is using, what the results of those moves are, what monsters are switched for
-\item Allow the user to choose between their various options each turn, as shown in
-  Section~\ref{subsubsec:turn}.
+\item Display the name, current health, max health, attack, defense, and speed
+  of the currently active monsters from both players.
+\item Display information about what is happening in the game; i.e. what
+  moves each monster is using, what the results of those moves are, what
+  monsters are switched for.
+\item Allow the user to choose between their various options each turn, as shown
+  in Section~\ref{subsubsec:turn}.
 \end{itemize}
 
 In addition, your client will need to connect to your server in order to send the
@@ -287,24 +343,22 @@ of monsters from a text file. This information must then be sent to the server u
 connection.
 
 \subsection{Server (battle\_server.py)}
-You will need to write a server that allows two clients to connect to it in order
-to play the game that I really wish I had come up with a name for. This server will
-carry out the majority of the game's logic and handle sending and receiving information
-from the players. It will need to fulfill the following tasks:
+You will need to write a server that allows two clients to connect to it in
+order to play the game. This server will carry out the majority of the game's
+logic and handle sending and receiving information from the players. It will
+need to fulfill the following tasks:
 
 \begin{itemize}
 \item Receive information about each player's party, store that information, and
-  send it to the players as necessary.
+  send it to each of the players as necessary.
 \item Wait for each player to select an action, then calculate the outcome of
   both actions.
 \item Detect when one player has won and inform each player.
 \item Anything else you find would be handy for the server to take care of.
 \end{itemize}
 
-You are free to use whatever protocol you wish for communicating data between the
-server and the clients.
-
-
+You are free to use whatever protocol you wish for communicating data between
+the server and the clients.
 
 \subsection{Terms}
 
@@ -316,45 +370,46 @@ server and the clients.
   \frac{attack}{100}\right) \cdot \left(1 - \frac{defense}{100}\right)$$
 \item[Defeated] A monster that has had its health points reduced to 0. A
   defeated monster cannot be active.
-\item[Monster] A mysterious creature that we are using to fight for questionably
-  moral reasons. (Section~\ref{subsubsec:monster})
+\item[Monster] A mysterious creature that we are using to fight for morally
+  questionable reasons (Section~\ref{subsubsec:monster}).
 \end{description}
 
 \subsection{Extra Credit}
-Any or all of these can be included in your lab. If you do extra credit, include a
-file called README.txt that details which extra credit opportunities you did. If
-you did something extra not mentioned here, also mention it in your README.txt.
-If you have any ideas for extra credit that aren't mentioned here, email
-\href{mailto:rwhite00@nmt.edu}{rwhite00@nmt.edu}.
+Any or all of these can be included in your lab. If you do extra credit, include
+a file called README.txt that details which extra credit opportunities you did.
+If you did something extra not mentioned here, also mention it in your
+README.txt.  If you have any ideas for extra credit that aren't mentioned here,
+email \href{mailto:rwhite00@nmt.edu}{rwhite00@nmt.edu}.
 
 \subsubsection{Awesome Name (5 points)}
 Give your game a REALLY AWESOME NAME!
 
 \subsubsection{Status Effects (10 points)}
-Implement status effects into some of your moves. That is, add some moves that have
-a chance to inflict effects beyond damage and debuffs onto the enemy. For example:
+Implement status effects into some of your moves. That is: add some moves that
+have a chance to inflict effects beyond damage and debuffs onto the enemy. For
+example:
 \begin{description}
 \item[Poison] A poisoned monster takes some amount of damage each turn for a set
   number of turns.
-\item[Paralyzed] A paralyzed monster has a chance to not perform a move when it is
-  selected. Additionally, a paralyzed will always move second if the other monster
-  is not paralyzed.
+\item[Paralysis] A paralyzed monster has a chance to not perform a move when it
+  is selected. Additionally, a paralyzed monster will always move second if the
+  other monster is not paralyzed.
 \item[Scared] A scared monster has a chance to ignore a move command and instead
   switch itself with a random inactive undefeated monster.
 \end{description}
 
 \subsubsection{Types and Strengths/Weaknesses (15 points)}
-Implement elemental types for your monsters. That is, each monster will have some
-kind of alignment. Examples might be fire, water, flying, or jello. Define
-(preferably in a file) weaknesses between the different types. For example,
+Implement elemental types for your monsters. This means that each monster will
+have some kind of alignment. Examples might be fire, water, flying, or jello.
+Define (preferably in a file) weaknesses for the different types. For example,
 water types might deal 150\% normal damage to fire types, while only dealing
-25\% normal damage to jello types.
+25\% normal damage to jello types. See Figure~\ref{fig:types}.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.5\linewidth]{img/typechart}
+  \includegraphics[width=0.7\linewidth]{img/typechart}
   \caption{Type strengths and weaknesses in Pok\'emon.}
-  \label{types}
+  \label{fig:types}
 \end{figure}
 
 \subsubsection{Validate Monster Stats (10 points)}
@@ -373,13 +428,11 @@ When the client starts and loads up a group of monsters, allow the users
 to select which of the monsters they wish to use in the GUI.
 
 \subsubsection{Monster Graphics (15 points)}
-Let a monster have an associated image that is displayed on both clients.
-To do this, you will need to have the client load an image, then send that
-image to the server so that the server can pass it on to the other client
-(remember that in a real online game
-your clients won't have access to the same
-files to read from, so you can't just have them both load from the same
-file).
+Let a monster have an associated image that is displayed on both clients.  To do
+this, you will need to have the client load an image, then send that image to
+the server so that the server can pass it on to the other client (remember that
+in a real online game your clients won't have access to the same files to read
+from, so you can't just have them both load from the same file).
 
 If you use images from online, make sure to cite where you got them!
 
@@ -390,24 +443,23 @@ some logic to how their stats are created so that they are not too over-
 or underpowered. For examples, see Section~\ref{subsubsec:valid}.
 
 \subsubsection{User-Created Monsters (15 points)}
-In addition to loading monsters from files,
-provide an interface to allow a player to create their own monsters. Let
-them choose the name, stats, and whatever else youcan think of for their
-party of monsters.
+In addition to loading monsters from files, provide an interface to allow a
+player to create their own monsters. Let them choose the name, stats, and
+whatever else you can think of for their party of monsters.
 
 \subsubsection{Sound (10 points)}
-Let sounds play in response to certain events. Have sound effects for
-different moves, monsters being defeated, switching out monsters, and
-whatever other events you want to tie sounds to.
+Let sounds play in response to certain events. Have sound effects for different
+moves, monsters being defeated, switching out monsters, and whatever other
+events you want to tie sounds to.
 
 If you use sounds from online, make sure to cite where you got them!
 
 \subsubsection{Critical Hits (10 points)}
-Allow an offensive move to have a chance to make a critical hit. For
-each offensive move, give it a number from 0 to 100 indicating how
-likely it is to crit. Each time the move is performed, randomly
-determine -- based on that percentage -- to get a critical hit. If a
-move gets a critical hit, it should do twice as much damage as normal.
+Allow an offensive move to have a chance to make a critical hit. For each
+offensive move, give it a number from 0 to 100 indicating how likely it is to
+critically hit. Each time the move is performed, randomly determine -- based on
+that percentage -- to get a critical hit. If a move gets a critical hit, it
+should do twice as much damage as normal.
 
 Optionally, give each monster a built-in crit chance. That is, if a monster
 has a built-in crit chance of $5\%$, then all of its offensive moves have
@@ -415,10 +467,8 @@ an extra $5\%$ chance to get a critical hit, even if their previous chance
 was 0\%.
 
 \subsubsection{Other Extras (?? points)}
-If you have any ideas for more extra credit opportunities, email me and I
+If you have any ideas for more extra credit opportunities, email Russell and he
 will probably add them to the lab document.
-
-
 
 \pagebreak
 \section{Submitting}
