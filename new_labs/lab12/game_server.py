@@ -6,6 +6,8 @@ import sys
 import pickle
 from player import Player
 from monster import Monster
+from party import Party
+
 
 DATA_SIZE = 1024 * 10 #10 kilobytes max per message
 
@@ -15,6 +17,10 @@ def create_server_sock(port=50000, host='', backlog=5):
   server.bind((host, port))
   server.listen(backlog)
   return server
+
+def start_game(sockets):
+  for sock in sockets:
+    sock.sendall(pickle.dumps('start'))
 
 def main():
   inputs = []
@@ -38,6 +44,8 @@ def main():
           print('Received connection from {}.'.format(address))
           player_sockets.append(client)
           player_data[client] = Player(client)
+          if len(player_sockets) == 2:
+            start_game(player_sockets)
         else:
           print('Rejecting connection from {}.'.format(address))
           client.sendall(b'too many players\n')
@@ -65,10 +73,17 @@ def main():
           del player_data[s]
           s.close()
         else:
-          m = pickle.loads(data)
-          print('Received monster named {}.'.format(m.name))
-          s.sendall(pickle.dumps('Your monster is named {}.'.
-            format(m.name)))
+          data = pickle.loads(data)
+          if type(data) is Party:
+            print('Received party info: {}.'.format(data.party))
+            player_data[s].party = data
+
+            for sock in player_sockets:
+              print(s, sock)
+              if sock != s:
+                print('did it')
+                active = player_data[s].party.active
+                sock.sendall(pickle.dumps(active))
 
   server.close()
 

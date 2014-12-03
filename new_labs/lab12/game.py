@@ -5,6 +5,7 @@ import pickle
 import tkinter
 from threading import Thread
 from monster import Monster
+from party import Party
 
 DATA_SIZE = 1024 * 10 #10 kilobytes max per messagep
 
@@ -16,24 +17,45 @@ class Frame(tkinter.Frame):
     self.sock = sock
     
     self.initUI()
+    ready = False
+    while not ready:
+      data = self.wait_for_data()
+      if data == 'start':
+        ready = True
+
+    monsters = [Monster(x) for x in ['bob', 'alfred', 'batman']]
+    self.party = Party(monsters)
+    self.sock.sendall(pickle.dumps(self.party))
+
+    data = self.wait_for_data()
+
   
   def initUI(self):
     self.parent.title("Battle")
     button = tkinter.Button(self, text='Send Monster', fg='red',
-    command = self.send_monster)
+      command = self.send_monster)
     button.grid(row=0, column=0, columnspan=4)
 
     switch = tkinter.Button(self, text='Switch Monster')
-    switch.grid(row=3, column=0)
+    switch.grid(row=3, column=3)
 
     move = tkinter.Button(self, text='Use Move')
-    move.grid(row=3, column=3)
+    move.grid(row=3, column=0)
     
     self.grid(row=0, column=0)
 
+  def wait_for_data(self):
+    data = self.sock.recv(DATA_SIZE)
+
+    print(data)
+    data = pickle.loads(data)
+    print(data)
+    return data
+
+
 
   def send_monster(self):
-    monster = Monster('bob')
+    monster = Monster('alfred')
     monster = pickle.dumps(monster)
     self.sock.sendall(monster)
     data = self.sock.recv(DATA_SIZE)
