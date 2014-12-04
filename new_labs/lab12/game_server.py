@@ -19,14 +19,12 @@ def create_server_sock(port=50000, host='', backlog=5):
 def main():
   inputs = []
   player_sockets = []
-  player_data = {}
 
   server = create_server_sock()
 
   inputs.append(server)
   inputs.append(sys.stdin)
   running = True
-  game_started = False
 
   while running:
     input_ready, output_ready, except_ready = select.select(inputs + player_sockets, [], [])
@@ -37,7 +35,6 @@ def main():
         if len(player_sockets) < 2:
           print('Received connection from {}.'.format(address))
           player_sockets.append(client)
-          player_data[client] = Player(client)
         else:
           print('Rejecting connection from {}.'.format(address))
           client.sendall(b'too many players\n')
@@ -60,15 +57,15 @@ def main():
         print(data)
         if not data:
           #this socket closed or handle_message returned False
-          print("Connection {} closed remotely.".format(player_data[s].name))
+          print("Connection closed remotely.")
           player_sockets.remove(s)
-          del player_data[s]
           s.close()
         else:
-          m = pickle.loads(data)
-          print('Received monster named {}.'.format(m.name))
-          s.sendall(pickle.dumps('Your monster is named {}.'.
-            format(m.name)))
+          for sock in player_sockets:
+            if sock != s:
+              sock.sendall(data)
+
+          
 
   server.close()
 

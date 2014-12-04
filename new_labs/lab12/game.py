@@ -5,15 +5,18 @@ import pickle
 import tkinter
 from threading import Thread
 from monster import Monster
+from party import Party
 
 DATA_SIZE = 1024 * 10 #10 kilobytes max per messagep
 
 class Frame(tkinter.Frame):
   def __init__(self, parent, sock):
-    tkinter.Frame.__init__(self, parent, background="white")   
+    tkinter.Frame.__init__(self, parent, background="white")
      
     self.parent = parent
     self.sock = sock
+
+    self.init_party()
     
     self.initUI()
   
@@ -23,7 +26,8 @@ class Frame(tkinter.Frame):
     command = self.send_monster)
     button.grid(row=0, column=0, columnspan=4)
 
-    switch = tkinter.Button(self, text='Switch Monster')
+    switch = tkinter.Button(self, text='Switch Monster',
+      command=lambda: print("hello"))
     switch.grid(row=3, column=0)
 
     move = tkinter.Button(self, text='Use Move')
@@ -31,18 +35,27 @@ class Frame(tkinter.Frame):
     
     self.grid(row=0, column=0)
 
+  def init_party(self):
+    monsters = [Monster(x) for x in ['Tyler', 'Russell', 'Chris']]
+    self.party = Party(monsters)
+
 
   def send_monster(self):
-    monster = Monster('bob')
-    monster = pickle.dumps(monster)
-    self.sock.sendall(monster)
+    data = pickle.dumps(self.party)
+    self.sock.sendall(data)
     data = self.sock.recv(DATA_SIZE)
     if not data:
       print("Remote server closed connection.")
       running = False
     else:
       data = pickle.loads(data)
-      print('Received {}'.format(data))
+      if isinstance(data, Monster):
+        print('Opponent\'s monster is {}.'.format(data.name))
+      if isinstance(data, Party):
+        print("Opponent's party has {} monsters!".format(len(data.party)))
+        print("Opponent's active monster is {}.".format(data.active.name))
+      else:
+        print('Received {}'.format(data))
 
 def toggle(event):
   event.widget.grid_remove()
