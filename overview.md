@@ -1,11 +1,11 @@
 #Lab contents
 
-Contents for spring 2015 semester.
+Contents and instructional goals for spring 2015 semester.
 
 ##Lab 1 - Introduction to Linux and Python
 - Python as calculator (basic operators)
 - Python interpreter
-- Difference between float and int
+- Difference between float and int -- talk a bit about float, int (, maybe str)
 - Variables
 - Read the docs!
 
