@@ -7,10 +7,16 @@
 % Russell White, and Christopher Koch
 % Spring 2015
 
+% Instructional goals of this lab:
+% - basic Linux command line use
+% - start learning how to read the documentation (man pages, python docs)
+% - Python as a calculator
+% - Canvas use
+
 \documentclass[11pt]{cselabheader}
 
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 1: And Now for Something Completely Different}
+\fancyhead[R]{Lab 1: An Introduction to Linux and Python}
 \title{And Now for Something Completely Different\\
   {\large An Introduction to Linux and Python}}
 
@@ -25,7 +31,8 @@
   machines to execute.''
 \end{quotation}
 \begin{flushright}
---- H. Abelson and G. Sussman
+--- H. Abelson and G. Sussman (\textit{Structure and Interpretation of Computer
+Programs})
 \end{flushright}
 
 \begin{quotation}
@@ -50,11 +57,11 @@
 The purpose of this lab is to introduce you to the Python programming
 environment. In this lab, you will learn how to
 \begin{enumerate*}
-  \item Log into a computer of the Tech Computer Center (ITC).
-  \item Learn how to use and navigate Linux.
-  \item Learn to use Python as an interpreter.
-  \item Edit and run a few short Python programs.
-  \item Create a tarball and submit it to Canvas.
+  \item log into a computer of the Tech Computer Center (ITC),
+  \item learn how to use and navigate Linux,
+  \item learn to use Python as an interpreter,
+  \item edit and run a few short Python programs, as well as
+  \item create a tarball and submit it to Canvas.
 \end{enumerate*}
 
 Throughout this semester's labs, we will be using specially formatted text to
@@ -91,13 +98,14 @@ the name of a file, a function, or some action you need to perform.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagebreak
-\section{Instructions}
+\section{Linux Environment}
+\label{sec:linux}
 
-The following instructions will guide you through this lab. Because this is an
-introductory lab, the instructions are rather detailed and specific. However, it
-is important that you understand the concepts behind the actions you take -- you
-will be repeating them throughout the semester. If you have any questions, ask
-the instructor, teaching assistant, or lab assistant.
+The following instructions will guide you through the Linux introduction.
+Because this is an introductory lab, the instructions are rather detailed and
+specific. However, it is important that you understand the concepts behind the
+actions you take -- you will be repeating them throughout the semester. If you
+have any questions, ask the instructor, teaching assistant, or lab assistant.
 
 \subsection{Log in}
 To log into a ITC machine, you must use your ITC username and password. If you
@@ -107,9 +115,6 @@ activated.
 If your computer is currently booted with Windows, restart it and select Fedora
 (a variety of Linux) as your operating system. Please note that using Linux is a
 \emph{requirement} for this class.
-
-\section{Linux Environment}
-\label{sec:linux}
 
 \subsection{Open a Terminal}
 In Linux, you will perform most actions from the command line. In order to do
@@ -626,7 +631,7 @@ clear what they are meant to store; for example:
 \end{lstlisting}
 
 \pagebreak
-\section{Running Python programs} 
+\section{Running Python Programs}
 
 So far, you have been running Python interactively. This is a nice feature as it
 lets you test ideas quickly and easily. However, there are times you want to
@@ -679,7 +684,6 @@ print(y)
 \end{lstlisting}
 
 \begin{lstlisting}[style=bash]
->>> 
 4
 9
 \end{lstlisting}
