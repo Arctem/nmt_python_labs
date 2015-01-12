@@ -65,6 +65,7 @@
 \setlength{\LTcapwidth}{6in}
 \usepackage{array}
 \usepackage{multirow}
+\usepackage{multicol}
 % better table formatting
 \usepackage{booktabs}
 % Supports code formatting/highlighting
