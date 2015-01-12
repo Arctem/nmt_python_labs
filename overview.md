@@ -1,95 +1,62 @@
-#Contents of each lab
+#Lab contents
 
-##Lab 1
-- Basic Unix commands and navigation.
-	- passwd
-	- pwd
-	- cd
-	- man (not focused on)
-	- ls
-	- The details of what the -l option shows.
-	- Group permissions.
-	- mkdir
-	- Mentioned: cp, mv, rm, touch, cat, less, script, alias, export, source.
-- Python interpretter (as calculator). +, -, *, /, %, **, //
-- Difference between int and float division.
-- Comments.
-- Variables.
-- ipython
-- - ? shortcut
-- help()
-- type()
-- pylab.plot()
-- range()
-- for loops
-- print
-- Running Python programs with either ipython's run or python in terminal
-- chmod and shebang to run program with ./
-- Boilerplate and main()
-- ASCII art.
-- random.randrange()
-- time.sleep()
-- Making tarballs.
+Contents for spring 2015 semester.
 
-##Lab 2
-- Functions.
-- Difference between 'strings' and "strings".
-- Using sys.argv
-- Accesses strings like lists.
-- len()
-- for i in range(len(s)) format.
-- .join() is mentioned.
-- random.randint()
-- String manipulation.
-- Third argument of range()
+##Lab 1 - Introduction to Linux and Python
+- Python as calculator (basic operators)
+- Python interpreter
+- Difference between float and int
+- Variables
+- Read the docs!
 
-##Lab 3
-- While loops.
-- Recursion.
-- Binary search.
-- Returning multiple values (tuples)
-- Default parameter values.
-- E notation.
-- format()
+##Lab 2 - Basic Flow Control
+- Boolean logic
+- If/else
+- While loops
+  - both while waiting for something and doing a set number of times - poor man's for loop
+- Basic string formating
+- input()
+- Turtle
 
-##Lab 4
-- Manually accepting command line options.
-- matplotlib.pyplot.plot()
-- Nested if/else blocks (rock, paper, scissors)
+##Lab 3 - Functions
+- Functions
+- import statements
+- main() boilerplate?
+- Comments and PEP-8 style
 
-##Lab 5
-- in operator
-- Negative indexing (first mention I saw, might have occured sooner)
-- String slicing.
-- upper() and lower()
-- ljust() and rjust()
-- isalpha() and isspace()
-- ord() and char()
-- Math using characters.
-- split()
-- Reading from a file using open(), file.read(), and file.close()
+##Lab 4 - Lists and Strings
+- Lists
+- Strings
+- For loops
+- Slicing
+- in, not in keyword.
+- Maybe range(), but I think we should focus more on for loops being used in the
+  style of "for each"
+- Talk about types -- we now have float, int, str, list(, function)
 
-##Lab 6
-- Using for line in file for reading lines from a file.
-- strip()
-- int() to convert strings.
-- open()ing file for writing and file.write()
-- Combining format() and write()
-- min(), max(), list.sort(), list.count()
+##Lab 5 - File I/O and matplotlib
+- File I/O using with
+- matplotlib
+- data processing for exercises
 
-##Lab 7
-- Lists inside lists (nesting).
-- type()
-- List comprehensions (previous labs had them, but always prewritten)
-- Polish notation.
+##Lab 6a and 6b - Collections (6b during midterms)
+- dictionaries, lists, tuples, sets
 
-##Lab 8
-- Decimal/hex/bin conversion.
-- Stacks.
-- Queues.
-- Lab includes selection sort and radix sort.
+##Lab 7 - Programming Competition (post-midterm lab)
+- algorithm development (redo some questions!)
 
-##Lab 9
-- Dictionaries.
-- Nested dictionaries.
-- Dictionaries containing lists.
+##Labs 8 through 12 - undecided
+
+##Foci
+- Algorithm development, critical thinking
+  - Introduce common CS algorithms early: binary search, sorting, etc.
+  - Play around with interdisciplinary themes: genetics, linguistics, physics
+- Earlier labs: use turtle to demonstrate concepts
+- Later labs: start building ONE project
+
+##Possibilities for later labs
+- Functions as first-class citizens
+- Higher order functions
+- Lambda functions
+- Generators
+- Object-oriented?
