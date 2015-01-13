@@ -264,13 +264,13 @@ s.sendall(msg)
     \item[name] Next message sent will be your client's display name.
     \item[taken] The name sent is already in use. Repeat sending a name.
     \item[wait] Game has not yet been found (waiting for another player). No
-      response required.
+      response to the server required.
     \item[opponent <name>] A game has been found. The opponent's name will be
-      inserted for ``<name>''. No response required.
+      inserted for ``<name>''. No response to the server required.
     \item[play] The next message sent should consist solely of ``r'', ``p'', or
       ``s'', depending on whether you wish to play rock, paper, or scissors.
     \item[tie] Your opponent played the same as you, causing a tie. No response
-      required.
+      to the server required.
     \item[win] Your play beat your opponent's, so you won. The next
       message should consist solely of ``y'' or ``n'', indicating your desire to
       play again.
@@ -286,6 +286,12 @@ s.sendall(msg)
       you can be sure that will not occur you do not necessarily need this
       case.
   \end{description}
+
+  For each of these server responses, you need to display a more user-friendly
+  message
+  with a prompt for input if appropriate. For example, a ``win'' message might
+  output ``Congratulations, you beat <otherplayer>! Do you want to play again?''
+  while ``wait'' might print ``Looking for an opponent, please wait.''
 
   Every message sent will be terminated with a ``\textbackslash{}n''. Every message you send
   should be terminated with a ``\textbackslash{}n''. It is possible when you read from a socket
@@ -306,10 +312,6 @@ s.sendall(msg)
   \item[n] Indication of desire to not play again, in response to \lstinline{win},
     \lstinline{lose}, \lstinline{disconnect}, or \lstinline{again}.
   \end{description}
-
-  For each of these server responses, you need to display an appropriate message
-  with a prompt for input if appropriate. For example, a ``win'' message might
-  output ``Congratulations, you beat <otherplayer>! Do you want to play again?''
 
   An example of the output (and input) of your program might be:
 
