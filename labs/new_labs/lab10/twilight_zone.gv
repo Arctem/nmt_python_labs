@@ -1,0 +1,20 @@
+digraph G {
+ "It"-> "is";
+ "known"-> "to";
+ "to"-> "man.";
+ "fifth"-> "dimension,";
+ "beyond"-> "that";
+ "which"-> "is";
+ "that"-> "which";
+ "timeless"-> "as";
+ "dimension,"-> "beyond";
+ "man."-> "It";
+ "space"-> "and";
+ "There"-> "is";
+ "and"-> "as";
+ "a"-> "fifth", "dimension";
+ "vast"-> "as";
+ "as"-> "vast", "space", "timeless", "infinity.";
+ "dimension"-> "as";
+ "is"-> "a", "known", "a";
+}

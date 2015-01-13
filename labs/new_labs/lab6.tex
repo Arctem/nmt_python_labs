@@ -1,0 +1,586 @@
+% LAB 6: Data Structures
+% 
+% CSE/IT 107: Introduction to Programming
+% New Mexico Tech
+% 
+% Prepared by Russell White and Christopher Koch
+% Fall 2014
+\documentclass[11pt]{cselabheader}
+\usepackage{IEEEtrantools}
+
+%%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
+\fancyhead[R]{Lab 6: Collections}
+\title{Lab 6: Collections}
+
+\begin{document}
+
+\maketitle
+
+\hrule
+\begin{quotation}
+``All thought is a kind of computation.''
+\end{quotation}
+\begin{flushright}
+--- D. Hobbes
+\end{flushright}
+
+\begin{quotation}
+``Vague and nebulous is the beginning of all things, but not their end.''
+\end{quotation}
+\begin{flushright}
+--- K. Gibran
+\end{flushright}
+
+\begin{quotation}
+``It [programming] is the only job I can think of where I get to be both an
+engineer and artist. There's an incredible, rigorous, technical element to it,
+which I like because you have to do very precise thinking. On the other hand, it
+has a wildly creative side where the boundaries of imagination are the only real
+limitation.''
+\end{quotation}
+\begin{flushright}
+--- A. Hertzfeld
+\end{flushright}
+
+\hrule
+
+\section{Introduction}
+
+In previous labs, we have used lists to be able to enclose data in a certain
+structure and manipulate it. Lists gave us an easy way to find sums of numbers,
+to store things, to sort things, and much more. Other structures like this are
+commonly referred to as collections: collections collect data and encapsulate
+it. They give us useful methods to manipulate that data.
+
+A list in Python is an ordered container of any elements you want indexed by
+whole numbers starting at 0. Lists are mutable: this means you can add elements,
+change elements, and remove elements from a list. In this lab, we will introduce
+you to three other collections: Sets, tuples, and dictionaries. 
+
+Please read Chapters 7 and 9 for this lab. Another great resource on lists,
+sets, tuples, and dictionaries is the Python Tutorial:
+\begin{center}
+  \url{https://docs.python.org/3.3/tutorial/datastructures.html}
+\end{center}
+Be sure to use the Python 3 version of the Python Tutorial.
+
+\textbf{This lab will be due in \emph{two} weeks, so you have time to study for your
+midterm.}
+
+%\section{Sets}
+%Sets and tuples are a lot like lists; but their properties are a bit different.
+%A set is just like a list, but \emph{no element can appear twice} and it is
+%\emph{unordered}. Unlike lists, they also cannot contain mutable elements. Thus,
+%a set cannot contain a list. However, sets themselves are mutable.
+%
+%A set is made using curly braces or from a list:
+%\begin{lstlisting}[style=ipython]
+%>>> a = {5,5,4,3,2} # duplicates ignored
+%>>> print(a)
+%{2, 3, 4, 5}
+%>>> b = set([5, 5, 4, 3])
+%>>> print(b)
+%{3, 4, 5}
+%\end{lstlisting}
+%
+%Sets are heterogeneous -- their elements do not need to be of the same type:
+%\begin{lstlisting}[style=ipython]
+%>>> a = {5, 4, 'a'}
+%>>> print(a)
+%{'a', 4, 5}
+%\end{lstlisting}
+%
+%Because sets are inherently unordered, they cannot be indexed. That means you
+%cannot use the \lstinline![]! operator on sets:
+%\begin{lstlisting}
+%>>> a = {5,4,3,2}
+%>>> a[1]
+%Traceback (most recent call last):
+%  File ``<stdin>'', line 1, in <module>
+%  TypeError: 'set' object does not support indexing
+%\end{lstlisting}
+%
+
+\pagebreak
+\section{Collections Summary}
+
+% this could be something better than a table
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{p{1.6cm}lp{1.6cm}p{3.5cm}lp{4.5cm}}
+    \toprule
+    Data Structure & Mutable & Mutable elements & Indexing & Ordered
+    & Other
+    properties\\
+    \midrule
+    List \lstinline![]! & yes & yes & by whole numbers & yes & can contain elements more than once\\
+    Sets \lstinline!{}! & yes & no & not indexable & no & no element can appear more than once\\
+    Tuples \lstinline!()! & no & yes & by whole numbers & yes & can contain elements more than
+    once\\
+    Dictionary \lstinline!{}! & yes & yes & by anything ``hashable'' (immutable collections or
+    basic types) & no & \\
+    \bottomrule
+  \end{tabular}
+  \caption{Summary of Data Structures in Python}
+  \label{tab:sum}
+\end{table}
+
+For syntax, please refer to the Python Tutorial or Chapters 7 and 9 in your
+book.
+\begin{center}
+  \url{https://docs.python.org/3.3/tutorial/datastructures.html}
+\end{center}
+Be sure to use the Python 3 version of the Python Tutorial.
+
+
+
+%\subsection{List Syntax}
+%
+%\begin{lstlisting}[style=ipython]
+%>>> semester_gpas = [4.0, 3.5, 2.0, 1.5, 4.0, 3.7]
+%>>> 4.0 in semester_gpas
+%True
+%>>> 1.0 not in semester_gpas
+%True
+%>>> 2.0 not in semester_gpas
+%False
+%>>> mult_gpas = 1
+%>>> for gpa in semester_gpas:
+%      mult_gpas += gpa
+%>>> print(mult_gpas)
+%621.6
+%>>> semester_gpas[2]
+%2.0
+%>>> semester_gpas[:2]
+%[4.0, 3.5]
+%>>> semester_gpas.append(3.4)
+%>>> semester_gpas
+%[4.0, 3.5, 2.0, 1.5, 4.0, 3.7, 3.4]
+%\end{lstlisting}
+%
+%Refer to lab 3 for more list functions and the slicing notation.
+%
+%\subsection{Set Syntax}
+%
+%\begin{lstlisting}[style=ipython]
+%>>> companions_nine = {'rose', 'jack'}
+%>>> companions_ten = {'rose', 'mickey', 'jack', 'donna', 'martha', 'wilf'}
+%# intersection
+%>>> companions_of_both = companions_nine & companions_ten
+%>>> print(companions_of_both)
+%{'jack', 'rose'}
+%# union
+%>>> print(companions_nine | companions_ten)
+%{'donna', 'wilf', 'rose', 'martha', 'mickey', 'jack'}
+%# testing membership
+%>>> 'rose' in companions_nine
+%True
+%# iterating over elements
+%>>> for companion in companions_nine:
+%      print(companion)
+%
+%rose
+%jack
+%# adding an element to set
+%>>> companions_ten.add('sarah jane')
+%>>> print(companions_ten)
+%{'donna', 'sarah jane', 'wilf', 'rose', 'martha', 'mickey', 'jack'}
+%\end{lstlisting}
+%
+%\subsection{Tuple Syntax}
+%
+%\begin{lstlisting}[style=ipython]
+%>>> ordered_pairs = [(1,2), (2,1), (3,3), (4,5), (5,4)] # list of tuples
+%\end{lstlisting}
+%
+%\subsection{Dictionary Syntax}
+%
+%\begin{lstlisting}[style=ipython]
+%ages = {'chris': 20, 'tyler': 22, 'randomperson': 34} # dictionary
+%\end{lstlisting}
+
+
+\pagebreak
+\section{Stacks}
+\label{sec:stacks}
+
+Stacks are an important data structure in the world of computer
+science. They are at the heart of every operating system and used in many, many
+pieces of software.
+
+For a stack, imagine a stack of plates. You can only add plates to the top and
+remove plates from the top. We call this a ``Last-In-First-Out'' data structure:
+If you add three plates to your stack, the last one you added will be the first
+one you remove.
+
+Similar to that, in Python you can say that a stack
+is a list where you can only add elements to the end or remove elements from the
+end. In Python, this is accomplished using the
+\lstinline!.pop()! and \lstinline!.append(element)! methods on lists. When given
+no arguments, the pop method will remove the last element of the list and return
+it. The append method will add an element to the end of the list.
+
+When we ask you to use a stack in Python, you should use a list and only use
+these two methods and the array index \lstinline![-1]! to inspect the last
+element of the list. For example:
+
+\begin{lstlisting}[style=ipython]
+>>> somelist = [1, 2, 3]
+>>> a = somelist.pop()
+>>> print(a)
+3
+>>> print(somelist)
+[1, 2]
+>>> somelist.append(4)
+>>> print(somelist)
+[1, 2, 4]
+>>> somelist[-1]
+4
+\end{lstlisting}
+
+Interacting with the elements of the list in any other way violates the
+idea of the list being a stack.
+
+\pagebreak
+
+\section{A Note on Sequence Types}
+A sequence is a data type that stores data in a structured order. The most familiar example of a sequence is the list, but other sequences include tuples, strings, and the value given by \lstinline{range()}. For the most part we will care only about lists, strings, and tuples. Lists and strings have already been covered fairly heavily in previous labs, so for this section we will be focusing on tuples.
+
+In many ways, tuples behave similarly to lists. We create a tuple in the same way that we would create a list, though we use parentheses instead of square brackets to surround the elements of the tuple.
+
+\begin{lstlisting}[style=ipython]
+>>> tup = (1, 7, 3, 2, 6)
+>>> print(tup)
+(1, 7, 3, 2, 6)
+\end{lstlisting}
+
+The primary difference between a list and a tuple is that a tuple is immutable. This means that, once it has been created, its elements cannot be added, removed, or replaced.
+
+\begin{lstlisting}[style=ipython]
+>>> tup = (1, 7, 3, 2, 6)
+>>> tup[0] = 5
+Traceback (most recent call last):
+  File ``<stdin>'', line 1, in <module>
+TypeError: 'tuple' object does not support item assignment
+>>> tup.append(10)
+Traceback (most recent call last):
+  File ``<stdin>'', line 1, in <module>
+AttributeError: 'tuple' object has no attribute 'append'
+\end{lstlisting}
+
+Beyond this change, most list operations will work perfectly normally on tuples.
+
+\begin{lstlisting}[style=ipython]
+>>> tup = (1, 7, 3, 2, 6)
+>>> tup[2:5]
+(3, 2, 6)
+>>> tup += (2, 3, 4)
+>>> tup
+(1, 7, 3, 2, 6, 2, 3, 4)
+>>> min(tup)
+1
+>>> 5 in tup
+False
+>>> len(tup)
+8
+\end{lstlisting}
+
+It should be noted that in the case of \lstinline{tup += (2, 3, 4)} we are not modifying the existing tuple. Instead, we are creating a new tuple that contains the elements of the two tuples we are joining, then assigning it to the same variable as the original tuple.
+
+It should also be noted that we need a bit of special syntax to create a tuple with only one element. If we want a tuple that only contains \lstinline{2}, then we must say \lstinline{(2, )} rather than simply \lstinline{(2)}. This is because Python will interpret \lstinline{(2)} as a simple mathematical statement and simplify it to \lstinline{2} rather than a tuple containing \lstinline{2}.
+
+Knowing when to use a tuple and when to use a list can sometimes be difficult. The general rule is that a list should be used when the elements are homogeneous (meaning they represent the same type of data) while a tuple should be used when the data being stored is heterogeneous.
+
+As an example, let's assume we want to store birthdays. In order to store a single person's birthday, we need three integers. Even though all three values are integers, they are not homogeneous: one integer represents a day, one represents a month, and one represents a year. Therefore, a tuple is a better choice than a list.
+
+\begin{lstlisting}[style=ipython]
+>>> birthday = (21, 12, 1948)
+\end{lstlisting}
+
+Now assume we want to store a large number of birthdays. Since each element of this collection will be of the same type -- a birthday -- we can consider them to be homogeneous. Therefore, we will use a list.
+
+\begin{lstlisting}[style=ipython]
+>>> birthday = (21, 12, 1948)
+>>> birthdays = []
+>>> birthdays.append(birthday)
+>>> birthdays.append((27, 3, 1963))
+>>> birthdays.append((19, 3, 1955))
+>>> birthdays.append((14, 4, 1961))
+>>> birthdays.append((13, 12, 1957))
+>>> print(birthdays)
+[(21, 12, 1948), (27, 3, 1963), (19, 3, 1955), (14, 4, 1961), (13, 12, 1957)]
+\end{lstlisting}
+
+In each tuple that we created, each index represents the same value as in the other tuples. This is important since they represent different data types: changing the order of the elements in a tuple would ruin our interpretation of that data.
+
+In the list, however, the order is purely a method of organizing the data. We can change the order based on how we wish to view it -- currently it is ordered by when elements were added to the list, but we could easily sort it based on birth year -- and it has no impact on the data itself.
+
+% talk about sequence types and what they are
+% standard sequence type operations
+% refer to https://docs.python.org/3.3/library/stdtypes.html
+% list sequence types -- range, list, str, tuple
+
+\pagebreak
+
+%\section{Plotting in Python}
+
+% matplotlib
+% maybe fill in for second week
+
+
+%\pagebreak
+\section{Exercises}
+\label{sec:ex}
+
+\begin{warningbox}{Boilerplate}
+  Remember that this lab \emph{must} use the
+  boilerplate syntax introduced in Lab~5, including the review exercises.
+\end{warningbox}
+
+\subsection{Review for Midterm}
+\label{subsec:reviewex}
+
+Reviewing: for, while, if, if-elif-else, functions, file I/O, strings, lists. 
+
+\begin{description}
+  \item[piglatin.py] Write a program that will take a string of words and
+    convert each word to pig latin. 
+
+    The rules for pig latin are as follows:
+
+    For a word that begins with consonant sounds, the initial consonant or
+    consonant cluster is moved to the end of the word and ``ay'' is added as a
+    suffix:
+    \begin{itemize}
+      \item ``happy'' $\to$ ``appyhay''
+      \item ``glove'' $\to$ ``oveglay''
+    \end{itemize}
+
+    For words that begin with vowels, you add ``way'' to the end of the word:
+    \begin{itemize}
+      \item ``egg'' $\to$ ``eggway''
+      \item ``inbox'' $\to$ ``inboxway''
+    \end{itemize}
+
+    For your program, you \emph{must} write a function that takes in one
+    individual word and returns the translation to pig latin. Write another
+    function that takes a string, which may be sentences (may contain the
+    characters ``a-zA-Z,.-;!?()'' and space), and returns the translation of the
+    sentence to pig latin. Strip out any punctuation. For example, ``Hello, how
+    are you?'' would translate into ``elloHay owhay areway ouyay''.
+
+  \item[piglatin\_file.py] Use the two functions you previously wrote for
+    \texttt{piglatin.py} and write a program that asks the user for a filename,
+    reads the contents of that file and translates it to pig latin. The pig
+    latin must be written to a file name
+    \texttt{originalfilename\_piglatin.txt}.
+
+  \item[luhns.py] Luhn's algorithm
+    (\url{http://en.wikipedia.org/wiki/Luhn_algorithm}) provides a quick way to
+    check if a credit card is valid or not. The algorithm consists of three
+    steps:
+
+    \begin{enumerate}
+      \item Starting with the second to last digit (ten's column digit),
+        multiply every other digit by two.
+      \item Sum all the digits of the resulting number.
+      \item If the total sum modulo by 10 is zero, then the card is valid;
+        otherwise it is invalid.
+    \end{enumerate}
+
+    For example, to check that the Diners Club card 38520000023237 is valid, you
+    would start at 3, double it and double every other digit to give, writing
+    the credit card number as separate digits: 
+    \begin{IEEEeqnarray*}{RCCRCCRCCRCCRCCRCCRCCRCCRCCRCCRCCRCCR}
+3 &~& 8 &~& 5  &~& 2 &~& 0 &~& 0 &~& 0 &~& 0 &~& 0 &~& 2 &~& 3 &~& 2 &~& 3 &~& 7\\
+6 &~& 8 &~& 10 &~& 2 &~& 0 &~& 0 &~& 0 &~& 0 &~& 0 &~& 2 &~& 6 &~& 2 &~& 6 &~& 7
+    \end{IEEEeqnarray*}
+    Next you would sum all the digits of the resulting number:
+    \[ 6 + 8 + (1 + 0) + 2 + 0 + 0 + 0 + 0 + 0 + 2 + 6 + 2 + 6 + 7 = 40 \]
+
+    Note that for 10, you also sum its digits  -- $(1 + 0)$.
+
+    The last step is to check if $40\mod{10} = 0$, which is true. So the
+    card is valid.
+
+    Write a program that implements Luhn's Algorithm for validating credit
+    cards. It should ask the user to enter a credit card number and tell the
+    user whether it is valid or not. It should also have a separate function to
+    validate the card number.
+
+  \item[anagrams.py] Write a function that takes in two strings. If the strings
+    are anagrams of one another, return \lstinline{True}. If not, return
+    \lstinline{False}.
+
+\end{description}
+
+\subsection{New Material}
+\label{subsec:newex}
+
+\begin{description}
+  \item[fractions.py] Any fraction can be written as the division of two
+    integers. You could express this in Python as a tuple -- 
+    (numerator, denominator).
+
+    Write functions for each of the following. They must use the tuple
+    representation to return fractions.
+    \begin{enumerate}
+      \item Given two fractions as tuples, multiply them.
+      \item Given two fractions as tuples, divide them.
+      \item Given a list of fractions as a tuple, return the one that is
+        smallest in value.
+    \end{enumerate}
+
+    (For midterm review, you can do this problem using lists instead of 
+    tuples to represent fractions. When you turn it in, please have it use
+    tuples though.)
+
+
+  \item[days.py] Write a function that takes four arguments -- day, month, and
+    year as numbers, and weekday as MTWRFSU -- and converts this date to a
+    human-readable string. Have the program be called with user-specified
+    input. For example:
+    \begin{lstlisting}[style=bash]
+Enter day: 28
+Enter month: 9
+Enter year: 2014
+Enter weekday: U
+Date is: Sunday, September 28, 2014
+    \end{lstlisting}
+
+    Use dictionaries to convert weekdays to their long name and months to their
+    long name.
+
+%  \item[addresses.py] Classic address book dict exercise.
+
+%  \item[zombies.py] Zombie lab from 113. Use struct like dict and array like
+%    list.
+
+%  \item[words.py] Write program that takes a file and
+%    \begin{enumerate}
+%      \item finds how many unique words there are
+%      \item finds the unique words and writes them to
+%        \texttt{originalfile\_unique.txt}
+%      \item calculate the percentage of unique words
+%      \item MORE
+%    \end{enumerate}
+%
+  %\item[data.py] Some data analysis exercise. Chris will fill in. Use tuples,
+  %  use matplotlib. Use set to remove duplicates in data.
+  % exercise will be made available in the second week. no time to write about
+  % matplotlib.
+
+  \item[rpn\_calculator.py] Your task is to write a reverse Polish notation
+    calculator. In reverse Polish notation (also HP
+    calculator notation), mathematical expressions are written with the operator
+    following both operands. For example, $3 + 4$ becomes $3~4~+$.
+
+    To write $3 + (4 * 2)$, we would have to write $4~2~*~3~+$ in RPN. The
+    expressions are evaluated from left to right.
+
+    A longer example of an expression is this: 
+    \[ 5~1~2~/~4~*~+~3~- \]
+    which translates to
+    \[ 5 + ( (1 / 2) * 4 ) - 3 \]
+
+    If you were to try to ``parse'' the RPN expression from left to right, you
+    would probably ``remember'' values until you hit an operator, at which point
+    you take the last two values and use the operator on them. In the example
+    expression above, you would store 5, then 1, then 2, then see the division
+    operator (/) and take the last two values you stored (1 and 2) to do the
+    division. Then, you would store the result of that (0.5) and encounter
+    4, which you store. When you encounter the multiplication sign (*), you
+    would take the last two values stored and do the operation ($4 * 0.5$)
+    and store that. 
+
+    Writing this algorithm for evaluating RPN in pseudo code, we get:
+
+\begin{enumerate}
+  \item Read next value in expression.
+  \item If number, store.
+  \item If operator:
+    \begin{enumerate}
+      \item Remove last two numbers stored.
+      \item Do operation with these last two numbers.
+      \item Store the result of the operation as last number.
+    \end{enumerate}
+\end{enumerate}
+
+    If you keep repeating this algorithm, you will eventually just end up with
+    one number stored unless the RPN expression was invalid.
+
+    Your task is to write an RPN calculator which asks the user for an RPN
+    expression and prints the result of that expression. You \emph{must} use a
+    stack (see Section~\ref{sec:stacks}). The RPN algorithm has to be in a
+    separate function (not main). You need to support the four basic operators
+    (+, -, *, and /).
+
+    Please see the example file and output below for expressions you can test
+    with.
+
+  \item[rpn\_file.py] Write another version of the RPN calculator that reads
+    RPN expressions from a file (one per line) and prints the answers to them
+    (one per line). Use the function you previously wrote. You must ask the user
+    which file they want to read from.
+
+    Example file:
+    \begin{lstlisting}
+4 3 +
+4 3 -
+3 4 -
+5 1 2 / 4 * + 3 -
+5 12 50 5 * / 5 + +
+    \end{lstlisting}
+
+    Answers:
+    \begin{lstlisting}
+7
+1
+-1
+4
+10.048
+    \end{lstlisting}
+    
+\end{description}
+
+\pagebreak
+\section{Submitting}
+
+\begin{center}
+  \textbf{We will be adding more exercises later. We have just not had the time
+  to finish them. You will get an email about them.}
+\end{center}
+
+Files to submit:
+\begin{itemize}
+  \item piglatin.py (Section~\ref{subsec:reviewex})
+  \item piglatin\_file.py (Section~\ref{subsec:reviewex})
+  \item luhns.py (Section~\ref{subsec:reviewex})
+  \item anagrams.py (Section~\ref{subsec:reviewex})
+  \item fractions.py (Section~\ref{subsec:reviewex})
+  \item days.py (Section~\ref{subsec:newex})
+%  \item addresses.py (Section~\ref{subsec:newex})
+%  \item zombies.py (Section~\ref{subsec:newex})
+  %\item words.py (Section~\ref{subsec:newex})
+  %\item data.py (Section~\ref{subsec:newex})
+  \item rpn\_calculator.py (Section~\ref{subsec:newex})
+  \item rpn\_file.py (Section~\ref{subsec:newex})
+\end{itemize}
+
+You may submit your code as either a tarball (instructions below) or as a .zip
+file. Either one should contain all files used in the exercises for this lab.
+The submitted file should be named either
+\texttt{cse107\_firstname\_lastname\_lab6.zip} or
+\texttt{cse107\_firstname\_lastname\_lab6.tar.gz} depending on which method you
+used.
+
+For Windows, use a tool you like to create a \texttt{.zip} file. The TCC
+computers should have \texttt{7z} installed. For Linux, look at lab 1 for
+instructions on how to create a tarball or use the ``Archive Manager'' graphical
+tool.
+
+\begin{center}
+  \textbf{Upload your tarball or .zip file to Canvas.}
+\end{center}
+
+\end{document}
