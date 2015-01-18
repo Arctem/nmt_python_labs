@@ -1,7 +1,0 @@
-digraph G {
-	"Hello," -> "how";
-	"how" -> "are";
-	"are" -> "you?", "my";
-	"Where" -> "are";
-	"my" -> "keys?";
-}
