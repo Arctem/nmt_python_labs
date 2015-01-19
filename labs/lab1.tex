@@ -66,17 +66,19 @@ environment. In this lab, you will learn how to
 
 Throughout this semester's labs, we will be using specially formatted text to
 aid in your understanding. For example,
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 text in a console font within a gray box
-\end{lstlisting}
+\end{bashcode}
+
 is text that either appears in the terminal or is to be typed into the terminal
 verbatim. Even the case is important, so be sure to keep it the same! If a \$ is
 used that indicates the terminal prompt. You do not type the \$.
 
-\begin{lstlisting}[style=python]
-Text that appears in console font within a framed box is 
-sample Python code or program output.
-\end{lstlisting}
+\begin{python3code}
+Text that appears in console font within a framed box is sample Python code
+or program output.
+\end{python3code}
 
 Text in a \texttt{simple console font}, without a frame or background, indicates
 the name of a file, a function, or some action you need to perform.
@@ -97,7 +99,6 @@ the name of a file, a function, or some action you need to perform.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\pagebreak
 \section{Linux Environment}
 \label{sec:linux}
 
@@ -140,9 +141,11 @@ become familiar with command line actions.
 
 \begin{enumerate}
   \item In the terminal, type the following command:
-    \begin{lstlisting}[style=bash]
+
+    \begin{bashcode}
 $ passwd
-    \end{lstlisting}
+    \end{bashcode}
+
   \item Follow the prompts to change your password.
 \end{enumerate}
 
@@ -203,10 +206,10 @@ To navigate the file system, there are a couple of useful commands:
 \textbf{p}rint \textbf{w}orking \textbf{d}irectory displays the
 directory you are in.  
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 $ pwd
 /home/cse
-\end{lstlisting}
+\end{bashcode}
 
 The directory you are currently in is called your ``working'' directory.
 
@@ -214,25 +217,26 @@ The directory you are currently in is called your ``working'' directory.
 \texttt{cd} allows you to change your working directory to another location.
 
 Syntax:
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 $ cd <path_name>
-\end{lstlisting}
+\end{bashcode}
 
 % where the $<$path\_name$>$ is either relative or absolute.
 % They don't know what that means.
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 $ cd /usr/local/bin
 $ pwd
 /usr/local/bin
 $ cd -
-\end{lstlisting}
+\end{bashcode}
 
 Where are you?
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 $ cd -
-\end{lstlisting}
+\end{bashcode}
 
 Now where are you? The command \texttt{cd -} returns you to your previous
 working directory.
@@ -240,37 +244,43 @@ working directory.
 The \texttt{-} is called a command line argument or option. To view
 the list of options for a command, use the manual.
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 $ man cd
-\end{lstlisting}
+\end{bashcode}
 
 \texttt{man} is short for manual.
 
 To move up one directory (one node) level use dot-dot:
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 $ cd ..
-\end{lstlisting}
+\end{bashcode}
+
 Where are you?
 
 To move up two levels use dot-dot slash dot-dot:
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 $ cd ../..
-\end{lstlisting}
+\end{bashcode}
 
 To go to your home directory you can type
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 $ cd /u/<user>
-\end{lstlisting}
+\end{bashcode}
 
 where $<$user$>$ is your user name. Alternatively, use a tilde
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 $ cd ~
-\end{lstlisting}
+\end{bashcode}
 
 or you can use
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 $ cd $HOME
-\end{lstlisting}
+\end{bashcode}
 
 where \$HOME is an environment variable that stores the path to your
 home directory. This is more useful in shell scripting than path
@@ -278,9 +288,10 @@ navigation. Use tilde instead.
 
 Even easier than all these options is to just type \texttt{cd} without any
 options. This always takes you to your home directory.
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 $ cd
-\end{lstlisting}
+\end{bashcode}
 
 \begin{table}[!ht]
   \centering
@@ -303,24 +314,24 @@ $ cd
 \texttt{ls} allows you to list the contents of a directory: the files and
 directories that are located there.
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 $ cd
 $ ls
 <a list of file names and directories contained 
 with your working directory, which is currently
 your home directory>
-\end{lstlisting}
+\end{bashcode}
 
 Adding some command options let you see other file information
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 $ ls -alFh 
 ...
 -rwxr-x---.  1 scott scott  1.0K Jan 12 14:56 down_and_out*
 drwxr-xr-x.  5 scott scott  4.0K Jan 21 17:04 Downloads/
 -rw-r-x---.  1 scott scott  2.2K Jan 12 11:31 .emacs
 ...
-\end{lstlisting}
+\end{bashcode}
 
 The \texttt{a} option show hidden files (aka dot-files), the \texttt{l} option
 produces a long listing format of file names and directories, the \texttt{F}
@@ -368,7 +379,8 @@ sort by file size?
 \subsection{Other Commands}
 
 \url{http://infohost.nmt.edu/tcc/help/pubs/unixcrib/}
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 mkdir 
 cp
 mv
@@ -377,7 +389,7 @@ touch
 cat
 less
 script
-\end{lstlisting}
+\end{bashcode}
 
 Learn these by reading their man page!
 
@@ -389,32 +401,37 @@ the habit of creating a new directory for every lab this semester.
 
 \item In the terminal, change your current working directory to your home
   directory by typing the following command:
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 cd
-\end{lstlisting}
+\end{bashcode}
 
 \item Create a \texttt{cse107} directory by typing the following command;
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 mkdir cse107
-\end{lstlisting}
+\end{bashcode}
 
 \item Change your current working directory to the \texttt{cse107} directory by
   typing the following command:
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 cd cse107
-\end{lstlisting}
+\end{bashcode}
 
 \item Create a subdirectory for this lab in your \texttt{cse107} directory by
   typing the following command:
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 mkdir lab1
-\end{lstlisting}
+\end{bashcode}
 
 \item Change your current working directory to the \texttt{lab1} directory by
   typing the following command:
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 cd lab1
-\end{lstlisting}
+\end{bashcode}
 
 \end{enumerate}
 
@@ -422,13 +439,14 @@ cd lab1
 
 In the shell, type \texttt{python3}. It is important that you not use
 \texttt{python}, but \texttt{python3}! It should look something like this:
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 $ python3
 Python 3.3.2 (default, Jun 30 2014, 12:45:18) 
 [GCC 4.8.2 20131212 (Red Hat 4.8.2-7)] on linux
 Type "help", "copyright", "credits" or "license" for more information.
 >>> 
-\end{lstlisting}
+\end{bashcode}
 
 \subsection{Summary}
 
@@ -459,13 +477,13 @@ Commands to know for next lab:
 \label{sec:python-calc}
 Forgot ever using your calculator! Python rocks as a calculator.
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 $ python3
 Python 3.4.1 (v3.4.1:c0e311e010fc, May 18 2014, 10:38:22) [MSC
 v.1600 32 bit (Intel)] on win32
 Type "copyright", "credits" or "license()" for more information.
 >>> 
-\end{lstlisting}
+\end{bashcode}
 
 Note the first line thing printed out: \texttt{Python 3.4.1}. This is the
 version of Python that is running. Make sure you have \emph{Python 3} or higher.
@@ -473,11 +491,12 @@ version of Python that is running. Make sure you have \emph{Python 3} or higher.
 At the Python prompt \texttt{>>>} you can type in Python statements and
 immediately see the result. For instance, to add 2 + 3, simply type \texttt{2 +
 3}: 
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 >>> 2 + 3
 5
 >>>
-\end{lstlisting}
+\end{bashcode}
 
 Notice that after a statement is executed, you are given a prompt to enter
 another statement. The \texttt{+} is the addition operator. Other basic math
@@ -486,24 +505,25 @@ operators in python include:
 \begin{description}
   \item[Subtraction] \texttt{-} subtracts the right hand operand from the left
     hand operand:
-    \begin{lstlisting}[style=bash]
+
+    \begin{bashcode}
 >>> 2 - 3
 -1
-    \end{lstlisting}
+    \end{bashcode}
 
   \item[Multiplication] \texttt{*} multiplies values on either side of the
     operator:
 
-    \begin{lstlisting}[style=bash]
+    \begin{bashcode}
 >>> 2 * 3
 6
-    \end{lstlisting}
+    \end{bashcode}
 
   \item[Division] \texttt{/} divides the left hand operand by the right hand
     operand, while \texttt{//} does the division and cuts off the decimals. The
     latter is called \emph{floor division}.
 
-  \begin{lstlisting}[style=bash]
+  \begin{bashcode}
 >>> 2 / 3
 0.6666666666666666
 >>> 2 // 3
@@ -516,7 +536,7 @@ operators in python include:
 0.6666666666666666
 >>> 2 / float(3)
 0.6666666666666666
-  \end{lstlisting}
+  \end{bashcode}
 
     This is an example of a major difference between Python 2 and Python 3. If
     you are using Python 2 some of these calculations will give different
@@ -531,31 +551,32 @@ operators in python include:
   \item[Modulus] \texttt{\%} divides the left hand operand by the right hand
     operand and gives you the remainder.
 
-    \begin{lstlisting}[style=bash]
+    \begin{bashcode}
 >>> 5 % 3
 2
 >>> 3 % 5
 3
-    \end{lstlisting}
+    \end{bashcode}
 
     This is as it was in elementary school: If you divide 7 by 3, 3 goes into 7
     twice with a remainder of one. Modulus will become more important later in
     your CS life.
 
     Modulus can, for example, tell you whether an integer is even or odd:
-    \begin{lstlisting}[style=bash]
+
+    \begin{bashcode}
 >>> 5 % 2
 1
 >>> 6 % 2
 0
-    \end{lstlisting}
+    \end{bashcode}
     For even integers, division by two will always yield a remainder of zero.
     For odd integers, division by two will always yield a remainder of one.
 
   \item[Exponentiation] \texttt{**} performs exponential (power) calculation.
     \texttt{a ** b} means a raised to b.
 
-    \begin{lstlisting}[style=bash]
+    \begin{bashcode}
 >>> 10 ** 5
 100000
 >>> 5 ** 10 
@@ -564,16 +585,16 @@ operators in python include:
 3.0
 >>> 5.5 ** 6.8
 108259.56770464421
-    \end{lstlisting}
+    \end{bashcode}
 
 %    Besides fractional powers, Python can handle very large numbers. Try raising
 %    10 to the 100th power (a googol)
 %
-%    \begin{lstlisting}[style=bash]
+%    \begin{bashcode}
 %>>> 10 ** 100
 %10000000000000000000000000000000000000000000000000000000
 %000000000000000000000000000000000000000000000L
-%    \end{lstlisting}
+%    \end{bashcode}
 %
 %    The \texttt{L} at the end of the number indicates it is a long. Long
 %    integers are integers that are too big to represent with a normal integer.
@@ -588,7 +609,7 @@ precedence than \texttt{+} and \texttt{-}. If operators have equal precedence
 they execute left to right. You can always use parentheses to change the
 precedence.
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 >>> 6 * 5 % 4 - 6 ** 7 + 80 / 3 #((6 * 5) % 4) - (6 ** 7) + (80 / 3)
 -279908
 >>> 6 * 5 % 4
@@ -597,7 +618,7 @@ precedence.
 6
 >>> (6 * 5) % 4
 2
-\end{lstlisting}
+\end{bashcode}
 
 The \texttt{\#} indicates the start of a comment. Comments are ignored by the
 interpreter and can be used to provide reminders to yourself as to what a
@@ -608,19 +629,19 @@ The real power of Python as a calculator comes when you add variables. Using
 name consisting of letters, numbers, and underscores. Once a variable has been
 assigned, it can be used in future computations.
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 >>> x = 7
 >>> y = 5 + x
 >>> y
 12
 >>> x
 7
-\end{lstlisting}
+\end{bashcode}
 
 In general, you should try to give your variables descriptive names so that it is
 clear what they are meant to store; for example:
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 >>> food_price = 4.50
 >>> drink_price = 1.00
 >>> subtotal = food_price + drink_price
@@ -628,7 +649,7 @@ clear what they are meant to store; for example:
 >>> total = subtotal + tax
 >>> total
 5.885
-\end{lstlisting}
+\end{bashcode}
 
 \pagebreak
 \section{Running Python Programs}
@@ -642,72 +663,78 @@ output.
 
 Open a text editor (e.g. type \texttt{gedit} in the command line) and create a
 one line Python program as following:
-\begin{lstlisting}[style=python]
+
+\begin{python3code}
 print('Hello, world!')
-\end{lstlisting}
+\end{python3code}
 
 \texttt{print} is a function. It will print the value of whatever is within its
 parentheses. In order to print plaintext (not variables), you must additionally
 surround it with quotes. This is called a string. It is important to note that
-\begin{lstlisting}[style=python]
+
+\begin{python3code}
 print("Hello, world!")
-\end{lstlisting}
+\end{python3code}
+
 is equivalent to the first example.
 
 \texttt{\textbackslash n} prints a newline. This means that the text following
 the \texttt{\textbackslash n} will start on a new line. Test this with the
 following example:
-\begin{lstlisting}[style=python]
+
+\begin{python3code}
 print('Hello, world!\nHow are you?')
-\end{lstlisting}
+\end{python3code}
 
 Save your file as \texttt{hello.py}. The \texttt{py} extension indicates it is a
 Python file.
 
 If you are using Linux, type \texttt{python3 hello.py} to run from a program
 from a file.
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 $ python3 hello.py
 Hello, world!
 How are you?
 $
-\end{lstlisting}
+\end{bashcode}
 
 You can also print out the values of variable that you may have assigned earlier
 in the program.
-\begin{lstlisting}[style=python]
+
+\begin{python3code}
 x = 5
 y = 4
 print(y)
 y = y + x
 print(y)
-\end{lstlisting}
+\end{python3code}
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 4
 9
-\end{lstlisting}
+\end{bashcode}
 
 But what if you wish to print a variable's value on the same line as another
 string? Unfortunately, the simplest method of doing this does not work:
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 >>> x = 5
 >>> print('x = ' + x)
 Traceback (most recent call last):
   File "<pyshell#9>", line 1, in <module>
     print('x = ' + x)
 TypeError: Can't convert 'int' object to str implicitly
-\end{lstlisting}
+\end{bashcode}
 
 However, we can get around this by converting \texttt{x} into a string using
 \texttt{str()}.
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 >>> x = 5
 >>> print('x = ' + str(x))
 x = 5
-\end{lstlisting}
+\end{bashcode}
 
 At this point it is not necessary to completely understand the differences
 between a string and an actual number, just remember that \texttt{x = '5'} and
@@ -721,23 +748,25 @@ In Python, you can do many more things mathematical. Python can be your
 replacement for a TI-89!
 
 It is as simple as the following line of code:
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 >>> import math
 >>>
-\end{lstlisting}
+\end{bashcode}
 
 Then, try out some of the functions:
-\begin{lstlisting}[style=bash]
+
+\begin{bashcode}
 >>> math.sqrt(16)
 4.0
->>> math.log(8, 2) # log with base 2 of 8
+>>> math.log(8, 2) # $\log_2(8)$
 3.0
->>> math.pow(2, 3) # 2 raised to the 3rd power
+>>> math.pow(2, 3) # $2^3$
 8.0
 >>> math.pi
 3.14...
 >>>
-\end{lstlisting}
+\end{bashcode}
 
 There are more functions in the math library, you can find them documented here:
 \begin{center}
@@ -753,19 +782,19 @@ temperatures from Celsius to Kelvin. We would like to modify it to also convert
 the temperatures to Fahrenheit. Currently, the output of the program is
 something like this:
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 Please input a temperature in Celsius: 10
 Kelvin temperature: 283.15
-\end{lstlisting}
+\end{bashcode}
 
 Add code (you should not need to modify the existing lines, though you are free
 to) so that its output is as follows:
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 Please input a temperature in Celsius: 10
 Kelvin temperature: 283.15
 Fahrenheit temperature: 50.0
-\end{lstlisting}
+\end{bashcode}
 
 \subsection{Shapes}
 Download \texttt{shapes.py}. It is the start of a Python program to display
@@ -776,7 +805,7 @@ of the box.
 
 That is, we want the output of the program to looking something like this:
 
-\begin{lstlisting}[style=bash]
+\begin{bashcode}
 Please input the radius of the circle: 3
 The circumference of the circle is 18.84
 The area of the circle is 28.26
@@ -785,7 +814,7 @@ Please input the height of the box: 6
 Please input the length of the box: 4
 The surface area of the box is 88.0
 The volume of the box is 48.0
-\end{lstlisting}
+\end{bashcode}
 
 \pagebreak
 \section{Submitting}
@@ -809,9 +838,9 @@ In the terminal (ensure you are in your \texttt{lab1} directory), type the
 following command, replacing \texttt{firstname} and \texttt{lastname} with your
 first and last names:
 
-\begin{lstlisting}[style=bash]
-tar czvf cse107_firstname_lastname_lab1.tar.gz *.py
-\end{lstlisting}
+\begin{bashcode}
+$ tar czvf cse107_firstname_lastname_lab1.tar.gz *.py
+\end{bashcode}
 
 This creates the file \texttt{cse107\_firstname\_lastname\_lab1.tar.gz} in the
 directory. The resulting archive, which includes every python file in your
@@ -819,9 +848,9 @@ directory. The resulting archive, which includes every python file in your
 
 To check the contents of your tarball, run the following command:
 
-\begin{lstlisting}[style=bash]
-tar tvf cse107_firstname_lastname_lab1.tar.gz
-\end{lstlisting}
+\begin{bashcode}
+$ tar tvf cse107_firstname_lastname_lab1.tar.gz
+\end{bashcode}
 
 You should see a list of your Python source code files.
 

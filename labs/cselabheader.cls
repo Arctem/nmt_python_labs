@@ -48,6 +48,7 @@
 \definecolor{green}{RGB}{0,127,0}
 \definecolor{dred}{rgb}{0.6,0,0}
 \definecolor{dkbrown}{RGB}{92,51,23}
+\definecolor{lightgray}{rgb}{0.95,0.95,0.95}
 % Outline support
 %\usepackage{outlines}
 % URL formatting
@@ -137,6 +138,13 @@
 \usepackage[toc,page]{appendix}
 \usepackage{tikz}
 \usetikzlibrary{trees}
+
+\usepackage{minted}
+
+\newminted{python3}{fontsize=\small,
+  mathescape,linenos,numbersep=5pt,frame=single,framesep=2mm}
+\newminted{bash}{fontsize=\small,
+  mathescape,linenos,numbersep=5pt,framesep=2mm,frame=lines,bgcolor=lightgray}
 
 \usepackage{mdframed}
 
