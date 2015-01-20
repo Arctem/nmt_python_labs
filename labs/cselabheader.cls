@@ -141,6 +141,7 @@
 
 \usepackage{minted}
 
+\usemintedstyle{colorful}
 \newminted{python3}{fontsize=\small,
   mathescape,linenos,numbersep=5pt,frame=single,framesep=2mm}
 \newminted{pycon}{fontsize=\small,
@@ -151,7 +152,7 @@
   mathescape,linenos,numbersep=5pt,framesep=2mm,frame=lines,bgcolor=lightgray}
 \newmintinline{python}{mathescape}
 \newmintinline{bash}{mathescape}
-\usemintedstyle{colorful}
+\newmintinline{pycon}{python3,mathescape}
 
 \usepackage{mdframed}
 
