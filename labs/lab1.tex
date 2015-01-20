@@ -155,6 +155,7 @@ provides a means to interact with the operating system. The shell also provides
 the command line for you: a means to type in commands and receive feedback from
 the operating system, shell, or program behind that command.
 
+
 \subsection{File Hierarchy}
 
 Unix has a logical file system, which means as an end user you don't care about
@@ -199,12 +200,20 @@ child [missing] {}
 ;
 \end{tikzpicture}
 
-To navigate the file system, there are a couple of useful commands:
+\subsection{Commands}
+
+All commands that you execute in a shell are structured in the following way:
+
+\begin{bashcode}
+commandname [arguments]
+\end{bashcode}
+
+There can be multiple or no arguments and they are separated by spaces.
 
 \subsubsection{pwd -- \textbf{P}rint \textbf{W}orking \textbf{D}irectory}
 
 \textbf{p}rint \textbf{w}orking \textbf{d}irectory displays the
-directory you are in.  
+directory you are in.
 
 \begin{bashcode}
 $ pwd
@@ -310,6 +319,30 @@ $ cd
   \caption{Some possible arguments to \texttt{cd}}
 \end{table}
 
+\subsection{man -- Manual}
+
+To view the documentation for any command, use
+
+\begin{bashcode}
+$ man commandname
+\end{bashcode}
+
+For example,
+
+\begin{bashcode}
+$ man cd
+\end{bashcode}
+
+will show the documentation for the \texttt{cd} command. A man page will usually
+include a \textit{synopsis} that tells you all the possible options and usages
+of the command followed by a detailed \textit{description}, which is followed by
+a section that explains all the \textit{options}. There can be many other
+sections in a man page, but most man pages will have at least these three.
+
+Please try to make use of man pages before you ask for help -- our first
+suggestion regarding anything that involves Linux commands will be for you to
+use the man page.
+
 \subsubsection{ls -- Listing the Contents of a Directory}
 \texttt{ls} allows you to list the contents of a directory: the files and
 directories that are located there.
@@ -322,7 +355,7 @@ with your working directory, which is currently
 your home directory>
 \end{bashcode}
 
-Adding some command options let you see other file information
+Adding some command-line options let you see other file information:
 
 \begin{bashcode}
 $ ls -alFh 
@@ -333,16 +366,26 @@ drwxr-xr-x.  5 scott scott  4.0K Jan 21 17:04 Downloads/
 ...
 \end{bashcode}
 
-The \texttt{a} option show hidden files (aka dot-files), the \texttt{l} option
-produces a long listing format of file names and directories, the \texttt{F}
-option adds a \texttt{*} to the end of the file if is an executable and a
-\texttt{/} if it is a directory, and the \texttt{h} option prints out the size
-of the file in human readable format.
+The \texttt{a} option shows hidden files (a.k.a. dot-files), the \texttt{l}
+option produces a long listing format of file names and directories, the
+\texttt{F} option adds a \texttt{*} to the end of the file if is an executable
+and a \texttt{/} if it is a directory, and the \texttt{h} option prints out the
+size of the file in human readable format.
+
+Under Linux, any file whose name begins with a dot is a ``hidden'' file. Most
+commands that list files in some way will hide files that begin with a dot.
 
 \subsection*{Understanding the Long Format Output}
 
-The \texttt{-l} option of \texttt{ls} tells you quite a bit about a file. The
-first character of the line indicates the file type. Some file type options are:
+The \texttt{-l} option of \texttt{ls} tells you quite a bit about a file. 
+For example, we saw 
+\begin{center}
+  \texttt{-rwxr-x---.  1 scott scott 1.0K Jan 12 14:56 down\_and\_out*}
+\end{center}
+for the file \texttt{down\_and\_out} listed above.
+
+The first character of the line indicates the file type. Some file type options
+are:
 \\\texttt{-} ordinary file
 \\\texttt{d} directory
 \\\texttt{l} symbolic link
@@ -350,16 +393,22 @@ first character of the line indicates the file type. Some file type options are:
 There are other file types.
 
 The next three groups of three letters indicate the file permissions for the
-\emph{user}, \emph{group}, and \emph{others} (aka ugo). Common letters are
+\emph{user}, \emph{group}, and \emph{others} (a.k.a. ugo). Common letters are
 \texttt{r} for the ability to read the file; \texttt{w} for the ability to write
 or change the contents of the file on disk; and \texttt{x} for executable or the
-ability to run the file. There are other file permissions.
+ability to run the file. There are other file permissions. For example, the file
+\texttt{down\_and\_out} has read, write, and execute permissions for the user
+that owns it, has read and execute permissions for anyone that is part of the
+group that owns it, and has no permissions for everyeone else.
 
 The next item indicates how many links the file has. A directory often has
 several links, because each of its subdirectories includes an entry for its
-parent directory and that entry counts as a link to the parent.
+parent directory and that entry counts as a link to the parent. For example, the
+file \texttt{down\_and\_out} has 1 link.
 
-The next two items indicate the user and the group that own the file.
+The next two items indicate the user and the group that own the file. For
+example, the file \texttt{down\_and\_out} is owned by the user \texttt{scott}
+and the group \texttt{scott} (it is coincidental that they are named the same).
 
 The next item indicates the file size in characters (1 character = 1 byte). Use
 the -h option to get this in human readable format (K for kilobytes, M for
@@ -371,14 +420,18 @@ The last item is the file name. If you use the \texttt{-F} option, a \texttt{*}
 at the end of the file indicates it is an executable file and a \texttt{/}
 indicates it is a directory.
 
-\subsection*{Finding More Information}
+\subsubsection*{Finding More Information}
 
 How can you see more command line options for \texttt{ls}? What is the option to
 sort by file size?
 
 \subsection{Other Commands}
 
+To learn about these commands, please refer to the \texttt{man} pages (type
+\texttt{man command} in a command line) or read the following document:
+\begin{center}
 \url{http://infohost.nmt.edu/tcc/help/pubs/unixcrib/}
+\end{center}
 
 \begin{bashcode}
 mkdir 
@@ -391,14 +444,11 @@ less
 script
 \end{bashcode}
 
-Learn these by reading their man page!
-
 \subsection{Creating Directories}
 Directories are very important for organizing your work, and you should get in
 the habit of creating a new directory for every lab this semester.
 
 \begin{enumerate}
-
 \item In the terminal, change your current working directory to your home
   directory by typing the following command:
 
@@ -492,11 +542,11 @@ At the Python prompt \texttt{>>>} you can type in Python statements and
 immediately see the result. For instance, to add 2 + 3, simply type \texttt{2 +
 3}: 
 
-\begin{bashcode}
+\begin{python3code}
 >>> 2 + 3
 5
 >>>
-\end{bashcode}
+\end{python3code}
 
 Notice that after a statement is executed, you are given a prompt to enter
 another statement. The \texttt{+} is the addition operator. Other basic math
@@ -506,24 +556,24 @@ operators in python include:
   \item[Subtraction] \texttt{-} subtracts the right hand operand from the left
     hand operand:
 
-    \begin{bashcode}
+    \begin{python3code}
 >>> 2 - 3
 -1
-    \end{bashcode}
+    \end{python3code}
 
   \item[Multiplication] \texttt{*} multiplies values on either side of the
     operator:
 
-    \begin{bashcode}
+    \begin{python3code}
 >>> 2 * 3
 6
-    \end{bashcode}
+    \end{python3code}
 
   \item[Division] \texttt{/} divides the left hand operand by the right hand
     operand, while \texttt{//} does the division and cuts off the decimals. The
     latter is called \emph{floor division}.
 
-  \begin{bashcode}
+  \begin{python3code}
 >>> 2 / 3
 0.6666666666666666
 >>> 2 // 3
@@ -536,7 +586,7 @@ operators in python include:
 0.6666666666666666
 >>> 2 / float(3)
 0.6666666666666666
-  \end{bashcode}
+  \end{python3code}
 
     This is an example of a major difference between Python 2 and Python 3. If
     you are using Python 2 some of these calculations will give different
@@ -551,12 +601,12 @@ operators in python include:
   \item[Modulus] \texttt{\%} divides the left hand operand by the right hand
     operand and gives you the remainder.
 
-    \begin{bashcode}
+    \begin{python3code}
 >>> 5 % 3
 2
 >>> 3 % 5
 3
-    \end{bashcode}
+    \end{python3code}
 
     This is as it was in elementary school: If you divide 7 by 3, 3 goes into 7
     twice with a remainder of one. Modulus will become more important later in
@@ -564,19 +614,19 @@ operators in python include:
 
     Modulus can, for example, tell you whether an integer is even or odd:
 
-    \begin{bashcode}
+    \begin{python3code}
 >>> 5 % 2
 1
 >>> 6 % 2
 0
-    \end{bashcode}
+    \end{python3code}
     For even integers, division by two will always yield a remainder of zero.
     For odd integers, division by two will always yield a remainder of one.
 
   \item[Exponentiation] \texttt{**} performs exponential (power) calculation.
     \texttt{a ** b} means a raised to b.
 
-    \begin{bashcode}
+    \begin{python3code}
 >>> 10 ** 5
 100000
 >>> 5 ** 10 
@@ -585,16 +635,16 @@ operators in python include:
 3.0
 >>> 5.5 ** 6.8
 108259.56770464421
-    \end{bashcode}
+    \end{python3code}
 
 %    Besides fractional powers, Python can handle very large numbers. Try raising
 %    10 to the 100th power (a googol)
 %
-%    \begin{bashcode}
+%    \begin{python3code}
 %>>> 10 ** 100
 %10000000000000000000000000000000000000000000000000000000
 %000000000000000000000000000000000000000000000L
-%    \end{bashcode}
+%    \end{python3code}
 %
 %    The \texttt{L} at the end of the number indicates it is a long. Long
 %    integers are integers that are too big to represent with a normal integer.
@@ -609,7 +659,7 @@ precedence than \texttt{+} and \texttt{-}. If operators have equal precedence
 they execute left to right. You can always use parentheses to change the
 precedence.
 
-\begin{bashcode}
+\begin{python3code}
 >>> 6 * 5 % 4 - 6 ** 7 + 80 / 3 #((6 * 5) % 4) - (6 ** 7) + (80 / 3)
 -279908
 >>> 6 * 5 % 4
@@ -618,7 +668,7 @@ precedence.
 6
 >>> (6 * 5) % 4
 2
-\end{bashcode}
+\end{python3code}
 
 The \texttt{\#} indicates the start of a comment. Comments are ignored by the
 interpreter and can be used to provide reminders to yourself as to what a
@@ -629,19 +679,19 @@ The real power of Python as a calculator comes when you add variables. Using
 name consisting of letters, numbers, and underscores. Once a variable has been
 assigned, it can be used in future computations.
 
-\begin{bashcode}
+\begin{python3code}
 >>> x = 7
 >>> y = 5 + x
 >>> y
 12
 >>> x
 7
-\end{bashcode}
+\end{python3code}
 
 In general, you should try to give your variables descriptive names so that it is
 clear what they are meant to store; for example:
 
-\begin{bashcode}
+\begin{python3code}
 >>> food_price = 4.50
 >>> drink_price = 1.00
 >>> subtotal = food_price + drink_price
@@ -649,7 +699,7 @@ clear what they are meant to store; for example:
 >>> total = subtotal + tax
 >>> total
 5.885
-\end{bashcode}
+\end{python3code}
 
 \pagebreak
 \section{Running Python Programs}
@@ -718,27 +768,27 @@ print(y)
 But what if you wish to print a variable's value on the same line as another
 string? Unfortunately, the simplest method of doing this does not work:
 
-\begin{bashcode}
+\begin{python3code}
 >>> x = 5
 >>> print('x = ' + x)
 Traceback (most recent call last):
   File "<pyshell#9>", line 1, in <module>
     print('x = ' + x)
 TypeError: Can't convert 'int' object to str implicitly
-\end{bashcode}
+\end{python3code}
 
 However, we can get around this by converting \texttt{x} into a string using
 \texttt{str()}.
 
-\begin{bashcode}
+\begin{python3code}
 >>> x = 5
 >>> print('x = ' + str(x))
 x = 5
-\end{bashcode}
+\end{python3code}
 
 At this point it is not necessary to completely understand the differences
-between a string and an actual number, just remember that \texttt{x = '5'} and
-\texttt{x = 5} denote different things.
+between a string and an actual number, just remember that \pythoninline{x = '5'}
+and \pythoninline{x = 5} denote different things.
 
 \pagebreak
 
@@ -749,14 +799,14 @@ replacement for a TI-89!
 
 It is as simple as the following line of code:
 
-\begin{bashcode}
+\begin{python3code}
 >>> import math
 >>>
-\end{bashcode}
+\end{python3code}
 
 Then, try out some of the functions:
 
-\begin{bashcode}
+\begin{python3code}
 >>> math.sqrt(16)
 4.0
 >>> math.log(8, 2) # $\log_2(8)$
@@ -766,7 +816,7 @@ Then, try out some of the functions:
 >>> math.pi
 3.14...
 >>>
-\end{bashcode}
+\end{python3code}
 
 There are more functions in the math library, you can find them documented here:
 \begin{center}
@@ -854,4 +904,8 @@ $ tar tvf cse107_firstname_lastname_lab1.tar.gz
 
 You should see a list of your Python source code files.
 
+
+\begin{center}
+  \textbf{Upload your tarball to Canvas.}
+\end{center}
 \end{document}
