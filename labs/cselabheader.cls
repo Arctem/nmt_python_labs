@@ -145,9 +145,12 @@
   mathescape,linenos,numbersep=5pt,frame=single,framesep=2mm}
 \newminted{pycon}{fontsize=\small,
   mathescape,linenos,numbersep=5pt,frame=single,framesep=2mm,python3}
-\newminted{bash}{fontsize=\small,
+\newminted[bashcode]{console}{fontsize=\small,
+  mathescape,linenos,numbersep=5pt,framesep=2mm,frame=lines,bgcolor=lightgray}
+\newminted[verbatimcode]{html}{fontsize=\small,
   mathescape,linenos,numbersep=5pt,framesep=2mm,frame=lines,bgcolor=lightgray}
 \newmintinline{python}{mathescape}
+\newmintinline{bash}{mathescape}
 \usemintedstyle{colorful}
 
 \usepackage{mdframed}

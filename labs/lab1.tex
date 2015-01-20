@@ -145,9 +145,10 @@ the operating system, shell, or program behind that command.
 
 When you open the shell, you will probably see something like this:
 
-\begin{bashcode}
+\begin{minted}[fontsize=\small,
+  mathescape,linenos,numbersep=5pt,framesep=2mm,frame=lines,bgcolor=lightgray]{shell-session}
 [username@machinename ~]$ youcantypehere
-\end{bashcode}
+\end{minted}
 
 This is where you type commands. We will be shortening this prompt to just a
 single \$ to denote a terminal prompt for the rest of this semester's labs.
@@ -333,8 +334,7 @@ $ cd
 \end{bashcode}
 
 % orphaned table
-See Table~\ref{tab:cd} on page~\pageref{tab:cd} for a summary of the arguments
-to \texttt{cd}.
+See Table~\ref{tab:cd} for a summary of the arguments to \texttt{cd}.
 
 \begin{table}[!ht]
   \centering
@@ -354,7 +354,7 @@ to \texttt{cd}.
   \label{tab:cd}
 \end{table}
 
-\subsection{man -- Manual}
+\subsubsection{man -- Manual}
 
 To view the documentation for any command, use
 
@@ -410,13 +410,13 @@ size of the file in human readable format.
 Under Linux, any file whose name begins with a dot is a ``hidden'' file. Most
 commands that list files in some way will hide files that begin with a dot.
 
-\subsection*{Understanding the Long Format Output}
+\paragraph*{Understanding the Long Format Output}
 
 The \texttt{-l} option of \texttt{ls} tells you quite a bit about a file. For a
 detailed explanation of the output, please see Table 3-2 on page 16 of
 \textit{The Linux Command Line} (\url{http://linuxcommand.org}).
 
-\subsubsection*{Finding More Information}
+\paragraph*{Finding More Information}
 
 How can you see more command line options for \texttt{ls}? What is the option to
 sort by file size?
@@ -768,10 +768,10 @@ y = y + x
 print(y)
 \end{python3code}
 
-\begin{bashcode}
+\begin{verbatimcode}
 4
 9
-\end{bashcode}
+\end{verbatimcode}
 
 But what if you wish to print a variable's value on the same line as another
 string? Unfortunately, the simplest method of doing this does not work:
@@ -884,19 +884,19 @@ temperatures from Celsius to Kelvin. We would like to modify it to also convert
 the temperatures to Fahrenheit. Currently, the output of the program is
 something like this:
 
-\begin{bashcode}
+\begin{verbatimcode}
 Please input a temperature in Celsius: 10
 Kelvin temperature: 283.15
-\end{bashcode}
+\end{verbatimcode}
 
 Add code (you should not need to modify the existing lines, though you are free
 to) so that its output is as follows:
 
-\begin{bashcode}
+\begin{verbatimcode}
 Please input a temperature in Celsius: 10
 Kelvin temperature: 283.15
 Fahrenheit temperature: 50.0
-\end{bashcode}
+\end{verbatimcode}
 
 \subsection{Shapes}
 Download \texttt{shapes.py}. It is the start of a Python program to display
@@ -907,7 +907,7 @@ of the box.
 
 That is, we want the output of the program to looking something like this:
 
-\begin{bashcode}
+\begin{verbatimcode}
 Please input the radius of the circle: 3
 The circumference of the circle is 18.84
 The area of the circle is 28.26
@@ -916,7 +916,7 @@ Please input the height of the box: 6
 Please input the length of the box: 4
 The surface area of the box is 88.0
 The volume of the box is 48.0
-\end{bashcode}
+\end{verbatimcode}
 
 \pagebreak
 \section{Submitting}
