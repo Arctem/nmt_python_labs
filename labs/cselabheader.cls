@@ -167,6 +167,18 @@
   \begin{mdframed}[]\relax
 }{\end{mdframed}}
 
+\newenvironment{infobox}[1]{
+  \mdfsetup{%
+    frametitle={%
+      \tikz[baseline=(current bounding box.east),outer sep=0pt]
+      \node[anchor=east,rectangle,fill=green!20]
+           {\strut #1};}}
+  \mdfsetup{innertopmargin=10pt, linecolor=green!20, linewidth=2pt, topline=true,
+    frametitleaboveskip=\dimexpr-\ht\strutbox\relax,}
+  \begin{mdframed}[]\relax
+}{\end{mdframed}}
+
+
 \def\Version#1{\def\version{#1}}
 
 \author{CSE/IT 107}

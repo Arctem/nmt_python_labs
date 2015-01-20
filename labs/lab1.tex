@@ -410,76 +410,109 @@ size of the file in human readable format.
 Under Linux, any file whose name begins with a dot is a ``hidden'' file. Most
 commands that list files in some way will hide files that begin with a dot.
 
-\paragraph*{Understanding the Long Format Output}
+\paragraph*{Understanding the Long Format Output} \hfill
 
 The \texttt{-l} option of \texttt{ls} tells you quite a bit about a file. For a
 detailed explanation of the output, please see Table 3-2 on page 16 of
 \textit{The Linux Command Line} (\url{http://linuxcommand.org}).
 
-\paragraph*{Finding More Information}
+\paragraph*{Finding More Information} \hfill
 
 How can you see more command line options for \texttt{ls}? What is the option to
 sort by file size?
 
-\subsection{Other Commands}
 
-To learn about these commands, please refer to the \texttt{man} pages (type
-\texttt{man command} in a command line) or read the following document:
-\begin{center}
-\url{http://infohost.nmt.edu/tcc/help/pubs/unixcrib/}
-\end{center}
-
-\begin{bashcode}
-mkdir 
-cp
-mv
-rm
-touch
-cat
-less
-script
-\end{bashcode}
-
-\subsection{Creating Directories}
+\subsubsection{mkdir -- Creating Directories}
 Directories are very important for organizing your work, and you should get in
-the habit of creating a new directory for every lab this semester.
+the habit of creating a new directory for every lab this semester. 
 
-\begin{enumerate}
-\item In the terminal, change your current working directory to your home
-  directory by typing the following command:
+To create a directory, use the \bashinline{mkdir} command as such:
 
 \begin{bashcode}
-$ cd
+$ mkdir directorypath
 \end{bashcode}
 
-\item Create a \texttt{cse107} directory by typing the following command;
+For example, if you are in your home directory \texttt{/u/username}, you can
+create the directory \texttt{cse107} in two ways: 
 
-\begin{bashcode}
+\begin{description}
+  \item[Absolute path] \hfill
+
+    \begin{bashcode}
+$ mkdir /u/username/cse107
+    \end{bashcode}
+
+  \item[Relative path] \hfill
+
+    \begin{bashcode}
 $ mkdir cse107
-\end{bashcode}
+    \end{bashcode}
+\end{description}
 
-\item Change your current working directory to the \texttt{cse107} directory by
-  typing the following command:
+%\begin{enumerate}
+%\item In the terminal, change your current working directory to your home
+%  directory by typing the following command:
+%
+%\begin{bashcode}
+%$ cd
+%\end{bashcode}
+%
+%\item Create a \texttt{cse107} directory by typing the following command;
+%
+%\begin{bashcode}
+%$ mkdir cse107
+%\end{bashcode}
+%
+%\item Change your current working directory to the \texttt{cse107} directory by
+%  typing the following command:
+%
+%\begin{bashcode}
+%$ cd cse107
+%\end{bashcode}
+%
+%\item Create a subdirectory for this lab in your \texttt{cse107} directory by
+%  typing the following command:
+%
+%\begin{bashcode}
+%$ mkdir lab1
+%\end{bashcode}
+%
+%\item Change your current working directory to the \texttt{lab1} directory by
+%  typing the following command:
+%
+%\begin{bashcode}
+%$ cd lab1
+%\end{bashcode}
+%
+%\end{enumerate}
 
-\begin{bashcode}
-$ cd cse107
-\end{bashcode}
+\begin{infobox}{Habits}
+  It's a good idea to have a directory for each lab inside a directory for the
+  class. For example:
 
-\item Create a subdirectory for this lab in your \texttt{cse107} directory by
-  typing the following command:
-
-\begin{bashcode}
-$ mkdir lab1
-\end{bashcode}
-
-\item Change your current working directory to the \texttt{lab1} directory by
-  typing the following command:
-
-\begin{bashcode}
-$ cd lab1
-\end{bashcode}
-
-\end{enumerate}
+\begin{tikzpicture}[
+grow via three points={one child at (0.5,-0.7) and
+two children at (0.5,-0.7) and (0.5,-1.4)},
+edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+\node {/}
+child { node [label={[xshift=4.5cm, yshift=-0.58cm] /u}] {u}
+child { node [label={[xshift=3.95cm, yshift=-0.58cm] /u/ckoch}] {ckoch} 
+  child { node [label={[xshift=3.4cm, yshift=-0.58cm] /u/ckoch/cse107}] {cse107}
+    child { node [label={[xshift=2.85cm, yshift=-0.58cm] /u/ckoch/cse107/lab1}] {lab1} }
+    child { node [label={[xshift=2.85cm, yshift=-0.58cm] /u/ckoch/cse107/lab2}] {lab2} }
+    child { node [label={[xshift=2.85cm, yshift=-0.58cm] /u/ckoch/cse107/lab3}] {lab3} }
+  }
+}
+}
+child [missing] {}
+child [missing] {}
+child [missing] {}
+child [missing] {}
+child [missing] {}
+child [missing] {}
+;
+\end{tikzpicture}
+\end{infobox}
 
 \subsection{The Linux Command Line}
 
@@ -490,6 +523,21 @@ the pre-lab for lab 2.)
 \begin{center}
   \url{http://linuxcommand.org/tlcl.php}
 \end{center}
+
+\subsubsection{Other Commands}
+
+To learn about these commands, please use man pages or \textit{The Linux Command
+Line}.
+
+\begin{bashcode}
+mkdir
+cp
+mv
+rm
+touch
+cat
+less
+\end{bashcode}
 
 \subsection{Start Python}
 
@@ -505,6 +553,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 \end{bashcode}
 
 \subsection{Summary}
+\label{sec:linux.res}
 
 Commands to know for next lab:
 \begin{multicols}{3}
@@ -522,6 +571,16 @@ Commands to know for next lab:
   \item less
 \end{itemize}
 \end{multicols}
+
+\paragraph*{Resources}
+
+\begin{itemize}
+  \item \textit{The Linux Command Line}, William Shotts,
+    \url{http://linuxcommand.org}. (Chapters 1 through 4.)
+  \item \textit{Summary of common Unix commands}, John Shipman,
+    \url{http://infohost.nmt.edu/tcc/help/pubs/unixcrib/}.
+  \item man pages.
+\end{itemize}
 
 \begin{warningbox}{Quiz}
   We will likely have a quiz about the above commands at the beginning of lab 2.
