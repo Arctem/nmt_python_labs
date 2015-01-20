@@ -80,6 +80,11 @@ Text that appears in console font within a framed box is sample Python code
 or program output.
 \end{python3code}
 
+\begin{pyconcode}
+>>> # Text that appears in console font wihtin a framed box and is preceded by \
+three greater-than signs contains sample Python interpreter input.
+\end{pyconcode}
+
 Text in a \texttt{simple console font}, without a frame or background, indicates
 the name of a file, a function, or some action you need to perform.
 
@@ -161,6 +166,19 @@ root file system to the desired directory. If you include the root directory in
 the path this is called an absolute path. Another way to navigate the tree is to
 use relative paths, which navigate the tree based on where you currently are.
 
+An absolute path starts at the root directory \texttt{/} and gives an absolute
+description of which directory or file you are refering to. For example,
+\texttt{/u/ckoch/cse107/lab1/} refers to the directory as seen in the file tree
+below. A relative path always references your current directory. When you are in
+a shell, you always have a \textit{current working directory} from which the
+relative path will go. A relative path leaves off the first \texttt{/} and uses
+\texttt{..} to refer to the parent of the current working directory and
+\texttt{.} to refer to the current working directory. For example, if my current
+directory is \texttt{/u/ckoch/cse107/}, then \texttt{lab1} refers to the absolute
+path \texttt{/u/ckoch/cse107/lab1/}, while \texttt{../} refers to the absolute
+path \texttt{/u/ckoch/}, and \texttt{../../tcecil} refers to the absolute path
+\texttt{/u/tcecil/}.
+
 For example, this is a typical file system tree close to what the ITC has with
 absolute file paths shown on the right:
 \tikzstyle{every node}=[draw=black,thick,anchor=west]
@@ -172,20 +190,28 @@ grow via three points={one child at (0.5,-0.7) and
 two children at (0.5,-0.7) and (0.5,-1.4)},
 edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
 \node {/}
-child { node [label={[xshift=4.0cm, yshift=-0.58cm] /bin}] {bin} }
-child { node [label={[xshift=4.0cm, yshift=-0.58cm] /dev}] {dev} }
-child { node [label={[xshift=4.0cm, yshift=-0.58cm] /tmp}] {tmp} }
-child { node [label={[xshift=4.0cm, yshift=-0.58cm] /u}] {u}
-child { node [label={[xshift=3.4cm, yshift=-0.58cm] /u/ckoch}] {ckoch} }
-child { node [label={[xshift=3.4cm, yshift=-0.58cm] /u/tcecil}] {tcecil}}
-child { node [label={[xshift=3.4cm, yshift=-0.58cm]
+child { node [label={[xshift=4.5cm, yshift=-0.58cm] /bin}] {bin} }
+child { node [label={[xshift=4.5cm, yshift=-0.58cm] /dev}] {dev} }
+child { node [label={[xshift=4.5cm, yshift=-0.58cm] /tmp}] {tmp} }
+child { node [label={[xshift=4.5cm, yshift=-0.58cm] /u}] {u}
+child { node [label={[xshift=3.95cm, yshift=-0.58cm] /u/ckoch}] {ckoch} 
+  child { node [label={[xshift=3.4cm, yshift=-0.58cm] /u/ckoch/cse107}] {cse107}
+    child { node [label={[xshift=2.85cm, yshift=-0.58cm] /u/ckoch/cse107/lab1}] {lab1} }
+  }
+}
+child [missing] {}
+child [missing] {}
+child { node [label={[xshift=3.95cm, yshift=-0.58cm] /u/tcecil}] {tcecil}}
+child { node [label={[xshift=3.95cm, yshift=-0.58cm]
 /u/yourusername},optional] {yourusername}}
 }
 child [missing] {}
 child [missing] {}
 child [missing] {}
-child { node [label={[xshift=4.0cm, yshift=-0.58cm] /usr}] {usr}
-child { node [label={[xshift=3.4cm, yshift=-0.58cm] /usr/bin}] {bin} }
+child [missing] {}
+child [missing] {}
+child { node [label={[xshift=4.5cm, yshift=-0.58cm] /usr}] {usr}
+child { node [label={[xshift=3.95cm, yshift=-0.58cm] /usr/bin}] {bin} }
 }
 child [missing] {}
 ;
@@ -523,11 +549,10 @@ At the Python prompt \texttt{>>>} you can type in Python statements and
 immediately see the result. For instance, to add 2 + 3, simply type \texttt{2 +
 3}: 
 
-\begin{python3code}
+\begin{pyconcode}
 >>> 2 + 3
 5
->>>
-\end{python3code}
+\end{pyconcode}
 
 Notice that after a statement is executed, you are given a prompt to enter
 another statement. The \texttt{+} is the addition operator. Other basic math
@@ -537,24 +562,24 @@ operators in python include:
   \item[Subtraction] \texttt{-} subtracts the right hand operand from the left
     hand operand:
 
-    \begin{python3code}
+    \begin{pyconcode}
 >>> 2 - 3
 -1
-    \end{python3code}
+    \end{pyconcode}
 
   \item[Multiplication] \texttt{*} multiplies values on either side of the
     operator:
 
-    \begin{python3code}
+    \begin{pyconcode}
 >>> 2 * 3
 6
-    \end{python3code}
+    \end{pyconcode}
 
   \item[Division] \texttt{/} divides the left hand operand by the right hand
     operand, while \texttt{//} does the division and cuts off the decimals. The
     latter is called \emph{floor division}.
 
-  \begin{python3code}
+  \begin{pyconcode}
 >>> 2 / 3
 0.6666666666666666
 >>> 2 // 3
@@ -567,7 +592,7 @@ operators in python include:
 0.6666666666666666
 >>> 2 / float(3)
 0.6666666666666666
-  \end{python3code}
+  \end{pyconcode}
 
     This is an example of a major difference between Python 2 and Python 3. If
     you are using Python 2 some of these calculations will give different
@@ -582,12 +607,12 @@ operators in python include:
   \item[Modulus] \texttt{\%} divides the left hand operand by the right hand
     operand and gives you the remainder.
 
-    \begin{python3code}
+    \begin{pyconcode}
 >>> 5 % 3
 2
 >>> 3 % 5
 3
-    \end{python3code}
+    \end{pyconcode}
 
     This is as it was in elementary school: If you divide 7 by 3, 3 goes into 7
     twice with a remainder of one. Modulus will become more important later in
@@ -595,19 +620,19 @@ operators in python include:
 
     Modulus can, for example, tell you whether an integer is even or odd:
 
-    \begin{python3code}
+    \begin{pyconcode}
 >>> 5 % 2
 1
 >>> 6 % 2
 0
-    \end{python3code}
+    \end{pyconcode}
     For even integers, division by two will always yield a remainder of zero.
     For odd integers, division by two will always yield a remainder of one.
 
   \item[Exponentiation] \texttt{**} performs exponential (power) calculation.
     \texttt{a ** b} means a raised to b.
 
-    \begin{python3code}
+    \begin{pyconcode}
 >>> 10 ** 5
 100000
 >>> 5 ** 10 
@@ -616,16 +641,16 @@ operators in python include:
 3.0
 >>> 5.5 ** 6.8
 108259.56770464421
-    \end{python3code}
+    \end{pyconcode}
 
-%    Besides fractional powers, Python can handle very large numbers. Try raising
-%    10 to the 100th power (a googol)
+%    Besides fractional powers, Python can handle very large numbers. Try
+%    raising 10 to the 100th power (a googol)
 %
-%    \begin{python3code}
+%    \begin{pyconcode}
 %>>> 10 ** 100
 %10000000000000000000000000000000000000000000000000000000
 %000000000000000000000000000000000000000000000L
-%    \end{python3code}
+%    \end{pyconcode}
 %
 %    The \texttt{L} at the end of the number indicates it is a long. Long
 %    integers are integers that are too big to represent with a normal integer.
@@ -640,8 +665,8 @@ precedence than \texttt{+} and \texttt{-}. If operators have equal precedence
 they execute left to right. You can always use parentheses to change the
 precedence.
 
-\begin{python3code}
->>> 6 * 5 % 4 - 6 ** 7 + 80 / 3 #((6 * 5) % 4) - (6 ** 7) + (80 / 3)
+\begin{pyconcode}
+>>> 6 * 5 % 4 - 6 ** 7 + 80 / 3 # $((6 \times 5) % 4) - 6^7 + \frac{80}{3}$
 -279908
 >>> 6 * 5 % 4
 2
@@ -649,7 +674,7 @@ precedence.
 6
 >>> (6 * 5) % 4
 2
-\end{python3code}
+\end{pyconcode}
 
 The \texttt{\#} indicates the start of a comment. Comments are ignored by the
 interpreter and can be used to provide reminders to yourself as to what a
@@ -660,19 +685,19 @@ The real power of Python as a calculator comes when you add variables. Using
 name consisting of letters, numbers, and underscores. Once a variable has been
 assigned, it can be used in future computations.
 
-\begin{python3code}
+\begin{pyconcode}
 >>> x = 7
 >>> y = 5 + x
 >>> y
 12
 >>> x
 7
-\end{python3code}
+\end{pyconcode}
 
 In general, you should try to give your variables descriptive names so that it is
 clear what they are meant to store; for example:
 
-\begin{python3code}
+\begin{pyconcode}
 >>> food_price = 4.50
 >>> drink_price = 1.00
 >>> subtotal = food_price + drink_price
@@ -680,7 +705,7 @@ clear what they are meant to store; for example:
 >>> total = subtotal + tax
 >>> total
 5.885
-\end{python3code}
+\end{pyconcode}
 
 \pagebreak
 \section{Running Python Programs}
@@ -689,7 +714,7 @@ So far, you have been running Python interactively. This is a nice feature as it
 lets you test ideas quickly and easily. However, there are times you want to
 save your ideas to a text file and to run the code as a program. Your programs
 will be almost identical to what you enter when using the Python interpreter,
-though you will have to use the \texttt{print} function in order to display
+though you will have to use the \pythoninline{print} function in order to display
 output.
 
 Open a text editor (e.g. type \texttt{gedit} in the command line) and create a
@@ -699,7 +724,9 @@ one line Python program as following:
 print('Hello, world!')
 \end{python3code}
 
-\texttt{print} is a function. It will print the value of whatever is within its
+\pythoninline{print} is a function (do not worry about what a function is -- we
+will talk about it later).
+It has the specific task of printing the value of whatever is within its
 parentheses. In order to print plaintext (not variables), you must additionally
 surround it with quotes. This is called a string. It is important to note that
 
@@ -749,27 +776,69 @@ print(y)
 But what if you wish to print a variable's value on the same line as another
 string? Unfortunately, the simplest method of doing this does not work:
 
-\begin{python3code}
+\begin{pyconcode}
 >>> x = 5
 >>> print('x = ' + x)
 Traceback (most recent call last):
   File "<pyshell#9>", line 1, in <module>
     print('x = ' + x)
 TypeError: Can't convert 'int' object to str implicitly
-\end{python3code}
+\end{pyconcode}
 
 However, we can get around this by converting \texttt{x} into a string using
 \texttt{str()}.
 
-\begin{python3code}
+\begin{pyconcode}
 >>> x = 5
 >>> print('x = ' + str(x))
 x = 5
-\end{python3code}
+\end{pyconcode}
 
 At this point it is not necessary to completely understand the differences
 between a string and an actual number, just remember that \pythoninline{x = '5'}
 and \pythoninline{x = 5} denote different things.
+
+\subsection{About Functions}
+
+A function is a little self-contained program that performs one specific task.
+You can re-use functions as you wish, and Python offers many built-in ones. The
+function \pythoninline{print} has the specific task of printing to the screen
+whatever parameters are given to it. You will learn how to make your own
+functions in just a few weeks!
+
+Like a function in math, you can give it one or more parameters. A function may
+also pass a value back to the user. How many parameters are appropriate and what
+value is passed back depends on the specific function, though.
+
+Note that functions are used (``called'') by putting its name followed by
+parentheses and some parameters (sometimes also called ``arguments'') to the
+function. A function may have none, one, or multiple parameters (the parentheses
+always have to be there, though). For example:
+
+\begin{python3code}
+function_name()
+function_name(parameter)
+function_name(parameter1, parameter2)
+\end{python3code}
+
+If \pythoninline{print} is called with two or more parameters, it will print to
+them all to the screen separated by spaces:
+
+\begin{pyconcode}
+>>> print("Hello", "World")
+Hello World
+\end{pyconcode}
+
+If a function passes a value back to the user (``returns'' a value), you can
+assign it like this:
+
+\begin{python3code}
+x = pow(2, 3)
+\end{python3code}
+
+\pythoninline{pow} is a function that takes two parameters: a base and an
+exponent. It will return the base raised to the exponent. In this case, $x$
+contains $2^3 = 8$.
 
 \pagebreak
 
@@ -780,14 +849,17 @@ replacement for a TI-89!
 
 It is as simple as the following line of code:
 
-\begin{python3code}
+\begin{pyconcode}
 >>> import math
->>>
-\end{python3code}
+\end{pyconcode}
 
-Then, try out some of the functions:
+This enables the built-in Python \texttt{math} library.
 
-\begin{python3code}
+Then, try out some of the functions that \texttt{math} offers. You must refer to
+them with the library name, \texttt{math}, followed by a dot, and then the
+function name:
+
+\begin{pyconcode}
 >>> math.sqrt(16)
 4.0
 >>> math.log(8, 2) # $\log_2(8)$
@@ -796,8 +868,7 @@ Then, try out some of the functions:
 8.0
 >>> math.pi
 3.14...
->>>
-\end{python3code}
+\end{pyconcode}
 
 There are more functions in the math library, you can find them documented here:
 \begin{center}

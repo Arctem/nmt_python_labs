@@ -63,6 +63,7 @@ calculation in your code, there is the \pythoninline!while! statement to help yo
 repeat code.
 
 \pagebreak
+
 \section{Boolean Logic}
 
 %Cover basic boolean logic with comparisons and whatnot, then use those to drive if and else statements.
@@ -72,13 +73,13 @@ entered the correct password. Any statement that can be resolved into a true or
 a false value is called a boolean statement, the value it resolves into (true or
 false) is called a boolean value.
 
-\begin{python3code}
+\begin{pyconcode}
 >>> x = 5
 >>> print(x < 3)
 False
 >>> print(x < 6)
 True
-\end{python3code}
+\end{pyconcode}
 
 In the above example, the boolean values are \pythoninline{True} and
 \pythoninline{False}. The boolean statements are \pythoninline{x < 3} and 
@@ -87,7 +88,7 @@ In the above example, the boolean values are \pythoninline{True} and
 In addition to \pythoninline{<}, we can also test for other
 inequalities.
 
-\begin{python3code}
+\begin{pyconcode}
 >>> x = 3; y = 6
 >>> print(x < y)
 True
@@ -97,7 +98,7 @@ False
 True
 >>> print(x >= y)
 False
-\end{python3code}
+\end{pyconcode}
 
 Note that \pythoninline{<=} means ``less than or equal to'' and \pythoninline{>=}
 means ``greater than or equal to''. 
@@ -105,7 +106,7 @@ means ``greater than or equal to''.
 Finally, we can test if two values are equal
 (\pythoninline{==}) or not equal (\pythoninline{!=}).
 
-\begin{python3code}
+\begin{pyconcode}
 >>> x = 3; y = 3; z = 4
 >>> print(x == y)
 True
@@ -115,14 +116,14 @@ False
 True
 >>> print(y != x)
 False
-\end{python3code}
+\end{pyconcode}
 
 It is important to remember that we use \pythoninline{=} to assign a value to a variable and \pythoninline{==} to test if two values are equal.
 
 We can also combine boolean statements using \pythoninline!and! and \pythoninline!or!
 as such:
 
-\begin{python3code}
+\begin{pyconcode}
 >>> x = 3; y = 5; z = 8
 >>> print(x < y and y < z)
 True
@@ -134,7 +135,7 @@ True
 False
 >>> print(True or False)
 True
-\end{python3code}
+\end{pyconcode}
 
 If you combine two boolean statements that are true using \pythoninline!and!, the
 result will be true. In all other cases the result is false. Since 
@@ -147,13 +148,13 @@ In addition to this, there is the \pythoninline!not! operator to negate a boolea
 statement. You can also put a boolean statement in parentheses to do more
 complicated combinations:
 
-\begin{python3code}
+\begin{pyconcode}
 >>> x = 3; y = 5; z = 8
 >>> print(not True)
 False
 >>> print(not (x > y and y < z))
 True
-\end{python3code}
+\end{pyconcode}
 
 \begin{table}[!ht]
   \centering
@@ -208,13 +209,29 @@ True
 \end{table}
 
 \pagebreak
+\section{On Types}
+
+In Python, every value is associated with what we call a type. We have already
+seen a few types in action: integers, floating-point numbers, strings, and
+boolean values.
+
+ETC Talk about the significance and what each actually are
+
+Then for cond statements make it clear that \pythoninline{1 != "1"} because of
+types.
+
+\pythoninline{type()} -- only use in interpreter though.
+
+Type conversions with int, float, str.
+
+\pagebreak
 \section{Conditional Statements}
 
 The primary use for boolean values is to determine which branch in your code to
-follow. This is accomplished using \pythoninline{if} and \pythoninline{else}, as shown
-in the program below. \pythoninline!elif! will be introduced later in this lab. All
-three -- \pythoninline!if!, \pythoninline!elif!, and \pythoninline!else! -- are generally
-called \emph{conditional statements}.
+follow. This is accomplished using \pythoninline{if} and \pythoninline{else}, as
+shown in the program below. \pythoninline!elif! will be introduced later in this
+lab. All three -- \pythoninline!if!, \pythoninline!elif!, and
+\pythoninline!else! -- are generally called \emph{conditional statements}.
 
 \begin{python3code}
 x = 1
@@ -227,16 +244,18 @@ else:
 print("When do I print?")
 \end{python3code}
 
-Try running the above program, putting in different numbers for \pythoninline{y}.
-If the number input is 1, then the first \pythoninline!print! statement will
-output. If not, then the second one will. The third one will output regardless.
+Try running the above program, putting in different numbers for
+\pythoninline{y}.  If the number input is 1, then the first \pythoninline!print!
+statement will output. If not, then the second one will. The third one will
+output regardless.
 
-The way this works is very simple: either the first \pythoninline!print! statement
-runs or the second \pythoninline!print! statement runs, but never both. Which one
-runs is determined by Python: if the boolean statement (called \emph{condition})
-following the \pythoninline!if! evaluates to \pythoninline!True!, then Python will
-run the indented code following the \pythoninline!if! and then skip until after
-the indented code of the \pythoninline!else!.
+The way this works is very simple: either the first \pythoninline!print!
+statement runs or the second \pythoninline!print! statement runs, but never
+both. Which one runs is determined by Python: if the boolean statement (called
+\emph{condition}) following the \pythoninline!if! evaluates to
+\pythoninline!True!, then Python will run the indented code following the
+\pythoninline!if! and then skip until after the indented code of the
+\pythoninline!else!.
 
 However, if the \emph{condition} evaluates to \pythoninline!False!, then the
 indented code following the \pythoninline!else! is run and Python skips the
@@ -271,7 +290,8 @@ if x < 0:
 print("x = " + str(x))
 \end{python3code}
 
-You can perform other operations as part of a boolean statement, such as this convenient way to check if a number is even:
+You can perform other operations as part of a boolean statement, such as this
+convenient way to check if a number is even:
 
 \begin{python3code}
 x = 5
@@ -285,26 +305,26 @@ else:
 Remember that \pythoninline!%! 
 is the modulus operator: it gives you the remainder of the division.
 
-When using \pythoninline{if} and \pythoninline{else}, you will generally be dealing
-with user input. This is done using the function \pythoninline{input}, which you
-can see used in the above examples. When you use \pythoninline{input} it will
-display whatever string you pass to it, then pause while it waits for the user
-to type something and then hit enter. It will give whatever was entered as a
-string back to the variable that it is assigned to. We will be learning more
-about strings in future labs, but for now just know that strings are basically
-groups of letters, like what you pass to a \pythoninline{print} statement, and are
-declared by surrounding something in quotes.
+When using \pythoninline{if} and \pythoninline{else}, you will generally be
+dealing with user input. This is done using the function \pythoninline{input},
+which you can see used in the above examples. When you use \pythoninline{input}
+it will display whatever string you pass to it, then pause while it waits for
+the user to type something and then hit enter. It will give whatever was entered
+as a string back to the variable that it is assigned to. We will be learning
+more about strings in future labs, but for now just know that strings are
+basically groups of letters, like what you pass to a \pythoninline{print}
+statement, and are declared by surrounding something in quotes.
 
 The main thing to know about strings for now is that they cannot be used as
-numbers. This is why we use the \pythoninline{float} function to convert the string
-the user gives us into a number.
+numbers. This is why we use the \pythoninline{float} function to convert the
+string the user gives us into a number.
 
-\begin{python3code}
+\begin{pyconcode}
 >>> 5.5 == "5.5"
 False
 >>> 5.5 == float("5.5")
 True
-\end{python3code}
+\end{pyconcode}
 
 % PROBLEMS HERE HERE HERE
 % ``float cannot run'' -- they dont know what that means.
@@ -473,21 +493,21 @@ Which operation? sqrt (s), arcsin (a), arccos (c), arctan (t): a
 Previously, when we wanted to print out both a number and a string, we
 had to resort to this:
 
-\begin{python3code}
+\begin{pyconcode}
 >>> x = 5
 >>> print("x is equal to " + str(x))
 x is equal to 5
-\end{python3code}
+\end{pyconcode}
 
 However, there is an easier way to accomplish the same thing. By using the
 \pythoninline!.format()! command, as shown below, we can have far more options for
 how we format our output.
 
-\begin{python3code}
+\begin{pyconcode}
 >>> x = 5
 >>> print("x is equal to {}".format(x))
 x is equal to 5
-\end{python3code}
+\end{pyconcode}
 
 Rather than leaving a gap in our string and then using \pythoninline{+} to add on
 our variable, we instead include \pythoninline!{}! where we wish to place our
@@ -498,12 +518,12 @@ If we include multiple instances of \pythoninline!{}! in our string, we can then
 pass multiple variables to \pythoninline{.format()}. It will place them in the
 string in the order provided.
 
-\begin{python3code}
+\begin{pyconcode}
 >>> x = 5
 >>> y = 6
 >>> print("x is equal to {} and y is equal to {}.".format(x, y))
 x is equal to 5 and y is equal to 6.
-\end{python3code}
+\end{pyconcode}
 
 We can also use \pythoninline!.format()! to control our output. For example, we can
 restrict how many decimal places a floating point number is printed with. To do
@@ -514,13 +534,13 @@ specifies that we want 2 digits to follow the decimal point.
 %want in this position. We don't want to mess with the order of the arguments, so
 %we leave the position before the colon blank.
 
-\begin{python3code}
+\begin{pyconcode}
 >>> import math
 >>> print(math.pi)
 3.141592653589793
 >>> print("{:.2f}".format(math.pi))
 3.14
-\end{python3code}
+\end{pyconcode}
 
 For more format options, see
 \begin{center}
