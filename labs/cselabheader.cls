@@ -141,7 +141,7 @@
 
 \usepackage{minted}
 
-\usemintedstyle{colorful}
+\usemintedstyle{tango} % friendly, colorful
 \newminted{python3}{fontsize=\small,
   mathescape,linenos,numbersep=5pt,frame=single,framesep=2mm}
 \newminted{pycon}{fontsize=\small,
