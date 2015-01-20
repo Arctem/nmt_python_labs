@@ -48,7 +48,7 @@
 \definecolor{green}{RGB}{0,127,0}
 \definecolor{dred}{rgb}{0.6,0,0}
 \definecolor{dkbrown}{RGB}{92,51,23}
-\definecolor{lightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lightgray}{rgb}{0.96,0.96,0.96}
 % Outline support
 %\usepackage{outlines}
 % URL formatting
