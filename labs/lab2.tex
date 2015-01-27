@@ -246,7 +246,8 @@ Python has different implementations of what goes on under the hood, which can
 then be optimized for each type separately.
 
 Of course, there are ways to convert between types and there are ways to find
-out what type the value of a specific variable is.
+out what type the value of a specific variable is. To do so, use the function
+\pythoninline{type()}.
 \begin{pyconcode}
 >>> type(5)
 <class 'int'>
@@ -278,6 +279,8 @@ ValueError: invalid literal for int() with base 10: '55a'
 We call the process of converting a value from one type to another type
 \emph{casting}.
 
+Note that only values have types, and variables can hold different values.
+
 In the previous section, we learned about comparison operators
 such as \pythoninline{!=}, \pythoninline{<}, \pythoninline{>}, etc. What was not
 mentioned is that these comparison operators also compare the type:
@@ -286,7 +289,7 @@ mentioned is that these comparison operators also compare the type:
 False
 >>> x = 5.5
 >>> y = 5.5
->>> x == y 
+>>> x == y
 True
 >>> 5.5 == float('5.5')
 True
@@ -296,7 +299,9 @@ True
 
 \begin{itemize}
   \item A type is a set of values that it can represent.
-  \item Casting is the process of converting one value from one type to another.
+  \item Casting is the process of converting a value from one type to another.
+  \item To find out what type a value / variable is, use the
+    \pythoninline{type()} function.
   \item Types we know about:
     \begin{multicols}{2}
       \begin{itemize}
