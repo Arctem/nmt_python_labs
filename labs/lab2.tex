@@ -215,14 +215,100 @@ In Python, every value is associated with what we call a type. We have already
 seen a few types in action: integers, floating-point numbers, strings, and
 boolean values.
 
-ETC Talk about the significance and what each actually are
+To be clear, an integer is a whole number, for example \pythoninline{5}. A float
+(floating-point number) is a number with decimal places, for example
+\pythoninline{3.14} or \pythoninline{5.0}. A string is a sequence of characters
+(letters, numbers, \ldots) enclosed by either double or single quotes, for
+example \pythoninline{"I'm a string!"}. A boolean
+value, as we just learned, can have two values: \pythoninline{True} or
+\pythoninline{False}.
 
-Then for cond statements make it clear that \pythoninline{1 != "1"} because of
-types.
+Most programming languages have types for a good reason: for one, operations
+(such as \pythoninline{+}, \pythoninline{-}, \ldots) have different effects on
+different types. For example, an integer \pythoninline{*} an integer results in
+an integer (the multiplication of the two \emph{operands}), but an integer
+\pythoninline{*} a string results in the string repeated. However, a string
+\pythoninline{*} a string results in an error:
+\begin{pyconcode}
+>>> 5*3
+15
+>>> 5*'hi'
+'hihihihihi'
+>>> 'hi'*'hi'
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: can't multiply sequence by non-int of type 'str'
+\end{pyconcode}
 
-\pythoninline{type()} -- only use in interpreter though.
+In addition to that, some operations do not work on some types, which helps
+ensure correctness of your program. Also, depending on the type of the operands,
+Python has different implementations of what goes on under the hood, which can
+then be optimized for each type separately.
 
-Type conversions with int, float, str.
+Of course, there are ways to convert between types and there are ways to find
+out what type the value of a specific variable is.
+\begin{pyconcode}
+>>> type(5)
+<class 'int'>
+>>> x = 10
+>>> type(x)
+<class 'int'>
+>>> x = 'Allons-y!'
+>>> type(x)
+<class 'str'>
+>>> type(True)
+<class 'bool'>
+>>> x = "5.5" # string containing 5.5
+>>> y = float("5.5") # convert string with 5.5 to a float
+>>> y
+5.5
+>>> z = int("5") # integer containing 5
+>>> z
+5
+>>> q = str(5) # string containing 5
+>>> q
+'5'
+>>> # Note that an impossible conversion will throw an error
+>>> int("55a")
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: invalid literal for int() with base 10: '55a'
+\end{pyconcode}
+
+We call the process of converting a value from one type to another type
+\emph{casting}.
+
+In the previous section, we learned about comparison operators
+such as \pythoninline{!=}, \pythoninline{<}, \pythoninline{>}, etc. What was not
+mentioned is that these comparison operators also compare the type:
+\begin{pyconcode}
+>>> 5.5 == '5.5' # comparing a string to a float
+False
+>>> x = 5.5
+>>> y = 5.5
+>>> x == y 
+True
+>>> 5.5 == float('5.5')
+True
+\end{pyconcode}
+
+\subsection{Summary}
+
+\begin{itemize}
+  \item A type is a set of values that it can represent.
+  \item Casting is the process of converting from one type to another.
+  \item Types we know about:
+    \begin{multicols}{2}
+      \begin{itemize}
+        \item \pythoninline{str} -- string
+        \item \pythoninline{int} -- integer number
+        \item \pythoninline{float} -- floating-point number
+        \item \pythoninline{bool} -- boolean value
+      \end{itemize}
+    \end{multicols}
+    Not coincidentally, these type names are also the names of the casting
+    functions.
+\end{itemize}
 
 \pagebreak
 \section{Conditional Statements}
