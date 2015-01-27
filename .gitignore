@@ -3,6 +3,7 @@
 *out
 *log
 *.pdf
+*.toc
 *~
 *synctex.gz
 *blg
