@@ -34,7 +34,14 @@
 
 % Margin support
 \usepackage[margin=1in]{geometry}
+\usepackage{float}
+\usepackage{hyperref}
 
+\hypersetup{
+  hidelinks
+}
+\usepackage{minted}
+\usepackage[format=plain,font=small,labelfont=bf]{caption}
 % Header/footer support
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -56,7 +63,6 @@
 % Image/graphic support
 \usepackage{graphicx}
 % Supports in-document hyperlinks
-\usepackage[hidelinks,pdfborder=0in,bookmarks=true]{hyperref}
 \usepackage[numbered]{bookmark}
 % List compression
 \usepackage{mdwlist}
@@ -134,12 +140,10 @@
 }
 
 % caption formatting
-\usepackage[format=plain,font=small,labelfont=bf]{caption}
 \usepackage[toc,page]{appendix}
 \usepackage{tikz}
 \usetikzlibrary{trees}
 
-\usepackage{minted}
 
 \usemintedstyle{tango} % friendly, colorful
 \newminted{python3}{fontsize=\small,
