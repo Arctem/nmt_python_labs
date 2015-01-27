@@ -12,7 +12,7 @@
 
 \begin{document}
 
-\pagenumbering{Roman}
+\pagenumbering{roman}
 \maketitle
 
 \hrule
@@ -43,6 +43,8 @@ a crucial matter that decides between success and failure?''
 \hrule
 
 \section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+
 The purpose of this lab is to introduce you to the fundamentals of what
 programmers call flow control. In the previous lab, we showed you how to do
 basic calculations in Python. For example, we had you convert temperature from
@@ -191,7 +193,7 @@ True
     \pythoninline!a >= b! & is $a$ greater than or equal to $b$ \\
     \pythoninline!a == b! & is $a$ equal to $b$ \\
     % because pythoninline is retarded and doesn't work right in tables.
-    \pythoninline!a! !\pythoninline!= b! & is $a$ not equal to $b$ \\
+    \pythoninline{a != b} & is $a$ not equal to $b$ \\
     \bottomrule
   \end{tabular}
   \caption{Comparison operators}
