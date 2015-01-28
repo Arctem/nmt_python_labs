@@ -11,18 +11,22 @@ Contents and instructional goals for spring 2015 semester.
 
 ## Lab 2 - Basic Flow Control
 - Boolean logic
-- If/else
-- While loops
+- Types (int, str, float, bool)
+- Conditionals: if/elif/else
+- Loops: while
   - both while waiting for something and doing a set number of times - poor man's for loop
-- Basic string formating
+- Basic string formatting
 - input()
 - Turtle
 - Keywords: and, or, not, if, else, elif, while, import
 
 ## Lab 3 - Functions
 - Functions
-- import statements
-- main() boilerplate?
+  - Positional and Optional Arguments
+  - Recursion
+- Modules
+  - import statements
+  - main() boilerplate
 - Comments and PEP-8 style
 - Keywords: def
 
@@ -34,7 +38,8 @@ Contents and instructional goals for spring 2015 semester.
 - Keywords: in (not in), for
 - Maybe range(), but I think we should focus more on for loops being used in the
   style of "for each"
-- Talk about types -- we now have float, int, str, list(, function)
+- Talk about types again -- we now have float, int, str, list(, function)
+- matplotlib
 
 ## Lab 5 - File I/O and matplotlib
 - File I/O using with
