@@ -1,6 +1,6 @@
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
-% 
+%
 % Prepared by Cynthia Veitch, William Kwan, Scott Chadde, Kaley Goatcher,
 % Russell White, and Christopher Koch
 
@@ -42,6 +42,7 @@
 }
 \usepackage{minted}
 \usepackage[format=plain,font=small,labelfont=bf]{caption}
+\usepackage{wrapfig}
 % Header/footer support
 \usepackage{fancyhdr}
 \pagestyle{fancy}
