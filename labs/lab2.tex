@@ -867,6 +867,37 @@ while condition:
 \label{subsec:whileex}
 
 \begin{description}
+  \item[rps.py] Write a program that reads a character for playing the game of
+    rock-paper-scissors. If the character entered by the user is not one of
+    ``R'', ``P'', or ``S'', the program keeps on prompting the user to enter a
+    character.
+
+    % http://cs.smith.edu/dftwiki/index.php/CSC111_While_Loop_Exercises
+
+    For example:
+
+\begin{verbatimcode}
+Enter R, P, or S >>> A
+Did not enter R, P, or S. Try again.
+Enter R, P, or S >>> R
+You chose rock. Exiting.
+\end{verbatimcode}
+
+  \item[sums.py] Write a program that keeps prompting the user for numbers to
+    add to a sum until the user types in ``exit''. Then, display the sum of the
+    numbers previously entered. Assume the user input is nothing other than
+    numbers or ``exit''.
+
+    For example:
+
+\begin{verbatimcode}
+Enter a number to add to the sum >>> 15
+Enter a number to add to the sum >>> 14.5
+Enter a number to add to the sum >>> 12.25
+Enter a number to add to the sum >>> exit
+Sum of numbers: 41.75
+\end{verbatimcode}
+
   \item[fizzbuzz.py] Have the user enter a positive integer number. Then, print
     the numbers from 1 to that number each on a line. When the printed number is
     divisible by 3, print ``Fizz'', and when the number is divisible by 5, print
@@ -915,22 +946,23 @@ Not a positive number!
     all those numbers? At which point do you know that you can stop? Remember to
     \pythoninline!import math!.
 
-  \item[dna.py] 
-    DNA is generally encoded with four letters: A, T, G, and C. For example, a
-    string of DNA would be ``ATTGCAT''.
 
-    You can find the ``complement'' of DNA for some biological reason (it is
-    double stranded, but that does not matter to us). The complement of A is T
-    and vice versa; the complement of G is C and vice versa.
-
-    Write a program that takes in a strand of DNA from the user using
-    \pythoninline!input()! and finds its complement. You may assume the user's
-    input is valid.
-
-    \begin{verbatimcode}
-Enter DNA: ATTGCAT
-Complement is: TAACGTA
-    \end{verbatimcode}
+%  \item[dna.py] 
+%    DNA is generally encoded with four letters: A, T, G, and C. For example, a
+%    string of DNA would be ``ATTGCAT''.
+%
+%    You can find the ``complement'' of DNA for some biological reason (it is
+%    double stranded, but that does not matter to us). The complement of A is T
+%    and vice versa; the complement of G is C and vice versa.
+%
+%    Write a program that takes in a strand of DNA from the user using
+%    \pythoninline!input()! and finds its complement. You may assume the user's
+%    input is valid.
+%
+%    \begin{verbatimcode}
+%Enter DNA: ATTGCAT
+%Complement is: TAACGTA
+%    \end{verbatimcode}
 
 \end{description}
 
@@ -1090,7 +1122,8 @@ Files to submit:
   \item fizzbuzz.py (see Section~\ref{subsec:whileex})
 %  \item fizzbuzz\_for.py (see Section~\ref{subsec:whileex})
   \item primes.py (see Section~\ref{subsec:whileex})
-  \item dna.py (see Section~\ref{subsec:whileex})
+  \item rps.py (see Section~\ref{subsec:whileex})
+  \item sums.py (see Section~\ref{subsec:whileex})
   \item polygons.py (see Section~\ref{subsec:turtleex})
   \item navigate.py (see Section~\ref{subsec:turtleex})
   \item star.py (see Section~\ref{subsec:turtleex})
