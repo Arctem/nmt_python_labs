@@ -24,55 +24,64 @@
 
 \maketitle
 
-\hrule
-\vspace{0.5em}
-\begin{minipage}{0.32\textwidth}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.85\textwidth]{img/xkcd_python.png}
+  \caption{xkcd 353: Python (Source: \url{http://xkcd.com/353})}
+\end{figure}
 
+\pagebreak
+\hrule
+%\vspace{0.5em}
+%\begin{minipage}{0.32\textwidth}
+
+\begin{quotation}
 ``If you don't think carefully, you might believe that programming is just
 typing statements in a programming language.''
+\end{quotation}
 \begin{flushright}
   --- W. Cunningham
 \end{flushright}
 
-\vspace{2em}
+%\vspace{2em}
 
+\begin{quotation}
 ``Only ugly languages become popular. Python is the exception.''
+\end{quotation}
 \begin{flushright}
   --- Donald Knuth
 \end{flushright}
 
-\vspace{2em}
+%\vspace{2em}
 
+\begin{quotation}
 ``need funny quote.''
+\end{quotation}
 \begin{flushright}
   --- Chris
 \end{flushright}
 
-\end{minipage} 
-\begin{minipage}{0.68\textwidth}
-  \begin{flushright}
-  \includegraphics[width=0.97\textwidth]{img/xkcd_python.png}
-  \end{flushright}
-\end{minipage}
-\vspace{0.5em}
+%\end{minipage} 
+%\begin{minipage}{0.68\textwidth}
+%  \begin{flushright}
+%  \includegraphics[width=0.97\textwidth]{img/xkcd_python.png}
+%  \end{flushright}
+%\end{minipage}
+%\vspace{0.5em}
 \hrule
 
-\section*{Introduction}
-\addcontentsline{toc}{section}{Introduction}
+\tableofcontents
+
+\pagebreak
+\pagenumbering{arabic}
+
+\section{Introduction}
 \label{sec:intro}
 
 In the previous lab, we showed you simple control flow and how to repeat a piece
 of code using \pythoninline{while}. In this lab, we will be learning how to
 break a lot of code into smaller, reusable pieces called \emph{functions}.
 
-The comic above is titled \emph{Python} and by xkcd (\url{http://xkcd.com/353/}).
-
-\pagebreak
-
-\tableofcontents
-
-\pagebreak
-\pagenumbering{arabic}
 \section{Making Calculations Shorter}
 \label{sec:calc}
 
