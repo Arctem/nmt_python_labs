@@ -19,9 +19,7 @@
 \title{Lab 3: Functions}
 
 \begin{document}
-
 \pagenumbering{roman}
-
 \maketitle
 
 \begin{figure}[H]
@@ -32,7 +30,6 @@
 
 \pagebreak
 \hrule
-
 \begin{quotation}
 ``If you don't think carefully, you might believe that programming is just
 typing statements in a programming language.''
@@ -71,7 +68,31 @@ break a lot of code into smaller, reusable pieces called \emph{functions}.
 \section{Making Calculations Shorter}
 \label{sec:calc}
 
-+=, -=, /=, etc operators
+We showed you simple Python operators such as \pythoninline{+},
+\pythoninline{-}, \pythoninline{*}, \pythoninline{%},
+etc in lab 1. There is a small extension to these that you can use to update a
+variable:
+
+\begin{pyconcode}
+>>> x = 5
+>>> x += 3 # same as x = x + 3
+>>> x
+8
+\end{pyconcode}
+
+The available assignment operators are:
+\begin{multicols}{2}
+\begin{itemize}
+  \item \pythoninline{+=} -- addition
+  \item \pythoninline{-=} -- subtraction
+  \item \pythoninline{*=} -- multiplication
+  \item \pythoninline{/=} -- division
+  \item \pythoninline{//=} -- integer division
+  \item \pythoninline{%=} -- remainder
+  \item \pythoninline{**=} -- exponentiation
+\end{itemize}
+\end{multicols}
+They each correspond to the non-assignment version.
 
 \pagebreak
 \section{Functions}
