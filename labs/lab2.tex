@@ -535,8 +535,7 @@ else:
 \subsection{Exercises}
 \label{subsec:ifex}
 
-\begin{description}
-  \item[conversions.py] Use your \texttt{conversions.py} from last time and add a
+\begin{ex}[conversions.py] Use your \texttt{conversions.py} from last time and add a
     prompt asking the user whether to convert to Kelvin or Fahrenheit. It should
     look like this when it is run:
 
@@ -559,8 +558,9 @@ Please input the temperature in Celsius: 10
 Please choose Kelvin (K) or Fahrenheit (F): E
 You entered a letter I do not recognize.
     \end{verbatimcode}
+\end{ex}
 
-  \item[calculator.py] Write a small calculator that can compute arcsin, arccos,
+\begin{ex}[calculator.py] Write a small calculator that can compute arcsin, arccos,
     arctan and square root of a number. Use \pythoninline!math.sqrt()!,
     \pythoninline!math.asin()!, \pythoninline!math.acos()!, and
     \pythoninline!math.atan()!. Remember to import \pythoninline!math!.
@@ -582,7 +582,7 @@ Which operation? sqrt (s), arcsin (a), arccos (c), arctan (t): a
 16 is not in the domain of arcsin!
     \end{verbatimcode}
 
-\end{description}
+\end{ex}
 
 \pagebreak
 \section{Formatting Strings}
@@ -866,8 +866,7 @@ while condition:
 \subsection{Exercises}
 \label{subsec:whileex}
 
-\begin{description}
-  \item[rps.py] Write a program that reads a character for playing the game of
+\begin{ex}[rps.py] Write a program that reads a character for playing the game of
     rock-paper-scissors. If the character entered by the user is not one of
     ``R'', ``P'', or ``S'', the program keeps on prompting the user to enter a
     character.
@@ -882,32 +881,45 @@ Did not enter R, P, or S. Try again.
 Enter R, P, or S >>> R
 You chose rock. Exiting.
 \end{verbatimcode}
+\end{ex}
 
-  \item[sums.py] Write a program that keeps prompting the user for numbers to
-    add to a sum until the user types in ``exit''. Then, display the sum of the
-    numbers previously entered. Assume the user input is nothing other than
-    numbers or ``exit''.
+\begin{ex}[sums.py] Write a program that keeps prompting the user for numbers to
+  add to a sum until the user types in ``exit''. Then, display the sum of the
+  numbers previously entered. Assume the user input is nothing other than
+  numbers or ``exit''.
 
-    For example:
+  For example:
 
-\begin{verbatimcode}
+  \begin{verbatimcode}
 Enter a number to add to the sum >>> 15
 Enter a number to add to the sum >>> 14.5
 Enter a number to add to the sum >>> 12.25
 Enter a number to add to the sum >>> exit
 Sum of numbers: 41.75
-\end{verbatimcode}
+  \end{verbatimcode}
+\end{ex}
 
-  \item[fizzbuzz.py] Have the user enter a positive integer number. Then, print
-    the numbers from 1 to that number each on a line. When the printed number is
-    divisible by 3, print ``Fizz'', and when the number is divisible by 5, print
-    ``Buzz'', and when it is divisible by both, print ``FizzBuzz''.
+  \begin{ex}[primes.py] Write a program that checks if a number $N$ is prime.
+    You have to ask the user for the number. Remember that a prime number is a
+    number that is divisible only by $1$ and itself.
 
-    You must use \pythoninline!.format()! and a \pythoninline!while! loop.
+    A simple approach checks all numbers from $2$ up to $N$.
 
-    Should look like this when run:
+    Try to improve on the simple approach, though: do we really need to check
+    all those numbers? At which point do you know that you can stop? Remember to
+    \pythoninline!import math!.
+  \end{ex}
 
-    \begin{verbatimcode}
+\begin{ex}[fizzbuzz.py] Have the user enter a positive integer number. Then,
+  print the numbers from 1 to that number each on a line. When the printed
+  number is divisible by 3, print ``Fizz'', and when the number is divisible by
+  5, print ``Buzz'', and when it is divisible by both, print ``FizzBuzz''.
+
+  You must use \pythoninline!.format()! and a \pythoninline!while! loop.
+
+  Should look like this when run:
+
+  \begin{verbatimcode}
 Enter a number: 16
 1
 2
@@ -925,29 +937,21 @@ Enter a number: 16
 14
 15 FizzBuzz
 16
-    \end{verbatimcode}
+  \end{verbatimcode}
 
-    \begin{verbatimcode}
+  \begin{verbatimcode}
 Enter a number: -1
 Not a positive number!
-    \end{verbatimcode}
+  \end{verbatimcode}
+\end{ex}
 
-%  \item[fizzbuzz\_for.py] Write the same fizzbuzz program using a
+%  \begin{ex}[fizzbuzz\_for.py] Write the same fizzbuzz program using a
 %    \pythoninline!for! loop and \pythoninline!range()! this time. Using
 %    \pythoninline!.format()! is still required.
-
-  \item[primes.py] Write a program that checks if a number $N$ is prime. You
-    have to ask the user for the number. Remember that a prime number is a
-    number that is divisible only by $1$ and itself.
-
-    A simple approach checks all numbers from $2$ up to $N$.
-
-    Try to improve on the simple approach, though: do we really need to check
-    all those numbers? At which point do you know that you can stop? Remember to
-    \pythoninline!import math!.
+%  \end{ex}
 
 
-%  \item[dna.py] 
+%  \begin{ex}[dna.py] 
 %    DNA is generally encoded with four letters: A, T, G, and C. For example, a
 %    string of DNA would be ``ATTGCAT''.
 %
@@ -963,8 +967,7 @@ Not a positive number!
 %Enter DNA: ATTGCAT
 %Complement is: TAACGTA
 %    \end{verbatimcode}
-
-\end{description}
+% \end{ex}
 
 \pagebreak
 \section{Turtle}
@@ -1032,22 +1035,21 @@ while counter < 6:
 \subsection{Exercises}
 \label{subsec:turtleex}
 
-\begin{description}
-  \item[star.py] Write a program that draws a shape like the picture below.
-
-    \begin{figure}[!ht]
-      \centering
+\begin{ex}[star.py] Write a program that draws a shape like the picture below.
+  
+    \begin{center}
       \includegraphics[width=1.0in]{img/star}
       % Picture and exercise taken from
       % http://openbookproject.net/thinkcs/python/english3e/hello_little_turtles.html
       % public under GNU license
       % Copyright of Peter Wentworth, Jeffrey Elkner, Allen B. Downey and Chris Meyers
-    \end{figure}
+    \end{center}
 
     Hint: Try this on paper first. (It does not matter if the turtle is still
     displayed once it is drawn.)
+  \end{ex}
 
-  \item[polygons.py] Write a program that takes in a number using
+\begin{ex}[polygons.py] Write a program that takes in a number using
     \pythoninline{input} and then draws a regular polygon with that many sides. A
     regular polygon is one where each side is the same length and each corner is
     the same angle. For example, the sample code given in the section draws a
@@ -1060,14 +1062,14 @@ How many sides? 3
     \end{verbatimcode}
 
     Output:
-    \begin{figure}[h]
-      \centering
+    \begin{center}
 %      \vspace{-10mm}
       \includegraphics[width=2.0in]{img/triangle}
 %    \vspace{-10mm}
-    \end{figure}
+    \end{center}
+  \end{ex}
 
-  \item[navigate.py] Write a program that takes directions from the command line
+\begin{ex}[navigate.py] Write a program that takes directions from the command line
     to draw a line. Let the user input ``left'', ``right'', ``forward'', or
     ``stop''. Left and right turn the turtle left or right however many degrees
     are entered, forward moves the turtle forward (however far you wish), and
@@ -1101,33 +1103,17 @@ Please enter a direction: stop
   \end{verbatimcode}
 
     Output:
-  \begin{figure}[!ht]
-    \centering
+    \begin{center}
 %    \vspace{-5mm}
     \includegraphics[width=1.0in]{img/navigate}
 %    \vspace{-10mm}
-  \end{figure}
+  \end{center}
 
-
-\end{description}
+\end{ex}
 
 \pagebreak
 
 \section{Submitting}
-
-Files to submit:
-\begin{itemize}
-  \item conversions.py (see Section~\ref{subsec:ifex})
-  \item calculator.py (see Section~\ref{subsec:ifex})
-  \item fizzbuzz.py (see Section~\ref{subsec:whileex})
-%  \item fizzbuzz\_for.py (see Section~\ref{subsec:whileex})
-  \item primes.py (see Section~\ref{subsec:whileex})
-  \item rps.py (see Section~\ref{subsec:whileex})
-  \item sums.py (see Section~\ref{subsec:whileex})
-  \item polygons.py (see Section~\ref{subsec:turtleex})
-  \item navigate.py (see Section~\ref{subsec:turtleex})
-  \item star.py (see Section~\ref{subsec:turtleex})
-\end{itemize}
 
 You should submit your code as a tarball. It should contain all files
 used in the exercises for this lab. The submitted file should be named
@@ -1138,5 +1124,7 @@ used in the exercises for this lab. The submitted file should be named
 \begin{center}
   \textbf{Upload your tarball to Canvas.}
 \end{center}
+
+\listoftheorems
 
 \end{document}

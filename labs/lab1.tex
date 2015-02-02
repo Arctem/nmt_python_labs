@@ -935,36 +935,36 @@ There are more functions in the math library, you can find them documented here:
 \pagebreak
 
 \section{Exercises}
-\subsection{Conversions}
-Download \texttt{conversions.py}. It is a simple Python program for converting
-temperatures from Celsius to Kelvin. We would like to modify it to also convert
-the temperatures to Fahrenheit. Currently, the output of the program is
-something like this:
 
-\begin{verbatimcode}
+\begin{ex}[conversions.py] Download \texttt{conversions.py}. It is a simple
+  Python program for converting temperatures from Celsius to Kelvin. We would
+  like to modify it to also convert the temperatures to Fahrenheit. Currently,
+  the output of the program is something like this:
+
+  \begin{verbatimcode}
 Please input a temperature in Celsius: 10
 Kelvin temperature: 283.15
-\end{verbatimcode}
+  \end{verbatimcode}
 
-Add code (you should not need to modify the existing lines, though you are free
-to) so that its output is as follows:
+  Add code (you should not need to modify the existing lines, though you are free
+  to) so that its output is as follows:
 
-\begin{verbatimcode}
+  \begin{verbatimcode}
 Please input a temperature in Celsius: 10
 Kelvin temperature: 283.15
 Fahrenheit temperature: 50.0
-\end{verbatimcode}
+  \end{verbatimcode}
+\end{ex}
 
-\subsection{Shapes}
-Download \texttt{shapes.py}. It is the start of a Python program to display
-information about shapes. Currently it gets the of the radius of a circle and
-the three sides of a box. Using this information, add additional code to compute
-the circumference and area of the circle as well as the volume and surface area
-of the box.
+\begin{ex}[shapes.py] Download \texttt{shapes.py}. It is the start of a Python
+  program to display information about shapes. Currently it gets the of the
+  radius of a circle and the three sides of a box. Using this information, add
+  additional code to compute the circumference and area of the circle as well as
+  the volume and surface area of the box.
 
-That is, we want the output of the program to looking something like this:
+  That is, we want the output of the program to looking something like this:
 
-\begin{verbatimcode}
+  \begin{verbatimcode}
 Please input the radius of the circle: 3
 The circumference of the circle is 18.84
 The area of the circle is 28.26
@@ -973,19 +973,18 @@ Please input the height of the box: 6
 Please input the length of the box: 4
 The surface area of the box is 88.0
 The volume of the box is 48.0
-\end{verbatimcode}
+  \end{verbatimcode}
+\end{ex}
 
 \pagebreak
 \section{Submitting}
 
-You may submit your code as either a tarball (instructions below) or as a .zip
-file. Either one should contain all files used in the exercises for this lab.
-The submitted file should be named either
-\texttt{cse107\_firstname\_lastname\_lab1.zip} or
-\texttt{cse107\_firstname\_lastname\_lab1.tar.gz} depending on which method you
-used.
-
-\subsection{Linux}
+You need to submit your code as a tarball (instructions below)
+file. It should contain all files used in the exercises for this lab.
+The submitted file should be named
+\begin{center}
+\texttt{cse107\_firstname\_lastname\_lab1.tar.gz}
+\end{center}
 
 Tar is used much the same way that Zip is used in Windows: it combines many
 files and/or directories into a single file. Gzip is used in Linux to compress a
@@ -1013,8 +1012,10 @@ $ tar tvf cse107_firstname_lastname_lab1.tar.gz
 
 You should see a list of your Python source code files.
 
-
 \begin{center}
   \textbf{Upload your tarball to Canvas.}
 \end{center}
+
+\listoftheorems
+
 \end{document}

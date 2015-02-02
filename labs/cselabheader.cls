@@ -29,8 +29,7 @@
 \usepackage{IEEEtrantools}
 % Indention formatting
 \setlength{\parindent}{0.0in}
-\setlength{\parskip}{0.03in}
-
+\setlength{\parskip}{0.04in}
 
 % Margin support
 \usepackage[margin=1in]{geometry}
@@ -180,6 +179,35 @@
   \begin{mdframed}[]\relax
 }{\end{mdframed}}
 
+\usepackage{amsmath} % MATH
+
+\usepackage{amsthm, thmtools}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools} % matrix alignment
+\usepackage{dsfont}
+\usepackage{IEEEtrantools} % nice equations
+
+\theoremstyle{definition}
+\declaretheoremstyle[
+  headfont=\bfseries,
+  notebraces={(}{)},
+  headpunct={.},
+  postheadspace=\newline,
+  spacebelow=\parsep,
+  spaceabove=\parsep,
+  mdframed={
+    linecolor=black,
+    innertopmargin=7pt,
+    innerbottommargin=7pt,
+    skipabove=\parsep,
+    skipbelow=\parsep
+  }
+]{exercises}
+\declaretheorem[style=exercises,name=Exercise,refname={exercise,exercises},Refname={Exercise,Exercises},numberwithin=section]{ex}
+\renewcommand{\listtheoremname}{List of Files to Submit}
+
+\setlength{\itemsep}{0in}
 
 \def\Version#1{\def\version{#1}}
 
