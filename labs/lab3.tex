@@ -17,6 +17,7 @@
 \documentclass[11pt]{cselabheader}
 \fancyhead[R]{Lab 3: Functions}
 \title{Lab 3: Functions}
+\usepgflibrary{fpu}
 
 \begin{document}
 \pagenumbering{roman}
@@ -99,9 +100,9 @@ They each correspond to the non-assignment version.
 \label{sec:funcs}
 
 So far, we have used functions such as \pythoninline{print()} and
-\pythoninline{math.sqrt()}, but we have not yet written our own function. 
+\pythoninline{math.sqrt()}, but we have not yet written our own functions.
 
-But first, let's talk about why to write functions. Some reasons:
+Before we dive into that, let's talk about why to write functions. Some reasons:
 \begin{itemize}
   \item Instead of writing the same code again, we can just call a function
     containing the code again. (Functions are \emph{reusable}.)
@@ -646,11 +647,138 @@ if __name__ == "__main__":
 \section{Advanced Functions}
 \label{sec:adv}
 
-\subsection{Positional and Optional Arguments}
+\subsection{Keyword Arguments}
 \label{subsec:adv.args}
+
+Many of the built-in functions we have been using, such as \pythoninline{input}
+and \pythoninline{print}, accept a variable number of arguments. We can do the
+same thing with our own functions by specifying default values for our
+arguments:
+
+\begin{pyconcode}
+>>> def celebrate(times=1):
+...     i = 1
+...     while i <= times:
+...         print("Yay!")
+...         i += 1
+...
+>>> celebrate()
+Yay!
+>>> celebrate(5)
+Yay!
+Yay!
+Yay!
+Yay!
+Yay!
+\end{pyconcode}
+
+Here, we have a function called \pythoninline!celebrate! which takes the
+parameter variable \pythoninline!times!. If that parameter is left unspecified
+in a function call, it will take the \emph{default value} of 1.
+
+Note what happens for each call of this function. The first time it only prints
+\pythoninline{"Yay!"} once, since the default argument is \pythoninline{1},
+while the second call overwrites the default value and prints it five times.
+
+While you are allowed to have a function that has some arguments with default
+values and some without, you must always put those with default values after
+those without any, so that Python will know which arguments go into which values
+if you do not include all of them when calling the function. This is because
+arguments from a function call are usually matched in order by their position.
+
+\begin{pyconcode}
+>>> def test(a, b=5, c, d=6):
+...     print(a, b, c, d)
+  File "<stdin>", line 1
+SyntaxError: non-default argument follows default argument
+>>> def test(a, c, b=5, d=6):
+...     print(a, b, c, d)
+...
+>>> test(2, 3)
+2 5 3 6
+>>> test(2, 3, 10)
+2 10 3 6
+>>> test(2, 3, 10, 100)
+2 10 3 100
+\end{pyconcode}
+
+We call the arguments that are non-default arguments \emph{positional
+arguments}, while the default arguments are called \emph{keyword arguments}.
+
+Sometimes we might want to include some default arguments while excluding
+others. We do this by specifying which of the arguments we wish to pass a value
+to:
+
+\begin{pyconcode}
+>>> def test(a=0, b=0, c=0, d=0):
+...     print(a, b, c, d)
+...
+>>> test(c=10)
+0 0 10 0
+>>> test(d=5, c=6)
+0 0 6 5
+\end{pyconcode}
+
+\begin{itemize}
+  \item If a function's caller supplies both positional and keyword arguments,
+    all positional parameters must precede all keyword parameters.
+  \item Keyword parameters may occur in any order.
+  \item The function call must supply at least as many parameters as the
+    function has positional arguments.
+  \item If the caller supplies more positional parameters than the function has
+    positional arguments, parameters are matched with keyword arguments
+    according to their position.
+\end{itemize}
 
 \subsection{Recursion}
 \label{subsec:adv.recursion}
+
+Recursion is the idea of a function calling itself. This can be useful in a wide
+variety of situations, but it can also be easy to misuse. Let us first look at a
+good example:
+\begin{python3code}
+def factorial(n):
+    if n <= 1:
+        return 1
+    else
+        return n * factorial(n-1)
+\end{python3code}
+
+Notice that this is just another way to repeat a statement, similar to a loop.
+In a loop, we have to specify when to stop repeating something, and we have to
+do the same thing with recursion; otherwise, it would run forever.
+
+As an example, see this simple \emph{bad} case of recursion:
+
+\begin{python3code}
+def test():
+    test()
+\end{python3code}
+
+If this function is called, it will continue to call itself infinitely until
+Python prints out an error message and quits. This is because the function calls
+itself every time it is called -- there is no case where the function ends
+without calling itself again. The case in which the recursion ends is called a
+\emph{base case} and it is important to include one in every recursive function.
+Here is a modified version of the above code that allows the initial call to
+specify a value limiting how many times the recursive call should be made:
+
+\begin{python3code}
+def test(x):
+    if x > 0:
+        test(x - 1)
+\end{python3code}
+
+As an example of a good recursive function, here's a function that prints the
+powers of two from a given $n$ down to $1$:
+
+\begin{pyconcode}
+>>> def powersof2(n):
+...     if n >= 1:
+...         print('{:10d} {:2d} {:17.15f}'.format(2**n, n, 2**(-n)))
+...         powersof2(n-1)
+...
+\end{pyconcode}
 
 \subsection{Summary}
 \label{subsec:adv.sum}
@@ -665,6 +793,25 @@ if __name__ == "__main__":
 \begin{ex}[expo.py] Write a recursive function that takes in a base and an
   exponent and returns the value of that base taken to that exponent. You are
   not allowed to use \lstinline{**} or any built-in exponentiation functions.
+\end{ex}
+
+\begin{ex}[pascal.py] \hfill
+  \begin{center}
+\def\N{9}
+\tikz[x=0.75cm,y=0.5cm, 
+  pascal node/.style={font=\small}, 
+  row node/.style={font=\footnotesize, anchor=west, shift=(180:1)}]
+  \path  
+    \foreach \n in {0,...,\N} { 
+      (-\N/2-1, -\n) node  [row node/.try]{Row \n:}
+        \foreach \k in {0,...,\n}{
+          (-\n/2+\k,-\n) node [pascal node/.try] {%
+            \pgfkeys{/pgf/fpu}%
+            \pgfmathparse{round(\n!/(\k!*(\n-\k)!))}%
+            \pgfmathfloattoint{\pgfmathresult}%
+            \pgfmathresult%
+          }}};
+  \end{center}
 \end{ex}
 
 \pagebreak

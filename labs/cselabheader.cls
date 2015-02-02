@@ -51,8 +51,10 @@
 \definecolor{light-gray}{gray}{0.9}
 \definecolor{green}{RGB}{0,127,0}
 \definecolor{dred}{rgb}{0.6,0,0}
+\definecolor{maroon}{rgb}{0.35,0,0}
 \definecolor{dkbrown}{RGB}{92,51,23}
 \definecolor{lightgray}{rgb}{0.93,0.93,0.93}
+\definecolor{anothergray}{rgb}{0.95,0.95,0.99}
 % Outline support
 %\usepackage{outlines}
 % URL formatting
@@ -190,16 +192,23 @@
 
 \theoremstyle{definition}
 \declaretheoremstyle[
-  headfont=\bfseries,
+  headfont=\color{maroon}\sffamily\bfseries,
   notebraces={(}{)},
+  notefont=\mdseries,
+  bodyfont=\normalfont,
   headpunct={.},
   postheadspace=\newline,
   spacebelow=\parsep,
   spaceabove=\parsep,
   headindent=0pt,
   mdframed={
-    linecolor=black,
-    middlelinewidth=1pt,
+    %linecolor=black,
+    %backgroundcolor=black!20,
+    topline=false,
+    rightline=false,
+    leftline=false,
+    bottomline=false,
+    backgroundcolor=anothergray,
     innertopmargin=7pt,
     innerrightmargin=10pt,
     innerleftmargin=10pt,
