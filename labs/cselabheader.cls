@@ -29,7 +29,7 @@
 \usepackage{IEEEtrantools}
 % Indention formatting
 \setlength{\parindent}{0.0in}
-\setlength{\parskip}{0.05in}
+\setlength{\parskip}{0.03in}
 
 
 % Margin support
@@ -37,9 +37,6 @@
 \usepackage{float}
 \usepackage{hyperref}
 
-\hypersetup{
-  hidelinks
-}
 \usepackage{minted}
 \usepackage[format=plain,font=small,labelfont=bf]{caption}
 \usepackage{wrapfig}
@@ -189,3 +186,4 @@
 \author{CSE/IT 107}
 \date{NMT Department of Computer Science and Engineering}
 
+\hypersetup{hidelinks}
