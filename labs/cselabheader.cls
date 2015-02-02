@@ -196,9 +196,13 @@
   postheadspace=\newline,
   spacebelow=\parsep,
   spaceabove=\parsep,
+  headindent=0pt,
   mdframed={
     linecolor=black,
+    middlelinewidth=1pt,
     innertopmargin=7pt,
+    innerrightmargin=10pt,
+    innerleftmargin=10pt,
     innerbottommargin=7pt,
     skipabove=\parsep,
     skipbelow=\parsep
@@ -206,6 +210,16 @@
 ]{exercises}
 \declaretheorem[style=exercises,name=Exercise,refname={exercise,exercises},Refname={Exercise,Exercises},numberwithin=section]{ex}
 \renewcommand{\listtheoremname}{List of Files to Submit}
+
+%\makeatletter
+%\AtBeginEnvironment{ex}{%
+%  \patchcmd\@ex
+%    {\trivlist}
+%    {\list{}{\leftmargin2.5em\itemindent-5em}}
+%    {}{}%
+%  \patchcmd\thmt@original@endex{\endtrivlist}{\endlist}{}{}%
+%}
+%\makeatother
 
 \setlength{\itemsep}{0in}
 
