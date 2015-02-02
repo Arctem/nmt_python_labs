@@ -95,15 +95,162 @@ The available assignment operators are:
 They each correspond to the non-assignment version.
 
 \pagebreak
-\section{Functions}
+\section{\protect\pythoninline{def}: Functions}
 \label{sec:funcs}
 
-We have used 
+So far, we have used functions such as \pythoninline{print()} and
+\pythoninline{math.sqrt()}, but we have not yet written our own function. 
+
+But first, let's talk about why to write functions. Some reasons:
+\begin{itemize}
+  \item Instead of writing the same code again, we can just call a function
+    containing the code again. (Functions are \emph{reusable}.)
+  \item Functions allow us to break our programs into many smaller pieces. This
+    also allows us to easily think about each small piece in detail.
+  \item Functions allow us to test small parts of our programs while not
+    affecting other parts of the program -- this reduces errors in our code.
+\end{itemize}
+
+A Python function is simply a ``container'' for a sequence of Python statements
+that do some task. Usually, a function does one task and one task only, but it
+does it really well. Here's the general form of how to write a function:
+
+\begin{python3code}
+def function_name(arg0, arg1, ...):
+    # block of code
+\end{python3code}
+
+A function can have \emph{zero or more} arguments. For example:
+
+\begin{pyconcode}
+>>> def pirate_noises():
+...     i = 1
+...     while i <= 4:
+...         print("Arr!")
+...         i += 1
+...
+\end{pyconcode}
+
+To call this function:
+
+\begin{pyconcode}
+>>> pirate_noises()
+Arr!
+Arr!
+Arr!
+Arr!
+\end{pyconcode}
+
+To call a function, use its name followed by parentheses which contain
+comma-separated parameters:
+
+\begin{python3code}
+function_name(param0, param1, ...)
+\end{python3code}
+
+\begin{itemize}
+  \item You must use parentheses both in the function definition and the function
+    call, even if there are zero arguments.
+  \item The parameter values are substituted for the corresponding arguments to
+    the function. I.e. the value of parameter param0 is substituted for argument
+    arg0, param1 is substituted for arg1, and so forth.
+\end{itemize}
+
+For example:
+
+\begin{pyconcode}
+>>> def grocer(num_fruits, fruit_kind):
+...     print('Stock: {} cases of {}'.format(num_fruits, fruit_kind))
+...
+>>> grocer(37, 'kale')
+Stock: 37 cases of kale
+>>> grocer(0, 'bananas')
+Stock: 0 cases of bananas
+\end{pyconcode}
+
+\subsection{\protect\pythoninline{return}: Giving back values from a function}
+
+When we used functions from the math module, we were always able to assign the
+result of a function to a variable or to print it. For example:
+
+\begin{pyconcode}
+>>> import math
+>>> x = math.sqrt(16)
+>>> print(x)
+4.0
+\end{pyconcode}
+
+So how do we get a function to give back a value (\emph{return} a value)? We use
+the return statement:
+
+\begin{pyconcode}
+>>> def square(x):
+...     return x**2
+...
+>>> y = square(5)
+>>> print(y)
+25
+>>> square(4.3)
+18.49
+\end{pyconcode}
+
+As soon as a \pythoninline{return} statement is reached, the function stops
+executing and just returns the value given to it. Any subsequent statements that
+are part of the function will be omitted. For example:
+
+\begin{pyconcode}
+>>> def wage(hours, base_rate):
+...     if hours > 40:
+...         ot_pay = (hours - 40) * base_rate * 1.5
+...         return base_rate * 40 + ot_pay
+...     pay = hours * base_rate
+...     return pay
+...
+>>> wage(40, 10)
+400
+>>> wage(50, 10)
+550
+\end{pyconcode}
+
+\begin{itemize}
+  \item You can omit the expression after the return and just use a statement of
+    this form:
+
+    \begin{python3code}
+return
+    \end{python3code}
+
+    In this case, the special value \pythoninline{None} is returned from the
+    function.
+
+  \item If Python executes your function body and never encounters a
+    \pythoninline{return} statement, the effect is the same as a
+    \pythoninline{return} with no value at the end of the function body: the
+    special value \pythoninline{None} is returned.
+\end{itemize}
 
 \subsection{Summary}
 \label{subsec:funcs.sum}
 
 \begin{itemize}
+  \item Function definition syntax:
+
+    \begin{python3code}
+def function_name(arg0, arg1, ...):
+    # block of code
+    \end{python3code}
+
+    Function call syntax:
+
+    \begin{python3code}
+function_name(param0, param1, ...)
+    \end{python3code}
+
+  \item A function may take zero or more arguments.
+
+  \item A function returns one value. (If the programmer does not specify a
+    value, the special value \pythoninline{None} is returned.)
+
   \item A good resource:
 
 \begin{center}
@@ -114,6 +261,36 @@ We have used
 
 \subsection{Exercises}
 \label{subsec:funcs.ex}
+
+\begin{description}
+  \item[mathutils.py] Write a Python file that contains the following functions:
+
+    \begin{itemize}
+      \item \pythoninline{sum_numbers}: given an integer $n$, returns the sum of
+        the integers between one and $n$.
+      \item \pythoninline{right_triangle_hypotenuse}: given the lengths of each
+        of the two legs of a right triangle, returns the length of the
+        hypotenuse.  (Hint: remember the Pythagorean theorem.)
+      \item \pythoninline{triangle_area}: given the base width and height of a
+        triangle, returns the area of the triangle.
+      \item \pythoninline{triangle_angle}: given two angles' value in degrees,
+        finds the value of the third angle of a triangle.
+    \end{itemize}
+
+  \item[calls.py] You buy an international calling card to Germany. The calling
+    card company has some special offers.
+
+    \begin{enumerate}[(a)]
+      \item If you charge your card with less than \$10, you don't get anything
+        extra.
+      \item For a less than \$25 charge, you get \$3 of extra phone time.
+      \item For a less than \$50 charge, you get \$8 of extra phone time.
+      \item For a less than \$100 charge, you get \$20 of extra phone time.
+      \item For a more than \$100 charge, you get \$25 of extra phone time.
+    \end{enumerate}
+
+    Write a function that takes the value the user wants to 
+\end{description}
 
 \pagebreak
 \section{Conventions}
@@ -481,12 +658,24 @@ if __name__ == "__main__":
 \subsection{Exercises}
 \label{subsec:adv.ex}
 
+\begin{description}
+  \item[sum.py] Write a recursive function that computes the sum of all the
+    numbers from 1 to $n$, where $n$ is the given parameter.
+
+  \item[expo.py] Write a recursive function that takes in a base and an exponent
+    and returns the value of that base taken to that exponent. You are not
+    allowed to use \lstinline{**} or any built-in exponentiation functions.
+\end{description}
+
 \pagebreak
 \section{Submitting}
 
 Files to submit:
 \begin{itemize}
-  \item 
+  \item mathutil.py (Section~\ref{subsec:funcs.ex})
+  \item calls.py (Section~\ref{subsec:funcs.ex})
+  \item sum.py (Section~\ref{subsec:adv.ex})
+  \item expo.py (Section~\ref{subsec:adv.ex})
 \end{itemize}
 
 You should submit your code as a tarball. It should contain all files
