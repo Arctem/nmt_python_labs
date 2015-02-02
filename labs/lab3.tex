@@ -1,947 +1,503 @@
-% LAB 3: Lists and Strings
-% 
+% LAB 3: Functions
+%
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
-% 
+%
 % Prepared by Russell White and Christopher Koch
-% Fall 2014
-\documentclass[11pt]{cselabheader}
+% Spring 2015
 
-%%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 3: Lists and Strings}
-\title{Lab 3: Lists and Strings}
+% - Functions
+%   - Positional and Optional Arguments
+%   - Recursion
+% - Modules
+%   - import statements
+%   - main() boilerplate
+% - Comments and PEP-8 style
+% - Keywords: def
+\documentclass[11pt]{cselabheader}
+\fancyhead[R]{Lab 3: Functions}
+\title{Lab 3: Functions}
 
 \begin{document}
-
+\pagenumbering{roman}
 \maketitle
 
-\hrule
-
-\begin{quotation}
-``Programming is learned by writing programs.''
-\end{quotation}
-\begin{flushright}
---- Brian Kernighan
-\end{flushright}
-
-\begin{quotation}
-``The purpose of computing is insight, not numbers.''
-\end{quotation}
-\begin{flushright}
---- Richard Hamming, 1962
-\end{flushright}
-
-\begin{quotation}
-  ``From our own history we learn what man is capable of. For that reason we
-  must not imagine that we are quite different and have become better.''
-\end{quotation}
-\begin{flushright}
-	--- Richard von Weizs\"{a}cker
-%\\\textit{Speech to commemorate end of WW II, May 8 1985}
-% English: http://www.hariguchi.org/yoichi/weizsaecker.html
-% Famous speech by RvW, President of Fed Rep of Germ, for the 
-% commemoration of the 40th anniversary of the end of WWII in
-% Germany on May 8, 1985
-% German: http://www.hdg.de/lemo/html/dokumente/NeueHerausforderungen_redeVollstaendigRichardVonWeizsaecker8Mai1985/index.html
-\end{flushright}
-\hrule
-
-\section{Introduction}
-In the first two labs, we showed you how to generally use Python and how to
-have your programs make decisions based on what the user entered. With this
-lab, we will be starting to show you how to do some useful things in Python:
-how to make lists and manipulate them -- sort them, reverse them, combine them.
-We will also show you how to deal with strings. You have
-seen strings before, but we will be showing you how to manipulate them.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.85\textwidth]{img/xkcd_python.png}
+  \caption{xkcd 353: Python (Source: \url{http://xkcd.com/353})}
+\end{figure}
 
 \pagebreak
-\section{Lists}
-%in/not in, slicing, pop, append, len, sum
-One of the most important data types in Python is the list. A list is an ordered
-collection of other values. For example, we might create a list of numbers
-representing data points on a graph or create a list of strings representing
-students in a class. Creating a list is simple. We simply place comma-separated
-values inside square brackets.
+\hrule
+\begin{quotation}
+``If you don't think carefully, you might believe that programming is just
+typing statements in a programming language.''
+\end{quotation}
+\begin{flushright}
+  --- W. Cunningham
+\end{flushright}
 
-\begin{lstlisting}[style=ipython]
->>> values = [1, 2, 3, 4, 5]
->>> print(values)
-[1, 2, 3, 4, 5]
-\end{lstlisting}
+\begin{quotation}
+``Only ugly languages become popular. Python is the exception.''
+\end{quotation}
+\begin{flushright}
+  --- Donald Knuth
+\end{flushright}
 
-\subsection{Indices}
-Once we put a value in a list, we can treat the list as a single entity or
-access individual values. In order to access an individual element, we need to
-use the index of the value we want to access. The index is the position of the
-element in the list if we start numbering the elements from 0. When we are
-accessing list elements by index we can use them in any way we might use a
-normal variable.
+\begin{quotation}
+``The time you enjoy wasting is not wasted time.''
+\end{quotation}
+\begin{flushright}
+  --- Bertrand Russell
+\end{flushright}
+\hrule
 
-\begin{lstlisting}[style=ipython]
->>> values = [23, 7, 18, 0.23, 91]
->>> print(values[0])
-23
->>> print(values[2])
-18
->>> print(values[3])
-0.23
->>> values[3] = 7.5
->>> print(values[3])
-7.5
->>> print(values)
-[23, 7, 18, 7.5, 91]
->>> values[0] = values[0] + values[1]
->>> print(values)
-[30, 7, 18, 7.5, 91]
-\end{lstlisting}
+\tableofcontents
 
-If we wish, we can use negative array indices to reference elements starting at
-the end of the list. For example, -1 is the last element, -2 is the second to
-last element, and so on.
+\pagebreak
+\pagenumbering{arabic}
 
-\begin{lstlisting}[style=ipython]
->>> values = [32, 1, 54, -3, 6]
->>> print(values[-1])
-6
->>> print(values[-2])
--3
-\end{lstlisting}
+\section{Introduction}
+\label{sec:intro}
 
-\subsection{Values in Lists}
-We can use an existing variable when creating a list. If we change the value of
-the variable, the value in the list will stay the same.
+In the previous lab, we showed you simple control flow and how to repeat a piece
+of code using \pythoninline{while}. In this lab, we will be learning how to
+break a lot of code into smaller, reusable pieces called \emph{functions}.
 
-\begin{lstlisting}[style=ipython]
->>> x = 35
->>> k = 19
->>> y = 5
->>> values = [x, k, y]
->>> print(values)
-[35, 19, 5]
->>> x = 1
->>> print(values)
-[35, 19, 5]
-\end{lstlisting}
+\section{Making Calculations Shorter}
+\label{sec:calc}
 
-All values in a list do not need to be the same type. If we want, we can create
-a list with both numbers and strings, although this is usually a poor idea.
+We showed you simple Python operators such as \pythoninline{+},
+\pythoninline{-}, \pythoninline{*}, \pythoninline{%},
+etc in lab 1. There is a small extension to these that you can use to update a
+variable:
 
-\begin{lstlisting}[style=ipython]
->>> values = [2, 'hello', 5.3]
->>> print(values)
-[2, 'hello', 5.3]
-\end{lstlisting}
+\begin{pyconcode}
+>>> x = 5
+>>> x += 3 # same as x = x + 3
+>>> x
+8
+\end{pyconcode}
 
-If you want, you can even put a list inside a list!
+The available assignment operators are:
+\begin{multicols}{2}
+\begin{itemize}
+  \item \pythoninline{+=} -- addition
+  \item \pythoninline{-=} -- subtraction
+  \item \pythoninline{*=} -- multiplication
+  \item \pythoninline{/=} -- division
+  \item \pythoninline{//=} -- integer division
+  \item \pythoninline{%=} -- remainder
+  \item \pythoninline{**=} -- exponentiation
+\end{itemize}
+\end{multicols}
+They each correspond to the non-assignment version.
 
-\begin{lstlisting}[style=ipython]
->>> values = [1, 5, 2]
->>> more_values = [7, 'test', values]
->>> print(more_values)
-[7, 'test', [1, 5, 2]]
->>> print(more_values[2])
-[1, 5, 2]
-\end{lstlisting}
+\pagebreak
+\section{Functions}
+\label{sec:funcs}
 
-Note that, unlike with other variables, changing an element of a list inside
-another list will change both values.
-
-\begin{lstlisting}[style=ipython]
->>> values = [1, 5, 2]
->>> more_values = [7, 'test', values]
->>> print(more_values)
-[7, 'test', [1, 5, 2]]
->>> values[2] = 7
->>> print(more_values)
-[7, 'test', [1, 5, 7]]
->>> values = [1, 2]
->>> print(more_values)
-[7, 'test', [1, 5, 7]]
-\end{lstlisting}
-
-You generally will not have to worry about this, though the reason is because we
-are modifying the existing value rather than create a new list. When we reassign
-\lstinline{values}, it no longer changes the values inside inside
-\lstinline{more_values}. This is because we are creating a new list for
-\lstinline{values} rather than modifying the existing list.
-
-\subsection{Testing List Contents}
-A common operation is to test if a list contains a given value. We can do this
-using the \lstinline{in} keyword. We can also test if a list does not contain a
-value using \lstinline{not in}.
-
-\begin{lstlisting}[style=ipython]
->>> values = [1, 'test', 30, 20]
->>> print(1 in values)
-True
->>> print('test' in values)
-True
->>> print(2 in values)
-False
->>> print(2 not in values)
-True
-\end{lstlisting}
-
-This could be used to simplify the example from Lab 2 involving checking user
-input against multiple valid passwords.
-
-\begin{lstlisting}[style=python]
-passwords = ['hunter2', 'hunter3', 'hunter4']
-
-user_in = input('Please enter your password: ')
-
-if user_in in passwords:
-    print('Correct password. Welcome!')
-else:
-    print('Incorrect password.')
-\end{lstlisting}
-
-\subsection{Slicing}
-Often we will want to make a new list out of part of a larger list. We do this
-using slicing. To do this, we specify the first and last indices we want to
-include in our new list, separated by a colon. The last index is used as a
-bookend -- that is, values up to but not including that index are included in
-the new list. If one of the values is omitted, then Python will act as if the
-most extreme index on that side was enterred. Omitting both values will use the
-full list.
-
-Thus, for a list \lstinline!L! and two positions (indices) \lstinline!B! and
-\lstinline!E! within that list, the expression \lstinline!L[ B : E ]! produces a
-new list containing the elements in \lstinline!L! between those two positions
-not including \lstinline!E!. Notice that \lstinline!B! and \lstinline!E! must be
-indices -- whole numbers.
-
-\begin{lstlisting}[style=ipython]
->>> L = [1, 2, 3, 4, 5]
->>> print(L[1:3])
-[2, 3]
->>> print(L[3])
-4
-\end{lstlisting}
-
-Note that \lstinline!L[1:3]! did \emph{not} include \lstinline!L[3]!. 
-
-You may omit the starting position to slice elements from the beginning of the
-list up to the specified position. You may similarly omit the ending position to
-specify that a slice extends to the end of the list. You can even omit both of
-them to just get a copy of the whole list.
-
-\begin{lstlisting}[style=ipython]
->>> print(L[:3])
-[1, 2, 3]
->>> print(L[1:])
-[2, 3, 4, 5]
->>> print(L[:])
-[1, 2, 3, 4, 5]
-\end{lstlisting}
-
-Using slicing allows us to add or delete elements from lists:
-\begin{lstlisting}[style=ipython]
->>> L = [1, 2, 3, 4, 5]
->>> L[2:4] = [93, 94, 95, 96]
->>> print(L)
-[1, 2, 93, 94, 95, 96, 5]
->>> L[3:6] = []
-[1, 2, 93, 5]
-\end{lstlisting}
-
-If we include an additional colon and value, we can include a step size. For
-example, a step size of two will create the list from every other value in the
-original list. A negative step size allows the list to be reversed.
-
-Then, given a list \lstinline!L! and two positions (indices) \lstinline!B! and
-\lstinline!E! as well as a step size \lstinline!S!, you can use the expression
-\lstinline!L[ B : E : S]! to obtain the elements of \lstinline!L! between
-\lstinline!B! and \lstinline!E! positions in increments of \lstinline!S!
-positions.
-
-\begin{lstlisting}[style=ipython]
->>> values = [1, 2, 3, 4, 5]
->>> print(values[::2])
-[1, 3, 5]
->>> print(values[1:4:2])
-[2, 4]
->>> print(values[4:1:-1])
-[5, 4, 3]
-\end{lstlisting}
-
-\subsection{List Functions}
-Many functions exist to help manipulate lists. The first of these is
-\lstinline{.append()}. This adds a new value onto the end of an existing list.
-
-\begin{lstlisting}[style=ipython]
->>> values = [1, 2, 3]
->>> values.append(12)
->>> values.append(123)
->>> print(values)
-[1, 2, 3, 12, 123]
-\end{lstlisting}
-
-\lstinline{.insert()} also inserts a value, but it allows you to choose where it
-goes. The first argument of the function is the index you want your new value to
-be located. Other values will be moved to make room.
-
-\begin{lstlisting}[style=ipython]
->>> values = [1, 2, 3, 4]
->>> values.insert(2, 10)
->>> print(values)
-[1, 2, 10, 3, 4]
-\end{lstlisting}
-
-The \lstinline{.pop()} function works similarly to accessing list values by
-index, but also removes the element from a list. If given a value, then
-\lstinline{.pop()} will remove the value at that index. If not, it will remove
-the last value in the list.
-
-\begin{lstlisting}[style=ipython]
->>> values = [1, 2, 3, 12, 123]
->>> print(values.pop())
-123
->>> print(values.pop(0))
-1
->>> print(values)
-[2, 3, 12]
-\end{lstlisting}
-
-
-Using \lstinline{len} returns the length of the list passed to it.
-
-\begin{lstlisting}[style=ipython]
->>> values = [1, 2, 3, 12, 123]
->>> print(len(values))
-5
-\end{lstlisting}
-
-\lstinline{sum} allows the easy summing of every value in a list, so long as
-every value in the list is a number. If any values are not, an error will occur.
-
-\begin{lstlisting}[style=ipython]
->>> values = [1, 2, 3, 12, 123]
->>> print(sum(values))
-141
->>> values.append('test')
->>> print(sum(values))
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-TypeError: unsupported operand type(s) for +: 'int' and 'str'
-\end{lstlisting}
-
-\begin{table}[!ht]
-  \centering
-  \begin{tabular}{ll}
-    \toprule
-    Function & What it does \\
-    \midrule
-    \lstinline!lst.append(x)! & appends \lstinline!x! to \lstinline!lst! \\
-    \lstinline!lst.insert(i, x)! & inserts \lstinline!x! at index \lstinline!i!
-    in \lstinline!lst! (moves other elements) \\
-    \lstinline!x = lst.pop()! & removes last element of \lstinline!lst! and
-    places it in \lstinline!x! \\
-    \lstinline!lst.reverse()! & reverses the order of elements in list
-    \lstinline!lst! in place\\
-    \lstinline!lst.sort()! & sort \lstinline!lst! in place \\
-    \lstinline!len(lst)! & number of elements in \lstinline!lst! \\
-    \lstinline!sum(lst)! & sum the elements of \lstinline!lst! (only works when
-    \lstinline!+! works between the elements)\\
-    \bottomrule
-  \end{tabular}
-  \caption{List Functions, where \lstinline!lst! is a variable that holds a list}
-  \label{tab:lists}
-\end{table}
-
-\subsection{Combining Lists}
-Two lists can be added together in order to combine them into one list.
-
-\begin{lstlisting}[style=ipython]
->>> values = [1, 2, 3]
->>> more_values = [3, 2, 1]
->>> combined = values + more_values
->>> print(combined)
-[1, 2, 3, 3, 2, 1]
-\end{lstlisting}
+We have used 
 
 \subsection{Summary}
+\label{subsec:funcs.sum}
 
 \begin{itemize}
-  \item A list is created from a series of comma-separated values inside square
-    brackets.  
-  \item An element in an array can be referenced and manipulated
-    using its index. The first element has an index of 0. Negative indices can
-    be used to reference elements from the end of the list, with the last
-    element having an index of -1.
-  \item The \lstinline{in} keyword can be used to test if a value exists in a
-    list, while \lstinline!not in! can be used to test if a value does not exist
-    in a list.
-  \item Slicing can be used to create a new list from an existing one.
-  \item See Table~\ref{tab:lists} for functions on lists.
+  \item A good resource:
+
+\begin{center}
+  \url{https://docs.python.org/3.4/tutorial/controlflow.html#defining-functions}
+\end{center}
+
 \end{itemize}
 
 \subsection{Exercises}
-\label{subsec:listsex}
-
-\begin{description}
-  \item[parity.py] Take in numbers as input until ``stop'' is entered. Then split the numbers into three lists: one containing all the numbers, one containing all even values, and one containing all odd. Print out all three lists, as well as each list's sum and average. Assume all input values are integers.
-
-    Sample:
-\begin{lstlisting}[style=bash]
-Input a number: 1
-Input a number: 5
-Input a number: 8
-Input a number: 2
-Input a number: 8
-Input a number: 100
-Input a number: 3
-Input a number: 7
-Input a number: 27
-Input a number: 5
-Input a number: stop
-All numbers: [1, 5, 8, 2, 8, 100, 3, 7, 27, 5]
-Average of all numbers: 16.6
-Sum of all numbers: 166
-Even numbers: [8, 2, 8, 100]
-Average of even numbers: 29.5
-Sum of even numbers: 118
-Odd numbers: [1, 5, 3, 7, 27, 5]
-Average of odd numbers: 8.0
-Sum of odd numbers: 48
-\end{lstlisting}
-\end{description}
+\label{subsec:funcs.ex}
 
 \pagebreak
-\section{Strings}
+\section{Conventions}
+\label{sec:pep8}
 
-You have seen strings in Python before. They are sequences of characters
-enclosed by either double quotes or single quotes; for example:
-\begin{lstlisting}[style=ipython,language=Octave] % string escaping issues with Python style
->>> s = "I'm a string."
->>> print(s)
-I'm a string.
->>> r = 'I am also a string.'
->>> print(r)
-I am also a string.
-\end{lstlisting}
+In order to make code more readable, we will start requiring you to comment your
+code and follow a style guide. Style guides are often used to make code easy to
+read, especially if multiple people are working on a project together. If left
+to their own devices, most people start conforming to their own style guide
+anyway just by preferring a certain way to write something over another. For
+example, common parameter of style guides is the use of a certain number of
+spaces for indentation. Also, some people put spaces before each colon, and some
+people do not.
 
-Notice how we did not use a single quote in the second string because it was
-enclosed (\emph{delimited}) by single quotes. The proper way to use a single
-quote in a single quoted string or a double quote in a double quoted string
-goes like this:
-\begin{lstlisting}[style=ipython,language=Octave]
->>> s = "Previously, we said \"I'm a string.\"."
->>> print(s)
-Previously, we said "I'm a string.".
->>> r = 'I\'m also a string.'
->>> print(r)
-I'm also a string.
-\end{lstlisting}
-This is called \emph{escaping} a character. We \emph{escaped} the double quotes
-and single quote respectively so that Python did not think it was the end of
-the string.
+\subsection{Style Guide}
 
-You do not have to escape a single quote in a double quoted string and vice
-versa:
-\begin{lstlisting}[style=ipython]
->>> s = "I can use single quotes '' here"
->>> print(s)
-I can use single quotes '' here
->>> r = 'I can use double quotes "" here'
->>> print(r)
-I can use double quotes "" here
-\end{lstlisting}
+We will be using PEP 8 (Python Enhancement Proposal 8 -- Style Guide for Python
+Code) found at
+\begin{center}
+  \url{https://www.python.org/dev/peps/pep-0008/}
+\end{center}
 
-If you want a string to go to a new line, you use \lstinline!\n! for that:
-\begin{lstlisting}[style=ipython,language=Octave,caption={Excerpt of I Hear
-America Singing by Walt Whitman}]
->>> r = 'I hear America singing, the varied carols I hear,\nThose of 
-mechanics, each one singing his as it should be blithe and strong,\nThe 
-carpenter singing his as he measures his plank or beam,'
->>> print(r)
-I hear America singing, the varied carols I hear,
-Those of mechanics, each one singing his as it should be blithe and strong,
-The carpenter singing his as he measures his plank or beam,
-\end{lstlisting}
+Some of the highlights:
+\begin{itemize}
+  \item 4 space indentation
+  \item Function names should be all-lowercase with words separated by underscores.
+  \item File/module/package names should have short, all-lowercase names.
+  \item Comment your code with useful information. For example,
 
-What, however, if you actually need a \lstinline!\n! in a string? You will want
-to create a raw string. You do this by placing an \lstinline!r! before the
-beginning quote:
-\begin{lstlisting}[style=ipython]
->>> s = r'C:\Users\Files\nothing\more'
->>> print(s)
-C:\Users\Files\nothing\more
-\end{lstlisting}
+    \begin{python3code}
+x = x + 1 # Increment x
+    \end{python3code}
 
-As you can see, the \lstinline!\n! in the middle of the string did not end up
-being a line break.
+    should be avoided. It is obvious that \pythoninline{x} is being incremented.
+    Instead, if you think a comment will improve code comprehension, the
+    following can be useful:
 
-A lot of the operations you can do on lists also work on strings. We also saw
-indirectly and previously that we can concatenate strings together using the
-addition operator \lstinline!+!:
-\begin{lstlisting}[style=ipython,language=Octave] % octave doesn't have in
-keyword
->>> s = "The cat"
->>> r = " in the hat"
->>> t = s+r
->>> print(t)
-The cat in the hat
-\end{lstlisting}
+    \begin{python3code}
+x = x + 1 # Compensate for border
+    \end{python3code}
 
-In addition to that, we can repeat strings using the multiplication operator
-\lstinline!*!:
-\begin{lstlisting}[style=ipython]
->>> s = "Hi"
->>> r = 5*s
->>> print(r)
-HiHiHiHiHi
->>> n = 3
->>> print(r + 'cat' * n)
-HiHiHiHIHicatcatcat
-\end{lstlisting}
-Note how we can also combine both.
+  \item Avoid whitespace where it does not help code legibility. Never put a
+    space between a function name and the parentheses when calling a function.
 
-You previously saw \emph{slicing} in the section on lists. Slicing works on strings, too!
-\begin{lstlisting}[style=ipython]
->>> s = "The cat in the hat"
->>> print(s[2])
-e
->>> print(s[4:7])
-cat
->>> print(s[15:18])
-hat
->>> print(s[14:18])
- hat
->>> print(s[17:14:-1])
-tah
->>> print(s[17::-1])
-tah eht ni tac ehT
-\end{lstlisting}
+    \begin{python3code}
+if x == 4: # do this
+    print(x, y)
 
-As opposed to lists, strings are \emph{immutable}. This means that the string
-cannot be changed at all:
-\begin{lstlisting}[style=ipython]
->>> s = 'Python'
->>> s[0] = 'J'
+if x == 4 : # don't do this
+    print ( x , y )
+    \end{python3code}
+\end{itemize}
+
+\pagebreak
+\subsection{Commenting Functions}
+
+For commenting on functions, we will be using PEP 257 (Docstring Conventions)
+found at
+\begin{center}
+  \url{https://www.python.org/dev/peps/pep-0257/}
+\end{center}
+
+\begin{center}
+\bfseries \large You will be required to put a \emph{docstring} at the beginning
+of every function that you code from now on.
+\end{center}
+A docstring is a comment immediately
+following the function definition enclosed by triple-double-quotes (\texttt{"""}).
+
+The highlights:
+\begin{itemize}
+  \item For short functions, do this:
+
+    \begin{python3code}
+def midpoint(a, b):
+    """Find and return the midpoint of the given a and b."""
+    return (a+b)/2
+    \end{python3code}
+
+  \item For larger functions or for a longer explanation, follow this style:
+
+    \begin{python3code}
+def calculate_weekly_pay(pay_rate, hours, tax_rate):
+    """Calculate the net pay after taxes given the number of hours worked 
+    in a week, a pay rate, and a flat tax rate.
+
+    Arguments:
+    pay_rate -- rate of pay
+    hours -- number of hours worked in one week
+    tax_rate -- flat tax rate (for example, 0.15 for 15%)
+    """
+    pay_before_taxes = hours * pay_rate
+
+    # Add overtime payment if necessary
+    if hours > 40:
+        pay_before_taxes += (hours - 40) * pay_rate * 0.5
+
+    pay_after_taxes = pay_before_taxes * (1 - tax_rate)
+    return pay_after_taxes
+    \end{python3code}
+
+\end{itemize}
+
+\pagebreak
+\section{Modules}
+\label{sec:modules}
+
+A program that is saved in a text file and then run with Python is called a
+\emph{script}. As your programs get longer, you may want to split them into
+multiple files for easier legibility, maintenance, or abstraction. To do this,
+Python supports a way to put definitions (of functions) in a file and use them
+in another script or in the interpreter. A file like this is called a
+\emph{module}. An example for such a module is the math module we have used
+previously. The definitions from a module can be \emph{imported} into other
+scripts.
+
+A module is just a file with Python statements in it. A module takes the name of
+the file that it is in. For example, imagine we have a file
+\texttt{circlemath.py} in our current working directory:
+
+\begin{python3code}
+import math # importing the math module
+
+def area(radius):
+    """Find and return the area of a circle (float) given the radius"""
+    return math.pi * radius**2
+
+def circumference(radius):
+    """Find and return the circumference of a circle (float) given the radius"""
+    return 2 * math.pi * radius
+\end{python3code}
+
+Then, open the interpreter and import the module:
+
+\begin{pyconcode}
+>>> import circlemath
+>>> circlemath.circumference(5) # have to use modulename.attributename
+31.41592653589793
+>>> circlemath.area(5)
+78.53981633974483
+>>> circlemath.__name__
+'circlemath'
+\end{pyconcode}
+
+Every module has a \pythoninline{__name__} attribute that contains the name of
+the module, except in one special case that we will see soon.
+
+There are other kinds of import statements with different effects:
+
+\begin{pyconcode}
+>>> from circlemath import area
+>>> area(5) # can just use the attribute imported without modulename.
+78.53981633974483
+>>> circumference(5) # not defined, because not imported
 Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-  TypeError: 'str' object does not support item assignment
-\end{lstlisting}
+  File "<input>", line 1, in <module>
+NameError: name 'circumference' is not defined
+\end{pyconcode}
 
-If you want to change a string, just create a new string!
-\begin{lstlisting}[style=ipython]
->>> s = 'Python'
->>> r = 'J' + s[1:]
->>> print(r)
-Jython
-\end{lstlisting}
+\begin{pyconcode}
+>>> from circlemath import area, circumference # use commas to separate multiple
+>>> area(5)
+78.53981633974483
+>>> circumference(5)
+31.41592653589793
+\end{pyconcode}
 
-Just as with lists, you can test membership of a string using \lstinline!in! and
-\lstinline!not in!:
-\begin{lstlisting}[style=ipython]
->>> s = 'abcde'
->>> print('c' in s)
-True
->>> print('f' in s)
-False
->>> print('f' not in s)
-True
->>> print('ab' in s)
-True
-\end{lstlisting}
+\begin{pyconcode}
+>>> from circlemath import * # import all definitions made
+>>> area(5)
+78.53981633974483
+>>> circumference(5)
+31.41592653589793
+\end{pyconcode}
 
-If you want strings to go on for two or more lines of Python code, you have to use three double
-quotes:
-\begin{lstlisting}[caption={Excerpt of Richard von Weizs\"{a}cker's speech in
-the Bundestag to commemorate the 40th anniversary of the end of World War II.}]
-weizsaecker = """We in the older generation owe to young people not the 
-fulfillment of dreams but honesty. We must help younger people to 
-understand why it is vital to keep memories alive. We want to help them 
-to accept historical truth soberly, not one-sidedly, without taking 
-refuge in utopian doctrines, but also without moral arrogance. From our
-own history we learn what man is capable of. For that reason we must not
-imagine that we are quite different and have become better. There is no
-ultimately achievable moral perfection. We have learned as human beings,
-and as human beings we remain in danger. But we have the strength to 
-overcome such danger again and again."""
-\end{lstlisting}
+\begin{pyconcode}
+>>> from circlemath import area as carea
+>>> carea(5)
+78.53981633974483
+\end{pyconcode}
 
-\subsection{String Functions}
+The last option is rather frowned upon; we would prefer you to use
+\pythoninline{circlemath.area} instead as it is more descriptive.
 
-As with lists, there are a few functions you can use with strings.
+You may also rename a module upon importing it:
 
-\begin{lstlisting}[style=ipython]
->>> s = 'abcDE'
->>> print(len(s))
-5
->>> print(s.upper())
-ABCDE
->>> print(s.lower())
-abcde
->>> print(s.capitalize())
-Abcde
->>> print(s.isnumeric())
-False
->>> print(s.isalpha())
-True
->>> print(s.islower())
-False
->>> print(s.isupper())
-False
->>> r = s.replace('ab', 'more')
->>> print(r)
-morecDE
->>> print(s)
-abcDE
-\end{lstlisting}
+\begin{pyconcode}
+>>> import circlemath as cmath
+>>> cmath.area(5)
+78.53981633974483
+\end{pyconcode}
 
-You can find a summary of the functions and what they do in Table~\ref{tab:str}.
 
-\begin{table}[!ht]
-  \centering
-  \begin{tabular}{ll}
-    \toprule
-    String Function & What it does \\
-    \midrule
-    \lstinline!len(s)! & Length of \lstinline!s! \\
-    \lstinline!r = s.upper()! & replaces all lowercase characters with uppercase
-    and puts that in \lstinline!r! \\
-    \lstinline!r = s.lower()! & replaces all uppercase characters with lowercase
-    and puts that in \lstinline!r! \\
-    \lstinline!r = s.capitalize()! & lower case of \lstinline!s! with capital
-    first letter and puts that in \lstinline!r! \\
-    \lstinline!r = s.isnumeric()! & \lstinline!r! is \lstinline!True! if
-    \lstinline!s! contains only numbers and \lstinline!False! otherwise\\
-    \lstinline!r = s.isalpha()! & \lstinline!r! is \lstinline!True! if
-    \lstinline!s! contains only alphabet characters and \lstinline!False!
-    otherwise\\
-    \lstinline!r = s.islower()! & \lstinline!r! is \lstinline!True! if
-    \lstinline!s! contains only lower case characters and \lstinline!False!
-    otherwise\\
-    \lstinline!r = s.isupper()! & \lstinline!r! is \lstinline!True! if
-    \lstinline!s! contains only upper case characters and \lstinline!False!
-    otherwise\\
-    \lstinline!r = s.replace(x, y)! & replace any occurence of \lstinline!x! in
-    \lstinline!s! with \lstinline!y! and put result in \lstinline!r! \\
-    \bottomrule 
-  \end{tabular}
-  \caption{String functions, where \lstinline!s! is a string}
-  \label{tab:str}
-\end{table}
+\begin{infobox}{Convention (PEP 8)}
+  Always put \pythoninline{import} statements at the beginning of a file in the
+  following order:
+  \begin{enumerate}
+    \item Built-in standard library modules
+    \item Third-party modules (e.g. matplotlib)
+    \item Self-written modules
+  \end{enumerate}
+  Put a blank line between each group of imports.
+\end{infobox}
+
+\subsection{Using Modules as Scripts and Boilerplate}
+
+If there is code in your module that is not a function definition, Python will
+run it just once when the module is imported. For example, take the file
+\texttt{mid.py}:
+
+\begin{python3code}
+def midpoint(a, b):
+    """Find and return the midpoint of two numbers."""
+    return (a+b)/2
+
+print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
+\end{python3code}
+
+\begin{pyconcode}
+>>> import mid
+Midpoint of 5 and 10 is 7.50.
+\end{pyconcode}
+
+The same will happen if you run the module like a script:
+
+\begin{bashcode}
+$ python3 mid.py
+Midpoint of 5 and 10 is 7.50.
+\end{bashcode}
+
+However, this can be rather annoying to deal with, for example if you wrote a
+script with a bunch of functions a while ago and you just want to use the
+functions you wrote, but do not want the other code to run when you're using
+them -- you just want the functions. You can achieve this!
+
+When you run a module as a script, the modules \pythoninline{__name__} attribute
+is not set to the module's name, but to \pythoninline{"__main__"}. Hence, the
+following code in \texttt{mid.py} will do the following:
+
+\begin{python3code}
+def midpoint(a, b):
+    """Find and return the midpoint of two numbers."""
+    return (a+b)/2
+
+print(__name__) # just for demonstration, do not put this in real programs
+
+if __name__ == "__main__":
+    print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
+\end{python3code}
+
+\begin{pyconcode}
+>>> import mid
+mid
+\end{pyconcode}
+
+\begin{bashcode}
+$ python3 mid.py
+__main__
+Midpoint of 5 and 10 is 7.50.
+\end{bashcode}
+
+We call this specific if-statement referencing the \pythoninline{__name__}
+variable boilerplate code.
+
+\begin{infobox}{Boilerplate Requirement}
+  Please put \textbf{any} code that is not part of a function inside the
+  boilerplate if-statement so that \emph{every} one of your scripts can also be
+  used as a module. This will be required for every lab from now on.
+
+  Wrong:
+
+  \begin{python3code}
+print("Hello World!")
+  \end{python3code}
+
+  Right:
+
+  \begin{python3code}
+if __name__ == "__main__":
+    print("Hello World!")
+  \end{python3code}
+\end{infobox}
+
+\subsection{The \protect\pythoninline{dir()} Function}
+
+Use the \pythoninline{dir()} function to get a list of every attribute --
+variables, functions, and other things you do not know about yet -- that is part
+of a module. For example for the circlemath module we wrote earlier:
+
+\begin{pyconcode}
+>>> import circlemath
+>>> dir(circlemath)
+['__name__', 'area', 'circumference']
+>>> import mid
+>>> dir(mid)
+['__name__', 'midpoint']
+>>> dir(math)
+['__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'acos',
+'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh',
+'degrees', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial', 'floor', 'fmod',
+'frexp', 'fsum', 'gamma', 'hypot', 'isfinite', 'isinf', 'isnan', 'ldexp', 'lgamma',
+'log', 'log10', 'log1p', 'log2', 'modf', 'pi', 'pow', 'radians', 'sin', 'sinh', 'sqrt',
+'tan', 'tanh', 'trunc']
+\end{pyconcode}
 
 \subsection{Summary}
+\label{subsec:modules.sum}
 
 \begin{itemize}
   \item Syntax:
-    \begin{lstlisting}
-s = 'String'
-# or
-s = "String"
-# or
-s = """Multiline
-String"""
-    \end{lstlisting}
 
-  \item Escape single quotes in single quoted strings and double quotes in
-    double quoted stings!
+    \begin{python3code}
+import modname1, modname2 # use: modname1.attributename
+import modname3 as othermodname # use: othermodname.attributename
+from modname import attribute1, attribute2 # use: attribute1, attribute2
+from modname import * # use: attributename
+from modname import attribute as otherattribute # use: otherattribute
+    \end{python3code}
 
-  \item Can slice strings just like lists, but not change them. You must make a
-    new string if you want something different, because strings are
-    \emph{immutable}.
+    Attributes can be functions defined in the module or variables defined in
+    the module. A special attribute is \pythoninline{__name__}, which contains
+    the name of the module unless the module is executed as a script.
 
-  \item Use \lstinline!r + s! to combine (concatenate) strings \lstinline!r! and
-    \lstinline!s! together and
-    \lstinline!s*n! to repeat a string \lstinline!s! a number of \lstinline!n!
-    times.
+  \item Every script is a module whose name is the filename of the script.
 
-  \item Use \lstinline!r in s! to test whether \lstinline!r! occurs in the
-    string \lstinline!s! and \lstinline!r not in s! to test whether it does not
-    occur in \lstinline!s!.
+  \item If a module is imported, its \pythoninline{__name__} attribute is a
+    variable that contains the module name. If a module is run as a script, its
+    \pythoninline{__name__} attribute contains \pythoninline{"__main__"}. With
+    this, you can have code that only runs if a module is run like a script.
 
-  \item See string functions in Table~\ref{tab:str}.
+    We call that boilerplate code:
+
+    \begin{python3code}
+if __name__ == "__main__":
+    # stuff that only runs if module is run as a script
+    \end{python3code}
+
+  \item Use \pythoninline{dir()} to get a list of every attribute -- every
+    variable and function (and other things that you do not know about yet) --
+    that is part of a particular module.
+
+  \item A good resource:
+
+    \begin{center}
+\url{https://docs.python.org/3.4/tutorial/modules.html}
+    \end{center}
 \end{itemize}
 
 \subsection{Exercises}
-\label{subsec:stringsex}
-
-\emph{These exercises are a modification of exercises in the Google Python
-  class, licensed under the
-  \href{http://www.apache.org/licenses/LICENSE-2.0.html}{Apache License 2.0}.}
-
-\begin{description}
-  \item[ends.py] Write a program that takes in a string from the user and prints
-    just the first two and the last two characters of the string.
-
-    \begin{lstlisting}[style=bash]
-Enter a string: spring
-Ends are: spng
-    \end{lstlisting}
-
-  \item[mix.py] Write a program that takes two strings
-    \lstinline!a! and \lstinline!b! and prints the two strings concatenated, but
-    with the first two characters of each word swapped with the other word's
-    first two characters. For example:
-
-    \begin{lstlisting}[style=bash]
-String a: german
-String b: english
-Result: enrman geglish
-    \end{lstlisting}
-
-    \begin{lstlisting}[style=bash]
-String a: dog
-String b: dinner
-Result: dig donner
-    \end{lstlisting}
-
-  \item[splitit.py] Consider dividing a string into two halves. If the length is
-    even, the front and back halves are the same length. If the length is odd,
-    we'll say that the extra character goes in the front. 
-
-    For example, in \lstinline!'abcde'!, the front half is \lstinline!'abc'! and
-    the back half is \lstinline!'de'!. 
-
-    Write a program that takes in two strings \lstinline!a! and \lstinline!b!
-    and prints a-front + b-front + a-back + b-back.
-
-    For example,
-    \begin{lstlisting}[style=bash]
-String a: abcd
-String b: efghi
-abefgcdhi
-    \end{lstlisting}
-    \begin{lstlisting}[style=bash]
-String a: this dinner is
-String b: what am i doing1
-this diwhat am nner isi doing1
-    \end{lstlisting}
-\end{description}
+\label{subsec:modules.ex}
 
 \pagebreak
-\section{For Loops Again}
-%usage with for lists and strings more in depth
-%using range in combination with a list
+\section{Advanced Functions}
+\label{sec:adv}
 
-\subsection{Lists}
-\lstinline{for} loops in Python are designed to primarily work with lists. A
-\lstinline{for} loop iterates through each element in a list in order,
-performing the same operation for each element. The following program is a
-simple \lstinline{for} loop that prints out every element of a list.
+\subsection{Positional and Optional Arguments}
+\label{subsec:adv.args}
 
-\begin{lstlisting}[style=python]
-values = [1, 2, 3, 4, 5]
-
-for i in values:
-    print(i)
-\end{lstlisting}
-
-This example uses one list as input to create another list consisting of the
-initial list's squares.
-
-\begin{lstlisting}[style=python]
-values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-squares = []
-
-for i in values:
-    squares.append(i ** 2)
-
-print("Initial values: {}".format(values))
-print("Squares: {}".format(squares))
-\end{lstlisting}
-
-This prints:
-\begin{lstlisting}[style=bash]
-Initial values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-Squares: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
-\end{lstlisting}
-
-One limitation of this approach is that we cannot easily manipulate multiple
-values of a list at once. We can get around this using \lstinline{range}.
-\lstinline{range} produces a list of the numbers 0 up to and not including the
-number passed as an argument. If given two arguments, the first is used as the
-lower bound rather than zero.
-
-\begin{lstlisting}[style=ipython]
->>> for i in range(5):
-...   print(i)
-... 
-0
-1
-2
-3
-4
-\end{lstlisting}
-
-\lstinline{range()} can take between one and three arguments:
-
-\begin{tabular}{ll}
-  \toprule
-  \lstinline!range(E)! & numbers from 0 to \lstinline!E!, not including
-  \lstinline!E! \\
-  \lstinline!range(B, E)! & numbers from \lstinline!B! to \lstinline!E!, not
-  including \lstinline!E! \\
-  \lstinline!range(B, E, S)! & numbers from \lstinline!B! to \lstinline!E!, not
-  including \lstinline!E!, skipping every \lstinline!S! number \\
-  \bottomrule
-\end{tabular}
-
-Do some experiments with range to see what numbers it gives. For reasons that we
-cannot yet explain to you, you have to use the \lstinline!list()! function to
-get it to print correctly as you can see in the following example.
-\begin{lstlisting}[style=ipython]
->>> print(range(5))
-range(0, 5)
->>> print(list(range(5)))
-[0, 1, 2, 3, 4]
->>> print(list(range(1, 5)))
-[1, 2, 3, 4]
->>> print(list(range(1, 7, 2)))
-[1, 3, 5]
-\end{lstlisting}
-
-If we use \lstinline{range} to produce a list of elements the same length as the
-array being looped over, we can use its values as indices. Here is the squares
-example redone using \lstinline{range}.
-
-\begin{lstlisting}[style=python]
-values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-squares = []
-
-for i in range(len(values)):
-    squares.append(values[i] ** 2)
-
-print("Initial values: {}".format(values))
-print("Squares: {}".format(squares))
-\end{lstlisting}
-
-In this example, using \lstinline{range} does not help us a significant amount.
-In this next example, it allows us to sum every adjacent pair of values to
-create a new list.
-
-\begin{lstlisting}[style=python]
-values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-adjacent_sums = []
-
-for i in range(len(values)):
-    if i != 0:
-        adjacent_sums.append(values[i] + values[i - 1])
-
-print("Initial values: {}".format(values))
-print("Sums: {}".format(adjacent_sums))
-\end{lstlisting}
-
-If we simply want to do something a fixed number of times, we pass that number
-to \lstinline{range} and put it in a loop.
-
-\begin{lstlisting}[style=python]
-for i in range(3):
-    print("Hello.")
-\end{lstlisting}
-
-Output of this would be:
-\begin{lstlisting}[style=bash]
-Hello.
-Hello.
-Hello.
-\end{lstlisting}
-
-\subsection{Strings}
-
-We showed you how to use a \lstinline!for! loop on strings last time already,
-but this is just iterating it:
-\begin{lstlisting}
-for char in 'aHdHefg':
-    if char == 'H':
-        print('5')
-    else:
-        print('1')
-\end{lstlisting}
-
-This will print:
-\begin{lstlisting}[style=bash]
-1
-5
-1
-5
-1
-1
-1
-\end{lstlisting}
+\subsection{Recursion}
+\label{subsec:adv.recursion}
 
 \subsection{Summary}
-\begin{itemize}
-  \item A \lstinline{for} loop can be used to iterate through every value in a
-    sequence, such as a list or a string.
-  \item If we want access to the index number of the current value, we need to
-    use a \lstinline{range} of the same length as the list.
-\end{itemize}
+\label{subsec:adv.sum}
 
 \subsection{Exercises}
-\label{subsec:forex}
-
-\begin{description}
-  \item[spiral.py] Use a \lstinline{for} loop, \lstinline{range}, and
-    \lstinline{turtle} to draw a spiral. It does not need to perfectly resemble
-    the example.
-
-    Sample:
-    \begin{figure}[h]
-      \centering
-      \includegraphics[width=2.0in]{img/spiral}
-    \end{figure}
-
-  \item[navigate2.py] Modify \texttt{navigate.py} from last week so that,
-    rather than performing each action as it is entered, it stores the inputs in a
-    list and runs them all at once after the ``stop'' command has been given.
-
-  \item[sorted.py] Take in numbers as input until ``stop'' is entered. As you
-    take in each number, insert it into a list so that the list is sorted in
-    ascending order. That is, look through the list until you find the place
-    where the new element belongs, then use \lstinline{.insert()} to place it
-    there. If the number is already in the list, do not add it again. After
-    ``stop'' is entered, print out the list. Do not use any of Python's built-in
-    sorting functions.
-
-    You cannot use \lstinline!.sort()! for this exercise.
-
-    Sample:
-\begin{lstlisting}[style=ipython]
-Input a number: 12
-Input a number: 5.2
-Input a number: 73
-Input a number: 100
-Input a number: -5
-Input a number: 2.3
-Input a number: stop
-[-5.0, 2.3, 5.2, 12.0, 73.0, 100.0]
-\end{lstlisting}
-
-\end{description}
+\label{subsec:adv.ex}
 
 \pagebreak
 \section{Submitting}
 
 Files to submit:
 \begin{itemize}
-  \item parity.py (see Section~\ref{subsec:listsex})
-  \item splitit.py (see Section~\ref{subsec:stringsex})
-  \item ends.py (see Section~\ref{subsec:stringsex})
-  \item mix.py (see Section~\ref{subsec:stringsex})
-  \item spiral.py (see Section~\ref{subsec:forex})
-  \item navigate2.py (see Section~\ref{subsec:forex})
-  \item sorted.py (see Section~\ref{subsec:forex})
+  \item 
 \end{itemize}
 
-You may submit your code as either a tarball (instructions below) or as a .zip
-file. Either one should contain all files used in the exercises for this lab.
-The submitted file should be named either
-\texttt{cse107\_firstname\_lastname\_lab3.zip} or
-\texttt{cse107\_firstname\_lastname\_lab3.tar.gz} depending on which method you
-used.
-
-For Windows, use a tool you like to create a \texttt{.zip} file. The TCC
-computers should have \texttt{7z} installed. For Linux, look at lab 1 for
-instructions on how to create a tarball or use the ``Archive Manager'' graphical
-tool.
+You should submit your code as a tarball. It should contain all files
+used in the exercises for this lab. The submitted file should be named
+\begin{center}
+  \texttt{cse107\_firstname\_lastname\_lab3.tar.gz}
+\end{center}
 
 \begin{center}
-  \textbf{Upload your tarball or .zip file to Canvas.}
+  \textbf{Upload your tarball to Canvas before the deadline.}
 \end{center}
+
 
 \end{document}

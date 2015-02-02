@@ -1,6 +1,6 @@
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
-% 
+%
 % Prepared by Cynthia Veitch, William Kwan, Scott Chadde, Kaley Goatcher,
 % Russell White, and Christopher Koch
 
@@ -29,12 +29,17 @@
 \usepackage{IEEEtrantools}
 % Indention formatting
 \setlength{\parindent}{0.0in}
-\setlength{\parskip}{0.05in}
+\setlength{\parskip}{0.03in}
 
 
 % Margin support
 \usepackage[margin=1in]{geometry}
+\usepackage{float}
+\usepackage{hyperref}
 
+\usepackage{minted}
+\usepackage[format=plain,font=small,labelfont=bf]{caption}
+\usepackage{wrapfig}
 % Header/footer support
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -56,7 +61,6 @@
 % Image/graphic support
 \usepackage{graphicx}
 % Supports in-document hyperlinks
-\usepackage[hidelinks,pdfborder=0in,bookmarks=true]{hyperref}
 \usepackage[numbered]{bookmark}
 % List compression
 \usepackage{mdwlist}
@@ -134,21 +138,19 @@
 }
 
 % caption formatting
-\usepackage[format=plain,font=small,labelfont=bf]{caption}
 \usepackage[toc,page]{appendix}
 \usepackage{tikz}
 \usetikzlibrary{trees}
 
-\usepackage{minted}
 
 \usemintedstyle{tango} % friendly, colorful
 \newminted{python3}{fontsize=\small,
-  mathescape,linenos,numbersep=5pt,frame=single,framesep=2mm}
+  mathescape,linenos,numbersep=5pt,frame=single,framesep=2mm,autogobble}
 \newminted{pycon}{fontsize=\small,
-  mathescape,linenos,numbersep=5pt,frame=single,framesep=2mm,python3}
-\newminted[bashcode]{console}{fontsize=\small,
+  mathescape,linenos,numbersep=5pt,frame=single,framesep=2mm,python3,autogobble}
+\newminted[bashcode]{console}{fontsize=\small,autogobble,
   mathescape,linenos,numbersep=5pt,framesep=2mm,frame=lines,bgcolor=lightgray}
-\newminted[verbatimcode]{html}{fontsize=\small,
+\newminted[verbatimcode]{html}{fontsize=\small,autogobble,
   mathescape,linenos,numbersep=5pt,framesep=2mm,frame=lines,bgcolor=lightgray}
 \newmintinline{python}{mathescape}
 \newmintinline{bash}{mathescape}
@@ -182,5 +184,6 @@
 \def\Version#1{\def\version{#1}}
 
 \author{CSE/IT 107}
-\date{NMT Computer Science}
+\date{NMT Department of Computer Science and Engineering}
 
+\hypersetup{hidelinks}
