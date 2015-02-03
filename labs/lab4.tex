@@ -380,10 +380,13 @@ Two lists can be added together in order to combine them into one list.
 \subsection{Exercises}
 \label{subsec:listsex}
 
-\begin{description}
-  \item[parity.py] Take in numbers as input until ``stop'' is entered. Then split the numbers into three lists: one containing all the numbers, one containing all even values, and one containing all odd. Print out all three lists, as well as each list's sum and average. Assume all input values are integers.
+\begin{ex}[parity.py] Take in numbers as input until ``stop'' is entered. Then
+  split the numbers into three lists: one containing all the numbers, one
+  containing all even values, and one containing all odd. Print out all three
+  lists, as well as each list's sum and average. Assume all input values are
+  integers.
 
-    Sample:
+  Sample:
 
 \begin{verbatimcode}
 Input a number: 1
@@ -408,7 +411,7 @@ Average of odd numbers: 8.0
 Sum of odd numbers: 48
 \end{verbatimcode}
 
-\end{description}
+\end{ex}
 
 \pagebreak
 \section{Strings}
@@ -686,57 +689,58 @@ String"""
   class, licensed under the
   \href{http://www.apache.org/licenses/LICENSE-2.0.html}{Apache License 2.0}.}
 
-\begin{description}
-  \item[ends.py] Write a program that takes in a string from the user and prints
-    just the first two and the last two characters of the string.
+\begin{ex}[ends.py] Write a program that takes in a string from the user and
+  prints just the first two and the last two characters of the string.
 
-    \begin{verbatimcode}
+  \begin{verbatimcode}
 Enter a string: spring
 Ends are: spng
-    \end{verbatimcode}
+  \end{verbatimcode}
+\end{ex}
 
-  \item[mix.py] Write a program that takes two strings
-    \pythoninline!a! and \pythoninline!b! and prints the two strings concatenated, but
-    with the first two characters of each word swapped with the other word's
-    first two characters. For example:
+\begin{ex}[mix.py] Write a program that takes two strings \pythoninline!a! and
+  \pythoninline!b! and prints the two strings concatenated, but with the first
+  two characters of each word swapped with the other word's first two
+  characters. For example:
 
-    \begin{verbatimcode}
+  \begin{verbatimcode}
 String a: german
 String b: english
 Result: enrman geglish
-    \end{verbatimcode}
+  \end{verbatimcode}
 
-    \begin{verbatimcode}
+  \begin{verbatimcode}
 String a: dog
 String b: dinner
 Result: dig donner
-    \end{verbatimcode}
+  \end{verbatimcode}
+\end{ex}
 
-  \item[splitit.py] Consider dividing a string into two halves. If the length is
-    even, the front and back halves are the same length. If the length is odd,
-    we'll say that the extra character goes in the front. 
+\begin{ex}[splitit.py] Consider dividing a string into two halves. If the length
+  is even, the front and back halves are the same length. If the length is odd,
+  we'll say that the extra character goes in the front. 
 
-    For example, in \pythoninline!'abcde'!, the front half is \pythoninline!'abc'! and
-    the back half is \pythoninline!'de'!. 
+  For example, in \pythoninline!'abcde'!, the front half is \pythoninline!'abc'!
+  and the back half is \pythoninline!'de'!. 
 
-    Write a program that takes in two strings \pythoninline!a! and \pythoninline!b!
-    and prints a-front + b-front + a-back + b-back.
+  Write a program that takes in two strings \pythoninline!a! and
+  \pythoninline!b!  and prints a-front + b-front + a-back + b-back.
 
-    For example,
+  For example,
 
-    \begin{verbatimcode}
+  \begin{verbatimcode}
 String a: abcd
 String b: efghi
 abefgcdhi
-    \end{verbatimcode}
+  \end{verbatimcode}
 
-    \begin{verbatimcode}
+  \begin{verbatimcode}
 String a: this dinner is
 String b: what am i doing1
 this diwhat am nner isi doing1
-    \end{verbatimcode}
+  \end{verbatimcode}
 
-\end{description}
+\end{ex}
 
 \pagebreak
 \section{For Loops}
@@ -905,34 +909,34 @@ This will print:
 \subsection{Exercises}
 \label{subsec:forex}
 
-\begin{description}
-  \item[spiral.py] Use a \pythoninline{for} loop, \pythoninline{range}, and
-    \pythoninline{turtle} to draw a spiral. It does not need to perfectly resemble
-    the example.
+\begin{ex}[spiral.py] Use a \pythoninline{for} loop, \pythoninline{range}, and
+  \pythoninline{turtle} to draw a spiral. It does not need to perfectly resemble
+  the example.
 
-    Sample:
-    \begin{figure}[h]
-      \centering
-      \includegraphics[width=2.0in]{img/spiral}
-    \end{figure}
+  Sample:
+  \begin{center}
+    \includegraphics[width=2.0in]{img/spiral}
+  \end{center}
+\end{ex}
 
-  \item[navigate2.py] Modify \texttt{navigate.py} from last week so that,
-    rather than performing each action as it is entered, it stores the inputs in a
-    list and runs them all at once after the ``stop'' command has been given.
+\begin{ex}[navigate2.py] Modify \texttt{navigate.py} from last week so that,
+  rather than performing each action as it is entered, it stores the inputs in a
+  list and runs them all at once after the ``stop'' command has been given.
+\end{ex}
 
-  \item[sorted.py] Take in numbers as input until ``stop'' is entered. As you
-    take in each number, insert it into a list so that the list is sorted in
-    ascending order. That is, look through the list until you find the place
-    where the new element belongs, then use \pythoninline{.insert()} to place it
-    there. If the number is already in the list, do not add it again. After
-    ``stop'' is entered, print out the list. Do not use any of Python's built-in
-    sorting functions.
+\begin{ex}[sorted.py] Take in numbers as input until ``stop'' is entered. As you
+  take in each number, insert it into a list so that the list is sorted in
+  ascending order. That is, look through the list until you find the place where
+  the new element belongs, then use \pythoninline{.insert()} to place it there.
+  If the number is already in the list, do not add it again. After ``stop'' is
+  entered, print out the list. Do not use any of Python's built-in sorting
+  functions.
 
-    You cannot use \pythoninline!.sort()! for this exercise.
+  You cannot use \pythoninline!.sort()! for this exercise.
 
-    Sample:
+  Sample:
 
-\begin{verbatimcode}
+  \begin{verbatimcode}
 Input a number: 12
 Input a number: 5.2
 Input a number: 73
@@ -941,23 +945,12 @@ Input a number: -5
 Input a number: 2.3
 Input a number: stop
 [-5.0, 2.3, 5.2, 12.0, 73.0, 100.0]
-\end{verbatimcode}
+  \end{verbatimcode}
 
-\end{description}
+\end{ex}
 
 \pagebreak
 \section{Submitting}
-
-Files to submit:
-\begin{itemize}
-  \item parity.py (see Section~\ref{subsec:listsex})
-  \item splitit.py (see Section~\ref{subsec:stringsex})
-  \item ends.py (see Section~\ref{subsec:stringsex})
-  \item mix.py (see Section~\ref{subsec:stringsex})
-  \item spiral.py (see Section~\ref{subsec:forex})
-  \item navigate2.py (see Section~\ref{subsec:forex})
-  \item sorted.py (see Section~\ref{subsec:forex})
-\end{itemize}
 
 You should submit your code as a tarball. It should contain all files
 used in the exercises for this lab. The submitted file should be named
@@ -968,5 +961,7 @@ used in the exercises for this lab. The submitted file should be named
 \begin{center}
   \textbf{Upload your tarball to Canvas.}
 \end{center}
+
+\listoftheorems
 
 \end{document}

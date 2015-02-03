@@ -18,6 +18,7 @@
 \fancyhead[R]{Lab 3: Functions}
 \title{Lab 3: Functions}
 \usepgflibrary{fpu}
+\newcommand{\pas}{\mathop{\mathrm{pascal}}}
 
 \begin{document}
 \pagenumbering{roman}
@@ -230,6 +231,26 @@ return
     special value \pythoninline{None} is returned.
 \end{itemize}
 
+A function may also call other functions. If we keep using the wage example and
+add the ability to calculate the pay after taxes:
+
+\begin{python3code}
+def wage(hours, base_rate):
+    """Calculate and return weekly pay for a given amount of hours and base rate taking
+    into consideration overtime pay at 1.5 times the given rate."""
+    if hours > 40:
+        ot_pay = (hours - 40) * base_rate * 1.5
+        return base_rate * 40 + ot_pay
+    pay = hours * base_rate
+    return pay
+
+def wage_after_tax(hours, base_rate, tax_rate):
+    """Calculate and return weekly pay after taxes for a given amount of hours and a 
+    base rate with a flat tax rate."""
+    pay = wage(hours, base_rate)
+    return pay * (1 - tax_rate)
+\end{python3code}
+
 \subsection{Summary}
 \label{subsec:funcs.sum}
 
@@ -252,46 +273,9 @@ function_name(param0, param1, ...)
   \item A function returns one value. (If the programmer does not specify a
     value, the special value \pythoninline{None} is returned.)
 
-  \item A good resource:
-
-\begin{center}
-  \url{https://docs.python.org/3.4/tutorial/controlflow.html#defining-functions}
-\end{center}
-
+  \item A good resource: \url{https://docs.python.org/3.4/tutorial/controlflow.html#defining-functions}
 \end{itemize}
 
-\subsection{Exercises}
-\label{subsec:funcs.ex}
-
-\begin{ex}[mathutils.py] Write a Python file that contains the following functions:
-
-    \begin{itemize}
-      \item \pythoninline{sum_numbers}: given an integer $n$, returns the sum of
-        the integers between one and $n$.
-      \item \pythoninline{right_triangle_hypotenuse}: given the lengths of each
-        of the two legs of a right triangle, returns the length of the
-        hypotenuse.  (Hint: remember the Pythagorean theorem.)
-      \item \pythoninline{triangle_area}: given the base width and height of a
-        triangle, returns the area of the triangle.
-      \item \pythoninline{triangle_angle}: given two angles' value in degrees,
-        finds the value of the third angle of a triangle.
-    \end{itemize}
-\end{ex}
-
-\begin{ex}[calls.py] You buy an international calling card to Germany. The calling
-    card company has some special offers.
-
-    \begin{enumerate}[(a)]
-      \item If you charge your card with less than \$10, you don't get anything
-        extra.
-      \item For a less than \$25 charge, you get \$3 of extra phone time.
-      \item For a less than \$50 charge, you get \$8 of extra phone time.
-      \item For a less than \$100 charge, you get \$20 of extra phone time.
-      \item For a more than \$100 charge, you get \$25 of extra phone time.
-    \end{enumerate}
-
-    Write a function that takes the value the user wants to 
-\end{ex}
 
 \pagebreak
 \section{Conventions}
@@ -375,8 +359,10 @@ def midpoint(a, b):
 
     \begin{python3code}
 def calculate_weekly_pay(pay_rate, hours, tax_rate):
-    """Calculate the net pay after taxes given the number of hours worked 
+    """
+    Calculate the net pay after taxes given the number of hours worked 
     in a week, a pay rate, and a flat tax rate.
+    Takes into consideration overtime pay at 1.5 the pay rate.
 
     Arguments:
     pay_rate -- rate of pay
@@ -553,8 +539,35 @@ __main__
 Midpoint of 5 and 10 is 7.50.
 \end{bashcode}
 
-We call this specific if-statement referencing the \pythoninline{__name__}
-variable boilerplate code.
+However, sometimes you may want to import the module \emph{and} run it as if it
+were a script. To enable us to do so, we usually put the script code in a
+function called \pythoninline{main()}:
+
+\begin{python3code}
+def midpoint(a, b):
+    """Find and return the midpoint of two numbers."""
+    return (a+b)/2
+
+def main():
+    print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
+
+if __name__ == "__main__":
+    main()
+\end{python3code}
+
+\begin{pyconcode}
+>>> import mid
+>>> mid.main() # if we want to
+Midpoint of 5 and 10 is 7.50.
+\end{pyconcode}
+
+\begin{bashcode}
+$ python3 mid.py
+Midpoint of 5 and 10 is 7.50.
+\end{bashcode}
+
+We call this combination of the if-statement and the
+\pythoninline{main()} function \emph{boilerplate code}.
 
 \begin{infobox}{Boilerplate Requirement}
   Please put \textbf{any} code that is not part of a function inside the
@@ -570,8 +583,11 @@ print("Hello World!")
   Right:
 
   \begin{python3code}
-if __name__ == "__main__":
+def main():
     print("Hello World!")
+
+if __name__ == "__main__":
+    main()
   \end{python3code}
 \end{infobox}
 
@@ -588,6 +604,7 @@ of a module. For example for the circlemath module we wrote earlier:
 >>> import mid
 >>> dir(mid)
 ['__name__', 'midpoint']
+>>> import math
 >>> dir(math)
 ['__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'acos',
 'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh',
@@ -597,6 +614,7 @@ of a module. For example for the circlemath module we wrote earlier:
 'tan', 'tanh', 'trunc']
 \end{pyconcode}
 
+\pagebreak
 \subsection{Summary}
 \label{subsec:modules.sum}
 
@@ -625,8 +643,11 @@ from modname import attribute as otherattribute # use: otherattribute
     We call that boilerplate code:
 
     \begin{python3code}
-if __name__ == "__main__":
+def main():
     # stuff that only runs if module is run as a script
+
+if __name__ == "__main__":
+    main()
     \end{python3code}
 
   \item Use \pythoninline{dir()} to get a list of every attribute -- every
@@ -636,108 +657,23 @@ if __name__ == "__main__":
   \item A good resource:
 
     \begin{center}
-\url{https://docs.python.org/3.4/tutorial/modules.html}
+      \url{https://docs.python.org/3.4/tutorial/modules.html}
     \end{center}
+
 \end{itemize}
 
-\subsection{Exercises}
-\label{subsec:modules.ex}
 
 \pagebreak
-\section{Advanced Functions}
-\label{sec:adv}
-
-\subsection{Keyword Arguments}
-\label{subsec:adv.args}
-
-Many of the built-in functions we have been using, such as \pythoninline{input}
-and \pythoninline{print}, accept a variable number of arguments. We can do the
-same thing with our own functions by specifying default values for our
-arguments:
-
-\begin{pyconcode}
->>> def celebrate(times=1):
-...     i = 1
-...     while i <= times:
-...         print("Yay!")
-...         i += 1
-...
->>> celebrate()
-Yay!
->>> celebrate(5)
-Yay!
-Yay!
-Yay!
-Yay!
-Yay!
-\end{pyconcode}
-
-Here, we have a function called \pythoninline!celebrate! which takes the
-parameter variable \pythoninline!times!. If that parameter is left unspecified
-in a function call, it will take the \emph{default value} of 1.
-
-Note what happens for each call of this function. The first time it only prints
-\pythoninline{"Yay!"} once, since the default argument is \pythoninline{1},
-while the second call overwrites the default value and prints it five times.
-
-While you are allowed to have a function that has some arguments with default
-values and some without, you must always put those with default values after
-those without any, so that Python will know which arguments go into which values
-if you do not include all of them when calling the function. This is because
-arguments from a function call are usually matched in order by their position.
-
-\begin{pyconcode}
->>> def test(a, b=5, c, d=6):
-...     print(a, b, c, d)
-  File "<stdin>", line 1
-SyntaxError: non-default argument follows default argument
->>> def test(a, c, b=5, d=6):
-...     print(a, b, c, d)
-...
->>> test(2, 3)
-2 5 3 6
->>> test(2, 3, 10)
-2 10 3 6
->>> test(2, 3, 10, 100)
-2 10 3 100
-\end{pyconcode}
-
-We call the arguments that are non-default arguments \emph{positional
-arguments}, while the default arguments are called \emph{keyword arguments}.
-
-Sometimes we might want to include some default arguments while excluding
-others. We do this by specifying which of the arguments we wish to pass a value
-to:
-
-\begin{pyconcode}
->>> def test(a=0, b=0, c=0, d=0):
-...     print(a, b, c, d)
-...
->>> test(c=10)
-0 0 10 0
->>> test(d=5, c=6)
-0 0 6 5
-\end{pyconcode}
-
-\begin{itemize}
-  \item If a function's caller supplies both positional and keyword arguments,
-    all positional parameters must precede all keyword parameters.
-  \item Keyword parameters may occur in any order.
-  \item The function call must supply at least as many parameters as the
-    function has positional arguments.
-  \item If the caller supplies more positional parameters than the function has
-    positional arguments, parameters are matched with keyword arguments
-    according to their position.
-\end{itemize}
-
-\subsection{Recursion}
-\label{subsec:adv.recursion}
+\section{Recursion}
+\label{sec:rec}
 
 Recursion is the idea of a function calling itself. This can be useful in a wide
 variety of situations, but it can also be easy to misuse. Let us first look at a
 good example:
 \begin{python3code}
 def factorial(n):
+    """Compute and return n! recursively by knowing that n! = n * (n-1)! for n > 1
+    and 1! = 1 and 0! = 1"""
     if n <= 1:
         return 1
     else
@@ -748,10 +684,15 @@ Notice that this is just another way to repeat a statement, similar to a loop.
 In a loop, we have to specify when to stop repeating something, and we have to
 do the same thing with recursion; otherwise, it would run forever.
 
-As an example, see this simple \emph{bad} case of recursion:
+As an example, this is how the function plays out:
+\[ f(5) = 5 * f(4) = 5 * 4 * f(3) = 5 * 4 * 3 * f(2) = 5 * 4 * 3 * 2 * f(1) = 5
+* 4 * 3 * 2 * 1 = 120 \]
+
+As an example, see this simple \textbf{\emph{bad}} case of recursion:
 
 \begin{python3code}
 def test():
+    """BAD example of recursion."""
     test()
 \end{python3code}
 
@@ -769,33 +710,227 @@ def test(x):
         test(x - 1)
 \end{python3code}
 
-As an example of a good recursive function, here's a function that prints the
-powers of two from a given $n$ down to $1$:
-
-\begin{pyconcode}
->>> def powersof2(n):
-...     if n >= 1:
-...         print('{:10d} {:2d} {:17.15f}'.format(2**n, n, 2**(-n)))
-...         powersof2(n-1)
-...
-\end{pyconcode}
-
 \subsection{Summary}
 \label{subsec:adv.sum}
 
-\subsection{Exercises}
-\label{subsec:adv.ex}
+\begin{itemize}
+  \item A function may call itself. This is called recursion.
+  \item Always need a base case, or the function will keep calling itself
+    forever.
+\end{itemize}
+
+\pagebreak
+
+\section{Exercises}
+
+\begin{warningbox}{New Requirements}
+  Please be aware of the new coding requirements laid out by
+  Section~\ref{sec:pep8} (PEP 8 and PEP 257) and Section~\ref{sec:modules}
+  (boilerplate code).
+\end{warningbox}
+
+\begin{warningbox}{Install}
+  Please have the \pythoninline{matplotlib} module installed before next lab. If
+  you installed Anaconda Python, you already have it. Please come see a TA if
+  you are having problems with the installation!
+\end{warningbox}
+
+
+\begin{ex}[geometry.py] Write a Python script that lets the user do some basic
+  geometry calculations. Your output should look something like the following.
+
+  The majority of the output must be calculated by your program using a function
+  for each kind of calculation. \emph{The output given below is just an example.
+  Your program needs to perform the calculations for the numerical values read
+  from the keyboard.}
+
+  \begin{verbatimcode}
+Welcome to Wile E. Coyote's Geometry Calculator!
+
+Enter height of a rectangle >>> 2
+Enter width of a rectangle >>> 3
+
+The area of a rectangle with height 2 and width 3 is 6.
+The perimeter of a rectangle with height 2 and width 3 is 10.
+The length of the diagonal of a rectangle with height 2 and width 3 is 3.605551.
+
+Enter the radius of a circle >>> 2
+
+The area of a circle with radius 2.00 is 12.57.
+The circumference of a circle with radius 2.00 is 12.57.
+
+Enter the height of a right triangle >>> 1
+Enter the base of a right triangle >>> 1
+
+The area of a right triangle with height 1.00 and base 1.00 is 0.50.
+The perimeter of a triangle with height 1.00 and base 1.00 is 3.41.
+
+Enter the number of sides of a regular polygon as >>> 8
+Enter the length of the side of a regular polygon >>> 5
+
+The exterior angle of a regular polygon with 8 sides is 45.00 degrees.
+The interior angles of a regular polygon with 8 sides sum to 1080.00 degrees.
+Each interior angle of a regular polygon with 8 sides is 135.00 degrees.
+The area of a regular polygon with 8 sides each 5.00 long is 120.71.
+  \end{verbatimcode}
+
+  \begin{center}
+    \bfseries Remember that coding the input part of the program should be your
+    \emph{last} step. It is a beginner's mistake to start with that -- you want
+    the logic of your functions to be correct before doing any of the input.
+    Test your functions with hard-coded values.
+  \end{center}
+
+  Please split your program into multiple files. Please create a module each for
+  the rectangle functions, the circle functions, the triangle functions, and the
+  polygon functions. For each of the modules, use boilerplate code to test the
+  functions. Here's an example:
+
+  \begin{python3code}
+# Module square (square.py)
+
+def area(side_length):
+    """Calculates the area of a square given the length of a side."""
+    return side_length ** 2
+
+def perimeter(side_length):
+    """Calculates the perimeter of a square given the length of a side."""
+    return 4 * side_length
+
+if __name__ == '__main__':
+    side_len = 2
+    print('A square with side length {:.2f} has area {:.2f}.'.format(
+        side_len, area(side_len)))
+    print('A square with side length {:.2f} has perimeter {:.2f}.'.format(
+        side_len, perimeter(side_len)))
+  \end{python3code}
+
+  Then, write a script \texttt{geometry.py} that gives the user interface as
+  seen in the example above.
+
+  Your program must define the following functions. It is your task to figure
+  out the appropriate arguments and return values as well as the code of these
+  functions.
+  \begin{multicols}{2}
+    \begin{itemize}
+      \item Module \texttt{triangle}:
+        \begin{itemize}
+          \item \pythoninline{area}
+          \item \pythoninline{hypotenuse}
+          \item \pythoninline{perimeter}
+        \end{itemize}
+      \item Module \texttt{regularpolygons}:
+        \begin{itemize}
+          \item \pythoninline{exterior_angle}
+          \item \pythoninline{interior_angle}
+          \item \pythoninline{area}
+        \end{itemize}
+      \item Module \texttt{rectangle}:
+        \begin{itemize}
+          \item\pythoninline{area}
+          \item \pythoninline{perimeter}
+          \item \pythoninline{diagonal}
+        \end{itemize}
+      \item Module \texttt{circle}:
+        \begin{itemize}
+          \item \pythoninline{area}
+          \item \pythoninline{circumference}
+        \end{itemize}
+    \end{itemize}
+  \end{multicols}
+\end{ex}
+
+\begin{ex}[calls.py] You buy an international calling card to Germany. The
+  calling card company has some special offers.
+
+    \begin{enumerate}[(a)]
+      \item If you charge your card with less than \$10, you don't get anything
+        extra.
+      \item For a less than \$25 charge, you get \$3 of extra phone time.
+      \item For a less than \$50 charge, you get \$8 of extra phone time.
+      \item For a less than \$100 charge, you get \$20 of extra phone time.
+      \item For a more than \$100 charge, you get \$25 of extra phone time.
+    \end{enumerate}
+
+    Write a function that takes the value the user wants to charge and returns
+    the actual value charged.
+
+    In your script, include a way for someone running the script to enter values
+    to charge and get the actual value charged.
+
+    Example:
+
+    \begin{verbatimcode}
+Enter value you want to charge >>> 24
+27 dollars were added to your calling card.
+    \end{verbatimcode}
+\end{ex}
 
 \begin{ex}[sum.py] Write a recursive function that computes the sum of all the
   numbers from 1 to $n$, where $n$ is the given parameter.
 \end{ex}
 
-\begin{ex}[expo.py] Write a recursive function that takes in a base and an
-  exponent and returns the value of that base taken to that exponent. You are
-  not allowed to use \lstinline{**} or any built-in exponentiation functions.
+\begin{ex}[peasants.py] \hfill
+  \begin{enumerate}[(a)]
+    \item In Russian peasant multiplication, you keep halving one factor while
+      doubling the other factor until one of the factors is 1. For example:
+      \begin{IEEEeqnarray*}{RCRCL}
+        &\quad& 8 &\quad\times\quad& 38 \\
+        = && 4 &\quad\times\quad& 76 \\
+        = && 2 &\quad\times\quad& 152 \\
+        = && 1 &\quad\times\quad& 304
+      \end{IEEEeqnarray*}
+      Hence, $8 \times 38 = 304$.
+
+      This, of course, becomes a bit more involved if the integer that you keep
+      halving has an odd prime factor. For example, imagine $38$ is the number
+      that keeps getting halved:
+      \begin{IEEEeqnarray*}{RCRCLCLCL}
+        && 8 &\times& 38 \\
+        = &\quad& 16 &\times& 19 \\
+        = && 32 &\times& 9 &+& 16      &\qquad& \text{$\nicefrac{19}{2} = 9$ with remainder $1$} \\
+        = && 64 &\times& 4 &+& 16 + 32 &\qquad& \text{$\nicefrac{9}{2} = 4$ with remainder $1$} \\
+        = && 128 &\times& 2 &+& 16 + 32 \\
+        = && 256 &\times& 1 &+& 16 + 32 \\
+        = && 256 && &+& 16 + 32 \\
+        = && 304
+      \end{IEEEeqnarray*}
+
+      This is all based on the following recursive definition of multiplication:
+
+      \[ x \times y = \begin{cases}
+          \frac{x}{2} \times (2 \times y) & \text{if $x$ is even} \\
+          \frac{x-1}{2} \times (2 \times y) + y & \text{if $x$ is odd}
+      \end{cases} \]
+
+      Write a \emph{non-recursive} function that implements Russian
+      peasant multiplication using a \pythoninline{while} loop. Call this
+      function \pythoninline{multiply()}.
+
+    \item The Russian peasant method can also be applied to exponentiation:
+
+      \[ x^y = \begin{cases}
+          \left( x^2 \right)^{\nicefrac{y}{2}} & \text{if $y$ is even} \\
+          x \times \left( x^2 \right)^{\nicefrac{(y-1)}{2}} & \text{if $y$ is odd} \\
+      \end{cases} \]
+
+      This method is also called exponentiation by squaring or the
+      square-and-multiply method.
+
+      Write a \emph{recursive} function called \pythoninline{expo()} that
+      implements this.
+
+  \end{enumerate}
+
 \end{ex}
 
 \begin{ex}[pascal.py] \hfill
+
+  In Pascal's triangle, each number is the sum of the two numbers directly above
+  it. The left and right ends of the triangle always consists of $1$s.
+
+  This recursive rule produces the following triangle:
+
   \begin{center}
 \def\N{9}
 \tikz[x=0.75cm,y=0.5cm, 
@@ -812,9 +947,29 @@ powers of two from a given $n$ down to $1$:
             \pgfmathresult%
           }}};
   \end{center}
+
+  Write a recursive function \pythoninline{pascal(n, k)} that finds the $k$th
+  value of the $n$th row by using the sum of the numbers directly above it.
+  We start counting at $0$ for both $n$ and $k$.
+
+  Since we know that the left and right end of the triangle are all $1$s, we
+  know that:
+  \begin{IEEEeqnarray*}{RCLCL}
+    \pas(n, 0) &=& 1 &\qquad& \text{left end} \\
+    \pas(n, n) &=& 1 &\qquad& \text{right end}
+  \end{IEEEeqnarray*}
+
+  For example:
+
+  \begin{IEEEeqnarray*}{RCLCL}
+    \pas(4, 2) &=& \pas(3, 1) + \pas(3, 2)  \\
+    &=& \pas(2, 0) + \pas(2, 1) + \pas(2, 1) + \pas(2, 2) \\
+    &=& 1 + \pas(1, 0) + \pas(1, 1) + \pas(1, 0) + \pas(1, 1) + 1 \\
+    &=& 1 + 1 + 1 + 1 + 1 + 1 \\
+    &=& 6
+  \end{IEEEeqnarray*}
 \end{ex}
 
-\pagebreak
 \section{Submitting}
 
 You should submit your code as a tarball. It should contain all files

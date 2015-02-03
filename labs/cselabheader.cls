@@ -22,7 +22,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{mathpazo}
 % AMS math formatting
-\usepackage{amsmath}
+\usepackage{amsmath,nicefrac}
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{textcomp}
