@@ -730,9 +730,9 @@ def test(x):
 \end{warningbox}
 
 \begin{warningbox}{Install}
-  Please have the \pythoninline{matplotlib} module installed before next lab. If
-  you installed Anaconda Python, you already have it. Please come see a TA if
-  you are having problems with the installation!
+  Please have the \pythoninline{matplotlib} module installed on your computer
+  before next lab. If you installed Anaconda Python, you already have it. Please
+  come see a TA if you are having problems with the installation!
 \end{warningbox}
 
 
@@ -883,7 +883,7 @@ Enter value you want to charge >>> 24
       Hence, $8 \times 38 = 304$.
 
       This, of course, becomes a bit more involved if the integer that you keep
-      halving has an odd prime factor. For example, imagine $38$ is the number
+      halving is not a power of two. For example, imagine $38$ is the number
       that keeps getting halved:
       \begin{IEEEeqnarray*}{RCRCLCLCL}
         && 8 &\times& 38 \\
@@ -911,7 +911,7 @@ Enter value you want to charge >>> 24
 
       \[ x^y = \begin{cases}
           \left( x^2 \right)^{\nicefrac{y}{2}} & \text{if $y$ is even} \\
-          x \times \left( x^2 \right)^{\nicefrac{(y-1)}{2}} & \text{if $y$ is odd} \\
+          x \left( x^2 \right)^{\nicefrac{(y-1)}{2}} & \text{if $y$ is odd} \\
       \end{cases} \]
 
       This method is also called exponentiation by squaring or the
@@ -953,13 +953,13 @@ Enter value you want to charge >>> 24
   We start counting at $0$ for both $n$ and $k$.
 
   Since we know that the left and right end of the triangle are all $1$s, we
-  know that:
+  know that for every row $n$:
   \begin{IEEEeqnarray*}{RCLCL}
     \pas(n, 0) &=& 1 &\qquad& \text{left end} \\
     \pas(n, n) &=& 1 &\qquad& \text{right end}
   \end{IEEEeqnarray*}
 
-  For example:
+  If for example I want to know the $2$nd entry of the $4$th row:
 
   \begin{IEEEeqnarray*}{RCLCL}
     \pas(4, 2) &=& \pas(3, 1) + \pas(3, 2)  \\
