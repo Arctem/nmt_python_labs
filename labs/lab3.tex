@@ -398,6 +398,8 @@ A module is just a file with Python statements in it. A module takes the name of
 the file that it is in. For example, imagine we have a file
 \texttt{circlemath.py} in our current working directory:
 
+\begin{listing}[H]
+\vspace{-0.5em}
 \begin{python3code}
 import math # importing the math module
 
@@ -409,6 +411,10 @@ def circumference(radius):
     """Find and return the circumference of a circle (float) given the radius"""
     return 2 * math.pi * radius
 \end{python3code}
+\vspace{-1em}
+\caption{\texttt{circlemath.py}}
+\vspace{-0.5em}
+\end{listing}
 
 Then, open the interpreter and import the module:
 
@@ -488,6 +494,8 @@ If there is code in your module that is not a function definition, Python will
 run it just once when the module is imported. For example, take the file
 \texttt{mid.py}:
 
+\begin{listing}[H]
+  \vspace{-0.5em}
 \begin{python3code}
 def midpoint(a, b):
     """Find and return the midpoint of two numbers."""
@@ -495,6 +503,10 @@ def midpoint(a, b):
 
 print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
 \end{python3code}
+  \vspace{-1em}
+  \caption{\texttt{mid.py}}
+  \vspace{-0.5em}
+\end{listing}
 
 \begin{pyconcode}
 >>> import mid
@@ -517,6 +529,8 @@ When you run a module as a script, the modules \pythoninline{__name__} attribute
 is not set to the module's name, but to \pythoninline{"__main__"}. Hence, the
 following code in \texttt{mid.py} will do the following:
 
+\begin{listing}[H]
+  \vspace{-0.5em}
 \begin{python3code}
 def midpoint(a, b):
     """Find and return the midpoint of two numbers."""
@@ -527,6 +541,10 @@ print(__name__) # just for demonstration, do not put this in real programs
 if __name__ == "__main__":
     print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
 \end{python3code}
+  \vspace{-1em}
+  \caption{\texttt{mid.py}}
+  \vspace{-0.5em}
+\end{listing}
 
 \begin{pyconcode}
 >>> import mid
@@ -543,6 +561,8 @@ However, sometimes you may want to import the module \emph{and} run it as if it
 were a script. To enable us to do so, we usually put the script code in a
 function called \pythoninline{main()}:
 
+\begin{listing}[H]
+  \vspace{-0.5em}
 \begin{python3code}
 def midpoint(a, b):
     """Find and return the midpoint of two numbers."""
@@ -554,6 +574,10 @@ def main():
 if __name__ == "__main__":
     main()
 \end{python3code}
+  \vspace{-1em}
+  \caption{\texttt{mid.py} -- perfect example}
+  \vspace{-0.5em}
+\end{listing}
 
 \begin{pyconcode}
 >>> import mid
@@ -797,12 +821,15 @@ def perimeter(side_length):
     """Calculates the perimeter of a square given the length of a side."""
     return 4 * side_length
 
-if __name__ == '__main__':
+def main():
     side_len = 2
     print('A square with side length {:.2f} has area {:.2f}.'.format(
         side_len, area(side_len)))
     print('A square with side length {:.2f} has perimeter {:.2f}.'.format(
         side_len, perimeter(side_len)))
+
+if __name__ == '__main__':
+    main()
   \end{python3code}
 
   Then, write a script \texttt{geometry.py} that gives the user interface as
@@ -810,7 +837,8 @@ if __name__ == '__main__':
 
   Your program must define the following functions. It is your task to figure
   out the appropriate arguments and return values as well as the code of these
-  functions.
+  functions. Notice that the triangle is a \emph{right triangle} where height
+  and base are the two legs joined by the 90 degree angle.
   \begin{multicols}{2}
     \begin{itemize}
       \item Module \texttt{triangle}:
@@ -838,6 +866,21 @@ if __name__ == '__main__':
         \end{itemize}
     \end{itemize}
   \end{multicols}
+
+  \emph{Regular Polygons}
+
+  The exterior angle of a regular $n$-polygon is $\frac{360}{n}$, where $n$ is
+  the number of sides. The angle is in degrees.
+
+  The sum of the interior angles of a regular $n$-polygon is $180(n-2)$, where the
+  angle is in degrees.
+
+  To get one particular interior angle of a regular $n$-polygon, divide by the
+  number of angles $n$ to get $\frac{180(n-2)}{n}$.
+
+  Finally, to find the area of a regular $n$-polygon, use the following formula:
+  \[ \frac{s^2 \times n}{4 \times \tan\left( \frac{\pi}{n} \right)}, \]
+  where $s$ is the length of a side and $n$ is the number of sides.
 \end{ex}
 
 \begin{ex}[calls.py] You buy an international calling card to Germany. The
@@ -872,7 +915,8 @@ Enter value you want to charge >>> 24
 
 \begin{ex}[peasants.py] \hfill
   \begin{enumerate}[(a)]
-    \item In Russian peasant multiplication, you keep halving one factor while
+    \item Russian peasant multiplication is a method of multiplying integers in
+      which you keep halving one factor while
       doubling the other factor until one of the factors is 1. For example:
       \begin{IEEEeqnarray*}{RCRCL}
         &\quad& 8 &\quad\times\quad& 38 \\
@@ -907,7 +951,8 @@ Enter value you want to charge >>> 24
       peasant multiplication using a \pythoninline{while} loop. Call this
       function \pythoninline{multiply()}.
 
-    \item The Russian peasant method can also be applied to exponentiation:
+    \item The Russian peasant method can also be applied to exponentiation (also
+      only for integers):
 
       \[ x^y = \begin{cases}
           \left( x^2 \right)^{\nicefrac{y}{2}} & \text{if $y$ is even} \\

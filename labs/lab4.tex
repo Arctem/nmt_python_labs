@@ -14,7 +14,7 @@
 \begin{document}
 
 \maketitle
-
+\pagenumbering{roman}
 \hrule
 
 \begin{quotation}
@@ -36,7 +36,7 @@
   must not imagine that we are quite different and have become better.''
 \end{quotation}
 \begin{flushright}
-	--- Richard von Weizs\"{a}cker
+  --- Richard von Weizs\"{a}cker
 %\\\textit{Speech to commemorate end of WW II, May 8 1985}
 % English: http://www.hariguchi.org/yoichi/weizsaecker.html
 % Famous speech by RvW, President of Fed Rep of Germ, for the 
@@ -46,15 +46,23 @@
 \end{flushright}
 \hrule
 
-\section{Introduction}
-In the first two labs, we showed you how to generally use Python and how to
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+
+In the first few labs, we showed you how to generally use Python and how to
 have your programs make decisions based on what the user entered. With this
 lab, we will be starting to show you how to do some useful things in Python:
 how to make lists and manipulate them -- sort them, reverse them, combine them.
-We will also show you how to deal with strings. You have
-seen strings before, but we will be showing you how to manipulate them.
+We will also show you how to deal with strings. You have seen strings before,
+but we will be showing you how to manipulate them.
 
 \pagebreak
+
+\tableofcontents
+
+\pagebreak
+
+\pagenumbering{arabic}
 \section{Lists}
 %in/not in, slicing, pop, append, len, sum
 One of the most important data types in Python is the list. A list is an ordered
@@ -266,6 +274,11 @@ positions.
 [5, 4, 3]
 \end{pyconcode}
 
+\subsection{Tangent: Let's Talk About Methods}
+
+TODO
+%TODO
+
 \subsection{List Functions}
 Many functions exist to help manipulate lists. The first of these is
 \pythoninline{.append()}. This adds a new value onto the end of an existing list.
@@ -377,41 +390,6 @@ Two lists can be added together in order to combine them into one list.
   \item See Table~\ref{tab:lists} for functions on lists.
 \end{itemize}
 
-\subsection{Exercises}
-\label{subsec:listsex}
-
-\begin{ex}[parity.py] Take in numbers as input until ``stop'' is entered. Then
-  split the numbers into three lists: one containing all the numbers, one
-  containing all even values, and one containing all odd. Print out all three
-  lists, as well as each list's sum and average. Assume all input values are
-  integers.
-
-  Sample:
-
-\begin{verbatimcode}
-Input a number: 1
-Input a number: 5
-Input a number: 8
-Input a number: 2
-Input a number: 8
-Input a number: 100
-Input a number: 3
-Input a number: 7
-Input a number: 27
-Input a number: 5
-Input a number: stop
-All numbers: [1, 5, 8, 2, 8, 100, 3, 7, 27, 5]
-Average of all numbers: 16.6
-Sum of all numbers: 166
-Even numbers: [8, 2, 8, 100]
-Average of even numbers: 29.5
-Sum of even numbers: 118
-Odd numbers: [1, 5, 3, 7, 27, 5]
-Average of odd numbers: 8.0
-Sum of odd numbers: 48
-\end{verbatimcode}
-
-\end{ex}
 
 \pagebreak
 \section{Strings}
@@ -461,7 +439,7 @@ I can use double quotes "" here
 If you want a string to go to a new line, you use \pythoninline!\n! for that:
 
 \begin{listing}[H]
-  \caption{Excerpt of \emph{I Hear America Singing} by Walt Whitman}
+  \vspace{-0.5em}
 \begin{pyconcode}
 >>> r = 'I hear America singing, the varied carols I hear,\nThose of mechanics,' + \
 ...     'each one singing his as it should be blithe and strong,\nThe carpenter' + \
@@ -471,6 +449,9 @@ I hear America singing, the varied carols I hear,
 Those of mechanics, each one singing his as it should be blithe and strong,
 The carpenter singing his as he measures his plank or beam,
 \end{pyconcode}
+  \vspace{-1em}
+  \caption{Excerpt of \emph{I Hear America Singing} by Walt Whitman}
+  \vspace{-0.5em}
 \end{listing}
 
 What, however, if you actually need a \pythoninline!\n! in a string? You will want
@@ -539,7 +520,7 @@ cannot be changed at all:
 >>> s[0] = 'J'
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
-  TypeError: 'str' object does not support item assignment
+TypeError: 'str' object does not support item assignment
 \end{pyconcode}
 
 If you want to change a string, just create a new string!
@@ -570,8 +551,7 @@ If you want strings to go on for two or more lines of Python code, you have to u
 quotes:
 
 \begin{listing}[H]
-  \caption{Excerpt of Richard von Weizs\"{a}cker's speech in
-the Bundestag to commemorate the 40th anniversary of the end of World War II.}
+  \vspace{-0.5em}
 \begin{python3code}
 weizsaecker = """We in the older generation owe to young people not the 
 fulfillment of dreams but honesty. We must help younger people to 
@@ -584,6 +564,10 @@ ultimately achievable moral perfection. We have learned as human beings,
 and as human beings we remain in danger. But we have the strength to 
 overcome such danger again and again."""
 \end{python3code}
+  \vspace{-1em}
+  \caption{Excerpt of Richard von Weizs\"{a}cker's speech in
+the Bundestag to commemorate the 40th anniversary of the end of World War II.}
+  \vspace{-0.5em}
 \end{listing}
 
 \subsection{String Functions}
@@ -682,68 +666,9 @@ String"""
   \item See string functions in Table~\ref{tab:str}.
 \end{itemize}
 
-\subsection{Exercises}
-\label{subsec:stringsex}
-
-\emph{These exercises are a modification of exercises in the Google Python
-  class, licensed under the
-  \href{http://www.apache.org/licenses/LICENSE-2.0.html}{Apache License 2.0}.}
-
-\begin{ex}[ends.py] Write a program that takes in a string from the user and
-  prints just the first two and the last two characters of the string.
-
-  \begin{verbatimcode}
-Enter a string: spring
-Ends are: spng
-  \end{verbatimcode}
-\end{ex}
-
-\begin{ex}[mix.py] Write a program that takes two strings \pythoninline!a! and
-  \pythoninline!b! and prints the two strings concatenated, but with the first
-  two characters of each word swapped with the other word's first two
-  characters. For example:
-
-  \begin{verbatimcode}
-String a: german
-String b: english
-Result: enrman geglish
-  \end{verbatimcode}
-
-  \begin{verbatimcode}
-String a: dog
-String b: dinner
-Result: dig donner
-  \end{verbatimcode}
-\end{ex}
-
-\begin{ex}[splitit.py] Consider dividing a string into two halves. If the length
-  is even, the front and back halves are the same length. If the length is odd,
-  we'll say that the extra character goes in the front. 
-
-  For example, in \pythoninline!'abcde'!, the front half is \pythoninline!'abc'!
-  and the back half is \pythoninline!'de'!. 
-
-  Write a program that takes in two strings \pythoninline!a! and
-  \pythoninline!b!  and prints a-front + b-front + a-back + b-back.
-
-  For example,
-
-  \begin{verbatimcode}
-String a: abcd
-String b: efghi
-abefgcdhi
-  \end{verbatimcode}
-
-  \begin{verbatimcode}
-String a: this dinner is
-String b: what am i doing1
-this diwhat am nner isi doing1
-  \end{verbatimcode}
-
-\end{ex}
 
 \pagebreak
-\section{For Loops}
+\section{\protect\pythoninline{for} Loops}
 %usage with for lists and strings more in depth
 %using range in combination with a list
 
@@ -860,18 +785,14 @@ print("Sums: {}".format(adjacent_sums))
 If we simply want to do something a fixed number of times, we pass that number
 to \pythoninline{range} and put it in a loop.
 
-\begin{python3code}
-for i in range(3):
-    print("Hello.")
-\end{python3code}
-
-Output of this would be:
-
-\begin{verbatimcode}
+\begin{pyconcode}
+>>> for i in range(3):
+...     print("Hello.")
+...
 Hello.
 Hello.
 Hello.
-\end{verbatimcode}
+\end{pyconcode}
 
 \subsection{Strings}
 
@@ -906,8 +827,107 @@ This will print:
     use a \pythoninline{range} of the same length as the list.
 \end{itemize}
 
-\subsection{Exercises}
-\label{subsec:forex}
+\pagebreak
+\section{Exercises}
+\label{sec:ex}
+
+\begin{ex}[stringfun.py] 
+\emph{This exercise is a modification of exercises in the Google Python
+  class, licensed under the
+  \href{http://www.apache.org/licenses/LICENSE-2.0.html}{Apache License 2.0}.}
+
+Write the following functions. \emph{You must figure out the appropriate
+  arguments to the functions and design a command line user interface that is
+not part of the prescribed functions.}
+
+\begin{description}
+  \item[\pythoninline{ends()}]
+  Write a function that takes in a string from the user and
+  prints just the first two and the last two characters of the string.
+
+  \begin{verbatimcode}
+Enter a string: spring
+Ends are: spng
+  \end{verbatimcode}
+
+  \item[\pythoninline{mix()}]
+Write a function that takes two strings \pythoninline!a! and
+  \pythoninline!b! and prints the two strings concatenated, but with the first
+  two characters of each word swapped with the other word's first two
+  characters. For example:
+
+  \begin{verbatimcode}
+String a: german
+String b: english
+Result: enrman geglish
+  \end{verbatimcode}
+
+  \begin{verbatimcode}
+String a: dog
+String b: dinner
+Result: dig donner
+  \end{verbatimcode}
+
+  \item[\pythoninline{splitit()}]
+Consider dividing a string into two halves. If the length
+  is even, the front and back halves are the same length. If the length is odd,
+  we'll say that the extra character goes in the front. 
+
+  For example, in \pythoninline!'abcde'!, the front half is \pythoninline!'abc'!
+  and the back half is \pythoninline!'de'!. 
+
+  Write a function that takes in two strings \pythoninline!a! and
+  \pythoninline!b!  and prints a-front + b-front + a-back + b-back.
+
+  For example,
+
+  \begin{verbatimcode}
+String a: abcd
+String b: efghi
+abefgcdhi
+  \end{verbatimcode}
+
+  \begin{verbatimcode}
+String a: this dinner is
+String b: what am i doing1
+this diwhat am nner isi doing1
+  \end{verbatimcode}
+\end{description}
+
+\end{ex}
+
+
+\begin{ex}[parity.py] Take in numbers as input until ``stop'' is entered. Then
+  split the numbers into three lists: one containing all the numbers, one
+  containing all even values, and one containing all odd. Print out all three
+  lists, as well as each list's sum and average. Assume all input values are
+  integers.
+
+  Sample:
+
+\begin{verbatimcode}
+Input a number: 1
+Input a number: 5
+Input a number: 8
+Input a number: 2
+Input a number: 8
+Input a number: 100
+Input a number: 3
+Input a number: 7
+Input a number: 27
+Input a number: 5
+Input a number: stop
+All numbers: [1, 5, 8, 2, 8, 100, 3, 7, 27, 5]
+Average of all numbers: 16.6
+Sum of all numbers: 166
+Even numbers: [8, 2, 8, 100]
+Average of even numbers: 29.5
+Sum of even numbers: 118
+Odd numbers: [1, 5, 3, 7, 27, 5]
+Average of odd numbers: 8.0
+Sum of odd numbers: 48
+\end{verbatimcode}
+\end{ex}
 
 \begin{ex}[spiral.py] Use a \pythoninline{for} loop, \pythoninline{range}, and
   \pythoninline{turtle} to draw a spiral. It does not need to perfectly resemble
@@ -919,7 +939,7 @@ This will print:
   \end{center}
 \end{ex}
 
-\begin{ex}[navigate2.py] Modify \texttt{navigate.py} from last week so that,
+\begin{ex}[navigate2.py] Modify \texttt{navigate.py} from lab 2 so that,
   rather than performing each action as it is entered, it stores the inputs in a
   list and runs them all at once after the ``stop'' command has been given.
 \end{ex}
@@ -947,6 +967,10 @@ Input a number: stop
 [-5.0, 2.3, 5.2, 12.0, 73.0, 100.0]
   \end{verbatimcode}
 
+\end{ex}
+
+\begin{ex}[binary.py]
+  Add binary search here.
 \end{ex}
 
 \pagebreak
