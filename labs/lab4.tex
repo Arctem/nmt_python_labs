@@ -279,7 +279,7 @@ positions.
 TODO
 %TODO
 
-\subsection{List Functions}
+\subsection{List Methods and Functions}
 Many functions exist to help manipulate lists. The first of these is
 \pythoninline{.append()}. This adds a new value onto the end of an existing list.
 
@@ -344,7 +344,7 @@ TypeError: unsupported operand type(s) for +: 'int' and 'str'
   \centering
   \begin{tabular}{ll}
     \toprule
-    Function & What it does \\
+    Function/method & What it does \\
     \midrule
     \pythoninline!lst.append(x)! & appends \pythoninline!x! to \pythoninline!lst! \\
     \pythoninline!lst.insert(i, x)! & inserts \pythoninline!x! at index \pythoninline!i!
@@ -359,7 +359,7 @@ TypeError: unsupported operand type(s) for +: 'int' and 'str'
     \pythoninline!+! works between the elements)\\
     \bottomrule
   \end{tabular}
-  \caption{List Functions, where \texttt{lst} is a variable that holds a list}
+  \caption{List methods and functions, where \texttt{lst} is a variable that holds a list}
   \label{tab:lists}
 \end{table}
 
@@ -390,6 +390,24 @@ Two lists can be added together in order to combine them into one list.
   \item See Table~\ref{tab:lists} for functions on lists.
 \end{itemize}
 
+\pagebreak
+\section{Tuples}
+
+Tuples work a lot like lists, except they cannot be modified; they are
+\emph{immutable}. Instead of brackets \pythoninline{[]} we use parentheses
+\pythoninline{()} around the elements.
+
+\begin{pyconcode}
+>>> food = ('eggs', 'bananas', 'lemonheads')
+>>> food[1]
+'bananas'
+>>> food[1:3]
+('bananas', 'lemonheads')
+>>> food[1] = 'steak' # tuples are immutable!
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'tuple' object does not support item assignment
+\end{pyconcode}
 
 \pagebreak
 \section{Strings}
@@ -570,7 +588,7 @@ the Bundestag to commemorate the 40th anniversary of the end of World War II.}
   \vspace{-0.5em}
 \end{listing}
 
-\subsection{String Functions}
+\subsection{String Methods and Functions}
 
 As with lists, there are a few functions you can use with strings.
 
@@ -605,7 +623,7 @@ You can find a summary of the functions and what they do in Table~\ref{tab:str}.
   \centering
   \begin{tabular}{ll}
     \toprule
-    String Function & What it does \\
+    String method/function & What it does \\
     \midrule
     \pythoninline!len(s)! & Length of \pythoninline!s! \\
     \pythoninline!r = s.upper()! & replaces all lowercase characters with uppercase
@@ -629,7 +647,7 @@ You can find a summary of the functions and what they do in Table~\ref{tab:str}.
     \pythoninline!s! with \pythoninline!y! and put result in \pythoninline!r! \\
     \bottomrule 
   \end{tabular}
-  \caption{String functions, where \texttt{s} is a string}
+  \caption{String methods and functions, where \texttt{s} is a string}
   \label{tab:str}
 \end{table}
 
@@ -846,8 +864,9 @@ not part of the prescribed functions.}
   prints just the first two and the last two characters of the string.
 
   \begin{verbatimcode}
-Enter a string: spring
-Ends are: spng
+== ends ==
+Enter a string >>> spring
+spng
   \end{verbatimcode}
 
   \item[\pythoninline{mix()}]
@@ -857,15 +876,17 @@ Write a function that takes two strings \pythoninline!a! and
   characters. For example:
 
   \begin{verbatimcode}
-String a: german
-String b: english
-Result: enrman geglish
+== mix ==
+String a >>> german
+String b >>> english
+enrman geglish
   \end{verbatimcode}
 
   \begin{verbatimcode}
-String a: dog
-String b: dinner
-Result: dig donner
+== mix ==
+String a >>> dog
+String b >>> dinner
+dig donner
   \end{verbatimcode}
 
   \item[\pythoninline{splitit()}]
@@ -882,20 +903,63 @@ Consider dividing a string into two halves. If the length
   For example,
 
   \begin{verbatimcode}
-String a: abcd
-String b: efghi
+== splitit ==
+String a >>> abcd
+String b >>> efghi
 abefgcdhi
   \end{verbatimcode}
 
   \begin{verbatimcode}
-String a: this dinner is
-String b: what am i doing1
+== splitit ==
+String a >>> this dinner is
+String b >>> what am i doing1
 this diwhat am nner isi doing1
   \end{verbatimcode}
 \end{description}
 
 \end{ex}
 
+\begin{ex}[fractions.py] Any fraction can be written as the division of two
+  integers. You could express this in Python as a tuple -- 
+  (numerator, denominator).
+
+  Write functions for each of the following. They must use the tuple
+  representation to return fractions.
+  \begin{enumerate}
+    \item Given two fractions as tuples, multiply them.
+    \item Given two fractions as tuples, divide them.
+    \item Given a list of fractions as a tuple, return the one that is
+      smallest in value.
+  \end{enumerate}
+
+  Also write a small command-line interface such that the user running your
+  script sees something like this:
+
+  \begin{verbatimcode}
+== Multiplication and Division ==
+Enter a fraction >>> 5/3
+Enter a fraction >>> 10/3
+Multiplication of the fractions: 50/9
+Division of the first by the second: 5/10
+
+== Smallest fraction ==
+Enter a fraction >>> 1/3
+Enter a fraction >>> 10/3
+Enter a fraction >>> 6/4
+Enter a fraction >>> stop
+Smallest fraction: 1/3
+  \end{verbatimcode}
+\end{ex}
+
+\begin{ex}[spiral.py] Use a \pythoninline{for} loop, \pythoninline{range}, and
+  \pythoninline{turtle} to draw a spiral. It does not need to perfectly resemble
+  the example.
+
+  Sample:
+  \begin{center}
+    \includegraphics[width=2.0in]{img/spiral}
+  \end{center}
+\end{ex}
 
 \begin{ex}[parity.py] Take in numbers as input until ``stop'' is entered. Then
   split the numbers into three lists: one containing all the numbers, one
@@ -906,17 +970,17 @@ this diwhat am nner isi doing1
   Sample:
 
 \begin{verbatimcode}
-Input a number: 1
-Input a number: 5
-Input a number: 8
-Input a number: 2
-Input a number: 8
-Input a number: 100
-Input a number: 3
-Input a number: 7
-Input a number: 27
-Input a number: 5
-Input a number: stop
+Input a number >>> 1
+Input a number >>> 5
+Input a number >>> 8
+Input a number >>> 2
+Input a number >>> 8
+Input a number >>> 100
+Input a number >>> 3
+Input a number >>> 7
+Input a number >>> 27
+Input a number >>> 5
+Input a number >>> stop
 All numbers: [1, 5, 8, 2, 8, 100, 3, 7, 27, 5]
 Average of all numbers: 16.6
 Sum of all numbers: 166
@@ -929,15 +993,6 @@ Sum of odd numbers: 48
 \end{verbatimcode}
 \end{ex}
 
-\begin{ex}[spiral.py] Use a \pythoninline{for} loop, \pythoninline{range}, and
-  \pythoninline{turtle} to draw a spiral. It does not need to perfectly resemble
-  the example.
-
-  Sample:
-  \begin{center}
-    \includegraphics[width=2.0in]{img/spiral}
-  \end{center}
-\end{ex}
 
 \begin{ex}[navigate2.py] Modify \texttt{navigate.py} from lab 2 so that,
   rather than performing each action as it is entered, it stores the inputs in a
@@ -957,14 +1012,36 @@ Sum of odd numbers: 48
   Sample:
 
   \begin{verbatimcode}
-Input a number: 12
-Input a number: 5.2
-Input a number: 73
-Input a number: 100
-Input a number: -5
-Input a number: 2.3
-Input a number: stop
-[-5.0, 2.3, 5.2, 12.0, 73.0, 100.0]
+Input a number >>> 12
+Input a number >>> 5.2
+Input a number >>> 73
+Input a number >>> 45
+Input a number >>> 100
+Input a number >>> -5
+Input a number >>> 2.3
+Input a number >>> stop
+[-5.0, 2.3, 5.2, 12.0, 45.0, 73.0, 100.0]
+  \end{verbatimcode}
+
+  What happens in the background:
+
+  \begin{verbatimcode}
+Input a number >>> 12
+List contains [12.0]
+Input a number >>> 5.2
+List contains [5.2, 12.0]
+Input a number >>> 73
+List contains [5.2, 12.0, 73.0]
+Input a number >>> 45
+List contains [5.2, 12.0, 45.0, 73.0]
+Input a number >>> 100
+List contains [5.2, 12.0, 45.0, 73.0, 100.0]
+Input a number >>> -5
+List contains [-5.0, 5.2, 12.0, 45.0, 73.0, 100.0]
+Input a number >>> 2.3
+List contains [-5.0, 2.3, 5.2, 12.0, 45.0, 73.0, 100.0]
+Input a number >>> stop
+[-5.0, 2.3, 5.2, 12.0, 45.0, 73.0, 100.0]
   \end{verbatimcode}
 
 \end{ex}
@@ -972,6 +1049,8 @@ Input a number: stop
 \begin{ex}[binary.py]
   Add binary search here.
 \end{ex}
+
+
 
 \pagebreak
 \section{Submitting}

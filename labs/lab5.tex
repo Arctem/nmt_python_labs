@@ -54,12 +54,12 @@ data beyond the scope of the single execution of a program. To open a file for
 reading or writing we will use the \lstinline{open} function. The following
 example opens a file and writes ``Hello World'' to it.
 
-\begin{lstlisting}[style=python]
+\begin{python3code}
 output_file = open("hello.txt", "w")
 
 print("Hello World", file=output_file)
 output_file.close()
-\end{lstlisting}
+\end{python3code}
 
 The arguments to the \lstinline{open} function are, in order, the name of the
 file to open and the mode in which to open the file. ``w'' means that the file
@@ -85,7 +85,7 @@ input, then prints out the entire contents of that file.
   \end{tabular}
 \end{table}
 
-\begin{lstlisting}[style=python]
+\begin{python3code}
 filename = input("What file should be read? ")
 
 input_file = open(filename, "r")
@@ -93,7 +93,7 @@ for line in input_file:
   print(line, end="")
 
 input_file.close()
-\end{lstlisting}
+\end{python3code}
 
 The additional concepts introduced in these examples are:
 
@@ -121,7 +121,7 @@ The additional concepts introduced in these examples are:
   entirety of the file can also be read into a single string using the
   \lstinline{.read()} function.
 
-\begin{lstlisting}[style=ipython]
+\begin{pyconcode}
 >>> input_file = open("test.py", "r")
 >>> contents = input_file.read()
 >>> print(contents)
@@ -132,7 +132,7 @@ for line in input_file:
   print(line, end="")
 
 input_file.close()
-\end{lstlisting}
+\end{pyconcode}
 
 \item \lstinline{.readlines()} can be used to read all of a file at once, though
   it splits the file into a list. Each element of the list will be one line of
@@ -144,20 +144,20 @@ input_file.close()
 If you try to open a file that does not exist for reading, Python will display
 an error message:
 
-\begin{lstlisting}[style=ipython]
+\begin{pyconcode}
 >>> open("not_a_file.txt", "r")
 Traceback (most recent call last):
-File "<pyshell#0>", line 1, in <module>
-open("not_a_file.txt", "r")
+  File "<pyshell#0>", line 1, in <module>
+  open("not_a_file.txt", "r")
 FileNotFoundError: [Errno 2] No such file or directory: 'not_a_file.txt'
-\end{lstlisting}
+\end{pyconcode}
 
 In this case, the error is \lstinline{FileNotFoundError}. Normally having an
 error occur will end your program, but we can use \lstinline{try-except} in
 order to perform a special action in case of an error. The following program
 uses this to display an error message rather than crashing.
 
-\begin{lstlisting}[style=python]
+\begin{python3code}
 filename = input("What file should be read? ")
 
 try:
@@ -168,7 +168,7 @@ try:
   input_file.close()
 except FileNotFoundError:
   print("Could not find file {}.".format(filename))
-\end{lstlisting}
+\end{python3code}
 
 If you wish to catch an error, check the error message for the name of the error
 that you need to catch with your \lstinline{except} statement. If the specified
@@ -185,7 +185,7 @@ turtles to draw more complex designs. This is done using the
 \lstinline{turtle.Turtle()} function. This function returns a turtle object,
 which we can call every other normal turtle function on.
 
-\begin{lstlisting}[style=python]
+\begin{python3code}
 import turtle
 
 first = turtle.Turtle()
@@ -201,7 +201,7 @@ first.right(90)
 second.left(90)
 first.forward(50)
 second.forward(50)
-\end{lstlisting}
+\end{python3code}
 
 \begin{figure}[h]
   \centering
@@ -210,7 +210,7 @@ second.forward(50)
 
 If we add a group of turtles to a list, we can easily apply the same commands to all of them, as in this example:
 
-\begin{lstlisting}[style=python]
+\begin{python3code}
 import turtle
 
 turtles = []
@@ -237,7 +237,7 @@ for i in range(200):
     for turt in turtles:
         turt.forward(i/5)
         turt.left(10)
-\end{lstlisting}
+\end{python3code}
 
 \begin{figure}[h]
   \centering
@@ -245,62 +245,23 @@ for i in range(200):
 \end{figure}
 
 \pagebreak
-\section{Program Boilerplate}
-\label{sec:boil}
-
-Most Python programs will have a standard format to them that looks something like this:
-
-\begin{lstlisting}[style=python]
-#import statements
-
-#other function declarations
-
-#Program starting point - first function run
-def main():
-    #All function calls and program logic should start here
-
-#Boilerplate that must be at the very end of your program
-if __name__ == '__main__':
-    main()
-\end{lstlisting}
-
-All program logic should exist inside functions. That is: the only code that
-exists at the lowest level of indentation should be imports, function
-declarations, and the \lstinline{if __name__ == '__main__':} statement.
-
-There are several reasons for this boilerplate code. Primarily, it provides a
-common structure to your programs: when trying to determine what a program
-does, you can know to look for the \lstinline{main()} function first.
-
-Additionally, this format will be useful once you start writing programs that
-consist of more than one file. Without this syntax, a file's code will execute
-when it is imported, while with this syntax importing the file will only allow
-its functions to be used.
-
-You are required to use this format on all future labs in this class.
-
-\pagebreak
 \section{Exercises}
 \label{sec:ex}
 
-\begin{warningbox}{Boilerplate}
-  Remember that this and all future labs \emph{must} use the
-  boilerplate syntax introduced in Section~\ref{sec:boil}.
-\end{warningbox}
-
-\begin{description}
-\item[save.py] Write a program that takes in a filename, then takes in
+\begin{ex}[save.py] Write a program that takes in a filename, then takes in
   a series of lines of input until a blank line is entered, writing each line to
   the file with the given name. After the blank line is entered, properly close
   the file before ending the program.  
+\end{ex}
 
-\item[word\_count.py] Write a program that
+\begin{ex}[word\_count.py] Write a program that
   takes in a filename and string as input. Then print how many times that string
   appears inside the chosen file. If the file does not exist, continue asking
   for a filename until one is given that exists. Use your source code file as
   test input.
+\end{ex}
 
-  \item[navigate3.py] Modify navigate.py so that, rather than take instructions
+\begin{ex}[navigate3.py] Modify navigate.py so that, rather than take instructions
     from the command line, it reads from a file (specified by user input) to
     determine what the turtle will do. Additionally, you will be adding the
     ``split'' command. This command will use instantiation of new turtles in order
@@ -322,17 +283,17 @@ You are required to use this format on all future labs in this class.
     \url{https://docs.python.org/3/library/turtle.html}.
 
     You will also likely use the \lstinline{.split()} command when getting input, which splits a single string into an array around the string's spaces.
-    \begin{lstlisting}[style=ipython]
+    \begin{pyconcode}
 >>> print("this is a phrase".split())
 ['this', 'is', 'a', 'phrase']
 >>> print("hi,hi,hi".split(",")
 ['hi', 'hi', 'hi']
-    \end{lstlisting}
+    \end{pyconcode}
 
     \emph{Suggestion:} Split each command into a different function to help keep their logic separate.
 
     Sample Input File:
-    \begin{lstlisting}[style=python]
+    \begin{python3code}
 forward 50
 left 20
 split 40
@@ -347,17 +308,15 @@ left 20
 split 40
 forward 50
 left 20
-    \end{lstlisting}
+    \end{python3code}
 
-    Sample Output (Figure~\ref{fig:nav})
-    \begin{figure}[!h]
-      \centering
+    Sample Output
+    \begin{center}
       \includegraphics[width=1.0in]{img/nav3_example}
-      \caption{navigate3.py}
-      \label{fig:nav}
-    \end{figure}
+    \end{center}
+  \end{ex}
 
-  \item[states.py]
+  \begin{ex}[states.py]
     Look at the file \texttt{states.csv} given. It has the following columns, in
     the following order:
     \begin{itemize}
@@ -382,33 +341,22 @@ left 20
     \end{itemize}
 
     Print the per state information in a table.
-\end{description}
+  \end{ex}
 
 \pagebreak
 \section{Submitting}
 
-Files to submit:
-\begin{itemize}
-\item save.py
-\item word\_count.py
-\item navigate3.py
-\item states.py
-\end{itemize}
-
-You may submit your code as either a tarball (instructions below) or as a .zip
-file. Either one should contain all files used in the exercises for this lab.
-The submitted file should be named either
-\texttt{cse107\_firstname\_lastname\_lab5.zip} or
-\texttt{cse107\_firstname\_lastname\_lab5.tar.gz} depending on which method you
-used.
-
-For Windows, use a tool you like to create a \texttt{.zip} file. The TCC
-computers should have \texttt{7z} installed. For Linux, look at lab 1 for
-instructions on how to create a tarball or use the ``Archive Manager'' graphical
-tool.
+You should submit your code as a tarball. It should contain all files
+used in the exercises for this lab. The submitted file should be named
+\begin{center}
+  \texttt{cse107\_firstname\_lastname\_lab5.tar.gz}
+\end{center}
 
 \begin{center}
-  \textbf{Upload your tarball or .zip file to Canvas.}
+  \textbf{Upload your tarball to Canvas.}
 \end{center}
+
+\listoftheorems
+
 
 \end{document}
