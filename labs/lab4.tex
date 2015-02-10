@@ -8,8 +8,8 @@
 \documentclass[11pt]{cselabheader}
 
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 4: Lists and Strings}
-\title{Lab 4: Lists and Strings}
+\fancyhead[R]{Lab 4: Sequence Types -- Lists, Tuples, Strings}
+\title{Lab 4: Sequence Types -- Lists, Tuples, Strings}
 
 \begin{document}
 
@@ -235,11 +235,11 @@ specify that a slice extends to the end of the list. You can even omit both of
 them to just get a copy of the whole list.
 
 \begin{pyconcode}
->>> print(L[:3])
+>>> L[:3]
 [1, 2, 3]
->>> print(L[1:])
+>>> L[1:]
 [2, 3, 4, 5]
->>> print(L[:])
+>>> L[:]
 [1, 2, 3, 4, 5]
 \end{pyconcode}
 
@@ -248,9 +248,10 @@ Using slicing allows us to add or delete elements from lists:
 \begin{pyconcode}
 >>> L = [1, 2, 3, 4, 5]
 >>> L[2:4] = [93, 94, 95, 96]
->>> print(L)
+>>> L
 [1, 2, 93, 94, 95, 96, 5]
 >>> L[3:6] = []
+>>> L
 [1, 2, 93, 5]
 \end{pyconcode}
 
@@ -266,17 +267,16 @@ positions.
 
 \begin{pyconcode}
 >>> values = [1, 2, 3, 4, 5]
->>> print(values[::2])
+>>> values[::2]
 [1, 3, 5]
->>> print(values[1:4:2])
+>>> values[1:4:2]
 [2, 4]
->>> print(values[4:1:-1])
+>>> values[4:1:-1]
 [5, 4, 3]
 \end{pyconcode}
 
 \subsection{Tangent: Let's Talk About Methods}
 
-TODO
 %TODO
 
 \subsection{List Methods and Functions}
@@ -408,6 +408,62 @@ Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 TypeError: 'tuple' object does not support item assignment
 \end{pyconcode}
+
+Lists and tuples turn out to be \texttt{sequence} data types -- this means they
+support indexing and slicing. We will see below that strings are also a sequence
+type.
+
+We can also define a tuple by simply separating values by commas:
+
+\begin{pyconcode}
+>>> food = 'trail mix', 'nothing'
+>>> food[0]
+'trail mix'
+\end{pyconcode}
+
+And of course, we can nest tuples and lists interchangably:
+
+\begin{pyconcode}
+>>> foo = ([1, 2, 3], [4, 5, (7, 8, 9)], (10, 11))
+>>> foo
+([1, 2, 3], [4, 5, (7, 8, 9)], (10, 11))
+\end{pyconcode}
+
+Tuples, like lists, can also be empty. Use \pythoninline{len()} to find the
+length of a tuple:
+
+\begin{pyconcode}
+>>> foo = ()
+>>> len(foo)
+0
+\end{pyconcode}
+
+We can also \emph{unpack} tuples, which means assigning each element of a tuple
+to a variable. For example:
+
+\begin{pyconcode}
+>>> food = 'trail mix', 'nothing'
+>>> tylerfood, chrisfood = food
+>>> # equivalent to, but shorter than:
+... tylerfood = food[0]
+... chrisfood = food[1]
+>>> tylerfood
+'trail mix'
+>>> chrisfood
+'nothing'
+\end{pyconcode}
+
+\subsection{Summary}
+
+\begin{itemize}
+  \item Tuples are a like lists, but they are immutable.
+
+  \item Find more documentation about sequence types here:
+
+    \begin{center}
+      \url{https://docs.python.org/3.4/library/stdtypes.html#typesseq}
+    \end{center}
+\end{itemize}
 
 \pagebreak
 \section{Strings}
@@ -691,10 +747,11 @@ String"""
 %using range in combination with a list
 
 \subsection{Lists}
-\pythoninline{for} loops in Python are designed to primarily work with lists. A
-\pythoninline{for} loop iterates through each element in a list in order,
-performing the same operation for each element. The following program is a
-simple \pythoninline{for} loop that prints out every element of a list.
+\pythoninline{for} loops in Python are designed to primarily work with lists and
+other sequence types. A \pythoninline{for} loop iterates through each element in
+a list in order, performing the same operation for each element. The following
+program is a simple \pythoninline{for} loop that prints out every element of a
+list.
 
 \begin{python3code}
 values = [1, 2, 3, 4, 5]
@@ -769,9 +826,9 @@ range(0, 5)
 [1, 3, 5]
 \end{pyconcode}
 
-If we use \pythoninline{range} to produce a list of elements the same length as the
-array being looped over, we can use its values as indices. Here is the squares
-example redone using \pythoninline{range}.
+If we use \pythoninline{range} to produce a list of elements the same length as
+the array being looped over, we can use its values as indices. Here is the
+squares example redone using \pythoninline{range}.
 
 \begin{python3code}
 values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -784,9 +841,15 @@ print("Initial values: {}".format(values))
 print("Squares: {}".format(squares))
 \end{python3code}
 
-In this example, using \pythoninline{range} does not help us a significant amount.
-In this next example, it allows us to sum every adjacent pair of values to
-create a new list.
+\begin{warningbox}{Using \pythoninline{range} to iterate a list}
+  Always try to \textbf{avoid} using \pythoninline{range} to iterate a list as
+  shown above. Try to iterate through the list directly if you can: after all,
+  it is a sequence type!
+\end{warningbox}
+
+In this example, using \pythoninline{range} does not help us a significant
+amount. In this next example, it allows us to sum every adjacent pair of values
+to create a new list.
 
 \begin{python3code}
 values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -814,8 +877,7 @@ Hello.
 
 \subsection{Strings}
 
-We showed you how to use a \pythoninline!for! loop on strings last time already,
-but this is just iterating it:
+Strings are sequence types just like lists and tuples:
 
 \begin{python3code}
 for char in 'aHdHefg':
@@ -837,6 +899,8 @@ This will print:
 1
 \end{verbatimcode}
 
+\subsection{\protect\pythoninline{enumerate()}}
+
 \subsection{Summary}
 \begin{itemize}
   \item A \pythoninline{for} loop can be used to iterate through every value in a
@@ -856,7 +920,8 @@ This will print:
 
 Write the following functions. \emph{You must figure out the appropriate
   arguments to the functions and design a command line user interface that is
-not part of the prescribed functions.}
+not part of the prescribed functions.} Please note that the command line user
+interface should \emph{not} be a part of the functions below!
 
 \begin{description}
   \item[\pythoninline{ends()}]
@@ -949,6 +1014,24 @@ Enter a fraction >>> 6/4
 Enter a fraction >>> stop
 Smallest fraction: 1/3
   \end{verbatimcode}
+\end{ex}
+
+\begin{ex}[dna.py] 
+  DNA is generally encoded with four letters: A, T, G, and C. For example, a
+  string of DNA would be ``ATTGCAT''.
+
+  You can find the ``complement'' of DNA for some biological reason (it is
+  double stranded, but that does not matter to us). The complement of A is T
+  and vice versa; the complement of G is C and vice versa.
+
+  Write a program that takes in a strand of DNA from the user using
+  \pythoninline!input()! and finds its complement. You may assume the user's
+  input is valid.
+
+  \begin{verbatimcode}
+Enter DNA >>> ATTGCAT
+Complement is: TAACGTA
+\end{verbatimcode}
 \end{ex}
 
 \begin{ex}[spiral.py] Use a \pythoninline{for} loop, \pythoninline{range}, and
