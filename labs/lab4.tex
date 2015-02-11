@@ -740,6 +740,28 @@ String"""
   \item See string functions in Table~\ref{tab:str}.
 \end{itemize}
 
+\pagebreak
+\section{Converting between Sequence Types}
+
+Just like we were able to convert between integers and floating-point types, we
+can convert (\emph{cast}) lists to tuples to strings and vice versa. Use
+\pythoninline{list()}, \pythoninline{tuple()}, and \pythoninline{str()}. For
+example:
+
+\begin{pyconcode}
+>>> food = ('nothing', 'cereal', 'lemonheads')
+>>> list(food)
+['nothing', 'cereal', 'lemonheads']
+>>> str(food) # not particularly useful
+"('nothing', 'cereal', 'lemonheads')"
+>>> s = "The cat in the"
+>>> list(s)
+['T', 'h', 'e', ' ', 'c', 'a', 't', ' ', 'i', 'n', ' ', 't', 'h', 'e']
+>>> tuple(s)
+('T', 'h', 'e', ' ', 'c', 'a', 't', ' ', 'i', 'n', ' ', 't', 'h', 'e')
+\end{pyconcode}
+
+
 
 \pagebreak
 \section{\protect\pythoninline{for} Loops}
@@ -913,7 +935,11 @@ This will print:
 \section{Exercises}
 \label{sec:ex}
 
-\begin{ex}[stringfun.py] 
+\begin{warningbox}{Requirements}
+  Remember to adhere to PEP 8, PEP 257, and the boilerplate code requirement.
+\end{warningbox}
+
+\begin{ex}[stringfun.py]
 \emph{This exercise is a modification of exercises in the Google Python
   class, licensed under the
   \href{http://www.apache.org/licenses/LICENSE-2.0.html}{Apache License 2.0}.}
@@ -1019,23 +1045,6 @@ Smallest fraction: 1/3
   \end{verbatimcode}
 \end{ex}
 
-\begin{ex}[dna.py] 
-  DNA is generally encoded with four letters: A, T, G, and C. For example, a
-  string of DNA would be ``ATTGCAT''.
-
-  You can find the ``complement'' of DNA for some biological reason (it is
-  double stranded, but that does not matter to us). The complement of A is T
-  and vice versa; the complement of G is C and vice versa.
-
-  Write a program that takes in a strand of DNA from the user using
-  \pythoninline!input()! and finds its complement. You may assume the user's
-  input is valid.
-
-  \begin{verbatimcode}
-Enter DNA >>> ATTGCAT
-Complement is: TAACGTA
-\end{verbatimcode}
-\end{ex}
 
 \begin{ex}[spiral.py] Use a \pythoninline{for} loop, \pythoninline{range}, and
   \pythoninline{turtle} to draw a spiral. It does not need to perfectly resemble
@@ -1136,7 +1145,37 @@ Input a number >>> stop
   Add binary search here.
 \end{ex}
 
+\begin{ex}[sets.py]
+  Write the following functions:
 
+  \begin{description}
+    \item[\pythoninline{overlap()}] Given two lists, find a list of the elements
+      common to both lists and return it.
+    \item[\pythoninline{join()}] Given two lists, join them together to be one
+      list without duplicate elements and return that list.
+  \end{description}
+
+  Write a small command line interface that is not part of these functions that
+  will look something like this:
+
+  \begin{verbatimcode}
+List 1
+Enter number >>> 1
+Enter number >>> 2
+Enter number >>> 4.5
+List 1 is [1.0, 2.0, 4.5]
+
+List 2
+Enter number >>> 2
+Enter number >>> 4.5
+Enter number >>> 5
+List 2 is [2.0, 4.5, 5.0]
+
+Overlap is [2.0, 4.5]
+Join is [1.0, 2.0, 4.5, 5.0]
+  \end{verbatimcode}
+
+\end{ex}
 
 \pagebreak
 \section{Submitting}
