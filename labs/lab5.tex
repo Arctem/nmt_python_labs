@@ -103,13 +103,14 @@ Traceback (most recent call last):
 
 The \pythoninline!|! operator can be used to join sets together. This results
 in a new set composed of the elements of the two composite sets.
+Since the result is also a set, any duplicate values will be only included once.
 \begin{pyconcode}
 >>> a = {1, 2, 4, 8, 16}
 >>> b = {1, 3, 9, 27}
 >>> a | b
 {1, 2, 3, 4, 8, 9, 16, 27}
 \end{pyconcode}
-Since the result is also a set, any duplicate values will be only included once.
+
 
 The \pythoninline!&! operator can be used to find the intersection of two sets.
 This is the set containing all elements that are in both sets.
@@ -120,6 +121,7 @@ This is the set containing all elements that are in both sets.
 {12, 6}
 \end{pyconcode}
 
+
 The \pythoninline!-! operator can be used to find the difference of two sets.
 This is the first set with all of the elements of the second set removed.
 \begin{pyconcode}
@@ -128,6 +130,7 @@ This is the first set with all of the elements of the second set removed.
 >>> a - b
 {8, 2, 10, 4}
 \end{pyconcode}
+
 
 The \pythoninline!^! operator can be used to find the symmetric difference
 of two sets. This is the set containing all elements in one of the original
@@ -140,8 +143,35 @@ sets, but not in both.
 \end{pyconcode}
 
 
+\section{Dictionaries}
+Dictionaries are similar to lists, but with a different index system. Unlike
+with a list, the indices of a dictionary can be any immutable object. This
+means that dictionaries are useful for storing elements best identified
+by a description or name rather than a strict order. Each element in a
+dictionary must be associated with an index, which is called a key. The
+element is called a value.
+
+A dictionary is made using curly braces, followed by listing the key: value
+pairs that make up the dictionary. Values can be accessed, changed, or added
+by using their keys just as you would use the indices of a list:
+\begin{pyconcode}
+>>> a = {'breakfast': 'burrito', 'lunch': 'burger', 'dinner': 'tacos'}
+>>> print(a)
+{'dinner': 'tacos', 'lunch': 'burger', 'breakfast': 'burrito'}
+>>> a['breakfast'] = 'toast'
+>>> print(a)
+{'dinner': 'tacos', 'lunch': 'burger', 'breakfast': 'toast'}
+>>> a['brunch'] = 'tea and biscuits'
+>>> print(a)
+{'dinner': 'tacos', 'brunch': 'tea and biscuits', 'lunch': 'burger', 'breakfast': 'toast'}
+\end{pyconcode}
+
+
 
 \pagebreak
+\section{Collection Similarities}
+
+
 \section{Collections Summary}
 
 % this could be something better than a table
