@@ -142,6 +142,21 @@ sets, but not in both.
 {'one', 'six', 'two', 'four'}
 \end{pyconcode}
 
+A list can be converted into a set using the \pythoninline!set()! function:
+\begin{pyconcode}
+>>> a = [1, 5, 2, 'hello', 2.3, 5, 2]
+>>> set(a)
+{1, 2, 'hello', 2.3, 5}
+\end{pyconcode}
+
+Similarly, a set can be converted into a list using the \pythoninline!list()!
+function:
+\begin{pyconcode}
+>>> a = {1, 2, 2, 5, 'asdf', 3, 2}
+>>> list(a)
+[1, 2, 3, 5, 'asdf']
+\end{pyconcode}
+
 
 \section{Dictionaries}
 Dictionaries are similar to lists, but with a different index system.
