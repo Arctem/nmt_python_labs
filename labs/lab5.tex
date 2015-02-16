@@ -59,49 +59,40 @@ change elements, and remove elements from a list. Meanwhile, tuples are immuatab
 and cannot be changed once they are created.
 In this lab, we will introduce you to two other collections: Sets and dictionaries.
 
-Please read Chapters 7 and 9 for this lab. Another great resource on lists,
-sets, tuples, and dictionaries is the Python Tutorial:
-\begin{center}
-  \url{https://docs.python.org/3.3/tutorial/datastructures.html}
-\end{center}
-Be sure to use the Python 3 version of the Python Tutorial.
+\pagebreak
+\section{Sets}
+Sets are a lot like lists; but their properties are a bit different.
+A set is just like a list, but \emph{no element can appear twice} and it is
+\emph{unordered}. Additionally, they cannot contain mutable elements. Thus,
+a set cannot contain a list. Sets themselves are mutable.
 
-\textbf{This lab will be due in \emph{two} weeks, so you have time to study for your
-midterm.}
+A set is made using curly braces or from a list:
+\begin{lstlisting}[style=ipython]
+>>> a = {5, 5, 4, 3, 2} # duplicates ignored
+>>> print(a)
+{2, 3, 4, 5}
+>>> b = set([5, 5, 4, 3])
+>>> print(b)
+{3, 4, 5}
+\end{lstlisting}
 
-%\section{Sets}
-%Sets and tuples are a lot like lists; but their properties are a bit different.
-%A set is just like a list, but \emph{no element can appear twice} and it is
-%\emph{unordered}. Unlike lists, they also cannot contain mutable elements. Thus,
-%a set cannot contain a list. However, sets themselves are mutable.
-%
-%A set is made using curly braces or from a list:
-%\begin{lstlisting}[style=ipython]
-%>>> a = {5,5,4,3,2} # duplicates ignored
-%>>> print(a)
-%{2, 3, 4, 5}
-%>>> b = set([5, 5, 4, 3])
-%>>> print(b)
-%{3, 4, 5}
-%\end{lstlisting}
-%
-%Sets are heterogeneous -- their elements do not need to be of the same type:
-%\begin{lstlisting}[style=ipython]
-%>>> a = {5, 4, 'a'}
-%>>> print(a)
-%{'a', 4, 5}
-%\end{lstlisting}
-%
-%Because sets are inherently unordered, they cannot be indexed. That means you
-%cannot use the \lstinline![]! operator on sets:
-%\begin{lstlisting}
-%>>> a = {5,4,3,2}
-%>>> a[1]
-%Traceback (most recent call last):
-%  File ``<stdin>'', line 1, in <module>
-%  TypeError: 'set' object does not support indexing
-%\end{lstlisting}
-%
+Sets are heterogeneous -- their elements do not need to be of the same type:
+\begin{lstlisting}[style=ipython]
+>>> a = {5, 4, 'a'}
+>>> print(a)
+{'a', 4, 5}
+\end{lstlisting}
+
+Because sets are inherently unordered, they cannot be indexed. That means you
+cannot use the \lstinline![]! operator on sets:
+\begin{lstlisting}
+>>> a = {5,4,3,2}
+>>> a[1]
+Traceback (most recent call last):
+  File ``<stdin>'', line 1, in <module>
+  TypeError: 'set' object does not support indexing
+\end{lstlisting}
+
 
 \pagebreak
 \section{Collections Summary}
