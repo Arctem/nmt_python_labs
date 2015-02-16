@@ -74,31 +74,31 @@ A set is just like a list, but \emph{no element can appear twice} and it is
 a set cannot contain a list. Sets themselves are mutable.
 
 A set is made using curly braces or from a list:
-\begin{lstlisting}[style=ipython]
+\begin{pyconcode}
 >>> a = {5, 5, 4, 3, 2} # duplicates ignored
 >>> print(a)
 {2, 3, 4, 5}
 >>> b = set([5, 5, 4, 3])
 >>> print(b)
 {3, 4, 5}
-\end{lstlisting}
+\end{pyconcode}
 
 Sets are heterogeneous -- their elements do not need to be of the same type:
-\begin{lstlisting}[style=ipython]
+\begin{pyconcode}
 >>> a = {5, 4, 'a'}
 >>> print(a)
 {'a', 4, 5}
-\end{lstlisting}
+\end{pyconcode}
 
 Because sets are inherently unordered, they cannot be indexed. That means you
 cannot use the \lstinline![]! operator on sets:
-\begin{lstlisting}
+\begin{pyconcode}
 >>> a = {5,4,3,2}
 >>> a[1]
 Traceback (most recent call last):
   File ``<stdin>'', line 1, in <module>
   TypeError: 'set' object does not support indexing
-\end{lstlisting}
+\end{pyconcode}
 
 
 \pagebreak
