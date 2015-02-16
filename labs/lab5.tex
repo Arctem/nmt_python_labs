@@ -144,12 +144,12 @@ sets, but not in both.
 
 
 \section{Dictionaries}
-Dictionaries are similar to lists, but with a different index system. Unlike
-with a list, the indices of a dictionary can be any immutable object. This
-means that dictionaries are useful for storing elements best identified
-by a description or name rather than a strict order. Each element in a
-dictionary must be associated with an index, which is called a key. The
-element is called a value.
+Dictionaries are similar to lists, but with a different index system.
+The elements of a dictionary are stored using a key: value system. A key
+is used similarly to the indices of a list, but may be any immutable
+object. A value is simply the element associated with that key and can be
+anything. This means that dictionaries are useful for storing elements best
+identified by a description or name rather than a strict order.
 
 A dictionary is made using curly braces, followed by listing the key: value
 pairs that make up the dictionary. Values can be accessed, changed, or added
@@ -164,6 +164,35 @@ by using their keys just as you would use the indices of a list:
 >>> a['brunch'] = 'tea and biscuits'
 >>> print(a)
 {'dinner': 'tacos', 'brunch': 'tea and biscuits', 'lunch': 'burger', 'breakfast': 'toast'}
+\end{pyconcode}
+
+Like sets, the elements of a dictionary are unordered.
+
+A list of the keys of a dictionary can be accessed using the
+\pythoninline!.keys()! function:
+\begin{pyconcode}
+>>> a = {1: 5, 'cake': 'lots', 'color': 'green'}
+>>> print(a)
+{1: 5, 'cake': 'lots', 'color': 'green'}
+>>> print(a.keys())
+dict_keys([1, 'cake', 'color'])
+\end{pyconcode}
+
+Since tuples are immutable, they can be used as keys for dictionaries.
+However, the tuple must not contain anything mutable,
+like a list, dictionary, or set.
+\begin{pyconcode}
+>>> a = {}
+>>> a[('a', 'b')] = 5
+>>> print(a)
+{('a', 'b'): 5}
+>>> a[('a', 'c')] = 6
+>>> print(a)
+{('a', 'c'): 6, ('a', 'b'): 5}
+>>> a['a', []] = 7
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: unhashable type: 'list'
 \end{pyconcode}
 
 
