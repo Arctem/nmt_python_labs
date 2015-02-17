@@ -464,32 +464,14 @@ Date is: Sunday, September 28, 2014
     long name.
 \end{ex}
 
-%  \item[addresses.py] Classic address book dict exercise.
-
-%  \item[zombies.py] Zombie lab from 113. Use struct like dict and array like
-%    list.
-
-%  \item[words.py] Write program that takes a file and
-%    \begin{enumerate}
-%      \item finds how many unique words there are
-%      \item finds the unique words and writes them to
-%        \texttt{originalfile\_unique.txt}
-%      \item calculate the percentage of unique words
-%      \item MORE
-%    \end{enumerate}
-%
-  %\item[data.py] Some data analysis exercise. Chris will fill in. Use tuples,
-  %  use matplotlib. Use set to remove duplicates in data.
-  % exercise will be made available in the second week. no time to write about
-  % matplotlib.
-
-\begin{ex}[rpn\_calculator.py] Your task is to write a reverse Polish notation
-    calculator. In reverse Polish notation (also HP
+\begin{ex}[rpn\_calculator.py] Write a reverse Polish notation
+    calculator. In reverse Polish notation (also known as HP
     calculator notation), mathematical expressions are written with the operator
-    following both operands. For example, $3 + 4$ becomes $3~4~+$.
+    following its operands. For example, $3 + 4$ becomes $3~4~+$.
 
-    To write $3 + (4 * 2)$, we would have to write $4~2~*~3~+$ in RPN. The
-    expressions are evaluated from left to right.
+    Order of operations is entirely based on the ordering of the operators
+    and operands. To write $3 + (4 * 2)$, we would write $4~2~*~3~+$ in RPN.
+    The expressions are evaluated from left to right.
 
     A longer example of an expression is this: 
     \[ 5~1~2~/~4~*~+~3~- \]
@@ -504,7 +486,16 @@ Date is: Sunday, September 28, 2014
     division. Then, you would store the result of that (0.5) and encounter
     4, which you store. When you encounter the multiplication sign (*), you
     would take the last two values stored and do the operation ($4 * 0.5$)
-    and store that. 
+    and store that.
+
+    Following this through step by step, the steps would look something like
+    this (the bold number is the most recently computed value):
+
+    \[5~1~2~/~4~*~+~3~-\]
+    \[5~\bm{0.5}~4~*~+~3~-\]
+    \[5~\bm{2}~+~3~-\]
+    \[\bm{7}~3~-\]
+    \[\bm{4}\]
 
     Writing this algorithm for evaluating RPN in pseudo code, we get:
 
