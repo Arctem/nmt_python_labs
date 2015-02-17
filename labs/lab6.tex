@@ -343,6 +343,83 @@ left 20
     Print the per state information in a table.
   \end{ex}
 
+\subsection{Review for Midterm}
+\label{subsec:reviewex}
+
+Reviewing: for, while, if, if-elif-else, functions, file I/O, strings, lists. 
+
+\begin{ex}[piglatin.py] Write a program that will take a string of words and
+    convert each word to pig latin. 
+
+    The rules for pig latin are as follows:
+
+    For a word that begins with consonant sounds, the initial consonant or
+    consonant cluster is moved to the end of the word and ``ay'' is added as a
+    suffix:
+    \begin{itemize}
+      \item ``happy'' $\to$ ``appyhay''
+      \item ``glove'' $\to$ ``oveglay''
+    \end{itemize}
+
+    For words that begin with vowels, you add ``way'' to the end of the word:
+    \begin{itemize}
+      \item ``egg'' $\to$ ``eggway''
+      \item ``inbox'' $\to$ ``inboxway''
+    \end{itemize}
+
+    For your program, you \emph{must} write a function that takes in one
+    individual word and returns the translation to pig latin. Write another
+    function that takes a string, which may be sentences (may contain the
+    characters ``a-zA-Z,.-;!?()'' and space), and returns the translation of the
+    sentence to pig latin. Strip out any punctuation. For example, ``Hello, how
+    are you?'' would translate into ``elloHay owhay areway ouyay''.
+\end{ex}
+
+\begin{ex}[piglatin\_file.py] Use the two functions you previously wrote for
+    \texttt{piglatin.py} and write a program that asks the user for a filename,
+    reads the contents of that file and translates it to pig latin. The pig
+    latin must be written to a file name
+    \texttt{originalfilename\_piglatin.txt}.
+  \end{ex}
+
+\begin{ex}[luhns.py] Luhn's algorithm
+  (\url{http://en.wikipedia.org/wiki/Luhn_algorithm}) provides a quick way to
+  check if a credit card is valid or not. The algorithm consists of three
+  steps:
+
+  \begin{enumerate}
+    \item Starting with the second to last digit (ten's column digit),
+      multiply every other digit by two.
+    \item Sum all the digits of the resulting number.
+    \item If the total sum modulo by 10 is zero, then the card is valid;
+      otherwise it is invalid.
+  \end{enumerate}
+
+  For example, to check that the Diners Club card 38520000023237 is valid, you
+  would start at 3, double it and double every other digit to give, writing
+  the credit card number as separate digits: 
+  \begin{IEEEeqnarray*}{RCCRCCRCCRCCRCCRCCRCCRCCRCCRCCRCCRCCR}
+3 &~& 8 &~& 5  &~& 2 &~& 0 &~& 0 &~& 0 &~& 0 &~& 0 &~& 2 &~& 3 &~& 2 &~& 3 &~& 7\\
+6 &~& 8 &~& 10 &~& 2 &~& 0 &~& 0 &~& 0 &~& 0 &~& 0 &~& 2 &~& 6 &~& 2 &~& 6 &~& 7
+  \end{IEEEeqnarray*}
+  Next you would sum all the digits of the resulting number:
+  \[ 6 + 8 + (1 + 0) + 2 + 0 + 0 + 0 + 0 + 0 + 2 + 6 + 2 + 6 + 7 = 40 \]
+
+  Note that for 10, you also sum its digits  -- $(1 + 0)$.
+
+  The last step is to check if $40\mod{10} = 0$, which is true. So the
+  card is valid.
+
+  Write a program that implements Luhn's Algorithm for validating credit
+  cards. It should ask the user to enter a credit card number and tell the
+  user whether it is valid or not. It should also have a separate function to
+  validate the card number.
+\end{ex}
+
+\begin{ex}[anagrams.py] Write a function that takes in two strings. If the
+  strings are anagrams of one another, return \lstinline{True}. If not, return
+  \lstinline{False}.
+\end{ex}
 \pagebreak
 \section{Submitting}
 

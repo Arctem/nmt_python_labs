@@ -63,7 +63,9 @@ the truth by capturing it, only by its capturing you.''
 
 Today's lab will be just another small project.
 We will not be covering any new
-topics: this is primarily an application of what you already know. You will be
+topics: this is primarily an application of what you already know. 
+
+You will be
 writing a program that generates
 \href{http://en.wikipedia.org/wiki/Markov_chain}{Markov chains} from an input
 file. Markov chains are the simplest way for you to generate sentences that
@@ -98,50 +100,83 @@ Russell and Chris about Python lab (the starting word was ``CS''):
 \section{Markov Chains}
 \label{sec:markov}
 
-A Markov chain is a method of randomly generating a sequence based on a set of input data. In this lab, we will be using Markov chains to generate sentences based on an input text file. In order to do this, we must understand how Markov chains work.
+A Markov chain is a method of randomly generating a sequence based on a set of
+input data. In this lab, we will be using Markov chains to generate sentences
+based on an input text file. In order to do this, we must understand how Markov
+chains work.
 
 The basic steps of creating Markov chains are:
 \begin{enumerate}
-\item Select a random starting word to start our new sentence.
-\item From all the words that ever follow that word in the input sequence, choose one. Add that word to the end of our new sentence.
-\item Continue selecting randomly from the words that can possibly follow the current last word of our sentence until either there are no possible choices or we have made a sentence as long as desired.
+  \item Select a random starting word to start our new sentence.
+  \item From all the words that ever follow that word in the input sequence,
+    choose one. Add that word to the end of our new sentence.
+  \item Continue selecting randomly from the words that can possibly follow the
+    current last word of our sentence until either there are no possible choices
+    or we have made a sentence as long as desired.
 \end{enumerate}
 
-For a simple example, let's generate Markov phrases using inputs of ``Hello, how are you?'' and ``Where are my keys?''. If we convert these sentences into a graph showing the possible results, we would get Figure \ref{mark_ex}.
+For a simple example, let's generate Markov phrases using inputs of ``Hello, how
+are you?'' and ``Where are my keys?''. If we convert these sentences into a
+graph showing the possible results, we would get Figure \ref{mark_ex}.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.2\linewidth]{lab10/example}
-  \caption{A graphical representation of the Markov possibilities for ``Hello, how are you?'' and ``Where are my keys?''}
+  \caption{A graphical representation of the Markov possibilities for ``Hello,
+    how are you?'' and ``Where are my keys?''}
   \label{mark_ex}
 \end{figure}
 
-In this graph, each arrow represents a choice we can take based on the last word we added to our sentence, continuing until there are no valid paths to take. Looking at the graph, it's pretty easy to see there are four possible outputs if we start our chain with either ``Hello,'' or ``Where'':
+In this graph, each arrow represents a choice we can take based on the last word
+we added to our sentence, continuing until there are no valid paths to take.
+Looking at the graph, it's pretty easy to see there are four possible outputs if
+we start our chain with either ``Hello,'' or ``Where'':
 
 \begin{itemize}
-\item Hello, how are you?
-\item Hello, how are my keys?
-\item Where are you?
-\item Where are my keys?
+  \item Hello, how are you?
+  \item Hello, how are my keys?
+  \item Where are you?
+  \item Where are my keys?
 \end{itemize}
 
-For a more complex example, let's use the input phrase ``There is a fifth dimension, beyond that which is known to man. It is a dimension as vast as space and as timeless as infinity.''. If we were to convert this sentence into a graph representing the possible choices to make at each step, it would look something like Figure \ref{twilight}.
+For a more complex example, let's use the input phrase ``There is a fifth
+dimension, beyond that which is known to man. It is a dimension as vast as space
+and as timeless as infinity.''. If we were to convert this sentence into a graph
+representing the possible choices to make at each step, it would look something
+like Figure \ref{twilight}.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=\linewidth]{lab10/twilight_zone}
-  \caption{A graphical representation of the Markov possibilities for \emph{The Twilight Zone}'s introduction.}
+  \caption{A graphical representation of the Markov possibilities for \emph{The
+    Twilight Zone}'s introduction.}
   \label{twilight}
 \end{figure}
 
-In this graph, if we start with ``There'', our only option for a next word is ``is''. ``is'' is followed by ``a'' twice and ``known'' once, so it has two arrows to ``a'' and one to ``known''. This means that, when we randomly choose a next step, we should have a $\frac{2}{3}$ chance to choose ``a'' and a $\frac{1}{3}$ chance to choose ``known''. If we (randomly) choose to continue to ``a'', we have the choice of either ``fifth'' or ``dimension'' to continue our sentence with. A few possible new sentences we could generate from this input are:
+In this graph, if we start with ``There'', our only option for a next word is
+``is''. ``is'' is followed by ``a'' twice and ``known'' once, so it has two
+arrows to ``a'' and one to ``known''. This means that, when we randomly choose a
+next step, we should have a $\frac{2}{3}$ chance to choose ``a'' and a
+$\frac{1}{3}$ chance to choose ``known''. If we (randomly) choose to continue to
+``a'', we have the choice of either ``fifth'' or ``dimension'' to continue our
+sentence with. A few possible new sentences we could generate from this input
+are:
 \begin{itemize}
-\item There is a dimension as infinity.
-\item There is a fifth dimension, beyond that which is a fifth dimension, beyond that which is a dimension as vast as space and as infinity.
-\item There is known to man. It is known to man. It is a dimension as space and as infinity.
+  \item There is a dimension as infinity.
+  \item There is a fifth dimension, beyond that which is a fifth dimension,
+    beyond that which is a dimension as vast as space and as infinity.
+  \item There is known to man. It is known to man. It is a dimension as space
+    and as infinity.
 \end{itemize}
 
-As you can see, Markov chains have a tendency to make sentences which almost make sense. This is because every individual pairing of two words will make sense, but the combinations of the pairings might not. For example, ``as vast'' and ``vast as'' can both make sense given the right context, but ``vast as vast as vast as vast'' is nonsense. We can help alleviate this problem by taking into account the last 2 (or 3, or 4...) words when choosing the next word instead of just the last one, but this requires a far larger input or it will result in the output being the same as the input.
+As you can see, Markov chains have a tendency to make sentences which almost
+make sense. This is because every individual pairing of two words will make
+sense, but the combinations of the pairings might not. For example, ``as vast''
+and ``vast as'' can both make sense given the right context, but ``vast as vast
+as vast as vast'' is nonsense. We can help alleviate this problem by taking into
+account the last 2 (or 3, or 4...) words when choosing the next word instead of
+just the last one, but this requires a far larger input or it will result in the
+output being the same as the input.
 
 \subsection{Random Numbers}
 \label{subsec:random}
@@ -187,7 +222,6 @@ random number not based on a uniform distribution:
   \caption{Summary of \lstinline{random} functions.}
   \label{tab:rand}
 \end{table}
-
 
 \clearpage
 \section{Amnesty}
