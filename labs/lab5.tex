@@ -184,6 +184,15 @@ food = set(['burgers', 'carne adovada', 'burritos'])
 food = set(('burgers', 'carne adovada', 'burritos'))
     \end{python3code}
 
+    \emph{Note that empty curly braces create an empty dictionary.} To create an
+    empty set, use the \pythoninline!set()! function:
+    \begin{pyconcode}
+>>> type({})
+<class 'dict'>
+>>> type(set())
+<class 'set'>
+    \end{pyconcode}
+
   \item No element can appear twice.
 
   \item Can only contain immutable elements (for example, lists are not allowed
@@ -351,10 +360,11 @@ False
 True
   \end{pyconcode}
 \item Tuples, sets, and lists can all be freely converted from one
-  to another using the \pythoninline!tuple()!, \pythoninline!set()!
-  \pythoninline!list()! functions.
+  to another using the \pythoninline!tuple()!, \pythoninline!set()!,
+  \pythoninline!list()!, \pythoninline!str()!, and \pythoninline!dict()! functions.
 \end{itemize}
 
+\pagebreak
 \section{Collections Summary}
 
 % this could be something better than a table
