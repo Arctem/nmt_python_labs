@@ -1,4 +1,4 @@
-% LAB 5: Dictionaries and Set
+% LAB 5: Dictionaries and Sets
 % 
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
@@ -9,8 +9,8 @@
 \usepackage{IEEEtrantools}
 
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 5: Dictionaries and Set}
-\title{Lab 5: Dictionaries and Set}
+\fancyhead[R]{Lab 5: Dictionaries and Sets}
+\title{Lab 5: Dictionaries and Sets}
 
 \begin{document}
 
@@ -319,7 +319,7 @@ else:
 
 \pagebreak
 \section{Collection Similarities}
-
+%show commonalities (conversion, for loops, len...)
 
 \section{Collections Summary}
 
@@ -343,14 +343,6 @@ else:
   \caption{Summary of Data Structures in Python}
   \label{tab:sum}
 \end{table}
-
-For syntax, please refer to the Python Tutorial or Chapters 7 and 9 in your
-book.
-\begin{center}
-  \url{https://docs.python.org/3.3/tutorial/datastructures.html}
-\end{center}
-Be sure to use the Python 3 version of the Python Tutorial.
-
 
 
 %\subsection{List Syntax}
@@ -469,17 +461,26 @@ idea of the list being a stack.
   Remember PEP 8, PEP 257, and the boilerplate code requirement.
 \end{warningbox}
 
+\begin{ex}[anagrams.py] Write a function that takes in two strings. If the strings
+  are anagrams of one another, return \lstinline{True}. If not, return
+  \lstinline{False}.
+
+  Two strings are \href{http://en.wikipedia.org/wiki/Anagram}{anagrams} of one
+  another if the characters of one can be rearranged to make the other.
+\end{ex}
+
 \begin{ex}[days.py] Write a function that takes four arguments -- day, month, and
     year as numbers, and weekday as MTWRFSU -- and converts this date to a
     human-readable string. Have the program be called with user-specified
     input. For example:
-    \begin{lstlisting}[style=bash]
-Enter day: 28
-Enter month: 9
-Enter year: 2014
-Enter weekday: U
+
+    \begin{verbatimcode}
+Enter day >>> 28
+Enter month >>> 9
+Enter year >>> 2014
+Enter weekday >>> U
 Date is: Sunday, September 28, 2014
-    \end{lstlisting}
+    \end{verbatimcode}
 
     Use dictionaries to convert weekdays to their long name and months to their
     long name.
@@ -512,13 +513,14 @@ Date is: Sunday, September 28, 2014
   % exercise will be made available in the second week. no time to write about
   % matplotlib.
 
-\begin{ex}[rpn\_calculator.py] Your task is to write a reverse Polish notation
-    calculator. In reverse Polish notation (also HP
+\begin{ex}[rpn\_calculator.py] Write a reverse Polish notation
+    calculator. In reverse Polish notation (also known as HP
     calculator notation), mathematical expressions are written with the operator
-    following both operands. For example, $3 + 4$ becomes $3~4~+$.
+    following its operands. For example, $3 + 4$ becomes $3~4~+$.
 
-    To write $3 + (4 * 2)$, we would have to write $4~2~*~3~+$ in RPN. The
-    expressions are evaluated from left to right.
+    Order of operations is entirely based on the ordering of the operators
+    and operands. To write $3 + (4 * 2)$, we would write $4~2~*~3~+$ in RPN.
+    The expressions are evaluated from left to right.
 
     A longer example of an expression is this: 
     \[ 5~1~2~/~4~*~+~3~- \]
@@ -533,7 +535,16 @@ Date is: Sunday, September 28, 2014
     division. Then, you would store the result of that (0.5) and encounter
     4, which you store. When you encounter the multiplication sign (*), you
     would take the last two values stored and do the operation ($4 * 0.5$)
-    and store that. 
+    and store that.
+
+    Following this through step by step, the steps would look something like
+    this (the bold number is the most recently computed value):
+
+    \[5~1~2~/~4~*~+~3~-\]
+    \[5~\bm{0.5}~4~*~+~3~-\]
+    \[5~\bm{2}~+~3~-\]
+    \[\bm{7}~3~-\]
+    \[\bm{4}\]
 
     Writing this algorithm for evaluating RPN in pseudo code, we get:
 
@@ -557,8 +568,27 @@ Date is: Sunday, September 28, 2014
     separate function (not main). You need to support the four basic operators
     (+, -, *, and /).
 
-    Please see the example file and output below for expressions you can test
+    You should detect and display messages for the following errors:
+    \begin{itemize}
+    \item Operand is used when not enough numbers are stored.
+    \item More or less than one number stored after the expression is
+      evaluated.
+    \end{itemize}
+
+    Please see the example input and output below for expressions you can test
     with.
+
+    \begin{center}
+    \begin{tabular}{cc}
+      \toprule
+      RPN Expression & Output\\
+      \midrule
+      $5~1~2~/~4~*~+~3~-$ & $4$\\
+      $4~2~+~1~5~+~*~+$ & Not enough operands for +.\\
+      $2~100~3~*~5~+~2~2~2~+~+~*~*$ & $3660$\\
+      \bottomrule
+    \end{tabular}
+    \end{center}
 
   \end{ex}
 
