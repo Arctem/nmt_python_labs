@@ -319,7 +319,42 @@ else:
 
 \pagebreak
 \section{Collection Similarities}
-%show commonalities (conversion, for loops, len...)
+Collections share several properties that make them convenient to work with.
+
+\begin{itemize}
+\item The \pythoninline!len()! function can be used on any collection object
+  in order to find the number of elements.
+\item All collections can be iterated over with \pythoninline!for! loops,
+  getting one element with each iteration. For dictionaries, the values provided
+  will be the keys. Note that for sets and dictionaries the order is not fixed.
+
+  \begin{pyconcode}
+>>> a = {'a': 1, 'b': 2}
+>>> for i in a:
+...     print(i)
+...     print(a[i])
+... 
+b
+2
+a
+1
+  \end{pyconcode}
+
+\item All collections can use the \pythoninline!in! keyword to test
+  if an element is in that collection. For dictionaries, this will
+  compare against the list of keys, not the values.
+  \begin{pyconcode}
+>>> a = {'1': 1}
+>>> 1 in a
+False
+>>> '1' in a
+True
+  \end{pyconcode}
+\item Tuples, sets, and lists can all be freely converted from one
+  to another using the \pythoninline!tuple()!, \pythoninline!set()!
+  \pythoninline!list()! functions.
+\end{itemize}
+
 
 \section{Collections Summary}
 
