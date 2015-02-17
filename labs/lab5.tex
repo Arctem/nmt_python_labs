@@ -519,8 +519,22 @@ Date is: Sunday, September 28, 2014
     separate function (not main). You need to support the four basic operators
     (+, -, *, and /).
 
-    Please see the example file and output below for expressions you can test
+    You should detect and display messages for the following errors:
+    \begin{itemize}
+    \item Operand is used when not enough numbers are stored.
+    \item More or less than one number stored after the expression is
+      evaluated.
+    \end{itemize}
+
+    Please see the example input and output below for expressions you can test
     with.
+
+    \begin{tabular}{| c | c |}\hline
+      RPN Expression & Output\\\hline
+      $5~1~2~/~4~*~+~3~-$ & $4$\\\hline
+      $4~2~+~1~5~+~*~+$ & Not enough operands for +.\\\hline
+      $2~100~3~*~5~+~2~2~2~+~+~*~*$ & $3660$\\\hline
+    \end{tabular}
 
   \end{ex}
 
