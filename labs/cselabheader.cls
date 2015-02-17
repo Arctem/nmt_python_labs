@@ -230,6 +230,8 @@
 %}
 %\makeatother
 
+\usepackage{bm}
+
 \setlength{\itemsep}{0in}
 
 \def\Version#1{\def\version{#1}}
