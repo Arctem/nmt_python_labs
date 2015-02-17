@@ -275,10 +275,6 @@ positions.
 [5, 4, 3]
 \end{pyconcode}
 
-\subsection{Tangent: Let's Talk About Methods}
-
-%TODO
-
 \subsection{List Methods and Functions}
 Many functions exist to help manipulate lists. The first of these is
 \pythoninline{.append()}. This adds a new value onto the end of an existing list.
@@ -457,6 +453,9 @@ to a variable. For example:
 
 \begin{itemize}
   \item Tuples are a like lists, but they are immutable.
+
+  \item Syntax: like lists, but use parentheses \pythoninline{()} instead of
+    brackets \pythoninline{[]}.
 
   \item Find more documentation about sequence types here:
 
@@ -923,6 +922,30 @@ This will print:
 
 \subsection{\protect\pythoninline{enumerate()}}
 
+Given any sequence type, \pythoninline{enumerate()} will return a list of tuples
+containing a count and an element of the list. (Actually,
+\pythoninline{enumerate()} is what we call a generator. You need not know what
+that is, just remember that to get an actual list you have to cast the return
+value to a list.) For example:
+
+\begin{pyconcode}
+>>> food = ['eggs', 'hamburgers', 'steak and potatos']
+>>> list(enumerate(food))
+[(0, 'eggs'), (1, 'hamburgers'), (2, 'steak and potatos')]
+\end{pyconcode}
+
+This is often used with the \emph{tuple unpacking} syntax in for loops:
+
+\begin{pyconcode}
+>>> food = ['eggs', 'hamburgers', 'steak and potatos']
+>>> for count, item in enumerate(food):
+...     print('{} is the {}th item.'.format(item, count))
+...
+eggs is the 0th item.
+hamburgers is the 1th item.
+steak and potatos is the 2th item.
+\end{pyconcode}
+
 \subsection{Summary}
 \begin{itemize}
   \item A \pythoninline{for} loop can be used to iterate through every value in a
@@ -1139,10 +1162,6 @@ Input a number >>> stop
 [-5.0, 2.3, 5.2, 12.0, 45.0, 73.0, 100.0]
   \end{verbatimcode}
 
-\end{ex}
-
-\begin{ex}[binary.py]
-  Add binary search here.
 \end{ex}
 
 \begin{ex}[sets.py]

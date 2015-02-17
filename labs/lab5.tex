@@ -68,7 +68,7 @@ In this lab, we will introduce you to two other collections: Sets and dictionari
 
 \pagenumbering{arabic}
 \section{Sets}
-Sets are a lot like lists; but their properties are a bit different.
+Sets are a lot like lists, but their properties are a bit different.
 A set is just like a list, but \emph{no element can appear twice} and it is
 \emph{unordered}. Additionally, they cannot contain mutable elements. Thus,
 a set cannot contain a list. Sets themselves are mutable.
@@ -96,21 +96,21 @@ cannot use the \pythoninline![]! operator on sets:
 >>> a = {5, 4, 3, 2}
 >>> a[1]
 Traceback (most recent call last):
-  File ``<stdin>'', line 1, in <module>
-  TypeError: 'set' object does not support indexing
+  File "<stdin>", line 1, in <module>
+TypeError: 'set' object does not support indexing
 \end{pyconcode}
 
 
 The \pythoninline!|! operator can be used to join sets together. This results
-in a new set composed of the elements of the two composite sets.
-Since the result is also a set, any duplicate values will be only included once.
+in a new set composed of the elements of the two composite sets. This is called
+the \emph{union} of the two sets. Since the result is also a set, any duplicate
+values will be only included once.
 \begin{pyconcode}
 >>> a = {1, 2, 4, 8, 16}
 >>> b = {1, 3, 9, 27}
 >>> a | b
 {1, 2, 3, 4, 8, 9, 16, 27}
 \end{pyconcode}
-
 
 The \pythoninline!&! operator can be used to find the intersection of two sets.
 This is the set containing all elements that are in both sets.
@@ -121,7 +121,6 @@ This is the set containing all elements that are in both sets.
 {12, 6}
 \end{pyconcode}
 
-
 The \pythoninline!-! operator can be used to find the difference of two sets.
 This is the first set with all of the elements of the second set removed.
 \begin{pyconcode}
@@ -130,7 +129,6 @@ This is the first set with all of the elements of the second set removed.
 >>> a - b
 {8, 2, 10, 4}
 \end{pyconcode}
-
 
 The \pythoninline!^! operator can be used to find the symmetric difference
 of two sets. This is the set containing all elements in one of the original
@@ -145,7 +143,7 @@ sets, but not in both.
 A list can be converted into a set using the \pythoninline!set()! function:
 \begin{pyconcode}
 >>> a = [1, 5, 2, 'hello', 2.3, 5, 2]
->>> set(a)
+>>> set(a) # duplicate removed!
 {1, 2, 'hello', 2.3, 5}
 \end{pyconcode}
 
@@ -157,34 +155,67 @@ function:
 [1, 2, 3, 5, 'asdf']
 \end{pyconcode}
 
+\subsection{Summary}
 
+\begin{itemize}
+  \item Sets can be made using curly braces or using the \pythoninline!set()!
+    function given another sequence type:
+    \begin{python3code}
+food = {'burgers', 'carne adovada', 'burritos'}
+food = set(['burgers', 'carne adovada', 'burritos'])
+food = set(('burgers', 'carne adovada', 'burritos'))
+    \end{python3code}
+
+  \item No element can appear twice.
+
+  \item Can only contain immutable elements (for example, lists are not allowed
+    as elements, but tuples are as long as the tuple only contains immutable
+    elements).
+
+  \item Given two sets \pythoninline!a! and \pythoninline!b!:
+    \begin{tabular}{ll}
+      \pythoninline!a | b! & union of \pythoninline!a! and \pythoninline!b! \\
+      \pythoninline!a & b! & intersection of \pythoninline!a! and \pythoninline!b! \\
+      \pythoninline!a - b! & difference of \pythoninline!a! and \pythoninline!b! \\
+      \pythoninline!a ^ b! & symmetric difference of \pythoninline!a! and \pythoninline!b! \\
+    \end{tabular}
+\end{itemize}
+
+\pagebreak
 \section{Dictionaries}
 Dictionaries are similar to lists, but with a different index system.
-The elements of a dictionary are stored using a key: value system. A key
-is used similarly to the indices of a list, but may be any immutable
-object. A value is simply the element associated with that key and can be
+The elements of a dictionary are stored using a key-value system. A key
+is used similarly to the indices of a list, but it must be of any immutable
+type. A value is simply the element associated with that key and can be
 anything. This means that dictionaries are useful for storing elements best
 identified by a description or name rather than a strict order.
 
-A dictionary is made using curly braces, followed by listing the key: value
-pairs that make up the dictionary. Values can be accessed, changed, or added
-by using their keys just as you would use the indices of a list:
+\begin{itemize}
+  \item A dictionary is made using curly braces, followed by listing the
+    key-value pairs that make up the dictionary. Keys and values are separated
+    by colons, while key-value pairs are separated by commas.
+  \item Values can be accessed, changed, or added by using their keys just as
+    you would use the indices of a list.
+\end{itemize}
 \begin{pyconcode}
->>> a = {'breakfast': 'burrito', 'lunch': 'burger', 'dinner': 'tacos'}
->>> print(a)
+>>> food = {'breakfast': 'burrito', 'lunch': 'burger', 'dinner': 'tacos'}
+>>> print(food)
 {'dinner': 'tacos', 'lunch': 'burger', 'breakfast': 'burrito'}
->>> a['breakfast'] = 'toast'
->>> print(a)
+>>> food['breakfast'] = 'toast'
+>>> print(food)
 {'dinner': 'tacos', 'lunch': 'burger', 'breakfast': 'toast'}
->>> a['brunch'] = 'tea and biscuits'
->>> print(a)
-{'dinner': 'tacos', 'brunch': 'tea and biscuits', 'lunch': 'burger', 'breakfast': 'toast'}
+>>> food['brunch'] = 'biscuits'
+>>> print(food)
+{'dinner': 'tacos', 'brunch': 'biscuits', 'lunch': 'burger', 'breakfast': 'toast'}
 \end{pyconcode}
 
-Like sets, the elements of a dictionary are unordered.
+\begin{itemize}
+  \item Like sets, the elements of a dictionary are unordered.
 
-A list of the keys of a dictionary can be accessed using the
-\pythoninline!.keys()! function:
+  \item A list of the keys of a dictionary can be accessed using the
+    \pythoninline!.keys()! function.
+\end{itemize}
+
 \begin{pyconcode}
 >>> a = {1: 5, 'cake': 'lots', 'color': 'green'}
 >>> print(a)
@@ -193,9 +224,16 @@ A list of the keys of a dictionary can be accessed using the
 dict_keys([1, 'cake', 'color'])
 \end{pyconcode}
 
-Since tuples are immutable, they can be used as keys for dictionaries.
-However, the tuple must not contain anything mutable,
-like a list, dictionary, or set.
+\begin{itemize}
+  \item Only immutable elements can be used as keys.
+  \item (Actually, only \emph{hashable} elements can be used as keys; however,
+    this usually means immutable. The error message will tell you that a type is
+    \emph{unhashable} when you used a mutable element as a key or set element.)
+  \item Since tuples are immutable, they can be used as keys for dictionaries.
+    However, the tuple must not contain anything mutable, like a list,
+    dictionary, or set.
+\end{itemize}
+
 \begin{pyconcode}
 >>> a = {}
 >>> a[('a', 'b')] = 5
@@ -210,7 +248,52 @@ Traceback (most recent call last):
 TypeError: unhashable type: 'list'
 \end{pyconcode}
 
+\begin{itemize}
+  \item You can use the \pythoninline!in! keyword to test whether an item is a
+    key in the respective dictionary.
+  \item You can use a for loop to iterate over the \emph{keys} of a dictionary.
+  \item \pythoninline!.items()! returns a list of tuples where the first element
+    is the key of a dictionary item and the second element is the corresponding
+    value. This can be used in a for loop as well with the unpacking syntax.
+\end{itemize}
 
+\begin{pyconcode}
+>>> states = {'NM' : 'New Mexico', 'TX' : 'Texas', 'KS' : 'Kansas'}
+>>> 'NM' in states
+True
+>>> for state_short in states:
+...     print(state_short, states[state_short])
+...
+KS Kansas
+TX Texas
+NM New Mexico
+>>> states.items()
+dict_items([('KS', 'Kansas'), ('TX', 'Texas'), ('NM', 'New Mexico')])
+>>> for state_short, state_name in states.items():
+...     print(state_short, state_name)
+...
+KS Kansas
+TX Texas
+NM New Mexico
+\end{pyconcode}
+
+Dictionaries are good for a load of things. Here's an example:
+
+\begin{python3code}
+states = {'NM' : 'New Mexico', 'TX' : 'Texas', 'KS' : 'Kansas'}
+capitals = { # multiline dictionaries are easier to read
+  'NM' : 'Santa Fe',
+  'TX' : 'Austin',
+  'KS' : 'Kansas City',
+}
+
+state = input('Enter a state >>> ')
+if state in states:
+    print('You selected {}. The state capital is {}.'.format(states[state], 
+        capitals[state]))
+else:
+    print('The state you selected is not known to this program.')
+\end{python3code}
 
 \pagebreak
 \section{Collection Similarities}
@@ -357,92 +440,6 @@ idea of the list being a stack.
 
 \pagebreak
 
-\section{A Note on Sequence Types}
-A sequence is a data type that stores data in a structured order. The most familiar example of a sequence is the list, but other sequences include tuples, strings, and the value given by \lstinline{range()}. For the most part we will care only about lists, strings, and tuples. Lists and strings have already been covered fairly heavily in previous labs, so for this section we will be focusing on tuples.
-
-In many ways, tuples behave similarly to lists. We create a tuple in the same way that we would create a list, though we use parentheses instead of square brackets to surround the elements of the tuple.
-
-\begin{lstlisting}[style=ipython]
->>> tup = (1, 7, 3, 2, 6)
->>> print(tup)
-(1, 7, 3, 2, 6)
-\end{lstlisting}
-
-The primary difference between a list and a tuple is that a tuple is immutable. This means that, once it has been created, its elements cannot be added, removed, or replaced.
-
-\begin{lstlisting}[style=ipython]
->>> tup = (1, 7, 3, 2, 6)
->>> tup[0] = 5
-Traceback (most recent call last):
-  File ``<stdin>'', line 1, in <module>
-TypeError: 'tuple' object does not support item assignment
->>> tup.append(10)
-Traceback (most recent call last):
-  File ``<stdin>'', line 1, in <module>
-AttributeError: 'tuple' object has no attribute 'append'
-\end{lstlisting}
-
-Beyond this change, most list operations will work perfectly normally on tuples.
-
-\begin{lstlisting}[style=ipython]
->>> tup = (1, 7, 3, 2, 6)
->>> tup[2:5]
-(3, 2, 6)
->>> tup += (2, 3, 4)
->>> tup
-(1, 7, 3, 2, 6, 2, 3, 4)
->>> min(tup)
-1
->>> 5 in tup
-False
->>> len(tup)
-8
-\end{lstlisting}
-
-It should be noted that in the case of \lstinline{tup += (2, 3, 4)} we are not modifying the existing tuple. Instead, we are creating a new tuple that contains the elements of the two tuples we are joining, then assigning it to the same variable as the original tuple.
-
-It should also be noted that we need a bit of special syntax to create a tuple with only one element. If we want a tuple that only contains \lstinline{2}, then we must say \lstinline{(2, )} rather than simply \lstinline{(2)}. This is because Python will interpret \lstinline{(2)} as a simple mathematical statement and simplify it to \lstinline{2} rather than a tuple containing \lstinline{2}.
-
-Knowing when to use a tuple and when to use a list can sometimes be difficult. The general rule is that a list should be used when the elements are homogeneous (meaning they represent the same type of data) while a tuple should be used when the data being stored is heterogeneous.
-
-As an example, let's assume we want to store birthdays. In order to store a single person's birthday, we need three integers. Even though all three values are integers, they are not homogeneous: one integer represents a day, one represents a month, and one represents a year. Therefore, a tuple is a better choice than a list.
-
-\begin{lstlisting}[style=ipython]
->>> birthday = (21, 12, 1948)
-\end{lstlisting}
-
-Now assume we want to store a large number of birthdays. Since each element of this collection will be of the same type -- a birthday -- we can consider them to be homogeneous. Therefore, we will use a list.
-
-\begin{lstlisting}[style=ipython]
->>> birthday = (21, 12, 1948)
->>> birthdays = []
->>> birthdays.append(birthday)
->>> birthdays.append((27, 3, 1963))
->>> birthdays.append((19, 3, 1955))
->>> birthdays.append((14, 4, 1961))
->>> birthdays.append((13, 12, 1957))
->>> print(birthdays)
-[(21, 12, 1948), (27, 3, 1963), (19, 3, 1955), (14, 4, 1961), (13, 12, 1957)]
-\end{lstlisting}
-
-In each tuple that we created, each index represents the same value as in the other tuples. This is important since they represent different data types: changing the order of the elements in a tuple would ruin our interpretation of that data.
-
-In the list, however, the order is purely a method of organizing the data. We can change the order based on how we wish to view it -- currently it is ordered by when elements were added to the list, but we could easily sort it based on birth year -- and it has no impact on the data itself.
-
-% talk about sequence types and what they are
-% standard sequence type operations
-% refer to https://docs.python.org/3.3/library/stdtypes.html
-% list sequence types -- range, list, str, tuple
-
-\pagebreak
-
-%\section{Plotting in Python}
-
-% matplotlib
-% maybe fill in for second week
-
-
-%\pagebreak
 \section{Exercises}
 \label{sec:ex}
 
@@ -531,26 +528,7 @@ Reviewing: for, while, if, if-elif-else, functions, file I/O, strings, lists.
 \subsection{New Material}
 \label{subsec:newex}
 
-\begin{description}
-  \item[fractions.py] Any fraction can be written as the division of two
-    integers. You could express this in Python as a tuple -- 
-    (numerator, denominator).
-
-    Write functions for each of the following. They must use the tuple
-    representation to return fractions.
-    \begin{enumerate}
-      \item Given two fractions as tuples, multiply them.
-      \item Given two fractions as tuples, divide them.
-      \item Given a list of fractions as a tuple, return the one that is
-        smallest in value.
-    \end{enumerate}
-
-    (For midterm review, you can do this problem using lists instead of 
-    tuples to represent fractions. When you turn it in, please have it use
-    tuples though.)
-
-
-  \item[days.py] Write a function that takes four arguments -- day, month, and
+\begin{ex}[days.py] Write a function that takes four arguments -- day, month, and
     year as numbers, and weekday as MTWRFSU -- and converts this date to a
     human-readable string. Have the program be called with user-specified
     input. For example:
@@ -564,6 +542,7 @@ Date is: Sunday, September 28, 2014
 
     Use dictionaries to convert weekdays to their long name and months to their
     long name.
+\end{ex}
 
 %  \item[addresses.py] Classic address book dict exercise.
 
@@ -584,7 +563,7 @@ Date is: Sunday, September 28, 2014
   % exercise will be made available in the second week. no time to write about
   % matplotlib.
 
-  \item[rpn\_calculator.py] Your task is to write a reverse Polish notation
+\begin{ex}[rpn\_calculator.py] Your task is to write a reverse Polish notation
     calculator. In reverse Polish notation (also HP
     calculator notation), mathematical expressions are written with the operator
     following both operands. For example, $3 + 4$ becomes $3~4~+$.
@@ -632,69 +611,21 @@ Date is: Sunday, September 28, 2014
     Please see the example file and output below for expressions you can test
     with.
 
-  \item[rpn\_file.py] Write another version of the RPN calculator that reads
-    RPN expressions from a file (one per line) and prints the answers to them
-    (one per line). Use the function you previously wrote. You must ask the user
-    which file they want to read from.
-
-    Example file:
-    \begin{lstlisting}
-4 3 +
-4 3 -
-3 4 -
-5 1 2 / 4 * + 3 -
-5 12 50 5 * / 5 + +
-    \end{lstlisting}
-
-    Answers:
-    \begin{lstlisting}
-7
-1
--1
-4
-10.048
-    \end{lstlisting}
-    
-\end{description}
+  \end{ex}
 
 \pagebreak
 \section{Submitting}
 
+You should submit your code as a tarball. It should contain all files
+used in the exercises for this lab. The submitted file should be named
 \begin{center}
-  \textbf{We will be adding more exercises later. We have just not had the time
-  to finish them. You will get an email about them.}
+  \texttt{cse107\_firstname\_lastname\_lab5.tar.gz}
 \end{center}
 
-Files to submit:
-\begin{itemize}
-  \item piglatin.py (Section~\ref{subsec:reviewex})
-  \item piglatin\_file.py (Section~\ref{subsec:reviewex})
-  \item luhns.py (Section~\ref{subsec:reviewex})
-  \item anagrams.py (Section~\ref{subsec:reviewex})
-  \item fractions.py (Section~\ref{subsec:reviewex})
-  \item days.py (Section~\ref{subsec:newex})
-%  \item addresses.py (Section~\ref{subsec:newex})
-%  \item zombies.py (Section~\ref{subsec:newex})
-  %\item words.py (Section~\ref{subsec:newex})
-  %\item data.py (Section~\ref{subsec:newex})
-  \item rpn\_calculator.py (Section~\ref{subsec:newex})
-  \item rpn\_file.py (Section~\ref{subsec:newex})
-\end{itemize}
-
-You may submit your code as either a tarball (instructions below) or as a .zip
-file. Either one should contain all files used in the exercises for this lab.
-The submitted file should be named either
-\texttt{cse107\_firstname\_lastname\_lab6.zip} or
-\texttt{cse107\_firstname\_lastname\_lab6.tar.gz} depending on which method you
-used.
-
-For Windows, use a tool you like to create a \texttt{.zip} file. The TCC
-computers should have \texttt{7z} installed. For Linux, look at lab 1 for
-instructions on how to create a tarball or use the ``Archive Manager'' graphical
-tool.
-
 \begin{center}
-  \textbf{Upload your tarball or .zip file to Canvas.}
+  \textbf{Upload your tarball to Canvas.}
 \end{center}
+
+\listoftheorems
 
 \end{document}
