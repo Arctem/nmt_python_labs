@@ -48,10 +48,74 @@ In previous labs, we taught you how to use functions, math, lists, strings, and
 the like. We will combine all that in this lab and teach you how to interact
 with files. This will lead us to do some exciting data analysis!
 
+\section{I/O Exceptions}
+When working with input and output it is important to check for exceptions.  For example, when we try to open a file that does not exist we'd like to exit the program safely or recover rather than observing the unexpected results.  Exception handling in python consists of "try-except" blocks.  In a "try-except" block we execute instructions in the \pythoninline!try! block and catch errors in one or more following \pythoninline!except! blocks.  The \pythoninline!except! block is only executed if an exception is caught in the \pythoninline!try! block.  Additionally, when an error is caught in the \pythoninline!try! block we stop executing commands in the \pythoninline!try! block and jump to the first \pythoninline!except! or optional \pythoninline!finally! block.  The following example throws a division by zero error and prints ``division by zero'':
+
+\begin{python3code}
+prime = 7
+x = 0
+
+try:
+  result = prime / 0
+  result = 7*42
+
+except ZeroDivisionError as err:
+  print(err)
+\end{python3code}
+
+Looking at the code above, since the error is thrown on line 5, line 4 is never executed.  Any \pythoninline!except!  block that does not list built-in  exceptions will catch all exceptions not listed in previous \pythoninline!except! blocks.  For example, the following code will throw an error if the user enters anything but an integer:
+
+\begin{python3code}
+try:
+  x = int(input("Enter a number: "))
+
+except:
+  print("Unknown error.")
+  raise
+else:
+  print("You entered: " + str(x))
+\end{python3code}
+
+The \pythoninline!raise! keyword causes a stack trace and prints out additional information if an exception is encountered.  The \pythoninline!else! block is always optional and will always be executed if no exceptions are thrown in the \pythoninline!try! block.  There are many more built-in exceptions such as \pythoninline!IOError! that can be found here: \url{https://docs.python.org/3.2/library/exceptions.html}
+
+If you try to open a file that does not exist for reading, Python will display
+an error message:
+
+\begin{pyconcode}
+>>> open("not_a_file.txt", "r")
+Traceback (most recent call last):
+  File "<pyshell#0>", line 1, in <module>
+  open("not_a_file.txt", "r")
+FileNotFoundError: [Errno 2] No such file or directory: 'not_a_file.txt'
+\end{pyconcode}
+
+In this case, the error is \pythoninline!IOError!. Normally having an
+error occur will end your program, but we can use \pythoninline!try-except! in
+order to perform a special action in case of an error. The following program
+uses this to display an error message rather than crashing.
+
+\begin{python3code}
+filename = input("What file should be read? ")
+
+try:
+  input_file = open(filename, "r")
+  for line in input_file:
+    print(line, end="")
+
+except IOError as err:
+  print(err)
+  raise
+else:
+  input_file.close()
+finally:
+  print("Goodbye!")
+\end{python3code}
+
+Lastly, the \pythoninline!finally! block is where clean-up actions are performed and is always executed after leaving the \pythoninline!try! block.
 \section{File I/O}
 Knowing how to work with files is important, since it lets us store and retrieve
 data beyond the scope of the single execution of a program. To open a file for
-reading or writing we will use the \lstinline{open} function. The following
+reading or writing we will use the \pythoninline!open! function. The following
 example opens a file and writes ``Hello World'' to it.
 
 \begin{python3code}
@@ -61,7 +125,7 @@ print("Hello World", file=output_file)
 output_file.close()
 \end{python3code}
 
-The arguments to the \lstinline{open} function are, in order, the name of the
+The arguments to the \pythoninline!open! function are, in order, the name of the
 file to open and the mode in which to open the file. ``w'' means that the file
 is to be opened in write mode. If the file does not exist, this will create the
 file. If it does exist, then the contents of the file will be cleared in
@@ -98,28 +162,28 @@ input_file.close()
 The additional concepts introduced in these examples are:
 
 \begin{itemize}
-\item The \lstinline{print} function can have an additional ``file'' parameter
+\item The \pythoninline!print! function can have an additional ``file'' parameter
   passed to it to allow writing to a file. This causes it to send its output to
   the file rather than the screen, though otherwise it performs identically.
 
-\item The \lstinline{print} function has an additional optional ``end''
+\item The \pythoninline!print! function has an additional optional ``end''
   parameter. This allows you to specify what should be printed after the main
-  string given to it. This is important because it defaults to \lstinline{"\n"},
+  string given to it. This is important because it defaults to \pythoninline!"\n"!,
   which causes a newline after every print statement. By changing ``end'' to
-  \lstinline{""} we prevent a newline from being added after every line of the
+  \pythoninline!""! we prevent a newline from being added after every line of the
   file is printed. This is because each line in the file already has a newline
-  at the end of it, so we don't need \lstinline{print} to add its own.
+  at the end of it, so we don't need \pythoninline!print! to add its own.
 
-\item \lstinline{.close()} is used to properly tell Python that you are done
+\item \pythoninline!.close()! is used to properly tell Python that you are done
   with a file and close your connection to it. This isn't \emph{strictly}
   required, but without it you risk the file being corrupted or other programs
   being unable to access that file.
 
-\item When reading from a file, Python can use a \lstinline{for} loop to go
+\item When reading from a file, Python can use a \pythoninline!for! loop to go
   through each line in sequence. This works identically to if you think of the
   file as a list with every line being a different element of the list. The
   entirety of the file can also be read into a single string using the
-  \lstinline{.read()} function.
+  \pythoninline!.read()! function.
 
 \begin{pyconcode}
 >>> input_file = open("test.py", "r")
@@ -134,55 +198,17 @@ for line in input_file:
 input_file.close()
 \end{pyconcode}
 
-\item \lstinline{.readlines()} can be used to read all of a file at once, though
+\item \pythoninline!.readlines()! can be used to read all of a file at once, though
   it splits the file into a list. Each element of the list will be one line of
   the file being read.
 \end{itemize}
-
-
-\subsection{Error Handling}
-If you try to open a file that does not exist for reading, Python will display
-an error message:
-
-\begin{pyconcode}
->>> open("not_a_file.txt", "r")
-Traceback (most recent call last):
-  File "<pyshell#0>", line 1, in <module>
-  open("not_a_file.txt", "r")
-FileNotFoundError: [Errno 2] No such file or directory: 'not_a_file.txt'
-\end{pyconcode}
-
-In this case, the error is \lstinline{FileNotFoundError}. Normally having an
-error occur will end your program, but we can use \lstinline{try-except} in
-order to perform a special action in case of an error. The following program
-uses this to display an error message rather than crashing.
-
-\begin{python3code}
-filename = input("What file should be read? ")
-
-try:
-  input_file = open(filename, "r")
-  for line in input_file:
-    print(line, end="")
-
-  input_file.close()
-except FileNotFoundError:
-  print("Could not find file {}.".format(filename))
-\end{python3code}
-
-If you wish to catch an error, check the error message for the name of the error
-that you need to catch with your \lstinline{except} statement. If the specified
-error does not occur inside the \lstinline{try} block, then the
-\lstinline{except} block will be skipped. A single \lstinline{try} block can
-have several \lstinline{except} statements following it for catching multiple
-types of errors.
 
 %\section{Recursion}
 \pagebreak
 \section{Instantiating Turtles}
 Similarly to being able to open multiple files, we can also create multiple
 turtles to draw more complex designs. This is done using the
-\lstinline{turtle.Turtle()} function. This function returns a turtle object,
+\pythoninline!turtle.Turtle()! function. This function returns a turtle object,
 which we can call every other normal turtle function on.
 
 \begin{python3code}
@@ -277,12 +303,12 @@ for i in range(200):
     \end{description}
 
     In order to properly implement split, you will probably need to look up the
-    turtle functions \lstinline{.position()}, \lstinline{.setposition()},
-    \lstinline{.setheading()}, \lstinline{.heading()}, \lstinline{.penup()}, and
-    \lstinline{.pendown()}. Turtle documentation is available at
+    turtle functions \pythoninline!.position()}, \lstinline{.setposition()!,
+    \pythoninline!.setheading()}, \lstinline{.heading()}, \lstinline{.penup()!, and
+    \pythoninline!.pendown()!. Turtle documentation is available at
     \url{https://docs.python.org/3/library/turtle.html}.
 
-    You will also likely use the \lstinline{.split()} command when getting input, which splits a single string into an array around the string's spaces.
+    You will also likely use the \pythoninline!.split()! command when getting input, which splits a single string into an array around the string's spaces.
     \begin{pyconcode}
 >>> print("this is a phrase".split())
 ['this', 'is', 'a', 'phrase']
@@ -417,8 +443,8 @@ Reviewing: for, while, if, if-elif-else, functions, file I/O, strings, lists.
 \end{ex}
 
 \begin{ex}[anagrams.py] Write a function that takes in two strings. If the
-  strings are anagrams of one another, return \lstinline{True}. If not, return
-  \lstinline{False}.
+  strings are anagrams of one another, return \pythoninline!True!. If not, return
+  \pythoninline!False!.
 \end{ex}
 \pagebreak
 \section{Submitting}
