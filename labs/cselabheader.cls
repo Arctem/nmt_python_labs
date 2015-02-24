@@ -151,7 +151,7 @@
   mathescape,linenos,numbersep=5pt,frame=single,framesep=2mm,python3,autogobble}
 \newminted[bashcode]{console}{fontsize=\small,autogobble,
   mathescape,linenos,numbersep=5pt,framesep=2mm,frame=lines,bgcolor=lightgray}
-\newminted[verbatimcode]{html}{fontsize=\small,autogobble,
+\newminted[verbatimcode]{text}{fontsize=\small,autogobble,
   mathescape,linenos,numbersep=5pt,framesep=2mm,frame=lines,bgcolor=lightgray}
 \newmintinline{python}{mathescape}
 \newmintinline{bash}{mathescape}
@@ -219,6 +219,7 @@
 ]{exercises}
 \declaretheorem[style=exercises,name=Exercise,refname={exercise,exercises},Refname={Exercise,Exercises},numberwithin=section]{ex}
 \renewcommand{\listtheoremname}{List of Files to Submit}
+\declaretheorem[style=exercises,name=Problem,refname={problem,problems},Refname={Problem,Problems}]{prob}
 
 %\makeatletter
 %\AtBeginEnvironment{ex}{%

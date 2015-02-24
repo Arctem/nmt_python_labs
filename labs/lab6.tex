@@ -15,6 +15,7 @@
 
 \maketitle
 
+\pagenumbering{roman}
 \hrule
 \begin{quotation}
 ``The danger that computers will become like humans is not as big as the danger
@@ -43,7 +44,9 @@ scientist.''
 
 \hrule
 
-\section{Introduction}
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+
 In previous labs, we taught you how to use functions, math, lists, strings, and
 the like. We will combine all that in this lab and teach you how to interact
 with files. This will lead us to do some exciting data analysis!
@@ -53,10 +56,11 @@ with files. This will lead us to do some exciting data analysis!
 \tableofcontents
 
 \pagebreak
+\pagenumbering{arabic}
 \section{File I/O}
 Knowing how to work with files is important, since it lets us store and retrieve
 data beyond the scope of the single execution of a program. To open a file for
-reading or writing we will use the \pythoninline!open! function. The following
+reading or writing we will use the \pythoninline!open()! function. The following
 example opens a file and writes ``Hello World'' to it.
 
 \begin{python3code}
@@ -77,10 +81,10 @@ output_file.write("Hello World\n")
 output_file.close()
 \end{python3code}
 
-The arguments to the \pythoninline!open! function are, in order, the name of the
-file to open and the mode in which to open the file. ``w'' means that the file
-is to be opened in write mode. If the file does not exist, this will create the
-file. If it does exist, then the contents of the file will be cleared in
+The arguments to the \pythoninline!open()! function are, in order, the name of
+the file to open and the mode in which to open the file. ``w'' means that the
+file is to be opened in write mode. If the file does not exist, this will create
+the file. If it does exist, then the contents of the file will be cleared in
 preparation for the new ones.
 
 Other options include ``a'', which is similar to ``w'' but will not clear the
@@ -114,17 +118,17 @@ input_file.close()
 The additional concepts introduced in these examples are:
 
 \begin{itemize}
-\item The \pythoninline!print! function can have an additional ``file'' parameter
+\item The \pythoninline!print()! function can have an additional ``file'' parameter
   passed to it to allow writing to a file. This causes it to send its output to
   the file rather than the screen, though otherwise it performs identically.
 
-\item The \pythoninline!print! function has an additional optional ``end''
+\item The \pythoninline!print()! function has an additional optional ``end''
   parameter. This allows you to specify what should be printed after the main
   string given to it. This is important because it defaults to \pythoninline!"\n"!,
   which causes a newline after every print statement. By changing ``end'' to
   \pythoninline!""! we prevent a newline from being added after every line of the
   file is printed. This is because each line in the file already has a newline
-  at the end of it, so we don't need \pythoninline!print! to add its own.
+  at the end of it, so we don't need \pythoninline!print()! to add its own.
 
 \item \pythoninline!.close()! is used to properly tell Python that you are done
   with a file and close your connection to it. This isn't \emph{strictly}
@@ -213,7 +217,7 @@ multiple types of errors.
 See more about error handling in the next section.
 
 \pagebreak
-\section{I/O Exceptions}
+\section{Exceptions}
 When working with input and output it is important to check for exceptions.  For
 example, when we try to open a file that does not exist we'd like to exit the
 program safely or recover rather than observing the unexpected results.
@@ -364,7 +368,7 @@ for i in range(200):
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=2.0in]{img/fancy_spiral}
+  \includegraphics[width=0.6\textwidth]{img/fancy_spiral}
 \end{figure}
 
 \pagebreak
@@ -482,6 +486,23 @@ This code will produce this output of the input data sorted into 10 bins of size
   \label{fig:bar1}
 \end{figure}
 
+\subsection{More Documentation}
+
+\begin{itemize}
+  \item \pythoninline!.plot()! function documentation:
+    \begin{center}
+      \url{http://matplotlib.org/api/pyplot\_api.html#matplotlib.pyplot.plot}
+    \end{center}
+  \item \pythoninline!.bar()! function documentation:
+    \begin{center}
+      \url{http://matplotlib.org/api/pyplot\_api.html#matplotlib.pyplot.bar}
+    \end{center}
+  \item Documentation overview for \pythoninline{matplotlib.pyplot}:
+    \begin{center}
+      \url{http://matplotlib.org/api/pyplot\_summary.html}
+    \end{center}
+\end{itemize}
+
 \pagebreak
 \section{Exercises}
 \label{sec:ex}
@@ -518,7 +539,9 @@ This code will produce this output of the input data sorted into 10 bins of size
 turtle functions \pythoninline!.position()!, \pythoninline!.setposition()!,
     \pythoninline!.setheading()!, \pythoninline!.heading()!, \pythoninline!.penup()!, and
     \pythoninline!.pendown()!. Turtle documentation is available at
-    \url{https://docs.python.org/3/library/turtle.html}.
+    \begin{center}
+      \url{https://docs.python.org/3/library/turtle.html}
+    \end{center}
 
     You will also likely use the \pythoninline!.split()! command when getting
     input, which splits a single string into an array around the string's
@@ -533,7 +556,8 @@ turtle functions \pythoninline!.position()!, \pythoninline!.setposition()!,
     \emph{Suggestion:} Split each command into a different function to help keep their logic separate.
 
     Sample Input File:
-    \begin{python3code}
+
+    \begin{verbatimcode}
 forward 50
 left 20
 split 40
@@ -548,11 +572,11 @@ left 20
 split 40
 forward 50
 left 20
-    \end{python3code}
+    \end{verbatimcode}
 
     Sample Output
     \begin{center}
-      \includegraphics[width=1.0in]{img/nav3_example}
+      \includegraphics[width=0.4\textwidth]{img/nav3_example}
     \end{center}
   \end{ex}
 
@@ -565,8 +589,8 @@ left 20
 
     Example:
 
-    file1.txt:
-
+\begin{listing}[H]
+  \vspace{-0.5em}
     \begin{verbatimcode}
 John goes to work.
 Keith and Kyle went to the Ensiferum concert.
@@ -574,9 +598,13 @@ Alice ate an apple pie.
 Joe cut down a tree.
 The dog jumped over the wall.
     \end{verbatimcode}
+  \vspace{-0.5em}
+  \caption{file1.txt}
+  \vspace{-0.5em}
+\end{listing}
 
-    file2.txt:
-
+\begin{listing}[H]
+  \vspace{-0.5em}
     \begin{verbatimcode}
 John goes to work.
 Coral went to a Kesha concert.
@@ -584,10 +612,14 @@ Alice ate an apple pie.
 Joe planted a tree.
 The dog jumped over the wall.
     \end{verbatimcode}
+  \vspace{-0.5em}
+  \caption{file2.txt}
+  \vspace{-0.5em}
+\end{listing}
 
     \begin{verbatimcode}
-Enter file name 1: >>> file1.txt
-Enter file name 2: >>> file2.txt
+Enter file name 1 >>> file1.txt
+Enter file name 2 >>> file2.txt
 
 2c2
 < Keith and Kyle went to the Ensiferum concert.
