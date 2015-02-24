@@ -48,70 +48,11 @@ In previous labs, we taught you how to use functions, math, lists, strings, and
 the like. We will combine all that in this lab and teach you how to interact
 with files. This will lead us to do some exciting data analysis!
 
-\section{I/O Exceptions}
-When working with input and output it is important to check for exceptions.  For example, when we try to open a file that does not exist we'd like to exit the program safely or recover rather than observing the unexpected results.  Exception handling in python consists of "try-except" blocks.  In a "try-except" block we execute instructions in the \pythoninline!try! block and catch errors in one or more following \pythoninline!except! blocks.  The \pythoninline!except! block is only executed if an exception is caught in the \pythoninline!try! block.  Additionally, when an error is caught in the \pythoninline!try! block we stop executing commands in the \pythoninline!try! block and jump to the first \pythoninline!except! or optional \pythoninline!finally! block.  The following example throws a division by zero error and prints ``division by zero'':
+\pagebreak
 
-\begin{python3code}
-prime = 7
-x = 0
+\tableofcontents
 
-try:
-  result = prime / 0
-  result = 7*42
-
-except ZeroDivisionError as err:
-  print(err)
-\end{python3code}
-
-Looking at the code above, since the error is thrown on line 5, line 4 is never executed.  Any \pythoninline!except!  block that does not list built-in  exceptions will catch all exceptions not listed in previous \pythoninline!except! blocks.  For example, the following code will throw an error if the user enters anything but an integer:
-
-\begin{python3code}
-try:
-  x = int(input("Enter a number: "))
-
-except:
-  print("Unknown error.")
-  raise
-else:
-  print("You entered: " + str(x))
-\end{python3code}
-
-The \pythoninline!raise! keyword causes a stack trace and prints out additional information if an exception is encountered.  The \pythoninline!else! block is always optional and will always be executed if no exceptions are thrown in the \pythoninline!try! block.  There are many more built-in exceptions such as \pythoninline!IOError! that can be found here: \url{https://docs.python.org/3.2/library/exceptions.html}
-
-If you try to open a file that does not exist for reading, Python will display
-an error message:
-
-\begin{pyconcode}
->>> open("not_a_file.txt", "r")
-Traceback (most recent call last):
-  File "<pyshell#0>", line 1, in <module>
-  open("not_a_file.txt", "r")
-FileNotFoundError: [Errno 2] No such file or directory: 'not_a_file.txt'
-\end{pyconcode}
-
-In this case, the error is \pythoninline!IOError!. Normally having an
-error occur will end your program, but we can use \pythoninline!try-except! in
-order to perform a special action in case of an error. The following program
-uses this to display an error message rather than crashing.
-
-\begin{python3code}
-filename = input("What file should be read? ")
-
-try:
-  input_file = open(filename, "r")
-  for line in input_file:
-    print(line, end="")
-
-except IOError as err:
-  print(err)
-  raise
-else:
-  input_file.close()
-finally:
-  print("Goodbye!")
-\end{python3code}
-
-Lastly, the \pythoninline!finally! block is where clean-up actions are performed and is always executed after leaving the \pythoninline!try! block.
+\pagebreak
 \section{File I/O}
 Knowing how to work with files is important, since it lets us store and retrieve
 data beyond the scope of the single execution of a program. To open a file for
@@ -125,7 +66,9 @@ print("Hello World", file=output_file)
 output_file.close()
 \end{python3code}
 
-Files can also be written to by using \pythoninline!.write(contents)!. This method will write only the characters given to it, so a newline \lstinline{\\n} must be included for a newline.
+Files can also be written to by using \pythoninline!.write(contents)!. This
+method will write only the characters given to it, so a newline \lstinline{\\n}
+must be included for a newline.
 
 \begin{python3code}
 output_file = open("hello.txt", "w")
@@ -163,7 +106,7 @@ filename = input("What file should be read? ")
 
 input_file = open(filename, "r")
 for line in input_file:
-  print(line, end="")
+    print(line, end="")
 
 input_file.close()
 \end{python3code}
@@ -202,7 +145,7 @@ filename = input("What file should be read? ")
 
 input_file = open(filename, "r")
 for line in input_file:
-  print(line, end="")
+    print(line, end="")
 
 input_file.close()
 \end{pyconcode}
@@ -212,18 +155,23 @@ input_file.close()
   the file being read.
 \end{itemize}
 
-\subsection{Files Using \pythoninline!with!}
-Since every file that you open should be closed after use, Python has an easy way to do this for you. Using the \pythoninline!with! command, your file will automatically be closed when the \pythoninline!with! block finished executing.
+\subsection{Files Using \protect\pythoninline!with!}
+Since every file that you open should be closed after use, Python has an easy
+way to do this for you. Using the \pythoninline!with! command, your file will
+automatically be closed when the \pythoninline!with! block finished executing.
 
 \begin{python3code}
 filename = input("Enter filename: ")
 
 with open(filename, "r") as file:
-  for line in file:
-    print(line, end="")
-# file.close() is not necessary, because ``with'' closed it for us
+    for line in file:
+        print(line, end="")
+# file.close() is not necessary, because "with" closed it for us
 \end{python3code}
 
+\begin{warningbox}{Using \protect\pythoninline!with!}
+  Always use the \pythoninline!with! statement to deal with file I/O in Python.
+\end{warningbox}
 
 \subsection{Error Handling}
 If you try to open a file that does not exist for reading, Python will display
@@ -246,21 +194,111 @@ uses this to display an error message rather than crashing.
 filename = input("What file should be read? ")
 
 try:
-  input_file = open(filename, "r")
-  for line in input_file:
-    print(line, end="")
+    input_file = open(filename, "r")
+    for line in input_file:
+        print(line, end="")
 
-  input_file.close()
+    input_file.close()
 except FileNotFoundError:
-  print("Could not find file {}.".format(filename))
+    print("Could not find file {}.".format(filename))
 \end{python3code}
 
 If you wish to catch an error, check the error message for the name of the error
-that you need to catch with your \pythoninline!except! statement. If the specified
-error does not occur inside the \pythoninline!try! block, then the
-\pythoninline!except! block will be skipped. A single \pythoninline!try! block can
-have several \pythoninline!except! statements following it for catching multiple
-types of errors.
+that you need to catch with your \pythoninline!except! statement. If the
+specified error does not occur inside the \pythoninline!try! block, then the
+\pythoninline!except! block will be skipped. A single \pythoninline!try! block
+can have several \pythoninline!except! statements following it for catching
+multiple types of errors.
+
+See more about error handling in the next section.
+
+\pagebreak
+\section{I/O Exceptions}
+When working with input and output it is important to check for exceptions.  For
+example, when we try to open a file that does not exist we'd like to exit the
+program safely or recover rather than observing the unexpected results.
+Exception handling in python consists of "try-except" blocks.  In a "try-except"
+block we execute instructions in the \pythoninline!try! block and catch errors
+in one or more following \pythoninline!except! blocks.  The
+\pythoninline!except! block is only executed if an exception is caught in the
+\pythoninline!try! block.  Additionally, when an error is caught in the
+\pythoninline!try! block we stop executing commands in the \pythoninline!try!
+block and jump to the first \pythoninline!except! or optional
+\pythoninline!finally! block.  The following example throws a division by zero
+error and prints ``division by zero'':
+
+\begin{python3code}
+prime = 7
+x = 0
+
+try:
+    result = prime / 0
+    result = 7*42
+except ZeroDivisionError as err:
+    print(err)
+\end{python3code}
+
+Looking at the code above, since the error is thrown on line 5, line 4 is never
+executed.  Any \pythoninline!except!  block that does not list built-in
+exceptions will catch all exceptions not listed in previous
+\pythoninline!except! blocks.  For example, the following code will throw an
+error if the user enters anything but an integer:
+
+\begin{python3code}
+try:
+    x = int(input("Enter a number: "))
+except:
+    print("Unknown error.")
+    raise
+else:
+    print("You entered: " + str(x))
+\end{python3code}
+
+The \pythoninline!raise! keyword causes a stack trace and prints out additional
+information if an exception is encountered.  The \pythoninline!else! block is
+always optional and will always be executed if no exceptions are thrown in the
+\pythoninline!try! block.  There are many more built-in exceptions such as
+\pythoninline!IOError! that can be found here:
+
+\begin{center}
+\url{https://docs.python.org/3.2/library/exceptions.html}
+\end{center}
+
+If you try to open a file that does not exist for reading, Python will display
+an error message:
+
+\begin{pyconcode}
+>>> open("not_a_file.txt", "r")
+Traceback (most recent call last):
+  File "<pyshell#0>", line 1, in <module>
+  open("not_a_file.txt", "r")
+FileNotFoundError: [Errno 2] No such file or directory: 'not_a_file.txt'
+\end{pyconcode}
+
+In this case, the error is \pythoninline!IOError!. Normally having an
+error occur will end your program, but we can use \pythoninline!try-except! in
+order to perform a special action in case of an error. The following program
+uses this to display an error message rather than crashing.
+
+\begin{python3code}
+filename = input("What file should be read? ")
+
+try:
+    input_file = open(filename, "r")
+    for line in input_file:
+        print(line, end="")
+except IOError as err:
+    print(err)
+    raise
+else:
+    input_file.close()
+finally:
+    print("Goodbye!")
+\end{python3code}
+
+Lastly, the \pythoninline!finally! block is where clean-up actions are performed
+and is always executed after leaving the \pythoninline!try! block.
+
 
 %\section{Recursion}
 \pagebreak
@@ -329,81 +367,119 @@ for i in range(200):
   \includegraphics[width=2.0in]{img/fancy_spiral}
 \end{figure}
 
+\pagebreak
 \section{Matplotlib}
-Matplotlib is a Python library that provides MATLAB-like plotting functions.  Simple plots such as bar graphs and line graphs are very easy to create using matplotlib.\\
-Using the \pythoninline!.plot! and \pythoninline!.bar! methods of \pythoninline!matplotlib.pyplot!, we can quickly show line and bar graphs. \pythoninline!.plot! and \pythoninline!.bar! take a dataset for x and a dataset for y, with many more optional parameters such as \pythoninline!align!.  These examples use data from \url{nmt.edu/~olegm/382labs/2cities.csv}.
+Matplotlib is a Python library that provides MATLAB-like plotting functions.
+Simple plots such as bar graphs and line graphs are very easy to create using
+matplotlib.
 
-\begin{python3code}
-import matplotlib.pyplot as plt
+Using the \pythoninline!.plot()! and \pythoninline!.bar()! methods of
+\pythoninline!matplotlib.pyplot!, we can quickly show line and bar graphs.
+\pythoninline!.plot()! and \pythoninline!.bar()! take a dataset for x and a
+dataset for y, with many more optional parameters such as \pythoninline!align!.
+These examples use data from
+\begin{center}
+  \url{http://nmt.edu/~olegm/382labs/2cities.csv}
+\end{center}
 
-with open("2cities.csv", "r") as f:
-        lines = f.readlines()
+\begin{itemize}
+  \item Data set is three columns: a data point number, the temperature in
+    Tucson, and the temperature in Eugene in degrees Celsius.
+\end{itemize}
 
-t = []
-for l in lines:
-        a = l.split()
-        if len(a) > 1:
-                t.append(a[1])
-t.pop(0)
-ts = []
-for i in t:
-        ts.append(float(i))
-
-x = list(range(1,11))
-
-y = []
-for i in x:
-        y.append([])
-        for j in ts:
-                if j > (i - 1) * 5 and j < i * 5:
-                        y[i - 1].append(j)
-
-yc = []
-for i in y:
-        yc.append(len(i))
-
-plt.bar(x, yc, align="center")
-plt.xlabel("X-Axis")
-plt.ylabel("Y-Axis")
-plt.title("Title")
-plt.show()
-\end{python3code}
-
-This code will produce this output of the input data sorted into 10 bins of size 5 (not showing empty bins):\\
 \begin{figure}[h]
   \centering
-  \includegraphics[width=4.0in]{img/bar1}
+  \includegraphics[width=0.85\textwidth]{img/line1.png}
+  \caption{Line plot example: temperature data from Tucson, AZ.}
+  \label{fig:line1}
 \end{figure}
 
-Likewise, the following code will show a line plot of the dataset:\\
+The following code will show a line plot of the dataset. You can see the graph
+it produces in Figure~\ref{fig:line1}.
+
 \begin{python3code}
 import matplotlib.pyplot as plt
 
 with open("2cities.csv", "r") as f:
-        lines = f.readlines()
+    lines = f.readlines()
 
-t = []
-for l in lines:
-        a = l.split()
-        if len(a) > 1:
-                t.append(a[1])
-t.pop(0)
-ts = []
-for i in t:
-        ts.append(float(i))
+temps = []
+for line in lines:
+    cols = line.split()
+    try:
+        if len(cols) > 1:
+            temps.append(float(cols[1]))
+    except ValueError:
+        pass # could not convert to float, must be first row with headers
 
-x = list(range(len(ts)))
-
-plt.plot(x, ts)
-plt.xlabel("X-Axis")
-plt.ylabel("Y-Axis")
-plt.title("Title")
+plt.plot(list(range(len(temps))), temps)
+plt.xlabel("Data point")
+plt.ylabel("Temperature in degrees Celsius")
+plt.title("Temperature in Tucson, AZ over 120 days")
 plt.show()
 \end{python3code}
 
+Next, we are trying to create a histogram of the data.
+
+\begin{itemize}
+  \item A histogram is a bar graph where a bar represents
+    a temperature \emph{range}. We call one of these ranges a bin or a bucket.
+  \item 
+    For example, the temperatures in Tucson in the data set
+    range from 18$^\circ$ Celsius to 37$^\circ$ Celsius. We would create a
+    histogram spanning temperatures from $15^\circ$ to $40^\circ$ Celsius with
+    bins of size $5^\circ$ Celsius. That means a bin for $15$ to $20$ degrees
+    Celsius, a bin for $20$ to $25$ degrees Celsius, etc.
+\end{itemize}
+
+\begin{python3code}
+import matplotlib.pyplot as plt
+
+with open("2cities.csv", "r") as f:
+    lines = f.readlines()
+
+temps = []
+for line in lines:
+    # columns in 2cities.csv are [data point number, tucson temp, eugene temp]
+    cols = line.split()
+    try:
+        if len(cols) > 1:
+            temps.append(float(cols[1]))
+    except ValueError:
+        pass # could not convert to float, must be first row with headers
+
+numbuckets = 5
+binnumbers = range(0, numbuckets)
+counts = []
+for bucketno in binnumbers:
+    bucket = []
+    for temp in temps:
+        if 15 + bucketno * 5 < temp < 15 + (bucketno + 1) * 5:
+            bucket.append(temp)
+    # Count how many temperatures are in this bucket.
+    # This count will be the height of the bar in the graph.
+    counts.append(len(bucket))
+
+xlabels = []
+for bucket in binnumbers:
+    xlabels.append("{} to {}C".format(15 + bucket * 5, 15 + (bucket + 1) * 5))
+
+plt.bar(binnumbers, counts, align="center")
+plt.xticks(binnumbers, xlabels)
+plt.xlabel("Temperature in Celsius")
+plt.ylabel("Number of times occured")
+plt.title("Histogram of Temperatures in Tucson, AZ")
+plt.show()
+\end{python3code}
+
+This code will produce this output of the input data sorted into 10 bins of size
+5 (not showing empty bins) as seen Figure~\ref{fig:bar1}.
+
 \begin{figure}[h]
   \centering
-  \includegraphics[width=4.0in]{img/line1}
+  \includegraphics[width=0.85\textwidth]{img/lab6_histo_tucson.png}
+  \caption{Input data sorted into 5 bins of size 5$^\circ$ Celsius.}
+  \label{fig:bar1}
 \end{figure}
 
 \pagebreak
@@ -413,7 +489,7 @@ plt.show()
 \begin{ex}[save.py] Write a program that takes in a filename, then takes in
   a series of lines of input until a blank line is entered, writing each line to
   the file with the given name. After the blank line is entered, properly close
-  the file before ending the program.  
+  the file before ending the program.
 \end{ex}
 
 \begin{ex}[word\_count.py] Write a program that
@@ -444,7 +520,9 @@ turtle functions \pythoninline!.position()!, \pythoninline!.setposition()!,
     \pythoninline!.pendown()!. Turtle documentation is available at
     \url{https://docs.python.org/3/library/turtle.html}.
 
-    You will also likely use the \pythoninline!.split()! command when getting input, which splits a single string into an array around the string's spaces.
+    You will also likely use the \pythoninline!.split()! command when getting
+    input, which splits a single string into an array around the string's
+    spaces.
     \begin{pyconcode}
 >>> print("this is a phrase".split())
 ['this', 'is', 'a', 'phrase']
@@ -478,39 +556,49 @@ left 20
     \end{center}
   \end{ex}
 
-	\begin{ex}[diff.py]
-		Write a ``diff'' program that prints out the differences, line by line, of two files.  Your program should ask the user for the names of two files, then print the differences between them.  Follow the format output by the system ``diff'' utility.  Make sure to use proper error handling techniques for file I/O.\\\\
-		Example:\\\\
-		file1.txt:
-		\begin{python3code}
-		John goes to work.
-		Keith and Kyle went to the Ensiferum concert.
-		Alice ate an apple pie.
-		Joe cut down a tree.
-		The dog jumped over the wall.
-		\end{python3code}
-		file2.txt:
-		\begin{python3code}
-		John goes to work.
-		Coral went to a Kesha concert.
-		Alice ate an apple pie.
-		Joe planted a tree.
-		The dog jumped over the wall.
-		\end{python3code}
-		\begin{python3code}
-		Enter file name 1: >>> file1.txt
-		Enter file name 2: >>> file2.txt
-		
-		2c2
-		< Keith and Kyle went to the Ensiferum concert.
-		---
-		> Coral went to a Kesha concert.
-		4c4
-		< Joe cut down a tree.
-		---
-		> Joe planted a tree.
-		\end{python3code}
-	\end{ex}
+  \begin{ex}[diff.py]
+    Write a ``diff'' program that prints out the differences, line by line, of
+    two files.  Your program should ask the user for the names of two files,
+    then print the differences between them.  Follow the format output by the
+    system ``diff'' utility.  Make sure to use proper error handling techniques
+    for file I/O.
+
+    Example:
+
+    file1.txt:
+
+    \begin{verbatimcode}
+John goes to work.
+Keith and Kyle went to the Ensiferum concert.
+Alice ate an apple pie.
+Joe cut down a tree.
+The dog jumped over the wall.
+    \end{verbatimcode}
+
+    file2.txt:
+
+    \begin{verbatimcode}
+John goes to work.
+Coral went to a Kesha concert.
+Alice ate an apple pie.
+Joe planted a tree.
+The dog jumped over the wall.
+    \end{verbatimcode}
+
+    \begin{verbatimcode}
+Enter file name 1: >>> file1.txt
+Enter file name 2: >>> file2.txt
+
+2c2
+< Keith and Kyle went to the Ensiferum concert.
+---
+> Coral went to a Kesha concert.
+4c4
+< Joe cut down a tree.
+---
+> Joe planted a tree.
+    \end{verbatimcode}
+  \end{ex}
 
 
 \pagebreak
