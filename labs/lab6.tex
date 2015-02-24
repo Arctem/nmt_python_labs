@@ -583,9 +583,8 @@ left 20
   \begin{ex}[diff.py]
     Write a ``diff'' program that prints out the differences, line by line, of
     two files.  Your program should ask the user for the names of two files,
-    then print the differences between them.  Follow the format output by the
-    system ``diff'' utility.  Make sure to use proper error handling techniques
-    for file I/O.
+    then print the differences between them.  Follow the format output as shown
+    below. Make sure to use proper error handling techniques for file I/O.
 
     Example:
 
@@ -632,8 +631,40 @@ Enter file name 2 >>> file2.txt
     \end{verbatimcode}
   \end{ex}
 
+  \begin{ex}[testscores.py]
+    Download the file \texttt{actsat.txt} provided on Canvas. It contains the
+    following data by column:
 
-\pagebreak
+    \begin{enumerate}[\text{Column} 1~]
+      \item 2-letter state/territory code (includes DC)
+      \item \% of graduates in that state taking the ACT
+      \item Average composite ACT score
+      \item \% of graduates in that state taking the SAT
+      \item Average SAT Math score
+      \item Average SAT Reading score
+      \item Average SAT Writing score
+    \end{enumerate}
+
+    Each SAT section is out of 800 points, while the ACT is out of 36 points.
+
+    Write a program that generates the following charts:
+    \begin{itemize}
+      \item A histogram of average ACT scores with bins of size $1$ between a
+        score of $18$ and $24$.
+      \item A chart that compares the composite ACT score with the total score
+        of all 3 SAT tests for all 51 states/territories.
+      \item Produce the same chart as in part 2, but only for states in which
+        less than 50\% take the ACT and more than 50\% take the SAT. (There
+        should be 21 states/territories like this.)
+    \end{itemize}
+
+    For parts 2 and 3, it is up to you what kind of chart to create and how to
+    represent the data. Depending on what you choose, you may have to do some
+    research in the matplotlib documentation on how to create that graph.
+    Remember to label your axes and title your graph.
+  \end{ex}
+
+
 \section{Submitting}
 
 You should submit your code as a tarball. It should contain all files
