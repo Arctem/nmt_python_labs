@@ -48,10 +48,74 @@ In previous labs, we taught you how to use functions, math, lists, strings, and
 the like. We will combine all that in this lab and teach you how to interact
 with files. This will lead us to do some exciting data analysis!
 
+\section{I/O Exceptions}
+When working with input and output it is important to check for exceptions.  For example, when we try to open a file that does not exist we'd like to exit the program safely or recover rather than observing the unexpected results.  Exception handling in python consists of "try-except" blocks.  In a "try-except" block we execute instructions in the \pythoninline!try! block and catch errors in one or more following \pythoninline!except! blocks.  The \pythoninline!except! block is only executed if an exception is caught in the \pythoninline!try! block.  Additionally, when an error is caught in the \pythoninline!try! block we stop executing commands in the \pythoninline!try! block and jump to the first \pythoninline!except! or optional \pythoninline!finally! block.  The following example throws a division by zero error and prints ``division by zero'':
+
+\begin{python3code}
+prime = 7
+x = 0
+
+try:
+  result = prime / 0
+  result = 7*42
+
+except ZeroDivisionError as err:
+  print(err)
+\end{python3code}
+
+Looking at the code above, since the error is thrown on line 5, line 4 is never executed.  Any \pythoninline!except!  block that does not list built-in  exceptions will catch all exceptions not listed in previous \pythoninline!except! blocks.  For example, the following code will throw an error if the user enters anything but an integer:
+
+\begin{python3code}
+try:
+  x = int(input("Enter a number: "))
+
+except:
+  print("Unknown error.")
+  raise
+else:
+  print("You entered: " + str(x))
+\end{python3code}
+
+The \pythoninline!raise! keyword causes a stack trace and prints out additional information if an exception is encountered.  The \pythoninline!else! block is always optional and will always be executed if no exceptions are thrown in the \pythoninline!try! block.  There are many more built-in exceptions such as \pythoninline!IOError! that can be found here: \url{https://docs.python.org/3.2/library/exceptions.html}
+
+If you try to open a file that does not exist for reading, Python will display
+an error message:
+
+\begin{pyconcode}
+>>> open("not_a_file.txt", "r")
+Traceback (most recent call last):
+  File "<pyshell#0>", line 1, in <module>
+  open("not_a_file.txt", "r")
+FileNotFoundError: [Errno 2] No such file or directory: 'not_a_file.txt'
+\end{pyconcode}
+
+In this case, the error is \pythoninline!IOError!. Normally having an
+error occur will end your program, but we can use \pythoninline!try-except! in
+order to perform a special action in case of an error. The following program
+uses this to display an error message rather than crashing.
+
+\begin{python3code}
+filename = input("What file should be read? ")
+
+try:
+  input_file = open(filename, "r")
+  for line in input_file:
+    print(line, end="")
+
+except IOError as err:
+  print(err)
+  raise
+else:
+  input_file.close()
+finally:
+  print("Goodbye!")
+\end{python3code}
+
+Lastly, the \pythoninline!finally! block is where clean-up actions are performed and is always executed after leaving the \pythoninline!try! block.
 \section{File I/O}
 Knowing how to work with files is important, since it lets us store and retrieve
 data beyond the scope of the single execution of a program. To open a file for
-reading or writing we will use the \lstinline{open} function. The following
+reading or writing we will use the \pythoninline!open! function. The following
 example opens a file and writes ``Hello World'' to it.
 
 \begin{python3code}
@@ -61,7 +125,16 @@ print("Hello World", file=output_file)
 output_file.close()
 \end{python3code}
 
-The arguments to the \lstinline{open} function are, in order, the name of the
+Files can also be written to by using \pythoninline!.write(contents)!. This method will write only the characters given to it, so a newline \lstinline{\\n} must be included for a newline.
+
+\begin{python3code}
+output_file = open("hello.txt", "w")
+
+output_file.write("Hello World\n")
+output_file.close()
+\end{python3code}
+
+The arguments to the \pythoninline!open! function are, in order, the name of the
 file to open and the mode in which to open the file. ``w'' means that the file
 is to be opened in write mode. If the file does not exist, this will create the
 file. If it does exist, then the contents of the file will be cleared in
@@ -98,28 +171,28 @@ input_file.close()
 The additional concepts introduced in these examples are:
 
 \begin{itemize}
-\item The \lstinline{print} function can have an additional ``file'' parameter
+\item The \pythoninline!print! function can have an additional ``file'' parameter
   passed to it to allow writing to a file. This causes it to send its output to
   the file rather than the screen, though otherwise it performs identically.
 
-\item The \lstinline{print} function has an additional optional ``end''
+\item The \pythoninline!print! function has an additional optional ``end''
   parameter. This allows you to specify what should be printed after the main
-  string given to it. This is important because it defaults to \lstinline{"\n"},
+  string given to it. This is important because it defaults to \pythoninline!"\n"!,
   which causes a newline after every print statement. By changing ``end'' to
-  \lstinline{""} we prevent a newline from being added after every line of the
+  \pythoninline!""! we prevent a newline from being added after every line of the
   file is printed. This is because each line in the file already has a newline
-  at the end of it, so we don't need \lstinline{print} to add its own.
+  at the end of it, so we don't need \pythoninline!print! to add its own.
 
-\item \lstinline{.close()} is used to properly tell Python that you are done
+\item \pythoninline!.close()! is used to properly tell Python that you are done
   with a file and close your connection to it. This isn't \emph{strictly}
   required, but without it you risk the file being corrupted or other programs
   being unable to access that file.
 
-\item When reading from a file, Python can use a \lstinline{for} loop to go
+\item When reading from a file, Python can use a \pythoninline!for! loop to go
   through each line in sequence. This works identically to if you think of the
   file as a list with every line being a different element of the list. The
   entirety of the file can also be read into a single string using the
-  \lstinline{.read()} function.
+  \pythoninline!.read()! function.
 
 \begin{pyconcode}
 >>> input_file = open("test.py", "r")
@@ -134,10 +207,22 @@ for line in input_file:
 input_file.close()
 \end{pyconcode}
 
-\item \lstinline{.readlines()} can be used to read all of a file at once, though
+\item \pythoninline!.readlines()! can be used to read all of a file at once, though
   it splits the file into a list. Each element of the list will be one line of
   the file being read.
 \end{itemize}
+
+\subsection{Files Using \pythoninline!with!}
+Since every file that you open should be closed after use, Python has an easy way to do this for you. Using the \pythoninline!with! command, your file will automatically be closed when the \pythoninline!with! block finished executing.
+
+\begin{python3code}
+filename = input("Enter filename: ")
+
+with open(filename, "r") as file:
+  for line in file:
+    print(line, end="")
+# file.close() is not necessary, because ``with'' closed it for us
+\end{python3code}
 
 
 \subsection{Error Handling}
@@ -152,8 +237,8 @@ Traceback (most recent call last):
 FileNotFoundError: [Errno 2] No such file or directory: 'not_a_file.txt'
 \end{pyconcode}
 
-In this case, the error is \lstinline{FileNotFoundError}. Normally having an
-error occur will end your program, but we can use \lstinline{try-except} in
+In this case, the error is \pythoninline!FileNotFoundError!. Normally having an
+error occur will end your program, but we can use \pythoninline!try-except! in
 order to perform a special action in case of an error. The following program
 uses this to display an error message rather than crashing.
 
@@ -171,10 +256,10 @@ except FileNotFoundError:
 \end{python3code}
 
 If you wish to catch an error, check the error message for the name of the error
-that you need to catch with your \lstinline{except} statement. If the specified
-error does not occur inside the \lstinline{try} block, then the
-\lstinline{except} block will be skipped. A single \lstinline{try} block can
-have several \lstinline{except} statements following it for catching multiple
+that you need to catch with your \pythoninline!except! statement. If the specified
+error does not occur inside the \pythoninline!try! block, then the
+\pythoninline!except! block will be skipped. A single \pythoninline!try! block can
+have several \pythoninline!except! statements following it for catching multiple
 types of errors.
 
 %\section{Recursion}
@@ -182,7 +267,7 @@ types of errors.
 \section{Instantiating Turtles}
 Similarly to being able to open multiple files, we can also create multiple
 turtles to draw more complex designs. This is done using the
-\lstinline{turtle.Turtle()} function. This function returns a turtle object,
+\pythoninline!turtle.Turtle()! function. This function returns a turtle object,
 which we can call every other normal turtle function on.
 
 \begin{python3code}
@@ -244,6 +329,83 @@ for i in range(200):
   \includegraphics[width=2.0in]{img/fancy_spiral}
 \end{figure}
 
+\section{Matplotlib}
+Matplotlib is a Python library that provides MATLAB-like plotting functions.  Simple plots such as bar graphs and line graphs are very easy to create using matplotlib.\\
+Using the \pythoninline!.plot! and \pythoninline!.bar! methods of \pythoninline!matplotlib.pyplot!, we can quickly show line and bar graphs. \pythoninline!.plot! and \pythoninline!.bar! take a dataset for x and a dataset for y, with many more optional parameters such as \pythoninline!align!.  These examples use data from \url{nmt.edu/~olegm/382labs/2cities.csv}.
+
+\begin{python3code}
+import matplotlib.pyplot as plt
+
+with open("2cities.csv", "r") as f:
+        lines = f.readlines()
+
+t = []
+for l in lines:
+        a = l.split()
+        if len(a) > 1:
+                t.append(a[1])
+t.pop(0)
+ts = []
+for i in t:
+        ts.append(float(i))
+
+x = list(range(1,11))
+
+y = []
+for i in x:
+        y.append([])
+        for j in ts:
+                if j > (i - 1) * 5 and j < i * 5:
+                        y[i - 1].append(j)
+
+yc = []
+for i in y:
+        yc.append(len(i))
+
+plt.bar(x, yc, align="center")
+plt.xlabel("X-Axis")
+plt.ylabel("Y-Axis")
+plt.title("Title")
+plt.show()
+\end{python3code}
+
+This code will produce this output of the input data sorted into 10 bins of size 5 (not showing empty bins):\\
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=4.0in]{img/bar1}
+\end{figure}
+
+Likewise, the following code will show a line plot of the dataset:\\
+\begin{python3code}
+import matplotlib.pyplot as plt
+
+with open("2cities.csv", "r") as f:
+        lines = f.readlines()
+
+t = []
+for l in lines:
+        a = l.split()
+        if len(a) > 1:
+                t.append(a[1])
+t.pop(0)
+ts = []
+for i in t:
+        ts.append(float(i))
+
+x = list(range(len(ts)))
+
+plt.plot(x, ts)
+plt.xlabel("X-Axis")
+plt.ylabel("Y-Axis")
+plt.title("Title")
+plt.show()
+\end{python3code}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=4.0in]{img/line1}
+\end{figure}
+
 \pagebreak
 \section{Exercises}
 \label{sec:ex}
@@ -277,12 +439,12 @@ for i in range(200):
     \end{description}
 
     In order to properly implement split, you will probably need to look up the
-    turtle functions \lstinline{.position()}, \lstinline{.setposition()},
-    \lstinline{.setheading()}, \lstinline{.heading()}, \lstinline{.penup()}, and
-    \lstinline{.pendown()}. Turtle documentation is available at
+turtle functions \pythoninline!.position()!, \pythoninline!.setposition()!,
+    \pythoninline!.setheading()!, \pythoninline!.heading()!, \pythoninline!.penup()!, and
+    \pythoninline!.pendown()!. Turtle documentation is available at
     \url{https://docs.python.org/3/library/turtle.html}.
 
-    You will also likely use the \lstinline{.split()} command when getting input, which splits a single string into an array around the string's spaces.
+    You will also likely use the \pythoninline!.split()! command when getting input, which splits a single string into an array around the string's spaces.
     \begin{pyconcode}
 >>> print("this is a phrase".split())
 ['this', 'is', 'a', 'phrase']
@@ -316,117 +478,48 @@ left 20
     \end{center}
   \end{ex}
 
-  \begin{ex}[states.py]
-    Look at the file \texttt{states.csv} given. It has the following columns, in
-    the following order:
-    \begin{itemize}
-      \item State name
-      \item Population in thousands
-      \item Life expectation in years
-      \item Murder rate per 1,000,000 people
-      \item High school graduation rate
-      \item Area in square miles
-    \end{itemize}
+	\begin{ex}[diff.py]
+		Write a ``diff'' program that prints out the differences, line by line, of two files.  Your program should ask the user for the names of two files, then print the differences between them.  Follow the format output by the system ``diff'' utility.  Make sure to use proper error handling techniques for file I/O.\\\\
+		Example:\\\\
+		file1.txt:
+		\begin{python3code}
+		John goes to work.
+		Keith and Kyle went to the Ensiferum concert.
+		Alice ate an apple pie.
+		Joe cut down a tree.
+		The dog jumped over the wall.
+		\end{python3code}
+		file2.txt:
+		\begin{python3code}
+		John goes to work.
+		Coral went to a Kesha concert.
+		Alice ate an apple pie.
+		Joe planted a tree.
+		The dog jumped over the wall.
+		\end{python3code}
+		\begin{python3code}
+		Enter file name 1: >>> file1.txt
+		Enter file name 2: >>> file2.txt
+		
+		2c2
+		< Keith and Kyle went to the Ensiferum concert.
+		---
+		> Coral went to a Kesha concert.
+		4c4
+		< Joe cut down a tree.
+		---
+		> Joe planted a tree.
+		\end{python3code}
+	\end{ex}
 
-    Write a program that reads in all this data to a list of lists and then
-    \emph{write a function} for each of the following:
-    \begin{itemize}
-      \item Find the murder rate per 1,000,000 people for the United States.
-      \item Find the murder rate per square mile for each state and then the
-        United States.
-      \item Find the high school graduation rate per area for each state.
-      \item Find the total area of the United States.
-      \item Find the population density (population per area) of the United
-        States.
-    \end{itemize}
 
-    Print the per state information in a table.
-  \end{ex}
-
-\subsection{Review for Midterm}
-\label{subsec:reviewex}
-
-Reviewing: for, while, if, if-elif-else, functions, file I/O, strings, lists. 
-
-\begin{ex}[piglatin.py] Write a program that will take a string of words and
-    convert each word to pig latin. 
-
-    The rules for pig latin are as follows:
-
-    For a word that begins with consonant sounds, the initial consonant or
-    consonant cluster is moved to the end of the word and ``ay'' is added as a
-    suffix:
-    \begin{itemize}
-      \item ``happy'' $\to$ ``appyhay''
-      \item ``glove'' $\to$ ``oveglay''
-    \end{itemize}
-
-    For words that begin with vowels, you add ``way'' to the end of the word:
-    \begin{itemize}
-      \item ``egg'' $\to$ ``eggway''
-      \item ``inbox'' $\to$ ``inboxway''
-    \end{itemize}
-
-    For your program, you \emph{must} write a function that takes in one
-    individual word and returns the translation to pig latin. Write another
-    function that takes a string, which may be sentences (may contain the
-    characters ``a-zA-Z,.-;!?()'' and space), and returns the translation of the
-    sentence to pig latin. Strip out any punctuation. For example, ``Hello, how
-    are you?'' would translate into ``elloHay owhay areway ouyay''.
-\end{ex}
-
-\begin{ex}[piglatin\_file.py] Use the two functions you previously wrote for
-    \texttt{piglatin.py} and write a program that asks the user for a filename,
-    reads the contents of that file and translates it to pig latin. The pig
-    latin must be written to a file name
-    \texttt{originalfilename\_piglatin.txt}.
-  \end{ex}
-
-\begin{ex}[luhns.py] Luhn's algorithm
-  (\url{http://en.wikipedia.org/wiki/Luhn_algorithm}) provides a quick way to
-  check if a credit card is valid or not. The algorithm consists of three
-  steps:
-
-  \begin{enumerate}
-    \item Starting with the second to last digit (ten's column digit),
-      multiply every other digit by two.
-    \item Sum all the digits of the resulting number.
-    \item If the total sum modulo by 10 is zero, then the card is valid;
-      otherwise it is invalid.
-  \end{enumerate}
-
-  For example, to check that the Diners Club card 38520000023237 is valid, you
-  would start at 3, double it and double every other digit to give, writing
-  the credit card number as separate digits: 
-  \begin{IEEEeqnarray*}{RCCRCCRCCRCCRCCRCCRCCRCCRCCRCCRCCRCCR}
-3 &~& 8 &~& 5  &~& 2 &~& 0 &~& 0 &~& 0 &~& 0 &~& 0 &~& 2 &~& 3 &~& 2 &~& 3 &~& 7\\
-6 &~& 8 &~& 10 &~& 2 &~& 0 &~& 0 &~& 0 &~& 0 &~& 0 &~& 2 &~& 6 &~& 2 &~& 6 &~& 7
-  \end{IEEEeqnarray*}
-  Next you would sum all the digits of the resulting number:
-  \[ 6 + 8 + (1 + 0) + 2 + 0 + 0 + 0 + 0 + 0 + 2 + 6 + 2 + 6 + 7 = 40 \]
-
-  Note that for 10, you also sum its digits  -- $(1 + 0)$.
-
-  The last step is to check if $40\mod{10} = 0$, which is true. So the
-  card is valid.
-
-  Write a program that implements Luhn's Algorithm for validating credit
-  cards. It should ask the user to enter a credit card number and tell the
-  user whether it is valid or not. It should also have a separate function to
-  validate the card number.
-\end{ex}
-
-\begin{ex}[anagrams.py] Write a function that takes in two strings. If the
-  strings are anagrams of one another, return \lstinline{True}. If not, return
-  \lstinline{False}.
-\end{ex}
 \pagebreak
 \section{Submitting}
 
 You should submit your code as a tarball. It should contain all files
 used in the exercises for this lab. The submitted file should be named
 \begin{center}
-  \texttt{cse107\_firstname\_lastname\_lab5.tar.gz}
+  \texttt{cse107\_firstname\_lastname\_lab6.tar.gz}
 \end{center}
 
 \begin{center}
