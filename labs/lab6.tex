@@ -177,63 +177,45 @@ with open(filename, "r") as file:
   Always use the \pythoninline!with! statement to deal with file I/O in Python.
 \end{warningbox}
 
-\subsection{Error Handling}
-If you try to open a file that does not exist for reading, Python will display
-an error message:
-
-\begin{pyconcode}
->>> open("not_a_file.txt", "r")
-Traceback (most recent call last):
-  File "<pyshell#0>", line 1, in <module>
-  open("not_a_file.txt", "r")
-FileNotFoundError: [Errno 2] No such file or directory: 'not_a_file.txt'
-\end{pyconcode}
-
-In this case, the error is \pythoninline!FileNotFoundError!. Normally having an
-error occur will end your program, but we can use \pythoninline!try-except! in
-order to perform a special action in case of an error. The following program
-uses this to display an error message rather than crashing.
-
-\begin{python3code}
-filename = input("What file should be read? ")
-
-try:
-    input_file = open(filename, "r")
-    for line in input_file:
-        print(line, end="")
-
-    input_file.close()
-except FileNotFoundError:
-    print("Could not find file {}.".format(filename))
-\end{python3code}
-
-If you wish to catch an error, check the error message for the name of the error
-that you need to catch with your \pythoninline!except! statement. If the
-specified error does not occur inside the \pythoninline!try! block, then the
-\pythoninline!except! block will be skipped. A single \pythoninline!try! block
-can have several \pythoninline!except! statements following it for catching
-multiple types of errors.
-
-See more about error handling in the next section.
-
 \pagebreak
 \section{Exceptions}
-When working with input and output it is important to check for exceptions.  For
-example, when we try to open a file that does not exist we'd like to exit the
-program safely or recover rather than observing the unexpected results.
-Exception handling in python consists of "try-except" blocks.  In a "try-except"
-block we execute instructions in the \pythoninline!try! block and catch errors
-in one or more following \pythoninline!except! blocks.  The
-\pythoninline!except! block is only executed if an exception is caught in the
-\pythoninline!try! block.  Additionally, when an error is caught in the
-\pythoninline!try! block we stop executing commands in the \pythoninline!try!
-block and jump to the first \pythoninline!except! or optional
-\pythoninline!finally! block.  The following example throws a division by zero
-error and prints ``division by zero'':
+
+An \emph{exception} is an error message in Python. When a certain operation
+encounters an error, it can \emph{raise} an exception that is then passed on to
+the user:
+
+\begin{pyconcode}
+>>> 43 / 0
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+ZeroDivisionError: division by zero
+\end{pyconcode}
+
+However, in a lot of cases you may want to handle an exception as a developer
+and not have it displayed to the user. This is where the \pythoninline!try! and
+\pythoninline!except! statements come in.
+
+When working with input and output it is important to check for exceptions.  
+\begin{itemize}
+  \item For example, when we try to open a file that does not exist we'd like to
+    exit the program safely or recover rather than observing the unexpected
+    results.
+  \item Exception handling in python consists of "try-except" blocks.  In a
+    "try-except" block we execute instructions in the \pythoninline!try! block
+    and catch errors in one or more following \pythoninline!except! blocks.  
+  \item The \pythoninline!except! block is only executed if an exception is
+    caught in the \pythoninline!try! block.
+  \item Additionally, when an error is
+    caught in the \pythoninline!try! block we stop executing commands in the
+    \pythoninline!try!  block and jump to the first \pythoninline!except! or
+    optional \pythoninline!finally! block.
+\end{itemize}
+
+The following example throws a division by zero error and prints ``division by
+zero'':
 
 \begin{python3code}
 prime = 7
-x = 0
 
 try:
     result = prime / 0
@@ -242,8 +224,38 @@ except ZeroDivisionError as err:
     print(err)
 \end{python3code}
 
-Looking at the code above, since the error is thrown on line 5, line 4 is never
-executed.  Any \pythoninline!except!  block that does not list built-in
+Looking at the code above, since the error is thrown on line 5, line 6 is never
+executed.
+
+If you are experimenting with code and want to know the name of an exception
+that is thrown, take a look at the error message:
+
+\begin{pyconcode}
+>>> float('obviously not convertable')
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+ValueError: could not convert string to float: 'obviously not convertable'
+\end{pyconcode}
+
+The part highlighted in red here is the name of the error message,
+\pythoninline!ValueErrror!.
+
+Hence, if you are getting user input and want to check whether it is the correct
+type, use a try-except block around the conversion:
+
+\begin{python3code}
+try:
+    x = int(input('Enter an integer number: '))
+except ValueError:
+    print('You did not enter an integer!')
+else:
+    print('You entered {}'.format(x))
+\end{python3code}
+
+Notice that you can use an \pythoninline!else! block to be executed if no
+exception was thrown.
+
+Any \pythoninline!except!  block that does not list built-in
 exceptions will catch all exceptions not listed in previous
 \pythoninline!except! blocks.  For example, the following code will throw an
 error if the user enters anything but an integer:
@@ -274,35 +286,39 @@ an error message:
 \begin{pyconcode}
 >>> open("not_a_file.txt", "r")
 Traceback (most recent call last):
-  File "<pyshell#0>", line 1, in <module>
-  open("not_a_file.txt", "r")
+  File "<stdin>", line 1, in <module>
 FileNotFoundError: [Errno 2] No such file or directory: 'not_a_file.txt'
 \end{pyconcode}
 
-In this case, the error is \pythoninline!IOError!. Normally having an
+In this case, the error is \pythoninline!FileNotFoundError!. Normally having an
 error occur will end your program, but we can use \pythoninline!try-except! in
-order to perform a special action in case of an error. The following program
-uses this to display an error message rather than crashing.
+order to perform a special action in case of an error.
+
+\begin{itemize}
+  \item The \pythoninline!finally! block is where clean-up actions are performed
+    and is always executed after leaving the \pythoninline!try! block.
+\end{itemize}
+
+The following is a good example of using \pythoninline!with! and exception
+handling together.
 
 \begin{python3code}
-filename = input("What file should be read? ")
+filename = input('Enter a filename >>> ')
 
 try:
-    input_file = open(filename, "r")
-    for line in input_file:
-        print(line, end="")
-except IOError as err:
-    print(err)
-    raise
+    with open(filename, 'r') as f:
+        sum = 0
+        for line in f:
+            sum += float(line)
+except FileNotFoundError:
+    print('Filename you entered is wrong')
+except ValueError:
+    print('The file you entered had a line containing a non-float element.')
 else:
-    input_file.close()
+    print('Sum of all numbers in file is {}'.format(sum))
 finally:
-    print("Goodbye!")
+    print('Goodbye.')
 \end{python3code}
-
-Lastly, the \pythoninline!finally! block is where clean-up actions are performed
-and is always executed after leaving the \pythoninline!try! block.
-
 
 %\section{Recursion}
 \pagebreak
@@ -520,76 +536,16 @@ This code will produce this output of the input data sorted into 10 bins of size
   test input.
 \end{ex}
 
-\begin{ex}[navigate3.py] Modify navigate.py so that, rather than take instructions
-    from the command line, it reads from a file (specified by user input) to
-    determine what the turtle will do. Additionally, you will be adding the
-    ``split'' command. This command will use instantiation of new turtles in order
-    to draw multiple lines at once. Every new command will apply to every turtle
-    that currently exists. The file will have on instruction per line. The
-    possible instructions are:
+\begin{ex}[diff.py]
+  Write a ``diff'' program that prints out the differences, line by line, of
+  two files.  Your program should ask the user for the names of two files,
+  then print the differences between them.  Follow the format output as shown
+  below. Make sure to use proper error handling techniques for file I/O.
 
-    \begin{description}
-      \item[forward X] Move all turtles forward X.
-      \item[left X] Turn all turtles X degrees to the left.
-      \item[right X] Turn all turtles X degrees to the right.
-      \item[split X] Split all turtles into new turtles. Each new turtle will be turned X degrees to the right.
-    \end{description}
+  Example:
 
-    In order to properly implement split, you will probably need to look up the
-turtle functions \pythoninline!.position()!, \pythoninline!.setposition()!,
-    \pythoninline!.setheading()!, \pythoninline!.heading()!, \pythoninline!.penup()!, and
-    \pythoninline!.pendown()!. Turtle documentation is available at
-    \begin{center}
-      \url{https://docs.python.org/3/library/turtle.html}
-    \end{center}
-
-    You will also likely use the \pythoninline!.split()! command when getting
-    input, which splits a single string into an array around the string's
-    spaces.
-    \begin{pyconcode}
->>> print("this is a phrase".split())
-['this', 'is', 'a', 'phrase']
->>> print("hi,hi,hi".split(",")
-['hi', 'hi', 'hi']
-    \end{pyconcode}
-
-    \emph{Suggestion:} Split each command into a different function to help keep their logic separate.
-
-    Sample Input File:
-
-    \begin{verbatimcode}
-forward 50
-left 20
-split 40
-forward 50
-left 20
-split 40
-forward 50
-left 20
-split 40
-forward 50
-left 20
-split 40
-forward 50
-left 20
-    \end{verbatimcode}
-
-    Sample Output
-    \begin{center}
-      \includegraphics[width=0.4\textwidth]{img/nav3_example}
-    \end{center}
-  \end{ex}
-
-  \begin{ex}[diff.py]
-    Write a ``diff'' program that prints out the differences, line by line, of
-    two files.  Your program should ask the user for the names of two files,
-    then print the differences between them.  Follow the format output as shown
-    below. Make sure to use proper error handling techniques for file I/O.
-
-    Example:
-
-\begin{listing}[H]
-  \vspace{-0.5em}
+  \begin{listing}[H]
+    \vspace{-0.5em}
     \begin{verbatimcode}
 John goes to work.
 Keith and Kyle went to the Ensiferum concert.
@@ -597,13 +553,13 @@ Alice ate an apple pie.
 Joe cut down a tree.
 The dog jumped over the wall.
     \end{verbatimcode}
-  \vspace{-0.5em}
-  \caption{file1.txt}
-  \vspace{-0.5em}
-\end{listing}
+    \vspace{-0.5em}
+    \caption{file1.txt}
+    \vspace{-0.5em}
+  \end{listing}
 
-\begin{listing}[H]
-  \vspace{-0.5em}
+  \begin{listing}[H]
+    \vspace{-0.5em}
     \begin{verbatimcode}
 John goes to work.
 Coral went to a Kesha concert.
@@ -611,12 +567,12 @@ Alice ate an apple pie.
 Joe planted a tree.
 The dog jumped over the wall.
     \end{verbatimcode}
-  \vspace{-0.5em}
-  \caption{file2.txt}
-  \vspace{-0.5em}
-\end{listing}
+    \vspace{-0.5em}
+    \caption{file2.txt}
+    \vspace{-0.5em}
+  \end{listing}
 
-    \begin{verbatimcode}
+  \begin{verbatimcode}
 Enter file name 1 >>> file1.txt
 Enter file name 2 >>> file2.txt
 
@@ -628,42 +584,100 @@ Enter file name 2 >>> file2.txt
 < Joe cut down a tree.
 ---
 > Joe planted a tree.
-    \end{verbatimcode}
-  \end{ex}
+  \end{verbatimcode}
+\end{ex}
 
-  \begin{ex}[testscores.py]
-    Download the file \texttt{actsat.txt} provided on Canvas. It contains the
-    following data by column:
 
-    \begin{enumerate}[\text{Column} 1~]
-      \item 2-letter state/territory code (includes DC)
-      \item \% of graduates in that state taking the ACT
-      \item Average composite ACT score
-      \item \% of graduates in that state taking the SAT
-      \item Average SAT Math score
-      \item Average SAT Reading score
-      \item Average SAT Writing score
-    \end{enumerate}
+\begin{ex}[navigate3.py] Modify navigate.py so that, rather than take
+  instructions from the command line, it reads from a file (specified by user
+  input) to determine what the turtle will do. Additionally, you will be adding
+  the ``split'' command. This command will use instantiation of new turtles in
+  order to draw multiple lines at once. Every new command will apply to every
+  turtle that currently exists. The file will have on instruction per line. The
+  possible instructions are:
 
-    Each SAT section is out of 800 points, while the ACT is out of 36 points.
+  \begin{description}
+    \item[forward X] Move all turtles forward X.
+    \item[left X] Turn all turtles X degrees to the left.
+    \item[right X] Turn all turtles X degrees to the right.
+    \item[split X] Split all turtles into new turtles. Each new turtle will be turned X degrees to the right.
+  \end{description}
 
-    Write a program that generates the following charts:
-    \begin{itemize}
-      \item A histogram of average ACT scores with bins of size $1$ between a
-        score of $18$ and $24$.
-      \item A chart that compares the composite ACT score with the total score
-        of all 3 SAT tests for all 51 states/territories.
-      \item Produce the same chart as in part 2, but only for states in which
-        less than 50\% take the ACT and more than 50\% take the SAT. (There
-        should be 21 states/territories like this.)
-    \end{itemize}
+  In order to properly implement split, you will probably need to look up the
+turtle functions \pythoninline!.position()!, \pythoninline!.setposition()!,
+  \pythoninline!.setheading()!, \pythoninline!.heading()!, \pythoninline!.penup()!, and
+  \pythoninline!.pendown()!. Turtle documentation is available at
+  \begin{center}
+    \url{https://docs.python.org/3/library/turtle.html}
+  \end{center}
 
-    For parts 2 and 3, it is up to you what kind of chart to create and how to
-    represent the data. Depending on what you choose, you may have to do some
-    research in the matplotlib documentation on how to create that graph.
-    Remember to label your axes and title your graph.
-  \end{ex}
+  You will also likely use the \pythoninline!.split()! command when getting
+  input, which splits a single string into an array around the string's
+  spaces.
+  \begin{pyconcode}
+>>> print("this is a phrase".split())
+['this', 'is', 'a', 'phrase']
+>>> print("hi,hi,hi".split(",")
+['hi', 'hi', 'hi']
+  \end{pyconcode}
 
+  \emph{Suggestion:} Split each command into a different function to help keep their logic separate.
+
+  Sample Input File:
+
+  \begin{verbatimcode}
+forward 50
+left 20
+split 40
+forward 50
+left 20
+split 40
+forward 50
+left 20
+split 40
+forward 50
+left 20
+split 40
+forward 50
+left 20
+  \end{verbatimcode}
+
+  Sample Output
+  \begin{center}
+    \includegraphics[width=0.4\textwidth]{img/nav3_example}
+  \end{center}
+\end{ex}
+\begin{ex}[testscores.py]
+  Download the file \texttt{actsat.txt} provided on Canvas. It contains the
+  following data by column:
+
+  \begin{enumerate}[\text{Column} 1~]
+    \item 2-letter state/territory code (includes DC)
+    \item \% of graduates in that state taking the ACT
+    \item Average composite ACT score
+    \item \% of graduates in that state taking the SAT
+    \item Average SAT Math score
+    \item Average SAT Reading score
+    \item Average SAT Writing score
+  \end{enumerate}
+
+  Each SAT section is out of 800 points, while the ACT is out of 36 points.
+
+  Write a program that generates the following charts:
+  \begin{enumerate}
+    \item A histogram of average ACT scores with bins of size $1$ between a
+      score of $18$ and $24$.
+    \item A double bar chart that compares the composite ACT score with the
+      total score of all 3 SAT tests for all 51 states/territories.
+    \item Produce the same chart as in part 2, but only for states in which
+      less than 50\% take the ACT and more than 50\% take the SAT. (There
+      should be 21 states/territories like this.)
+  \end{enumerate}
+
+  You may have to do some research on the matplotlib website on how to create
+  a double bar graph. Take a look at the example code on their website.
+  Remember to label your axes and title your graph.
+\end{ex}
 
 \section{Submitting}
 
