@@ -172,13 +172,15 @@ Result: 5/1
     % source: http://programmingpraxis.com/2014/02/25/crossing-hands/
 
     The hands of an analog clock occassionally cross as they revolve around
-    the dial. Write a program that determines how many times the hands
-    cross in one twelve-hour period, and compute a list of those times
-    (down to seconds). Assume you are just using two hands: the hour hand 
-    and the minute hand. Also assume that they tick continuously.
+    the dial. Write a program that determines the times at which times the 
+    hour and minute hands cross. Assume that
+    the hands move continuously (that is, the hands do not jump between
+    numbers -- the times at which they cross may not necessarily be
+    integer values).
 
     \textit{Scoreboard submission} Add up the hours, minutes, and seconds
-    of the times separately and submit it in the format \texttt{H-M-S}, 
+    of all of the times that the hour and minute hands cross
+    and submit it in the format \texttt{H-M-S}, 
     for example \texttt{30-167-421}.
 
   \item \cop{Finding a Path}{25}{path.py}
@@ -284,13 +286,12 @@ Area: 7
     \end{verbatimcode}
 
     \textit{Scoreboard submission:} Find the area of the polygon described
-    by the following 14 coordinates. The order of entering them should not
-    matter!
+    by the following 14 coordinates.
     \[
-      (0, 0)~(6, 0)~(6, 1)~(2, 1)~(0, 2)~(2, 2)~(7, 2)
+      (0, 0)~(6, 0)~(6, 1)~(2, 1)~(2, 2)~(7, 2)~(7, 1)
     \]
     \[
-      (1, 2)~(1, 3)~(2, 3)~(2, 4)~(9, 4)~(9, 1)~(7, 1)
+      (9, 1)~(9, 4)~(2, 4)~(2, 3)~(1, 3)~(1, 2)~(0, 2)
     \]
 
     \begin{figure}[!ht]
