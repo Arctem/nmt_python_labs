@@ -62,7 +62,7 @@
 This lab is solely a problem solving lab. There is nothing to turn in.
 
 \section{Programming Competition}
-Please pair up into groups of two or three with somebody in your lab. You will
+Please form groups of up to three with others in your lab. You will
 enter into the competition together and submit the same files.
 
 %To submit your answers, find the scoreboard at 
@@ -76,8 +76,8 @@ enter into the competition together and submit the same files.
 
 To submit your answers, please notify a TA. The whiteboard will serve as the
 scoreboard for your lab. The TA will want to see the answer to the ``scoreboard
-submission.'' If the TAs are grading another team's submission, do not wait for
-them and move on to a new problem.
+submission.'' If the TAs are grading another team's submission,  move on to a
+new problem while waiting for them to be free.
 
 \textbf{Do not share the problem descriptions or the code with the other lab
 section.} Everyone needs to have an equally fair chance of doing well in this
@@ -92,8 +92,8 @@ will count for extra credit on your lab final.
 The winners of your lab section will get 10\%, the second place will get
 9\%, and so on as extra credit on their lab final. 
 
-You have to gain at least 20 points in the competition to qualify for the extra
-credit. 
+You have to gain at least 20 points in the competition in order to qualify
+for the extra credit.
 
 \subsection{Requirements}
 Even though this lab ``only'' counts for extra credit, you have to stay the lab
@@ -141,7 +141,7 @@ for incomplete or incorrect submissions.
     \textit{Scoreboard submission:} Find the product $abc$ of that special
     Pythagorean triplet.
 
-  \item \cop{Fractions}{10}{fractions.py}
+  \item \cop{Reducing Fractions}{10}{fractions.py}
     % Source: ACM Freshman Coding Competition, Fall 2013 (Russell White)
 
     Write a program that reads both the numerator and denominator of
@@ -165,24 +165,86 @@ Result: 5/1
     \textit{Hints}: See Appendix~\ref{sec:gcd} to find out what a GCD is 
     and what Euclid's algorithm is. 
 
-    \textit{Scoreboard submission:} There is none. You have to get this one
-    looked at and tested by a TA.
+    \textit{Scoreboard submission:} Contact a TA for test cases.
 
   \item \cop{Crossing Hands}{20}{hands.py}
     % source: http://programmingpraxis.com/2014/02/25/crossing-hands/
 
     The hands of an analog clock occassionally cross as they revolve around
-    the dial. Write a program that determines how many times the hands
-    cross in one twelve-hour period, and compute a list of those times
-    (down to seconds). Assume you are just using two hands: the hour hand 
-    and the minute hand. Also assume that they tick continuously.
+    the dial. Write a program that determines the times at which times the 
+    hour and minute hands cross. Assume that
+    the hands move continuously (that is, the hands do not jump between
+    numbers -- the times at which they cross may not necessarily be
+    integer values).
 
     \textit{Scoreboard submission} Add up the hours, minutes, and seconds
-    of the times separately and submit it in the format \texttt{H-M-S}, 
+    of all of the times that the hour and minute hands cross
+    and submit it in the format \texttt{H-M-S}, 
     for example \texttt{30-167-421}.
+
+
+  \item \cop{Anagram Distance}{20}{anadist.py}
+    
+    The anagram distance between two words is how many letters must be added
+    or removed from one of the words in order to make it an anagram of the
+    other. For example, ``dog'' and ``godot'' have an anagram distance of $2$
+    while ``sandwich'' and ``witch'' have an anagram distance of $5$.
+
+    You can assume that input will be purely lowercase letters and will be
+    no longer than 20 characters.
+
+    \begin{verbatimcode}
+Enter first word: sandwich
+Enter second word: witch
+Result: 5
+    \end{verbatimcode}
+
+    \begin{verbatimcode}
+Enter first word: interwebs
+Enter second word: spiderman
+Result: 8
+    \end{verbatimcode}
+
+    \textit{Scoreboard submission} Contact a TA for test cases.
+
+
+  \item \cop{Contiguous Regions}{25}{regions.py}
+    
+    Write a program that takes in a square region and determines whether two
+    points are connected. The region will consist of three characters: \texttt{.},
+    \texttt{x}, and \texttt{s}. There will be exactly two \texttt{s}'s while there
+    can be any number of \texttt{.}'s and \texttt{x}'s. Your program will output
+    either \texttt{connected} or \texttt{not connected}, depending on if the two
+    \texttt{s} can be travelled between by only moving across \texttt{.}'s and only
+    moving in cardinal directions.
+
+    Your program should know when to stop accepting output without requiring a specific
+    ``stop'' command.
+
+    \begin{verbatimcode}
+..s.
+.xxx
+.x..
+...s
+connected
+    \end{verbatimcode}
+
+    \begin{verbatimcode}
+....x
+.s.x.
+..x..
+.x.s.
+x....
+not connected
+    \end{verbatimcode}
+
+    \textit{Scoreboard submission} Contact a TA for test cases.
+
+    
 
   \item \cop{Finding a Path}{25}{path.py}
     %Source: ENMU Codecomp, Spring 2014 (Tyler Cecil)
+    
     Write a program that finds the shortest valid path between two nodes in a graph.
     Each of the lines of input will be the name of a node (a single, upper-case
     character), followed by a list of the nodes connected to that node. The final
@@ -232,8 +294,7 @@ A B F
       \end{minipage}
     \end{minipage}
 
-    \textit{Scoreboard submission:} There is none. You have to get this
-    one looked at and tested by a TA.
+    \textit{Scoreboard submission:} Contact a TA for test cases.
 
   \item \cop{Block Areas}{35}{blocks.py}
     % Source: ACM Freshman Coding Competition, Fall 2013 (Russell White)
@@ -269,6 +330,9 @@ A B F
       \caption{Example shape}
     \end{figure}
 
+    \emph{Hint:} The order that the points are input shouldn't matter
+    for your algorithm.
+
     \begin{verbatimcode}
 Enter number of points: 8
 Enter point: 2 1
@@ -284,13 +348,12 @@ Area: 7
     \end{verbatimcode}
 
     \textit{Scoreboard submission:} Find the area of the polygon described
-    by the following 14 coordinates. The order of entering them should not
-    matter!
+    by the following 14 coordinates.
     \[
-      (0, 0)~(6, 0)~(6, 1)~(2, 1)~(0, 2)~(2, 2)~(7, 2)
+      (0, 0)~(6, 0)~(6, 1)~(2, 1)~(2, 2)~(7, 2)~(7, 1)
     \]
     \[
-      (1, 2)~(1, 3)~(2, 3)~(2, 4)~(9, 4)~(9, 1)~(7, 1)
+      (9, 1)~(9, 4)~(2, 4)~(2, 3)~(1, 3)~(1, 2)~(0, 2)
     \]
 
     \begin{figure}[!ht]
@@ -387,8 +450,7 @@ Transitive
       \end{minipage}
     \end{minipage}
 
-    \textit{Scoreboard submission:} There is none. You have to get this
-    one looked at and tested by a TA.
+    \textit{Scoreboard submission:} Contact a TA for test cases.
 \end{enumerate}
 \pagebreak
 

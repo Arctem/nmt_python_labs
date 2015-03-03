@@ -1,0 +1,252 @@
+\documentclass[twocolumn]{extarticle}
+\usepackage[top=1.0in, left=1.0in, right=1.0in, bottom=1.0in]{geometry}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{upgreek}
+\usepackage{tabulary}
+\usepackage{gensymb}
+\usepackage{titlesec}
+\usepackage{hyperref}
+
+
+\begin{document}
+
+\section{Multiples of 3 and 5}
+\subsubsection*{Output}
+\texttt{233168}
+
+\section{Special Pythagorean Triplet}
+\subsubsection*{Output}
+\texttt{31875000}
+%a = 200, b = 375, c = 425
+
+\section{Reducing Fractions}
+\subsection*{Test 1:}
+\subsubsection*{Input}
+\texttt{21\\42}
+
+\subsubsection*{Output}
+\texttt{1/2}
+
+\subsection*{Test 2:}
+\subsubsection*{Input}
+\texttt{1\\1}
+
+\subsubsection*{Output}
+\texttt{1/1}
+
+\subsection*{Text 3:}
+\subsubsection*{Input}
+\texttt{8908\\3524}
+
+\subsubsection*{Output}
+\texttt{2227/881}
+
+
+\section{Crossing Hands}
+\subsubsection*{Output}
+\texttt{55-295-300}
+
+
+\section{Anagram Distance}
+\subsection*{Test 1:}
+\subsubsection*{Input}
+\texttt{interwebs\\
+spiderman}
+
+\subsubsection*{Output}
+\texttt{8}
+
+\subsection*{Test 2:}
+\subsubsection*{Input}
+\texttt{north\\
+south}
+
+\subsubsection*{Output}
+\texttt{4}
+
+\subsection*{Test 3:}
+\subsubsection*{Input}
+\texttt{python\\
+python}
+
+\subsubsection*{Output}
+\texttt{0}
+
+\subsection*{Test 4:}
+\subsubsection*{Input}
+\texttt{abracadabra\\
+yyz}
+
+\subsubsection*{Output}
+\texttt{14}
+
+\newpage
+\section{Contiguous Regions}
+\subsection*{Test 1:}
+\subsubsection*{Input}
+\texttt{s.....\\
+xxxxx.\\
+......\\
+.xxxxx\\
+......\\
+xxxxxs}
+
+\subsubsection*{Output}
+\texttt{connected}
+
+\subsection*{Test 2:}
+\subsubsection*{Input}
+\texttt{sx\\
+xs}
+
+\subsubsection*{Output}
+\texttt{not connected}
+
+\subsection*{Test 3:}
+\subsubsection*{Input}
+\texttt{xxx.s\\
+...x.\\
+.x.x.\\
+.x.x.\\
+s..x.}
+
+\subsubsection*{Output}
+\texttt{not connected}
+
+\newpage
+\section{Finding a Path}
+\subsection*{Test 1:}
+\subsubsection*{Input}
+\texttt{A B C D E F\\
+B C D E F\\
+C D E F\\
+D E F\\
+E F\\
+F}
+
+\subsubsection*{Output}
+\texttt{A F}
+
+\subsection*{Test 2:}
+\subsubsection*{Input}
+\texttt{A B C D E\\
+B C D E F\\
+C D E F\\
+D E F\\
+E F\\
+F}
+
+\subsubsection*{Output}
+\texttt{A B F}
+
+\subsection*{Test 3:}
+\subsubsection*{Input}
+\texttt{A B D\\
+B E\\
+C F\\
+D C\\
+E C F\\
+C}
+
+\subsubsection*{Output}
+\texttt{A D C}
+
+\subsection*{Test 4:}
+\subsubsection*{Input}
+\texttt{A B D F\\
+B C\\
+D C E\\
+F E\\
+C}
+
+\subsubsection*{Output}
+\texttt{A D C}
+or
+\texttt{A B C}
+
+\subsection*{Test 5:}
+\subsubsection*{Input}
+A B
+B C
+C E
+E F
+F
+
+\subsubsection*{Output}
+A B C D E F
+
+
+\section{Block Areas}
+\subsubsection*{Output}
+\texttt{25}
+
+
+\newpage
+\section{Nontransitive Dice}
+\subsection*{Test 1:}
+\subsubsection*{Input}
+\texttt{6 6 8 8 19 19\\
+7 7 10 10 16 16\\
+5 5 13 13 15 15\\
+3 3 9 9 21 21\\
+2 2 14 14 17 17\\
+4 4 11 11 18 18\\
+1 1 12 12 20 20\\
+0}
+ 
+\subsubsection*{Output}
+\texttt{Nontransitive}
+ 
+\subsection*{Test 2:}
+\subsubsection*{Input}
+\texttt{125 512 513 514 515 516\\
+729 730 731 216 217 218\\
+597 859 785 978 597 859\\
+343 344 345 999 346 347\\
+867 530 986 753 98 675\\
+0}
+ 
+\subsubsection*{Output}
+\texttt{Nontransitive}
+ 
+\subsection*{Test 3:}
+\subsubsection*{Input}
+\texttt{3 1 4 1 5 9\\
+2 6 5 3 5 8\\
+97 93 23 84 62 64\\
+33 83 27 95 2 88\\
+419 716 939 937 510 582\\
+97 494 459 230 781 640\\
+0}
+ 
+\subsubsection*{Output}
+\texttt{Transitive}
+ 
+\subsection*{Test 4:}
+\subsubsection*{Input}
+\texttt{2 7 1 8 2 8\\
+496 696 762 772 407 663\\
+1 8 2 8 4 5\\
+90 45 23 53 60 28\\
+775 724 709 369 995 957\\
+74 71 35 26 62 49\\
+0}
+ 
+\subsubsection*{Output}
+\texttt{Transitive}
+ 
+\subsection*{Test 5:}
+\subsubsection*{Input}
+\texttt{141 421 356 237 309 504\\
+880 168 872 420 969 807\\
+85 69 67 18 75 37\\
+69 48 07 31 76 67\\
+9 7 3 7 9 9\\
+0 7 3 2 4 7\\
+0}
+ 
+\subsubsection*{Output}
+\texttt{Transitive}
+
+\end{document}
