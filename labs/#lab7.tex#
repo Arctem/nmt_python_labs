@@ -178,8 +178,8 @@ Result: 5/1
     integer values).
 
     \textit{Scoreboard submission} Add up the hours, minutes, and seconds
-    of all of the times that the hour and minute hands cross in one
-    twelve-hour cycle and submit it in the format \texttt{H-M-S}, 
+    of all of the times that the hour and minute hands cross in one 
+    and submit it in the format \texttt{H-M-S}, 
     for example \texttt{30-167-421}.
 
 
