@@ -28,10 +28,10 @@ wie der Computer.'')
 \end{flushright}
 
 \begin{quotation}
-	``First, solve the problem. Then, write the code.''
+``First, solve the problem. Then, write the code.''
 \end{quotation}
 \begin{flushright}
-	--- John Johnson
+--- John Johnson
 \end{flushright}
 
 \begin{quotation}
@@ -160,6 +160,8 @@ input_file.close()
 \end{itemize}
 
 \subsection{Files Using \protect\pythoninline!with!}
+\label{sec:with}
+
 Since every file that you open should be closed after use, Python has an easy
 way to do this for you. Using the \pythoninline!with! command, your file will
 automatically be closed when the \pythoninline!with! block finished executing.
@@ -522,6 +524,11 @@ This code will produce this output of the input data sorted into 10 bins of size
 \pagebreak
 \section{Exercises}
 \label{sec:ex}
+
+\begin{warningbox}{Using \protect\pythoninline!with!}
+  Always use the \pythoninline!with! statement to deal with file I/O in Python.
+  See Section~\ref{sec:with}.
+\end{warningbox}
 
 \begin{ex}[save.py] Write a program that takes in a filename, then takes in
   a series of lines of input until a blank line is entered, writing each line to
