@@ -2,12 +2,11 @@ def anadist(a, b):
     a = list(a)
     b = list(b)
     dist = 0
-    while a:
-        if a[0] in b:
-            b.remove(a[0])
+    for i in a:
+        if i in b:
+            b.remove(i)
         else:
             dist += 1
-        a.remove(a[0])
     dist += len(b)
     return dist
 
