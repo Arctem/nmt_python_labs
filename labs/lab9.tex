@@ -1,4 +1,4 @@
-% LAB 10: Markov Chains
+% LAB 9: Review and Markov
 % 
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
@@ -9,8 +9,8 @@
 \usepackage{caption}
 
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 10: Markov Chains}
-\title{Lab 10: Markov Chains}
+\fancyhead[R]{Lab 9: Review and Markov}
+\title{Lab 9: Review and Markov}
 
 \begin{document}
 
@@ -32,14 +32,6 @@
 --- Edsger W. Dijkstra
 \end{flushright}
 
-\begin{quotation}
-``Simplicity is the final achievement. After one has played a vast quantity of
-notes and more notes, it is simplicity that emerges as the crowning reward of
-art.''
-\end{quotation}
-\begin{flushright}
---- Fr\`ed\`eric Chopin
-\end{flushright}
 
 \begin{quotation}
 ``The truth is a trap: you can not get it without it getting you; you cannot get
@@ -68,18 +60,19 @@ topics: this is primarily an application of what you already know.
 You will be
 writing a program that generates
 \href{http://en.wikipedia.org/wiki/Markov_chain}{Markov chains} from an input
-file. Markov chains are the simplest way for you to generate sentences that
-almost make sense, but really don't. They are based on figuring out the
+file. Markov chains are the simplest way for to generate sentences that
+imitate the style of the chain's input text.
+They are based on figuring out the
 likelihood of a word following another word by looking at existing bodies of
-text (for example, Wikipedia). Then, to generate sentences you choose a starting
-word and based on a random variable as well as the probabilities that you've
-found by looking at existing text, you choose a word following that starting
-word and repeat. 
+text (for example, Wikipedia). They then generate statements by choosing a
+starting word and then repeatedly choosing words from the words that follow
+the previous word chosen, based on the input text.
 
-This will generate sentences like this when used on conversations between
-Russell and Chris about Python lab (the starting word was ``CS''):
+As an example, this was a markov chain generated based on conversations between
+Russell and Chris about Python lab (given the starting word ``CS''):
 \begin{quotation}
-``CS be hard!''
+%``CS be hard!''
+``CS grad student claiming to stare again for you? Cool! Where?''
 \end{quotation}
 \begin{flushright}
 --- arcbot
@@ -93,7 +86,6 @@ Russell and Chris about Python lab (the starting word was ``CS''):
     A Garfield comic generated using Markov chains.}
   \label{garkov}
 \end{figure}
-
 
 \pagebreak
 
@@ -121,7 +113,7 @@ graph showing the possible results, we would get Figure \ref{mark_ex}.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.2\linewidth]{lab10/example}
+  \includegraphics[width=0.2\linewidth]{lab9/example}
   \caption{A graphical representation of the Markov possibilities for ``Hello,
     how are you?'' and ``Where are my keys?''}
   \label{mark_ex}
@@ -147,7 +139,7 @@ like Figure \ref{twilight}.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=\linewidth]{lab10/twilight_zone}
+  \includegraphics[width=\linewidth]{lab9/twilight_zone}
   \caption{A graphical representation of the Markov possibilities for \emph{The
     Twilight Zone}'s introduction.}
   \label{twilight}
@@ -328,7 +320,6 @@ elloHay owhay areway ouyay
 
 \pagebreak
 \section{Submitting}
-
 You should submit your code as a tarball. It should contain all files
 used in the exercises for this lab. The submitted file should be named
 \begin{center}
