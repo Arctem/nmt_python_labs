@@ -1,4 +1,4 @@
-% LAB 9: Markov Chains
+% LAB 9: Classes and Markov
 % 
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
@@ -9,8 +9,8 @@
 \usepackage{caption}
 
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 9: Markov Chains}
-\title{Lab 9: Markov Chains}
+\fancyhead[R]{Lab 9: Classes and Markov}
+\title{Lab 9: Classes and Markov}
 
 \begin{document}
 
@@ -60,25 +60,24 @@ the truth by capturing it, only by its capturing you.''
 \pagebreak
 \section{Introduction}
 
-Today's lab will be just another small project.
-We will not be covering any new
-topics: this is primarily an application of what you already know. 
+This week's lab will be a small project using classes.
 
 You will be
 writing a program that generates
 \href{http://en.wikipedia.org/wiki/Markov_chain}{Markov chains} from an input
-file. Markov chains are the simplest way for you to generate sentences that
-almost make sense, but really don't. They are based on figuring out the
+file. Markov chains are the simplest way for to generate sentences that
+imitate the style of the chain's input text.
+They are based on figuring out the
 likelihood of a word following another word by looking at existing bodies of
-text (for example, Wikipedia). Then, to generate sentences you choose a starting
-word and based on a random variable as well as the probabilities that you've
-found by looking at existing text, you choose a word following that starting
-word and repeat. 
+text (for example, Wikipedia). They then generate statements by choosing a
+starting word and then repeatedly choosing words from the words that follow
+the previous word chosen, based on the input text.
 
-This will generate sentences like this when used on conversations between
-Russell and Chris about Python lab (the starting word was ``CS''):
+As an example, this was a markov chain generated based on conversations between
+Russell and Chris about Python lab (given the starting word ``CS''):
 \begin{quotation}
-``CS be hard!''
+%``CS be hard!''
+``CS grad student claiming to stare again for you? Cool! Where?''
 \end{quotation}
 \begin{flushright}
 --- arcbot
@@ -93,9 +92,12 @@ Russell and Chris about Python lab (the starting word was ``CS''):
   \label{garkov}
 \end{figure}
 
+\pagebreak
+\section{Classes}
+\label{sec:classes}
+
 
 \pagebreak
-
 \section{Markov Chains}
 \label{sec:markov}
 
@@ -179,9 +181,9 @@ output being the same as the input.
 
 \subsection{Random Numbers}
 \label{subsec:random}
-You may find the module \lstinline{random} to be especially useful when
+You may find the module \lstinline!random! to be especially useful when
 creating Markov chains. Below is a brief example of some common functions
-inside \lstinline{random}.
+inside \lstinline!random!.
 
 \begin{lstlisting}[style=ipython]
 >>> import random
@@ -223,42 +225,63 @@ random number not based on a uniform distribution:
 \end{table}
 
 \clearpage
-\section{Amnesty}
-\label{sec:amnesty}
-In honor of getting through 10 labs, we are allowing you to resubmit
-one previous lab or homework assignment for a new grade. If you have
-a previous assignment that you would like to improve your grade on,
-you may rewrite that assignment and upload a new version to be graded.
-This new grade, if better than your original (hopefully we can assume
-that will be the case) will replace your original grade.
-
-Upload your redone assignment to the ``Amnesty'' assignment on Canvas.
-Make sure it is clear from your filename which lab you are redoing.
-
 \section{Exercises}
 \label{sec:ex}
-
-\begin{warningbox}{Boilerplate}
-  Remember that this lab \emph{must} use the
-  boilerplate syntax introduced in Lab~5.
-\end{warningbox}
-
 \begin{description}
-\item[markov.py] Write a program that takes in a filename, reads each line of the file, converts the lines into a format convenient for making Markov chains, and then prints out a new sentence randomly generated from the data, based on the Markov algorithm. When loading the file, treat the lines as separate statements. That is, if ``Hello, how are you?'' and ``Where are my keys?'' are lines in a file, then ``you?'' should not be followed by ``Where'' when generating a chain. However, ``are'' should be allowed to be followed by either ``you?'' or ``my'', as seen in Figure \ref{mark_ex}.
-
-  When creating a new chain, the first element should always be a randomly selected first word of a line in the file. The chain should end when either:
-  \begin{itemize}
-  \item There are no valid choices to continue the sentence with.
-  \item The sentence has reached a length of 100 words.
-  \end{itemize}
+\item[markov.py] Write a class that works with the provided file
+  \lstinline{markov_test.py} to generate markov chains based on provided
+  input. \lstinline{markov_test.py} will import the code you write and
+  use the class. You are not allowed to edit \lstinline{markov_test.py}
+  for your submission, but you are free to comment out the sections
+  that use parts of your code that have not been written yet while
+  you write the lab.
+  
+  The expected contents of \lstinline{markov.py} are:
+  
+  \begin{description}
+  \item[class Markov] A class that can be instantiated and used to
+    generate markov chains.
+    \begin{description}
+    \item[def \_\_init\_\_(self)] Constructor for Markov that
+      initializes any attributes you may need.
+    \item[def add\_phrase(self, phrase)] Parse the string
+      \lstinline!phrase! into the collected Markov data. The
+      first word of \lstinline!phrase! should be considered a
+      valid first word for generate\_phrase if none is specified.
+    \item[def generate\_phrase(self, start=None)] Return a string
+      generated using the Markov chain technique, based on all phrases
+      previous added to this Markov instance. If start was specified,
+      then the sentence should start with what was given. If not, the
+      first word should be randomly chosen from all first words of all
+      phrases added to the Markov instance. The chain should continue
+      until either:
+      \begin{itemize}
+      \item There are no valid choices to continue the sentence with.
+      \item The sentence has reached a length of 100 words.
+      \end{itemize}
+    \end{description}
+  \end{description}
+  
+  You are free (and encouraged) to include any other functions that
+  seem useful as you develop the class.
+  
+  As an example, the code
+\begin{lstlisting}[style=ipython]
+>>> import markov
+>>> m = markov.Markov()
+>>> m.add_phrase('Hello, how are you?')
+>>> m.add_phrase('Where are my keys?')
+>>> print(m.generate())
+\end{lstlisting}
+  might print either ``Hello, how are my keys?'' or ``Where are you?''.
+  However, ``how are my keys?'' would not be valid, since ``how'' did
+  not start either of the phrases added.
 
   Remember that you need to account for different frequencies of possible
   follow words. That is, a situation like in Figure \ref{twilight} where
   there is a higher chance for ``a'' to follow ``is'' than for ``known''
   to. You need to account for whatever probabilities might come up within
-  your input file.
-
-  You may use any file you wish for test input, though \lstinline{reviews.txt} is provided for you. This is a collection of 12500 reviews from IMDB and is a subset of the data provided at \url{http://ai.stanford.edu/~amaas/data/sentiment/index.html}. When parsing the input file, you should skip any blank lines.
+  the given phrases.
 
   \emph{Hint}: You may find dictionaries to be useful in implementing
   Markov chains.
@@ -271,7 +294,6 @@ Make sure it is clear from your filename which lab you are redoing.
 Files to submit:
 \begin{itemize}
 \item markov.py (Section~\ref{sec:ex})
-\item Amnesty Lab (Section~\ref{sec:amnesty})
 \end{itemize}
 
 You may submit your code as either a tarball (instructions below) or as a .zip
