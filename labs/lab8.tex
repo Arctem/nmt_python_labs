@@ -495,7 +495,7 @@ def compose(f, g):
   # Creates another function that is the composition of f and g and returns it
   return lambda x: f(g(x))
 
-# Using math.sin and math.cos as first-class citizens
+# Using math.sqrt and math.factorial as first-class citizens
 h = compose(math.sqrt, math.factorial)
 
 # compose returns a function, so we can use h like a function!
@@ -548,7 +548,7 @@ print(p(10)) # 31.622776601683793
 \end{ex}
 
 \begin{ex}[fractions2.py] Using the same tuple representation of fractions as in
-    Lab~6, do the following:
+    Lab~4, do the following:
 
     \begin{enumerate}
       \item Write a function \pythoninline!prompt_fractions()! that implements the
@@ -619,7 +619,7 @@ if __name__ == '__main__':
     \end{python3code}
   \end{ex}
 
-  \begin{ex}[rpn.py] Take \texttt{rpn\_calculator.py} from Lab~6 and rewrite
+  \begin{ex}[rpn.py] Take \texttt{rpn\_calculator.py} from Lab~4 and rewrite
     it to use a dictionary of lambda functions to do the actual operation.
     Operations you should support are $+ - * /$. Also, add a $\sin$ and $\cos$
     operation. For example: $0 \sin$ should give $0$, while $1~2~+~\sin$ should
