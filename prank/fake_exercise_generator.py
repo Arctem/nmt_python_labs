@@ -33,7 +33,7 @@ def main():
 
     while True:
         phrases = []
-        for i in range(97):
+        for i in range(197):
             phrase = phrase_maker.make('exercise', capitalize=False)
             phrase = convert(phrase)
 
