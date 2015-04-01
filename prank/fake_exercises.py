@@ -22,9 +22,9 @@ data = {
         'prog_nouns': ['functions', 'classes', 'programs', 'interfaces', 'sets',
             'lists', 'dictionaries', 'sockets', 'trees', 'race conditions'],
         'prog_verb': ['invert', 'iterate over', 'reduce', 'simplify', 'parse',
-            'call', 'return', 'create'],
+            'call', 'return', 'create', 'emulate'],
         'prog_verbs': ['inverts', 'iterates over', 'reduces', 'simplifies',
-            'parses', 'calls', 'returns', 'creates'],
+            'parses', 'calls', 'returns', 'creates', 'emulates'],
         'prog_verbing': ['calling', 'returning'],
 
         'prog_action': ['{prog_verb} a group of {adjective,prog_adj} {nouns}',
@@ -55,9 +55,10 @@ data = {
             'a group of misled parents with their hearts in the right place'],
 
         'adjective': ['irritated', 'invisible', 'hidden', 'inverted',
-            'green', 'volatile', 'sorted'],
+            'green', 'volatile', 'sorted', 'corrupted'],
         'nouns': ['hamsters', 'toddlers', 'phone numbers', 'sentences',
-            'fans', 'text files', 'images', 'calendars', 'cars'],
+            'fans', 'text files', 'images', 'calendars', 'cars', 'owls',
+            'videos'],
 
         'requirements': ['{requirement} {requirements}',
             '{requirement} {requirement}\n{requirements}',
@@ -108,9 +109,28 @@ data = {
 
         'does': ['will'],
 
-        'former_lab': ['{filename} from Lab {gen/number}'],
+        'former_lab': ['{filename} from Lab {gen/number}',
+            '{old_book}', '{predefined_former}'],
 
-        'technobabble': ['include the lessons learned in {former_lab}',
+        'predefined_former': ['{gen/weekday}\'s class'],
+
+        'old_book': ['Welcome to {Spooky_city}', '{real_book}',
+            'The {Building} of {Spooky_adj} {Terrain}',
+            'The Secret of the {Spooky_adj} {Building}'],
+        'spooky_city': ['{Building}{body_part,clothing,terrain}',
+            '{Buildings}{body_part,clothing,terrain}'],
+        'building': ['inn', 'church', 'house', 'pub', 'hall'],
+        'buildings': ['inns', 'churches', 'houses', 'pubs', 'halls'],
+        'body_part': ['mouth', 'head', 'heart'],
+        'clothing': ['mask', 'hood'],
+        'terrain': ['mount', 'land', 'precipice', 'bog'],
+        'spooky_adj': ['cool', 'misty', 'shunned', 'old', 'nameless'],
+
+        'real_book': ['The Necronomicon', 'Welcome to Night Vale',
+            'The Shadow Over Innsmouth', 'Dagon', 'The Call of Cthulhu',
+            'At the Mountains of Madness'],
+
+        'technobabble': ['include the lessons learned from {former_lab}',
             'use {weird_cmd}', 'include support for {prog_things}',
             'catch errors involving {prog_things,nouns}',
             '{predefined_babble}'],
@@ -129,7 +149,8 @@ data = {
             'not trust politicians who resemble famous actors',
             'warn others of the changing seasons',
             'pretend to know sign language',
-            'spend way too long on a silly joke'],
+            'spend way too long on a silly joke',
+            'be wary of a British man named "Dave"'],
 
         'celebrity': ['Jack Black', 'Morgan Freeman', 'Sir Patrick Stewart',
             'David Cross', 'Richard Stallman', 'Josef Stalin',
