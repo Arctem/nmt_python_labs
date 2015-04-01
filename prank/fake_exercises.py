@@ -61,7 +61,6 @@ data = {
             'videos'],
 
         'requirements': ['{requirement} {requirements}',
-            '{requirement} {requirement}\n{requirements}',
             '{requirement} {requirement} {requirement}',
             '{requirement} {list} {requirements}',
             '{requirement} {table} {requirements}'],
@@ -110,9 +109,9 @@ data = {
         'does': ['will'],
 
         'former_lab': ['{filename} from Lab {gen/number}',
-            '{old_book}', '{predefined_former}'],
+            'EMPHSTART{old_book}ENDCURL', '{predefined_former}'],
 
-        'predefined_former': ['{gen/weekday}\'s class'],
+        'predefined_former': ['the example from {gen/weekday}\'s class'],
 
         'old_book': ['Welcome to {Spooky_city}', '{real_book}',
             'The {Building} of {Spooky_adj} {Terrain}',

@@ -8,9 +8,11 @@ replacements = {
     'BEGINENUM': '\\begin{enumerate}',
     'ENDENUM': '\\end{enumerate}\n',
     'LISTITEM.': '\\item',
-    'BEGINTABLE': '\n{\n\\centering\\begin{tabular}{c c c}' +
+    'BEGINTABLE': '\n\\begin{tabular}{c c c}' +
         '\n\\toprule',
-    'ENDTABLE': '\\bottomrule\n\\end{tabular}\n}\n\\\\\n',
+    'ENDTABLE': '\\bottomrule\n\\end{tabular}\n\n',
+    'EMPHSTART': '\\emph{',
+    'ENDCURL': '}',
 }
 def convert(phrase):
     for rep in replacements:
