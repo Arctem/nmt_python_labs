@@ -16,7 +16,7 @@ data = {
         'prog_things': ['{prog_adj} {prog_things}', '{prog_adj} {prog_nouns}'],
         'prog_adj': ['recursive', 'iterative', 'object-oriented', 'lambda',
             'higher-order', 'first-class', 'obfuscated', 'threaded', 'closed',
-            'open', 'volatile'],
+            'open', 'volatile', 'elaborate'],
         'prog_noun': ['function', 'class', 'program', 'interface', 'set',
             'list', 'dictionary', 'socket', 'tree', 'race condition'],
         'prog_nouns': ['functions', 'classes', 'programs', 'interfaces', 'sets',
@@ -48,9 +48,9 @@ data = {
         'default': ['True', 'False', 'None', '0', '{gen/number}',
             '"{gen/weekday}"'],
 
-        'input': ['a text file', 'a list of {nouns} terminated by "{stop}"'],
+        'input': ['a text file', 'a list of {nouns} terminated by {stop}'],
 
-        'stop': ['stop', 'cease', 'terminate', 'stop now', 'plzstop',
+        'stop': ['"stop"', '"cease"', '"terminate"', '"stop now"', '"plzstop"',
             'a null terminator', 'EOF', 'a stop sign',
             'a group of misled parents with their hearts in the right place'],
 
