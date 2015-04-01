@@ -12,6 +12,7 @@ replacements = {
         '\n\\toprule',
     'ENDTABLE': '\\bottomrule\n\\end{tabular}\n\n',
     'EMPHSTART': '\\emph{',
+    'INLINESTART': '\\lstinline{',
     'ENDCURL': '}',
 }
 def convert(phrase):

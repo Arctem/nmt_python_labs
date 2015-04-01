@@ -6,7 +6,7 @@ data = {
 
         'description': ['{intro} {requirements}'],
 
-        'intro': ['Using {Module}, {create} a {prog_thing} to {prog_action}.',
+        'intro': ['Using INLINESTART{Module}ENDCURL, {create} a {prog_thing} to {prog_action}.',
             '{Create} a {prog_thing} that {prog_actions}.',
             '{Create} a {prog_thing} such that {prog_actioning} {does} {prog_action}.',
             '{Redo} {former_lab} to {prog_action}.',
@@ -32,7 +32,7 @@ data = {
         'prog_actions': ['{prog_verbs} a group of {adjective,prog_adj} {nouns}',
             'takes in {input} and {prog_actions}'],
         'prog_actioning': ['{prog_verbing} a {prog_thing}',
-            '{prog_verbing} {weird_cmd}'],
+            '{prog_verbing} INLINESTART{weird_cmd}ENDCURL'],
 
         'weird_cmd': ['{function}({no_args,args})',
             '{module}.{function}({no_args,args})'],
@@ -130,7 +130,7 @@ data = {
             'At the Mountains of Madness'],
 
         'technobabble': ['include the lessons learned from {former_lab}',
-            'use {weird_cmd}', 'include support for {prog_things}',
+            'use INLINESTART{weird_cmd}ENDCURL', 'include support for {prog_things}',
             'catch errors involving {prog_things,nouns}',
             '{predefined_babble}'],
         'predefined_babble': ['avoid Googling "Red Wedding"',
