@@ -4,11 +4,13 @@ import fake_exercises
 
 replacements = {
     'BEGINLIST': '\\begin{itemize}',
-    'ENDLIST': '\\end{itemize}',
+    'ENDLIST': '\\end{itemize}\n',
+    'BEGINENUM': '\\begin{enumerate}',
+    'ENDENUM': '\\end{enumerate}\n',
     'LISTITEM.': '\\item',
-    'BEGINTABLE': '\\begin{centering}\n\\begin{tabular}{c | c | c}' +
+    'BEGINTABLE': '\n{\n\\centering\\begin{tabular}{c c c}' +
         '\n\\toprule',
-    'ENDTABLE': '\\bottomrule\n\\end{tabular}\n\\end{centering}',
+    'ENDTABLE': '\\bottomrule\n\\end{tabular}\n}\n\\\\\n',
 }
 def convert(phrase):
     for rep in replacements:
@@ -28,11 +30,18 @@ def main():
     #return
 
     phrases = []
-    for i in range(100):
-        phrase = phrase_maker.make('exercise', capitalize=False)
-        phrase = convert(phrase)
 
-        phrases.append(phrase)
+    while True:
+        phrases = []
+        for i in range(97):
+            phrase = phrase_maker.make('exercise', capitalize=False)
+            phrase = convert(phrase)
+
+            phrases.append(phrase)
+
+        if 'extremely lax' in ''.join(phrases[:3]):
+            break
+
 
     exercises = '\n\n'.join(phrases)
 
