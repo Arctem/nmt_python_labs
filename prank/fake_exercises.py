@@ -37,7 +37,7 @@ data = {
         'weird_cmd': ['{function}({no_args,args})',
             '{module}.{function}({no_args,args})'],
         'function': ['map', 'reduce', 'sort', 'split', 'filter', 'obfuscate',
-            '{old_words/template}', 'load\\_module', 'make', 'compile', 'name'],
+            '{old_words/template}', 'load_module', 'make', 'compile', 'name'],
         'module': ['{module}.{module}', 'functools', 'math', 'magic',
             'antigravity', 'PIL', 'urllib',
             'sys', 'os', 'random', 'pickle', 're', 'matplotlib'],
@@ -66,7 +66,7 @@ data = {
             '{requirement} {table} {requirements}'],
         'requirement': ['Make sure to {technobabble}.',
             'Your program should {technobabble}.',
-            'Do not edit the provided {filename}.',
+            'Do not edit the provided INLINESTART{filename}ENDCURL.',
             'Print the result of {prog_actioning}.',
             'Remember to {annoying_busywork}!',
             'You are free to {exercise_freedom}.',
@@ -108,7 +108,7 @@ data = {
 
         'does': ['will'],
 
-        'former_lab': ['{filename} from Lab {gen/number}',
+        'former_lab': ['INLINESTART{filename}ENDCURL from Lab {gen/number}',
             'EMPHSTART{old_book}ENDCURL', '{predefined_former}'],
 
         'predefined_former': ['the example from {gen/weekday}\'s class'],
