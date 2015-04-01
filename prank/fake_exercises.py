@@ -37,7 +37,7 @@ data = {
         'weird_cmd': ['{function}({no_args,args})',
             '{module}.{function}({no_args,args})'],
         'function': ['map', 'reduce', 'sort', 'split', 'filter', 'obfuscate',
-            '{old_words/template}', 'load_module', 'make', 'compile', 'name'],
+            '{old_words/template}', 'load\\_module', 'make', 'compile', 'name'],
         'module': ['{module}.{module}', 'functools', 'math', 'magic',
             'antigravity', 'PIL', 'urllib',
             'sys', 'os', 'random', 'pickle', 're', 'matplotlib'],
@@ -61,7 +61,9 @@ data = {
 
         'requirements': ['{requirement} {requirements}',
             '{requirement} {requirement}\n{requirements}',
-            '{requirement} {requirement} {requirement}'],
+            '{requirement} {requirement} {requirement}',
+            '{requirement} {list} {requirements}',
+            '{requirement} {table} {requirements}'],
         'requirement': ['Make sure to {technobabble}.',
             'It should {technobabble}.',
             'Do not edit the provided {filename}.',
@@ -69,6 +71,23 @@ data = {
             'Remember to {annoying_busywork}!',
             'You are free to {exercise_freedom}.',
             'You are required to {exercise_freedom}.'],
+
+        'list': ['{list_intro}:\nBEGINLIST\n{list_items}\nENDLIST\n'],
+        'list_intro': ['Make sure to', 'Remember'],
+        'list_items': ['{list_item}\n{list_item}', '{list_item}\n{list_items}'],
+        'list_item': ['LISTITEM. {requirement}'],
+
+        'table': ['{table_intro}:\n\\\\BEGINTABLE\n{table_header}\n\\midrule\n' +
+            '{table_rows}\nENDTABLE\n'],
+        'table_intro': ['Take into account',
+            'Use the following table for reference'],
+        'table_header': ['{old_words/template} & {old_words/template} &' +
+            '{old_words/template}\\\\'],
+        'table_rows': ['{table_row}\\\\{table_rows}',
+            '{table_row}\\\\{table_row}'],
+        'table_row': ['{table_item} & {table_item} & {table_item}\\\\'],
+        'table_item': ['{old_words/template}', '${mathbabble}$'],
+
 
         'annoying_busywork': ['cite your sources',
             'comment which sections each person wrote',
@@ -96,7 +115,7 @@ data = {
         'mathbabble': ['y = {mathbabble}', '{mathbabble}x',
             '{gen/number}^{gen/number}', '{gen/number}/{gen/number}',
             '{mathbabble}{gen/consonant,gen/vowel}_{gen/consonant,gen/vowel}',
-            '{mathbabble} ({mathbabble})'],
+            '{mathbabble} ({mathbabble})', '{old_words/template} = {mathbabble}'],
     },
 
     'old_words' : {
