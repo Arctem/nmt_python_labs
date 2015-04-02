@@ -12,6 +12,7 @@ quotes.tex
 # Created by https://www.gitignore.io
 
 __pycache__
+_minted*
 
 ### vim ###
 [._]*.s[a-w][a-z]
