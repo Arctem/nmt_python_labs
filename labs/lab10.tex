@@ -255,6 +255,37 @@ print(isinstance(D(), B)) #True
     you have written.
 \end{ex}
 
+\begin{ex}[tree.py]
+    Write a class that implements a simple binary tree data structure. That is a
+    tree that consists of a group of nodes, each of which has an optional
+    ``left'' and ``right'' child. The class needs to include the following:
+    \begin{description}
+    \item[class Tree] The class used to create objects representing trees. Each
+        object will also represent one of the nodes of the tree. The constructor
+        should take in one argument: the contents of that node. The contents can
+        be anything and are not important for the scope of this exercise. The
+        constructor should have two optional arguments: left and right trees. If
+        given, these will be the left and right children of the new node. This
+        allows for the joining of two trees into a single one with a new parent
+        node.
+        \begin{description}
+        \item[self.left] The left child of the node. May be
+            \pythoninline{None} or a \pythoninline{Tree} object.
+        \item[self.right] The right child of the node. May be
+            \pythoninline{None} or a \pythoninline{Tree} object.
+        \item[self.datum] The contents of the node.
+        \item[def height(self)] Returns the height of the tree that this node
+            is the root of. This is equal to one more than the largest height
+            of the children trees. If a child tree is \pythoninline{None} then
+            its height is 0.
+        \item[def add_item(self, item)] Create a new \pythoninline{Tree} object
+            and add it to the tree. The new object should be added to the child
+            tree with the smallest height (remember that a \pythoninline{None}
+            tree has a height of 0!). If there is a tie, favor the left tree.
+        \end{description}
+    \end{description}
+\end{ex}
+
 \pagebreak
 \section{Submitting}
 You should submit your code as a tarball. It should contain all files
