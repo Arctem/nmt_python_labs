@@ -216,14 +216,15 @@ print(isinstance(D(), B)) #True
         alphabetical order by author (as listed. You do not need to split into
         first and last names).
         \begin{description}
-        \item[def add_book(self, book)] This method takes in either a line of
+        \item[def add\_book(self, book)] This method takes in either a line of
             text or a book object. If the input is a line of text, then it
             creates a new \lstinline{Book} object out of it. The object
             (whether given or created) is then stored inside the library.
-        \item[def get_authors(self)] This method returns a list of all the
+        \item[def get\_authors(self)] This method returns a list of all the
             authors who have works contained in the library. No author should
             appear more than once.
-        \item[def get_books_per_author(self)] This method returns a dictionary.
+        \item[def get\_books\_per\_author(self)] This method returns a
+            dictionary.
             Each author should be a key in the dictionary. The value for each
             author should be the number of books by that author in the library.
         \end{description}
