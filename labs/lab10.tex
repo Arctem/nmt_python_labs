@@ -199,7 +199,40 @@ print(isinstance(D(), B)) #True
 \section{Exercises}
 \label{sec:ex}
 
+\begin{ex}[library.py]
+    Create a module called \lstinline{library}. This module should include two
+    classes as well as methods for each. The provided file
+    \lstinline{library_test.py} will use the contents of \lstinline{library.py}.
+    Do not edit \lstinline{library_test.py} for your submission, though you are
+    free to comment out lines using parts of \lstinline{library.py} that you
+    have not implemented yet. The contents of \lstinline{library.py} should be
+    as follows:
 
+    \begin{description}
+    \item[class Library] A \lstinline{Library} object stores multiple
+        \lstinline{Book}
+        objects and has methods to return statistics about those books. When
+        printed, the object should list all of the books it contains in
+        alphabetical order by author (as listed. You do not need to split into
+        first and last names).
+        \begin{description}
+        \item[def add_book(self, book)] This method takes in either a line of
+            text or a book object. If the input is a line of text, then it
+            creates a new \lstinline{Book} object out of it. The object
+            (whether given or created) is then stored inside the library.
+        \item[def get_authors(self)] This method returns a list of all the
+            authors who have works contained in the library. No author should
+            appear more than once.
+        \item[def get_books_per_author(self)] This method returns a dictionary.
+            Each author should be a key in the dictionary. The value for each
+            author should be the number of books by that author in the library.
+        \end{description}
+    \item[class Book] A \lstinline{Book} object stores the author and title of
+        a book. When printed, the object should display both the title and
+        author of the book. The constructor should take in two arguments:
+        the title of the book and the author of the book.
+    \end{description}
+\end{ex}
 
 \pagebreak
 \section{Submitting}
