@@ -89,10 +89,42 @@ a function level. This variable refers to the object that the function is
 being called on. For example, in line 11, \lstinline{self} would refer to
 \lstinline{a}. Note that \lstinline{a.set(20)} is equivalent to
 \lstinline{Test.set(a, 20)}. The former is preferred because it is shorter and
-more readable.
+more readable. Any variable referred to with \lstinline{self.variablename} will
+stay with the object, while other variables will stay local to the function.
 
+\lstinline{__init__} can be passed additional arguments in addition to
+\lstinline{self} so that the new objects can be initialized differently.
 
+The special function \lstinline{__str__(self)} can be defined to override
+how the object is displayed when printed. By default, printing an object will
+display something like this:
 
+\begin{pyconcode}
+>>> class Test:
+...     pass
+... 
+>>> a = Test()
+>>> print(a)
+<__main__.Test object at 0x7f2b806cc9e8>
+\end{pyconcode}
+
+However, if we define the function, it will instead print whatever we want it
+to. \lstinline{__str__} should always return a string.
+
+\begin{python3code}
+class Test:
+    def __init__(self):
+        self.x = 5
+
+    def __str__(self):
+        return 'x = {}'.format(self.x)
+
+a = Test()
+print(a)
+\end{python3code}
+
+Try running the above code. It should print out \lstinline{x = 5}. Overriding
+\lstinline{__str__} makes our output code far simpler when printing objects.
 
 \section{Inheritance}
 \label{sec:inheritance}
