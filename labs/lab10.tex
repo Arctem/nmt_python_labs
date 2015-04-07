@@ -286,6 +286,25 @@ print(isinstance(D(), B)) #True
             tree has a height of 0!). If there is a tie, favor the left tree.
         \end{description}
     \end{description}
+
+    Additionally, you should implement \pythoninline{__iter__(self)} and
+    \pythoninline{__next__(self)} such that the tree can be used in a for loop.
+    When used in a for loop, the nodes of the tree should be accessed in-order.
+    This means that they should be accessed from left to right. That is, if we
+    have a tree that looks like this:
+
+\begin{verbatim}
+    1
+   / \
+  2   3
+ / \ / \
+4  5 6  7
+\end{verbatim}
+
+    Then the nodes should be accessed in the order 4, 2, 5, 1, 6, 3, 7. To
+    accomplish this, you will need to keep track of where in the traversal the
+    loop currently is, as well as \pythoninline{raise StopIteration} when
+    necessary.
 \end{ex}
 
 \pagebreak
