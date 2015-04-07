@@ -13,7 +13,7 @@ def main():
     assert len(set(lib.get_authors())) == len(lib.get_authors())
     print(lib.get_books_per_author())
     assert len(lib.get_books_per_author()) == len(lib.get_authors())
-    
+
 
 if __name__ == '__main__':
     main()
