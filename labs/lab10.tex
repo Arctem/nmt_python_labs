@@ -1,8 +1,8 @@
 % LAB 10: Classes
-% 
+%
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
-% 
+%
 % Prepared by Russell White and Christopher Koch
 % Spring 2015
 \documentclass[11pt]{cselabheader}
@@ -18,20 +18,18 @@
 
 \hrule
 \begin{quotation}
-``Holy shit, you geeks are badass.''
+``Who are you? How did you get in my house?''
 \end{quotation}
 \begin{flushright}
-  --- Pam (\emph{Archer})
+  --- Donald Knuth
 \end{flushright}
 
 \hrule
 
-\pagebreak
 \section{Introduction}
 
 
 \pagebreak
-
 \section{Classes and Objects}
 \label{sec:classes}
 In Python, classes are a way to group together functions and attributes
@@ -44,7 +42,7 @@ than \pythoninline{def}.
 ...     i = 5
 ...     def hi():
 ...         print('Hello world.')
-... 
+...
 >>> Test.i
 5
 >>> Test.hi()
@@ -98,7 +96,7 @@ display something like this:
 \begin{pyconcode}
 >>> class Test:
 ...     pass
-... 
+...
 >>> a = Test()
 >>> print(a)
 <__main__.Test object at 0x7f2b806cc9e8>
@@ -220,8 +218,11 @@ print(isinstance(D(), B)) #True
         \begin{description}
         \item[def add\_book(self, book)] This method takes in either a line of
             text or a book object. If the input is a line of text, then it
-            creates a new \pythoninline{Book} object out of it. The object
-            (whether given or created) is then stored inside the library.
+            creates a new \pythoninline{Book} object out of it. The line of
+            text will be formatted as are the lines in \pythoninline{library.txt}
+            and should be parsed as needed to form a \pythoninline{Book} object.
+            The object (whether given or created) is then stored inside the
+            library.
         \item[def get\_authors(self)] This method returns a list of all the
             authors who have works contained in the library. No author should
             appear more than once.
@@ -235,6 +236,9 @@ print(isinstance(D(), B)) #True
         author of the book. The constructor should take in two arguments:
         the title of the book and the author of the book.
     \end{description}
+
+    You are free (and encouraged) to include any additional methods that you may
+    need to accomplish the tasks given.
 \end{ex}
 
 \pagebreak
