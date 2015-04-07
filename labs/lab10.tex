@@ -83,14 +83,16 @@ a function level. This variable refers to the object that the function is
 being called on. For example, in line 11, \pythoninline{self} would refer to
 \pythoninline{a}. Note that \pythoninline{a.set(20)} is equivalent to
 \pythoninline{Test.set(a, 20)}. The former is preferred because it is shorter
-and more readable. Any variable referred to with
+and more readable. Additionally, a function that refers operates on an instance
+of the class (that is, has \pythoninline{self} as the first argument) are called
+methods rather than functions.A ny variable referred to with
 \pythoninline{self.variablename} will stay with the object, while other
 variables will stay local to the function.
 
 \pythoninline{__init__} can be passed additional arguments in addition to
 \pythoninline{self} so that the new objects can be initialized differently.
 
-The special function \pythoninline{__str__(self)} can be defined to override
+The special method \pythoninline{__str__(self)} can be defined to override
 how the object is displayed when printed. By default, printing an object will
 display something like this:
 
@@ -103,7 +105,7 @@ display something like this:
 <__main__.Test object at 0x7f2b806cc9e8>
 \end{pyconcode}
 
-However, if we define the function, it will instead print whatever we want it
+However, if we define the method, it will instead print whatever we want it
 to. \pythoninline{__str__} should always return a string.
 
 \begin{python3code}
@@ -163,8 +165,8 @@ print(a) #Other Title by Other Author, published in Some Magazine
 \end{python3code}
 
 Note that \pythoninline{Article} creates its own version of the
-\pythoninline{__str__} function, while \pythoninline{Book} does not. This means
-that \pythoninline{Book} simply uses the function that it inherits from
+\pythoninline{__str__} method, while \pythoninline{Book} does not. This means
+that \pythoninline{Book} simply uses the method that it inherits from
 \pythoninline{Publication}.
 
 Also note that each of the subclasses call the constructors of the parent class.
