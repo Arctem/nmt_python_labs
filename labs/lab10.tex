@@ -73,15 +73,10 @@ class Test:
 
 a = Test()
 b = Test()
-print(a.x, b.x)
+print(a.x, b.x) #10 10
 a.set(20)
-print(a.x, b.x)
+print(a.x, b.x) #20 10
 \end{python3code}
-
-\begin{pyconcode}
-10 10
-20 10
-\end{pyconcode}
 
 Note the use of the variable \lstinline{self} in the function declarations.
 This variable should be first in any function declared that needs to be used on
@@ -163,18 +158,39 @@ class Article(Publication):
 b = Book('Title', 'Author', 100)
 a = Article('Other Title', 'Other Author', 'Some Magazine')
 
-print(b)
-print(a)
+print(b) #Title by Author
+print(a) #Other Title by Other Author, published in Some Magazine
 \end{python3code}
-
-\begin{pyconcode}
-Title by Author
-Other Title by Other Author, published in Some Magazine
-\end{pyconcode}
 
 Note that \lstinline{Article} creates its own version of the \lstinline{__str__}
 function, while \lstinline{Book} does not. This means that \lstinline{Book}
 simply uses the function that it inherits from \lstinline{Publication}.
+
+Also note that each of the subclasses call the constructors of the parent class.
+This is required to properly initialize the attributes of the object. Though it
+is not strictly required, doing otherwise would require duplicating the
+contents of the parent class's constructor in the subclass.
+
+Sometimes you will want to check if an object belongs to a specific class. This
+can be done with the \lstinline{isinstance} function. This function will return
+\lstinline{True} if the given object is an instance of the given class or of a
+subclass of that class.
+
+\begin{python3code}
+class A:
+    pass
+class B:
+    pass
+class C(A):
+    pass
+class D(C, B):
+    pass
+
+print(isinstance(A(), A)) #True
+print(isinstance(B(), A)) #False
+print(isinstance(C(), A)) #True
+print(isinstance(D(), B)) #True
+\end{python3code}
 
 
 \clearpage
