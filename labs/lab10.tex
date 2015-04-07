@@ -197,6 +197,47 @@ print(isinstance(C(), A)) #True
 print(isinstance(D(), B)) #True
 \end{python3code}
 
+\section{Iteration}
+\label{sec:iter}
+By defining a couple of special methods, we can make an object of any class that
+we create iterable. These two functions are \pythoninline{__iter__(self)} and
+\pythoninline{__next__(self)}. These functions are used by anything that uses
+iterables (such as \pythoninline{for} loops). \pythoninline{__iter__} is called
+when the loop starts and is expected to return an object with
+\pythoninline{__next__} defined. Thus, we can usually just
+\pythoninline{return self} if we've defined it ourselves. Then,
+\pythoninline{__next__} is called repeatedly until it raises an exception called
+\pythoninline{StopIteration}. Using this knowledge we can write our own version
+of \pythoninline{range()}:
+
+\begin{python3code}
+class MyRange:
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+
+    def __iter__(self):
+        self.current = None
+        return self
+
+    def __next__(self):
+        if self.current is None:
+            self.current = self.start
+        else:
+            self.current += 1
+
+        if self.current >= self.end:
+            raise StopIteration
+        else:
+            return self.current
+
+r = MyRange(1, 10)
+for i in r:
+    print(i) #prints 1, 2, 3, ..., 9
+\end{python3code}
+
+With a bit more complex logic in our \pythoninline{__next__} we can do some
+pretty complicated things with \pythoninline{for} loops!
 
 \clearpage
 \section{Exercises}
@@ -305,6 +346,11 @@ print(isinstance(D(), B)) #True
     accomplish this, you will need to keep track of where in the traversal the
     loop currently is, as well as \pythoninline{raise StopIteration} when
     necessary.
+
+    \emph{Hint}: You may find using a stack to track where you are in the tree
+    to be useful!
+
+    Once you have it using, you should be able to use \pythoninline{list} to
 \end{ex}
 
 \pagebreak
