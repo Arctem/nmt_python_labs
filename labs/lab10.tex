@@ -128,6 +128,53 @@ Try running the above code. It should print out \lstinline{x = 5}. Overriding
 
 \section{Inheritance}
 \label{sec:inheritance}
+A class can be built on another class. This is commonly done when multiple
+classes should logically be different but share common functionality. A class
+that inherits from another class is considered to be a subclass of its parent
+class. The subclass gains all the functions and attributes of its parent class.
+
+An example
+might be that both Books and Articles could be considered Publications. Both
+would have a title and an author, but only the book would have a chapter count.
+
+\begin{python3code}
+class Publication:
+    def __init__(self, title, author):
+        self.title = title
+        self.author = author
+
+    def __str__(self):
+        return '{} by {}'.format(self.title, self.author)
+
+class Book(Publication):
+    def __init__(self, title, author, chapters):
+        Publication.__init__(self, title, author)
+        self.chapters = chapters
+
+class Article(Publication):
+    def __init__(self, title, author, magazine):
+        Publication.__init__(self, title, author)
+        self.magazine = magazine
+
+    def __str__(self):
+        return '{} by {}, published in {}'.format(self.title, self.author,
+            self.magazine)
+
+b = Book('Title', 'Author', 100)
+a = Article('Other Title', 'Other Author', 'Some Magazine')
+
+print(b)
+print(a)
+\end{python3code}
+
+\begin{pyconcode}
+Title by Author
+Other Title by Other Author, published in Some Magazine
+\end{pyconcode}
+
+Note that \lstinline{Article} creates its own version of the \lstinline{__str__}
+function, while \lstinline{Book} does not. This means that \lstinline{Book}
+simply uses the function that it inherits from \lstinline{Publication}.
 
 
 \clearpage
