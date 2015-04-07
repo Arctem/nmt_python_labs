@@ -32,12 +32,66 @@
 
 \pagebreak
 
-\section{Classes}
+\section{Classes and Objects}
 \label{sec:classes}
+In Python, classes are a way to group together functions and attributes
+that are closely related to one another. A \lstinline{class} is defined
+similarly to a function, though it uses the \lstinline{class} keyword rather
+than \lstinline{def}.
+
+\begin{pyconcode}
+>>> class Test:
+...     i = 5
+...     def hi():
+...         print('Hello world.')
+... 
+>>> Test.i
+5
+>>> Test.hi()
+Hello world.
+\end{pyconcode}
+
+Once a class has been declared, an \emph{Object} or
+\emph{Instance} of that class can be created. An object is an independent
+copy of the class, with all of the same attributes and functions that were
+declared with the class that the object was created from. This is the
+primary use for classes, as it allows for you to easily create a group of
+objects that store the same kind of data.
+
+When doing this, it is important to declare a special function called
+\lstinline{__init__} inside the class. This function is called when
+creating the new class and can be used to initialize values for the
+new object:
+
+\begin{python3code}
+class Test:
+    def __init__(self):
+        self.x = 10
+
+    def set(self, x):
+        self.x = x
+
+a = Test()
+b = Test()
+print(a.x, b.x)
+a.set(20)
+print(a.x, b.x)
+\end{python3code}
+
+\begin{pyconcode}
+10 10
+20 10
+\end{pyconcode}
+
+Note the use of the variable \lstinline{self} in the function declarations.
+This variable should be first in any function declared that needs to be used on
+a function level. This variable refers to the object that the function is
+being called on. For example, in line 11, \lstinline{self} would refer to
+\lstinline{a}. Note that \lstinline{a.set(20)} is equivalent to
+\lstinline{Test.set(a, 20)}. The former is preferred because it is shorter and
+more readable.
 
 
-\section{Objects}
-\label{sec:objects}
 
 
 \section{Inheritance}
