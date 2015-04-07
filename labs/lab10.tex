@@ -169,7 +169,9 @@ simply uses the function that it inherits from \lstinline{Publication}.
 Also note that each of the subclasses call the constructors of the parent class.
 This is required to properly initialize the attributes of the object. Though it
 is not strictly required, doing otherwise would require duplicating the
-contents of the parent class's constructor in the subclass.
+contents of the parent class's constructor in the subclass. A class can inherit
+from multiple other classes. In that case, it would be expected to call the
+constructors for both of its parent classes.
 
 Sometimes you will want to check if an object belongs to a specific class. This
 can be done with the \lstinline{isinstance} function. This function will return
