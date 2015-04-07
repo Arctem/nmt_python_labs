@@ -35,9 +35,9 @@
 \section{Classes and Objects}
 \label{sec:classes}
 In Python, classes are a way to group together functions and attributes
-that are closely related to one another. A \lstinline{class} is defined
-similarly to a function, though it uses the \lstinline{class} keyword rather
-than \lstinline{def}.
+that are closely related to one another. A \pythoninline{class} is defined
+similarly to a function, though it uses the \pythoninline{class} keyword rather
+than \pythoninline{def}.
 
 \begin{pyconcode}
 >>> class Test:
@@ -59,7 +59,7 @@ primary use for classes, as it allows for you to easily create a group of
 objects that store the same kind of data.
 
 When doing this, it is important to declare a special function called
-\lstinline{__init__} inside the class. This function is called when
+\pythoninline{__init__} inside the class. This function is called when
 creating the new class and can be used to initialize values for the
 new object:
 
@@ -78,19 +78,20 @@ a.set(20)
 print(a.x, b.x) #20 10
 \end{python3code}
 
-Note the use of the variable \lstinline{self} in the function declarations.
+Note the use of the variable \pythoninline{self} in the function declarations.
 This variable should be first in any function declared that needs to be used on
 a function level. This variable refers to the object that the function is
-being called on. For example, in line 11, \lstinline{self} would refer to
-\lstinline{a}. Note that \lstinline{a.set(20)} is equivalent to
-\lstinline{Test.set(a, 20)}. The former is preferred because it is shorter and
-more readable. Any variable referred to with \lstinline{self.variablename} will
-stay with the object, while other variables will stay local to the function.
+being called on. For example, in line 11, \pythoninline{self} would refer to
+\pythoninline{a}. Note that \pythoninline{a.set(20)} is equivalent to
+\pythoninline{Test.set(a, 20)}. The former is preferred because it is shorter
+and more readable. Any variable referred to with
+\pythoninline{self.variablename} will stay with the object, while other
+variables will stay local to the function.
 
-\lstinline{__init__} can be passed additional arguments in addition to
-\lstinline{self} so that the new objects can be initialized differently.
+\pythoninline{__init__} can be passed additional arguments in addition to
+\pythoninline{self} so that the new objects can be initialized differently.
 
-The special function \lstinline{__str__(self)} can be defined to override
+The special function \pythoninline{__str__(self)} can be defined to override
 how the object is displayed when printed. By default, printing an object will
 display something like this:
 
@@ -104,7 +105,7 @@ display something like this:
 \end{pyconcode}
 
 However, if we define the function, it will instead print whatever we want it
-to. \lstinline{__str__} should always return a string.
+to. \pythoninline{__str__} should always return a string.
 
 \begin{python3code}
 class Test:
@@ -118,8 +119,8 @@ a = Test()
 print(a)
 \end{python3code}
 
-Try running the above code. It should print out \lstinline{x = 5}. Overriding
-\lstinline{__str__} makes our output code far simpler when printing objects.
+Try running the above code. It should print out \pythoninline{x = 5}. Overriding
+\pythoninline{__str__} makes our output code far simpler when printing objects.
 
 \section{Inheritance}
 \label{sec:inheritance}
@@ -162,9 +163,10 @@ print(b) #Title by Author
 print(a) #Other Title by Other Author, published in Some Magazine
 \end{python3code}
 
-Note that \lstinline{Article} creates its own version of the \lstinline{__str__}
-function, while \lstinline{Book} does not. This means that \lstinline{Book}
-simply uses the function that it inherits from \lstinline{Publication}.
+Note that \pythoninline{Article} creates its own version of the
+\pythoninline{__str__} function, while \pythoninline{Book} does not. This means
+that \pythoninline{Book} simply uses the function that it inherits from
+\pythoninline{Publication}.
 
 Also note that each of the subclasses call the constructors of the parent class.
 This is required to properly initialize the attributes of the object. Though it
@@ -174,9 +176,9 @@ from multiple other classes. In that case, it would be expected to call the
 constructors for both of its parent classes.
 
 Sometimes you will want to check if an object belongs to a specific class. This
-can be done with the \lstinline{isinstance} function. This function will return
-\lstinline{True} if the given object is an instance of the given class or of a
-subclass of that class.
+can be done with the \pythoninline{isinstance} function. This function will
+return \pythoninline{True} if the given object is an instance of the given class
+or of a subclass of that class.
 
 \begin{python3code}
 class A:
@@ -200,17 +202,17 @@ print(isinstance(D(), B)) #True
 \label{sec:ex}
 
 \begin{ex}[library.py]
-    Create a module called \lstinline{library}. This module should include two
-    classes as well as methods for each. The provided file
-    \lstinline{library_test.py} will use the contents of \lstinline{library.py}.
-    Do not edit \lstinline{library_test.py} for your submission, though you are
-    free to comment out lines using parts of \lstinline{library.py} that you
-    have not implemented yet. The contents of \lstinline{library.py} should be
-    as follows:
+    Create a module called \pythoninline{library}. This module should include
+    two classes as well as methods for each. The provided file
+    \pythoninline{library_test.py} will use the contents of
+    \pythoninline{library.py}. Do not edit \pythoninline{library_test.py} for
+    your submission, though you are free to comment out lines using parts of
+    \pythoninline{library.py} that you have not implemented yet. The contents of
+    \pythoninline{library.py} should be as follows:
 
     \begin{description}
-    \item[class Library] A \lstinline{Library} object stores multiple
-        \lstinline{Book}
+    \item[class Library] A \pythoninline{Library} object stores multiple
+        \pythoninline{Book}
         objects and has methods to return statistics about those books. When
         printed, the object should list all of the books it contains in
         alphabetical order by author (as listed. You do not need to split into
@@ -218,7 +220,7 @@ print(isinstance(D(), B)) #True
         \begin{description}
         \item[def add\_book(self, book)] This method takes in either a line of
             text or a book object. If the input is a line of text, then it
-            creates a new \lstinline{Book} object out of it. The object
+            creates a new \pythoninline{Book} object out of it. The object
             (whether given or created) is then stored inside the library.
         \item[def get\_authors(self)] This method returns a list of all the
             authors who have works contained in the library. No author should
@@ -228,8 +230,8 @@ print(isinstance(D(), B)) #True
             Each author should be a key in the dictionary. The value for each
             author should be the number of books by that author in the library.
         \end{description}
-    \item[class Book] A \lstinline{Book} object stores the author and title of
-        a book. When printed, the object should display both the title and
+    \item[class Book] A \pythoninline{Book} object stores the author and title
+        of a book. When printed, the object should display both the title and
         author of the book. The constructor should take in two arguments:
         the title of the book and the author of the book.
     \end{description}
