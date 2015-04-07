@@ -234,7 +234,15 @@ random number not based on a uniform distribution:
   to. You need to account for whatever probabilities might come up within
   your input file.
 
-  You may use any file you wish for test input, though \pythoninline{reviews.txt} is provided for you. This is a collection of 12500 reviews from IMDB and is a subset of the data provided at \url{http://ai.stanford.edu/~amaas/data/sentiment/index.html}. When parsing the input file, you should skip any blank lines.
+  You may use any file you wish for test input, though \pythoninline{alice.txt} and
+  \pythoninline{cthulhu.txt} are provided for you.
+  \pythoninline{alice.txt} is a slightly edited version of the complete text of
+  Lewis Carroll's \emph{Alice's Adventures in Wonderland}, taken from
+  \url{https://www.gutenberg.org/files/11/11-h/11-h.htm}.
+  \pythoninline{cthulhu.txt} is a slightly edited version of the complete text of
+  H.P. Lovecrafts's \emph{The Call of Cthulhu}, taken from
+  \url{http://www.hplovecraft.com/writings/texts/fiction/cc.aspx}.
+  When parsing the input file, you should ignore any blank lines.
 
   \emph{Hint}: You may find dictionaries to be useful in implementing
   Markov chains.
