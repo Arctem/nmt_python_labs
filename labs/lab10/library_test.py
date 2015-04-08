@@ -1,4 +1,4 @@
-from library import Library
+from library import Book, Library
 
 def main():
     lib = Library()
