@@ -72,7 +72,7 @@
   traction, and the tire's radius to determine how far it travels each second.
   Because of the tire's traction, it is possible that the car is not
   experiencing the full speed that might be indicated by
-  $engineSpeed \cdot tireRadius$. Thus, the car's speed cannot be purely
+  $engineSpeed \cdot tireCircumference$. Thus, the car's speed cannot be purely
   calculated from the engine's speed each second.
 
   \pythoninline{race.py} will contain your \pythoninline{main()} function and will
@@ -85,6 +85,8 @@
   car takes to travel a given distance. These should use the relevant methods
   described above.
   
+  %show table of sample output
+  
   When simulating the cars, you should use a time delta of 1 second. This means
   that you simulate time in chunks of one second at a time. Thus, a car should
   be considered to have the same speed throughout the entirety of each second.
@@ -92,22 +94,36 @@
   traveling a distance of 0 for the first second), but is fine for our
   purposes. As an example of how a car's travel might work, see
   Table~\ref{carexample}, which is a breakdown of the stats of a car at each
-  second of a 10 second trip. The car's tires have a radius of 1 and a
-  traction of 1. The car's engine has a max speed of 100 and an acceleration of
-  0.5.
+  second of a 10 second trip. The car's tires have a radius of $\frac{1}{\pi}$
+  (giving a circumference of 2) and a traction of 10. The car's engine has a
+  max speed of 100 and an acceleration of 0.5.
   
-  \begin{table}[!ht]
-    \centering
-    \begin{tabular}{c c c c}
+  \begin{center}
+    \begin{tabular}{crrrr}
     \toprule
-    Time $(s)$ & Distance $(m)$ & Car Speed $(m)$ & Engine Speed $(\frac{rot}{s})$\\
+    Time $(s)$ & Distance $(m)$ & Car Speed $(\frac{m}{s})$ &
+    Ideal Car Speed $(\frac{m}{s})$ & Engine Speed $(\frac{rot}{s})$\\
     \midrule
-    0 & 0 & 0  & 0\\
+    0 & 0 & 0 & 0 & 0\\
+    1 & 55 & 55 & 100 & 50\\
+    2 & 162.5 & 107.5 & 150 & 75\\
+    3 & 308.75 & 146.25 & 175 & 87.5\\
+    4 & 480.63 & 171.88 & 187.5 & 93.75\\
+    5 & 668.44 & 187.81 & 193.75 & 96.88\\
+    6 & 865.31 & 196.88 & 196.88 & 98.44\\
+    7 & 1063.75 & 198.44 & 198.44 & 99.22\\
+    8 & 1262.97 & 199.22 & 199.22 & 99.61\\
+    9 & 1462.58 & 199.61 & 199.61 & 99.80\\
+    10 & 1662.38 & 199.80 & 199.80 & 99.90\\
     \bottomrule
     \end{tabular}
     \label{carexample}
-    \caption{Example of a Car's Performance}
-  \end{table}
+    \captionof{table}{Example of a Car's Performance}
+  \end{center}
+  
+  It should be noted that the Distance column of Table~\ref{carexample}
+  represents the return value of \pythoninline{distance_time} when given the
+  corresponding Time column as an argument.
 \end{ex}
 
 \pagebreak
