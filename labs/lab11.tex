@@ -84,6 +84,30 @@
   comparing either how far each car travels in a given time or how long each
   car takes to travel a given distance. These should use the relevant methods
   described above.
+  
+  When simulating the cars, you should use a time delta of 1 second. This means
+  that you simulate time in chunks of one second at a time. Thus, a car should
+  be considered to have the same speed throughout the entirety of each second.
+  This can result in some inaccurate results (such as each car always
+  traveling a distance of 0 for the first second), but is fine for our
+  purposes. As an example of how a car's travel might work, see
+  Table~\ref{carexample}, which is a breakdown of the stats of a car at each
+  second of a 10 second trip. The car's tires have a radius of 1 and a
+  traction of 1. The car's engine has a max speed of 100 and an acceleration of
+  0.5.
+  
+  \begin{table}[!ht]
+    \centering
+    \begin{tabular}{c c c c}
+    \toprule
+    Time $(s)$ & Distance $(m)$ & Car Speed $(m)$ & Engine Speed $(\frac{rot}{s})$\\
+    \midrule
+    0 & 0 & 0  & 0\\
+    \bottomrule
+    \end{tabular}
+    \label{carexample}
+    \caption{Example of a Car's Performance}
+  \end{table}
 \end{ex}
 
 \pagebreak
