@@ -39,8 +39,11 @@
   \pythoninline{car.py} will contain the definition of \pythoninline{class Car}. A
   Car will have an \pythoninline{Engine} and a \pythoninline{Tire}  (representing all 4)
   as attributes. Additionally, each car should have an attribute representing its name.
-  Additionally, a Car should have a method \pythoninline{travel(self, time)} that returns
-  the distance that the Car travels in the time given. This method should assume that
+  Additionally, a Car should have a method \pythoninline{travel_time(self, time)} that returns
+  the distance that the Car travels in the time given as well as a method
+  \pythoninline{travel_dist(self, dist)} that returns the time it takes for the Car to travel
+  the given distance.
+  Both methods should assume that
   the car starts at a standstill and accelerates throughout the travel time. This value
   should take into account the attributes of the Car's Tire and Engine.
   
