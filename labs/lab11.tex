@@ -47,12 +47,16 @@
   Additionally, a Car should have a method \pythoninline{travel_time(self, time)} that returns
   the distance that the Car travels in the time given as well as a method
   \pythoninline{travel_dist(self, dist)} that returns the time it takes for the Car to travel
-  the given distance.
-  Both methods should assume that
+  the given distance. Both methods should assume that
   the car starts at a standstill and accelerates throughout the travel time. This value
   should take into account the attributes of the Car's Tire and Engine.
   
-  \pythoninline{tire.py} will contain the definition of \pythoninline{class Tire}.
+  \pythoninline{tire.py} will contain the definition of \pythoninline{class Tire}. Each tire
+  will have two attributes: traction and radius. The traction of the wheel indicates the
+  maximum ideal acceleration the wheel can provide. If the car's acceleration would be
+  above this number, then it is instead the average of this number and the ideal acceleration.
+  The radius of the tire indicates how far it causes the car to travel per spin. This is important
+  because Engine strength is measured in spin speed.
   
   \pythoninline{engine.py} will contain the definition of \pythoninline{class Engine}.
 
