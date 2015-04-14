@@ -22,7 +22,7 @@
   a duck, I call that bird a duck.''
 \end{quotation}
 \begin{flushright}
-  --- James Whitcomb Riley
+  --- James Whitcomb Riley, Duck Enthusiast
 \end{flushright}
 
 \hrule
@@ -35,12 +35,13 @@
 \label{sec:ex}
 
 \begin{warningbox}{Cars Are Hard}
-  \emph{Warning}: The following exercise was designed with no regard for how cars and
-  physics actually work in the real world. Sorry.
+  \emph{Warning}: The following exercise was designed with little regard for
+  how cars and physics actually work in the real world. Sorry.
 \end{warningbox}
 
 \begin{ex}[car.py, tire.py, engine.py, race.py]
   For this project, you will be submitting four files:
+
   \pythoninline{car.py} will contain the definition of \pythoninline{class Car}. A
   Car will have an \pythoninline{Engine} and a \pythoninline{Tire}  (representing all 4)
   as attributes. Additionally, each car should have an attribute representing its name.
@@ -48,17 +49,31 @@
   the distance that the Car travels in the time given as well as a method
   \pythoninline{travel_dist(self, dist)} that returns the time it takes for the Car to travel
   the given distance. Both methods should assume that
-  the car starts at a standstill and accelerates throughout the travel time. This value
+  the car starts at a standstill and accelerates throughout the travel time. The results
   should take into account the attributes of the Car's Tire and Engine.
   
-  \pythoninline{tire.py} will contain the definition of \pythoninline{class Tire}. Each tire
+  \pythoninline{tire.py} will contain the definition of \pythoninline{class Tire}. Each Tire
   will have two attributes: traction and radius. The traction of the wheel indicates the
   maximum ideal acceleration the wheel can provide. If the car's acceleration would be
-  above this number, then it is instead the average of this number and the ideal acceleration.
-  The radius of the tire indicates how far it causes the car to travel per spin. This is important
-  because Engine strength is measured in spin speed.
+  above this number, then it is instead the average of this number and the
+  ideal acceleration. The radius of the tire determines how far it causes the
+  car to travel per rotation. This is important because Engine strength is
+  measured in rotations. Traction and radius are both measured in meters.
   
-  \pythoninline{engine.py} will contain the definition of \pythoninline{class Engine}.
+  \pythoninline{engine.py} will contain the definition of
+  \pythoninline{class Engine}. Each Engine will have two attributes:
+  max speed and acceleration. Max speed is in terms of tire rotations per
+  second. Acceleration is a value between $0$ and $1$ that indicates how much
+  closer the current speed gets to the max speed each second. Each second, the
+  new speed is determined by the following formula:
+  $$newSpeed = oldSpeed + acceleration \cdot \left(maxSpeed - oldSpeed\right)$$
+  Since engine speed is measured in rotations per second, the actual
+  acceleration of the car must take into account the engine's speed, the tire's
+  traction, and the tire's radius to determine how far it travels each second.
+  Because of the tire's traction, it is possible that the car is not
+  experiencing the full speed that might be indicated by
+  $engineSpeed \cdot tireRadius$. Thus, the car's speed cannot be purely
+  calculated from the engine's speed each second.
 
   \pythoninline{race.py} will contain your \pythoninline{main()} function and will
   manipulate the classes from the other files.
