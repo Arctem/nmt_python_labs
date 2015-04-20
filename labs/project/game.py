@@ -12,23 +12,31 @@ class Game(object):
     def __init__(self, canvas):
         self.canvas = canvas
         self.tanks = []
+        self.drawing_map = {}
 
     def add_tank(self, tank):
         tank.pos = {'x': 100, 'y': 100}
         tank.facing = 0
         self.tanks.append(tank)
+        self.drawing_map[tank] = {}
 
     def step(self, delta):
         for tank in self.tanks:
             tank.step(delta)
 
     def draw_tanks(self):
-        self.canvas.delete(tkinter.ALL)
         for tank in self.tanks:
             x, y = tank.pos['x'], tank.pos['y']
-            self.canvas.create_line(x, y, x + math.cos(tank.facing) * 10,
-                y + math.sin(tank.facing) * 10)
-            self.canvas.create_rectangle(x - 10, y - 10, x + 10, y + 10)
+
+            if 'facing' in self.drawing_map[tank]:
+                self.canvas.delete(self.drawing_map[tank]['facing'])
+            self.drawing_map[tank]['facing'] = self.canvas.create_line(x, y, 
+                x + math.cos(tank.facing) * 10, y + math.sin(tank.facing) * 10)
+
+            if 'body' in self.drawing_map[tank]:
+                self.canvas.delete(self.drawing_map[tank]['body'])
+            self.drawing_map[tank]['body'] = self.canvas.create_rectangle(
+                x - 10, y - 10, x + 10, y + 10)
 
     def start(self):
         tank = Tank(self)
