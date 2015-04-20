@@ -7,26 +7,32 @@ import time
 from tank import Tank
 
 class Game(object):
-    XSIZE = 300
-    YSIZE = 300
+    XSIZE = 500
+    YSIZE = 500
 
     def __init__(self, canvas):
         self.canvas = canvas
         self.tanks = []
         self.drawing_map = {}
+        for x in [-self.XSIZE, 0, self.XSIZE]:
+            for y in [-self.YSIZE, 0, self.YSIZE]:
+                self.drawing_map[x, y] = {}
+
 
     def add_tank(self, tank):
         tank.set_pos((100, 100))
         tank.facing = 0
         tank.set_turret_target(120)
         self.tanks.append(tank)
-        self.drawing_map[tank] = {}
+        for i in self.drawing_map:
+            self.drawing_map[i][tank] = {}
 
     def step(self, delta):
         for tank in self.tanks:
             tank.step(delta)
 
     def draw_tanks(self):
+        """Handle drawing of all things related to tanks."""
         for tank in self.tanks:
             x, y = tank.pos['x'], tank.pos['y']
             angle = tank.facing
@@ -34,39 +40,46 @@ class Game(object):
 
             #use of drawing_map is to help prevent flicker due to how
             #tkinter.Canvas handles buffering
-            if 'body' in self.drawing_map[tank]:
-                self.canvas.delete(self.drawing_map[tank]['body'])
-            #self.drawing_map[tank]['body'] = self.canvas.create_rectangle(
-                #x - 10, y - 10, x + 10, y + 10)
-            rotated = list(map(lambda v: [
-                x + v[0] * math.cos(angle) - v[1] * math.sin(angle),
-                y + v[0] * math.sin(angle) + v[1] * math.cos(angle)
-                ], tank.shape))
-            self.drawing_map[tank]['body'] = self.canvas.create_polygon(rotated,
-                fill=tank.primary_color, outline=tank.secondary_color)
+            #it's horrid and I hate it, but unfortunately it's how tkinter
+            #does things
+            for xoffset, yoffset in self.drawing_map.keys():
+                tmp_map = self.drawing_map[xoffset, yoffset]
+                x, y = tank.pos['x'] + xoffset, tank.pos['y'] + yoffset
 
-            rotated = list(map(lambda v: [
-                x + v[0] * math.cos(tur_angle) - v[1] * math.sin(tur_angle),
-                y + v[0] * math.sin(tur_angle) + v[1] * math.cos(tur_angle)
-                ], tank.turret_shape))
-            if 'turret' in self.drawing_map[tank]:
-                self.canvas.delete(self.drawing_map[tank]['turret'])
-            self.drawing_map[tank]['turret'] = self.canvas.create_polygon(
-                rotated, fill='black')
+                #draw body
+                rotated = list(map(lambda v: [
+                    x + v[0] * math.cos(angle) - v[1] * math.sin(angle),
+                    y + v[0] * math.sin(angle) + v[1] * math.cos(angle)
+                    ], tank.shape))
 
-            for sensor in tank.sensors:
-                start_arc = -tank.facing / math.pi * 180 + sensor.direction -\
-                    sensor.width / 2
-                if sensor.tracking:
-                    start_arc -= tank.turret_facing / math.pi * 180
+                if 'body' in tmp_map[tank]:
+                    self.canvas.delete(tmp_map[tank]['body'])
+                tmp_map[tank]['body'] = self.canvas.create_polygon(rotated,
+                    fill=tank.primary_color, outline=tank.secondary_color)
 
-                if sensor in self.drawing_map[tank]:
-                    self.canvas.delete(self.drawing_map[tank][sensor])
-                self.drawing_map[tank][sensor] = self.canvas.create_arc(
-                    (x - sensor.size, y - sensor.size,
-                    x + sensor.size, y + sensor.size),
-                    start=start_arc, extent=sensor.width)
-            #self.canvas.create_arc((x, y, x, y), start=0, extent=30)
+                #draw turret
+                rotated = list(map(lambda v: [
+                    x + v[0] * math.cos(tur_angle) - v[1] * math.sin(tur_angle),
+                    y + v[0] * math.sin(tur_angle) + v[1] * math.cos(tur_angle)
+                    ], tank.turret_shape))
+                if 'turret' in tmp_map[tank]:
+                    self.canvas.delete(tmp_map[tank]['turret'])
+                tmp_map[tank]['turret'] = self.canvas.create_polygon(
+                    rotated, fill='black')
+
+                #draw all sensors
+                for sensor in tank.sensors:
+                    start_arc = -tank.facing / math.pi * 180 + sensor.direction -\
+                        sensor.width / 2
+                    if sensor.tracking:
+                        start_arc -= tank.turret_facing / math.pi * 180
+
+                    if sensor in tmp_map[tank]:
+                        self.canvas.delete(tmp_map[tank][sensor])
+                    tmp_map[tank][sensor] = self.canvas.create_arc(
+                        (x - sensor.size, y - sensor.size,
+                        x + sensor.size, y + sensor.size),
+                        start=start_arc, extent=sensor.width)
 
     def start(self):
         tank = Tank(self, random_color(), random_color())
