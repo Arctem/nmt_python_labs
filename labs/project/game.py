@@ -54,6 +54,20 @@ class Game(object):
             self.drawing_map[tank]['turret'] = self.canvas.create_polygon(
                 rotated, fill='black')
 
+            for sensor in tank.sensors:
+                start_arc = -tank.facing / math.pi * 180 + sensor.direction -\
+                    sensor.width / 2
+                if sensor.tracking:
+                    start_arc -= tank.turret_facing / math.pi * 180
+
+                if sensor in self.drawing_map[tank]:
+                    self.canvas.delete(self.drawing_map[tank][sensor])
+                self.drawing_map[tank][sensor] = self.canvas.create_arc(
+                    (x - sensor.size, y - sensor.size,
+                    x + sensor.size, y + sensor.size),
+                    start=start_arc, extent=sensor.width)
+            #self.canvas.create_arc((x, y, x, y), start=0, extent=30)
+
     def start(self):
         tank = Tank(self, random_color(), random_color())
         self.add_tank(tank)

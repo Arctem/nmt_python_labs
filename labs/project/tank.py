@@ -1,5 +1,7 @@
 import math
 
+from sensor import Sensor
+
 class Tank(object):
     tread_accel = 20
     tread_max = 50
@@ -17,7 +19,7 @@ class Tank(object):
 
         self.pos = None
         self.facing = None
-        self.sensors = None
+        self.sensors = [Sensor(0, 30, 100, False), Sensor(0, 10, 50, True)]
         self.turret_facing = 0
         self.turret_target = 0
         self.cooldown = 0

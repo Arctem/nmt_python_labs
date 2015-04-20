@@ -1,3 +1,6 @@
 class Sensor(object):
-    def __init__(self):
-        pass
+    def __init__(self, direction, width, size, tracking=False):
+        self.direction = direction
+        self.width = width
+        self.size = size
+        self.tracking = tracking
