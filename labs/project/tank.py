@@ -10,8 +10,11 @@ class Tank(object):
         [-2, -2], [-3, -2], [-3, -3], [3, -3], [3, -2], [2, -2]]
     turret_shape = [[0, 0], [1, 1], [4, 0], [1, -1]]
 
-    def __init__(self, parent):
+    def __init__(self, parent, primary_color, secondary_color):
         self.parent = parent
+        self.primary_color = primary_color
+        self.secondary_color = secondary_color
+
         self.pos = None
         self.facing = None
         self.sensors = None

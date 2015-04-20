@@ -1,4 +1,5 @@
 import math
+import random
 import threading
 import tkinter
 import time
@@ -42,7 +43,7 @@ class Game(object):
                 y + v[0] * math.sin(angle) + v[1] * math.cos(angle)
                 ], tank.shape))
             self.drawing_map[tank]['body'] = self.canvas.create_polygon(rotated,
-                fill='#ff0000')
+                fill=tank.primary_color, outline=tank.secondary_color)
 
             rotated = list(map(lambda v: [
                 x + v[0] * math.cos(tur_angle) - v[1] * math.sin(tur_angle),
@@ -54,7 +55,7 @@ class Game(object):
                 rotated, fill='black')
 
     def start(self):
-        tank = Tank(self)
+        tank = Tank(self, random_color(), random_color())
         self.add_tank(tank)
         tank.tread_target['l'] = 50
         tank.tread_target['r'] = 40
@@ -70,6 +71,15 @@ class Game(object):
             self.draw_tanks()
             time.sleep(1 / 60)
             delta = time.perf_counter() - start
+
+
+
+def random_color():
+    """Returns the string of a random color for use with tkinter."""
+    r = random.randint(0, 255)
+    g = random.randint(0, 255)
+    b = random.randint(0, 255)
+    return '#{:02X}{:02X}{:02X}'.format(r, g, b)
 
 
 def main():
