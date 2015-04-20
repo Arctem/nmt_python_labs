@@ -5,6 +5,9 @@ class Tank(object):
     tread_max = 50
     turret_speed = 30
     width = 10
+    #first row is left half of tank, second is right half
+    tank_shape = [[2, 2], [3, 2], [3, 3], [-3, 3], [-3, 2], [-2, 2],
+        [-2, -2], [-3, -2], [-3, -3], [3, -3], [3, -2], [2, -2]]
 
     def __init__(self, parent):
         self.parent = parent
@@ -16,6 +19,7 @@ class Tank(object):
         self.cooldown = 0
         self.tread_speed = {'l': 0, 'r': 0}
         self.tread_target = {'l': 0, 'r': 0}
+        self.shape = list(map(lambda p: [4 * p[0], 4 * p[1]], Tank.tank_shape))
 
     def step(self, delta):
         #Update tread speed

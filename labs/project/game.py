@@ -27,7 +27,10 @@ class Game(object):
     def draw_tanks(self):
         for tank in self.tanks:
             x, y = tank.pos['x'], tank.pos['y']
+            r = tank.facing
 
+            #use of drawing_map is to help prevent flicker due to how
+            #tkinter.Canvas handles buffering
             if 'facing' in self.drawing_map[tank]:
                 self.canvas.delete(self.drawing_map[tank]['facing'])
             self.drawing_map[tank]['facing'] = self.canvas.create_line(x, y, 
@@ -35,8 +38,13 @@ class Game(object):
 
             if 'body' in self.drawing_map[tank]:
                 self.canvas.delete(self.drawing_map[tank]['body'])
-            self.drawing_map[tank]['body'] = self.canvas.create_rectangle(
-                x - 10, y - 10, x + 10, y + 10)
+            #self.drawing_map[tank]['body'] = self.canvas.create_rectangle(
+                #x - 10, y - 10, x + 10, y + 10)
+            rotated = list(map(lambda v: [
+                x + v[0] * math.cos(r) - v[1] * math.sin(r),
+                y + v[0] * math.sin(r) + v[1] * math.cos(r)
+                ], tank.shape))
+            self.drawing_map[tank]['body'] = self.canvas.create_polygon(rotated)
 
     def start(self):
         tank = Tank(self)
