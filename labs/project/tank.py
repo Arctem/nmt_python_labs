@@ -3,11 +3,12 @@ import math
 class Tank(object):
     tread_accel = 20
     tread_max = 50
-    turret_speed = 30
+    turret_speed = 30 / 180 * math.pi
     width = 10
     #first row is left half of tank, second is right half
     tank_shape = [[2, 2], [3, 2], [3, 3], [-3, 3], [-3, 2], [-2, 2],
         [-2, -2], [-3, -2], [-3, -3], [3, -3], [3, -2], [2, -2]]
+    turret_shape = [[0, 0], [1, 1], [4, 0], [1, -1]]
 
     def __init__(self, parent):
         self.parent = parent
@@ -20,11 +21,15 @@ class Tank(object):
         self.tread_speed = {'l': 0, 'r': 0}
         self.tread_target = {'l': 0, 'r': 0}
         self.shape = list(map(lambda p: [4 * p[0], 4 * p[1]], Tank.tank_shape))
+        self.turret_shape = list(map(lambda p: [4 * p[0], 4 * p[1]],
+            Tank.turret_shape))
 
     def step(self, delta):
         #Update tread speed
         self.update_speed(delta)
         self.move_tank(delta)
+
+        self.move_turret(delta)
 
         #handle gun firing
 
@@ -36,7 +41,7 @@ class Tank(object):
             change = max(-self.tread_accel, change)
             change = min(self.tread_accel, change)
             change *= delta
-            
+
             self.tread_speed[i] += change
             self.tread_speed[i] = max(-self.tread_max, self.tread_speed[i])
             self.tread_speed[i] = min(self.tread_max, self.tread_speed[i])
@@ -67,6 +72,25 @@ class Tank(object):
 
         print(self.facing, self.pos)
 
+    def move_turret(self, delta):
+        #enforce bounds
+        self.turret_facing %= 2 * math.pi
+        self.turret_target %= 2 * math.pi
+
+        change = self.turret_target - self.turret_facing
+        if change > math.pi:
+            change = 2 * math.pi - change
+
+        change = max(-self.turret_speed, change)
+        change = min(self.turret_speed, change)
+        change *= delta
+        self.turret_facing += change
+
+    #value should be given in degrees
+    def set_turret_target(self, target):
+        self.turret_target = target / 180 * math.pi
 
     def set_pos(self, pos):
-        self.pos = pos
+        if not self.pos:
+            self.pos = {}
+        self.pos['x'], self.pos['y'] = pos
