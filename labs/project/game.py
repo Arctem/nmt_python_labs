@@ -75,13 +75,21 @@ class Game(object):
                         start_arc -= tank.turret_facing / math.pi * 180
 
                     if sensor in tmp_map[tank]:
-                        self.canvas.delete(tmp_map[tank][sensor])
-                    tmp_map[tank][sensor] = self.canvas.create_arc(
-                        (x - sensor.size, y - sensor.size,
-                        x + sensor.size, y + sensor.size),
-                        start=start_arc, extent=sensor.width,
-                        outline='black',
-                        fill=tank.primary_color if sensor.active else None)
+                        #we can just move these to avoid flicker.
+                        self.canvas.coords(tmp_map[tank][sensor],
+                            (x - sensor.size, y - sensor.size,
+                            x + sensor.size, y + sensor.size),)
+                        self.canvas.itemconfig(tmp_map[tank][sensor],
+                            start=start_arc, extent=sensor.width,
+                            outline='black',
+                            fill=tank.primary_color if sensor.active else '')
+                    else:
+                        tmp_map[tank][sensor] = self.canvas.create_arc(
+                            (x - sensor.size, y - sensor.size,
+                            x + sensor.size, y + sensor.size),
+                            start=start_arc, extent=sensor.width,
+                            outline='black',
+                            fill=tank.primary_color if sensor.active else '')
 
     def check_arc(self, sensor, tank):
         start = -tank.facing / math.pi * 180 + sensor.direction -\
