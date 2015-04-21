@@ -199,7 +199,7 @@ def main():
     canvas.pack()
 
     game = Game(canvas)
-    for i in range(5):
+    for i in range(10):
         game.add_tank(SampleTank())
     game.start()
 

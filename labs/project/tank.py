@@ -38,27 +38,43 @@ class Tank(object):
     def ai(self, delta):
         pass
 
-    ###FUNCTIONS TO BE USED BY AI###
+    ###METHODS TO BE USED BY AI###
     def turret_ready(self):
         """Returns true if the turret can be fired again."""
         return self.time_since_shot > self.cooldown
 
     def fire(self, should_fire=True):
+        """Indicate whether the gun should fire."""
         self.firing = should_fire
 
     def set_speed(self, tread, speed):
+        """Set the desired speed of the given tread."""
         if tread not in ['l', 'r']:
             raise InvalidTreadID
         else:
             self.tread_target[tread] = speed
 
+    def get_speed(self, tread):
+        """Return the current speed (not target) of the given tread."""
+        if tread not in ['l', 'r']:
+            raise InvalidTreadID
+        else:
+            return self.tread_speed[tread]
+
     def read_sensor(self, sensor_num):
+        """Return whether the numbered sensor is active."""
         return self.sensors[sensor_num].active
 
     def set_turret_target(self, target):
         """Tells the turret to turn to the given angle. Expects degrees."""
         self.turret_target = target / 180 * math.pi
-    ###END OF FUNCTIONS TO BE USED BY AI###
+
+    def get_turret_angle(self):
+        """Returns the current angle of the turret relative to the tank.
+        Value is in degrees.
+        """
+        return self.turret_facing / math.pi * 180
+    ###END OF METHODS TO BE USED BY AI###
 
 
     def step(self, delta):
