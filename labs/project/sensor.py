@@ -4,3 +4,4 @@ class Sensor(object):
         self.width = width
         self.size = size
         self.tracking = tracking
+        self.active = False

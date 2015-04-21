@@ -20,9 +20,6 @@ class Game(object):
 
 
     def add_tank(self, tank):
-        tank.set_pos((100, 100))
-        tank.facing = 0
-        tank.set_turret_target(120)
         self.tanks.append(tank)
         for i in self.drawing_map:
             self.drawing_map[i][tank] = {}
@@ -30,6 +27,9 @@ class Game(object):
     def step(self, delta):
         for tank in self.tanks:
             tank.step(delta)
+        for tank in self.tanks:
+            for sensor in tank.sensors:
+                sensor.active = self.check_arc(sensor, tank)
 
     def draw_tanks(self):
         """Handle drawing of all things related to tanks."""
@@ -79,13 +79,55 @@ class Game(object):
                     tmp_map[tank][sensor] = self.canvas.create_arc(
                         (x - sensor.size, y - sensor.size,
                         x + sensor.size, y + sensor.size),
-                        start=start_arc, extent=sensor.width)
+                        start=start_arc, extent=sensor.width,
+                        outline='black',
+                        fill=tank.primary_color if sensor.active else None)
+
+    def check_arc(self, sensor, tank):
+        start = -tank.facing / math.pi * 180 + sensor.direction -\
+            sensor.width / 2
+        if sensor.tracking:
+            start -= tank.turret_facing / math.pi * 180
+
+        #convert to radians and normalize
+        start = start / 180 * math.pi
+        start %= 2 * math.pi
+
+        for t in self.tanks:
+            if t is tank:
+                continue
+            else:
+                x1, y1 = t.pos['x'], t.pos['y']
+                x2, y2 = tank.pos['x'], tank.pos['y']
+                if abs(x1 + self.XSIZE - x2) < abs(x1 - x2):
+                    x1 += self.XSIZE
+                if abs(y1 + self.YSIZE - y2) < abs(y1 - y2):
+                    y1 += self.YSIZE
+
+
+                dist = math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+                angle = math.atan2(y1 - y2, x1 - x2)
+                diff = (angle - start) % (2 * math.pi)
+                if dist < sensor.size and diff < (sensor.width / 180 * math.pi):
+                    return True
+        return False
 
     def start(self):
         tank = Tank(self, random_color(), random_color())
         self.add_tank(tank)
         tank.tread_target['l'] = 50
+        tank.tread_target['r'] = 50
+        tank.set_pos((100, 100))
+        tank.facing = 0
+        tank.set_turret_target(120)
+
+        tank = Tank(self, random_color(), random_color())
+        self.add_tank(tank)
+        tank.tread_target['l'] = 40
         tank.tread_target['r'] = 40
+        tank.set_pos((50, 100))
+        tank.facing = 0
+        tank.set_turret_target(300)
 
         t = threading.Thread(target=self.loop)
         t.start()
