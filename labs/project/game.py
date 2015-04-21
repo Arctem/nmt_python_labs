@@ -26,6 +26,7 @@ class Game(object):
             self.drawing_map[i][tank] = {}
 
     def step(self, delta):
+        self.handle_shooting()
         for tank in self.tanks:
             tank.step(delta)
         self.check_collisions(delta)
@@ -93,6 +94,15 @@ class Game(object):
                                 start=start_arc, extent=sensor.width,
                                 outline='black',
                                 fill=tank.primary_color if sensor.active else '')
+
+                    #draw shooting things
+                    if 'shot' in tmp_map[tank]:
+                        self.canvas.delete(tmp_map[tank]['shot'])
+                    if tank.firing and tank.turret_ready():
+                        tmp_map[tank]['shot'] = self.canvas.create_line(
+                            x, y, x + tank.turret_range * math.cos(tur_angle),
+                            y + tank.turret_range * math.sin(tur_angle),
+                            width=3.0)
                 else:
                     #if tank is dead, draw explosion and remove other items
                     if 'body' in tmp_map[tank]:
@@ -102,6 +112,8 @@ class Game(object):
                     for sensor in tank.sensors:
                         if sensor in tmp_map[tank]:
                             self.canvas.delete(tmp_map[tank][sensor])
+                    if 'shot' in tmp_map[tank]:
+                        self.canvas.delete(tmp_map[tank]['shot'])
                     if 'corpse' not in tmp_map[tank]:
                         translation = list(map(lambda v: (x + v[0], y + v[1]),
                             tank.dead_shape))
@@ -153,6 +165,24 @@ class Game(object):
                     if dist < t1.radius + t2.radius:
                         t1.kill()
                         t2.kill()
+
+    def handle_shooting(self):
+        for t1 in self.tanks:
+            if not t1.alive or not (t1.firing and t1.turret_ready()):
+                continue
+            tur_angle = t1.facing + t1.turret_facing
+            x1, y1 = t1.pos['x'], t1.pos['y'] #origin of shot
+            x2 = x1 + t1.turret_range * math.cos(tur_angle)
+            y2 = y1 + t1.turret_range * math.sin(tur_angle)
+            for t2 in self.tanks:
+                if not t2.alive or t1 is t2:
+                    continue
+                else:
+                    x3, y3 = t2.pos['x'], t2.pos['y'] #target of shot
+                    if math.hypot(x3 - x1, y3 - y1) < t2.radius or\
+                        math.hypot(x3 - x2, y3 - y2) < t2.radius:
+                        t2.kill()
+
 
     def place_tanks(self):
         for i, tank in enumerate(self.tanks):

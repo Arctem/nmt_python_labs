@@ -9,6 +9,7 @@ class Tank(object):
     turret_speed = 30 / 180 * math.pi
     radius = 12
     cooldown = 2
+    turret_range = 50
     #first row is left half of tank, second is right half
     tank_shape = [[2, 2], [3, 2], [3, 3], [-3, 3], [-3, 2], [-2, 2],
         [-2, -2], [-3, -2], [-3, -3], [3, -3], [3, -2], [2, -2]]
@@ -79,6 +80,7 @@ class Tank(object):
 
     def step(self, delta):
         self.time_since_shot += delta
+        self.firing = False
         self.ai(delta)
 
         self.update_speed(delta)

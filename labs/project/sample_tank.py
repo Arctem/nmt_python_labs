@@ -9,7 +9,7 @@ class SampleTank(Tank):
     def ai(self, delta):
         self.set_turret_target(0)
         if self.turret_ready() and self.read_sensor(1):
-            self.fire(True)
+           self.fire(True)
 
         #avoid running into things
         if self.read_sensor(0):
