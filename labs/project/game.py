@@ -4,7 +4,7 @@ import threading
 import tkinter
 import time
 
-from tank import Tank
+from sample_tank import SampleTank
 
 class Game(object):
     XSIZE = 500
@@ -20,6 +20,7 @@ class Game(object):
 
 
     def add_tank(self, tank):
+        tank.parent = self
         self.tanks.append(tank)
         for i in self.drawing_map:
             self.drawing_map[i][tank] = {}
@@ -188,15 +189,6 @@ class Game(object):
             delta = time.perf_counter() - start
 
 
-
-def random_color():
-    """Returns the string of a random color for use with tkinter."""
-    r = random.randint(0, 255)
-    g = random.randint(0, 255)
-    b = random.randint(0, 255)
-    return '#{:02X}{:02X}{:02X}'.format(r, g, b)
-
-
 def main():
     root = tkinter.Tk()
     canvas = tkinter.Canvas(root, width=Game.XSIZE, height=Game.YSIZE)
@@ -204,7 +196,7 @@ def main():
 
     game = Game(canvas)
     for i in range(5):
-        game.add_tank(Tank(game, random_color(), random_color()))
+        game.add_tank(SampleTank())
     game.start()
 
     tkinter.mainloop()

@@ -1,11 +1,10 @@
 import math
 import random
 
-from sensor import Sensor
-from tankutil import InvalidTreadID
+from tankutil import InvalidTreadID, random_color
 
 class Tank(object):
-    tread_accel = 30
+    tread_accel = 50
     tread_max = 50
     turret_speed = 30 / 180 * math.pi
     radius = 12
@@ -15,14 +14,14 @@ class Tank(object):
         [-2, -2], [-3, -2], [-3, -3], [3, -3], [3, -2], [2, -2]]
     turret_shape = [[0, 0], [1, 1], [4, 0], [1, -1]]
 
-    def __init__(self, parent, primary_color, secondary_color):
-        self.parent = parent
-        self.primary_color = primary_color
-        self.secondary_color = secondary_color
+    def __init__(self):
+        self.primary_color = random_color()
+        self.secondary_color = random_color()
 
+        self.parent = None
         self.pos = None
         self.facing = None
-        self.sensors = [Sensor(0, 30, 100, False), Sensor(0, 10, 50, True)]
+        self.sensors = []
         self.turret_facing = 0
         self.turret_target = 0
         self.time_since_shot = 0
@@ -37,18 +36,7 @@ class Tank(object):
             generate_explosion()))
 
     def ai(self, delta):
-        self.set_turret_target(0)
-        if self.turret_ready() and self.read_sensor(1):
-            self.fire(True)
-
-        #avoid running into things
-        if self.read_sensor(0):
-            self.set_speed('l', -30)
-            self.set_speed('r', -30)
-        else:
-            self.set_speed('l', 40)
-            self.set_speed('r', 35)
-
+        pass
 
     ###FUNCTIONS TO BE USED BY AI###
     def turret_ready(self):
@@ -120,7 +108,7 @@ class Tank(object):
         while self.pos['y'] > self.parent.YSIZE:
             self.pos['y'] -= self.parent.YSIZE
 
-        print(self.facing, self.pos)
+        #print(self.facing, self.pos)
 
     def move_turret(self, delta):
         #enforce bounds
