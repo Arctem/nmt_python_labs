@@ -123,7 +123,7 @@ class Game(object):
     def start(self):
         tank = Tank(self, random_color(), random_color())
         self.add_tank(tank)
-        tank.tread_target['l'] = 35
+        tank.tread_target['l'] = 39
         tank.tread_target['r'] = 40
         tank.set_pos((100, 100))
         tank.facing = 0
@@ -132,10 +132,18 @@ class Game(object):
         tank = Tank(self, random_color(), random_color())
         self.add_tank(tank)
         tank.tread_target['l'] = 40
-        tank.tread_target['r'] = 35
+        tank.tread_target['r'] = 40
         tank.set_pos((50, 100))
         tank.facing = 0
         tank.set_turret_target(300)
+
+        tank = Tank(self, random_color(), random_color())
+        self.add_tank(tank)
+        tank.tread_target['l'] = 10
+        tank.tread_target['r'] = 0
+        tank.set_pos((50, 100))
+        tank.facing = 0
+        tank.set_turret_target(180)
 
         t = threading.Thread(target=self.loop)
         t.start()
