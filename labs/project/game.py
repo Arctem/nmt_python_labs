@@ -170,6 +170,9 @@ class Game(object):
         for t1 in self.tanks:
             if not t1.alive or not (t1.firing and t1.turret_ready()):
                 continue
+            t1.firing = False
+            t1.time_since_shot = 0
+
             tur_angle = t1.facing + t1.turret_facing
             x1, y1 = t1.pos['x'], t1.pos['y'] #origin of shot
             x2 = x1 + t1.turret_range * math.cos(tur_angle)
@@ -179,8 +182,19 @@ class Game(object):
                     continue
                 else:
                     x3, y3 = t2.pos['x'], t2.pos['y'] #target of shot
-                    if math.hypot(x3 - x1, y3 - y1) < t2.radius or\
-                        math.hypot(x3 - x2, y3 - y2) < t2.radius:
+                    #code based on http://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment
+                    l2 = (x1 - x2) ** 2 + (y1 - y2) ** 2
+                    t = ((x3 - x1) * (x2 - x1) + (y3 - y1) * (y2 - y1)) / l2
+
+                    if t < 0:
+                        dist = math.hypot(x3 - x1, y3 - y1)
+                    elif t > 1:
+                        dist = math.hypot(x3 - x2, y3 - y2)
+                    else:
+                        xtmp = x1 + t * (x2 - x1)
+                        ytmp = y1 + t * (y2 - y1)
+                        dist = math.hypot(xtmp - x3, ytmp - y3)
+                    if dist < t2.radius:
                         t2.kill()
 
 
@@ -217,7 +231,7 @@ class Game(object):
             self.draw_tanks()
             #time.sleep(1 / 60)
             delta = time.perf_counter() - start
-            print(1 / delta)
+            #print(1 / delta)
             # if delta < 1 / 30:
             #     time.sleep(1 / 30 - delta)
             #     delta = time.perf_counter() - start
