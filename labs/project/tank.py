@@ -1,4 +1,5 @@
 import math
+import random
 
 from sensor import Sensor
 
@@ -6,7 +7,7 @@ class Tank(object):
     tread_accel = 20
     tread_max = 50
     turret_speed = 30 / 180 * math.pi
-    width = 10
+    radius = 12
     #first row is left half of tank, second is right half
     tank_shape = [[2, 2], [3, 2], [3, 3], [-3, 3], [-3, 2], [-2, 2],
         [-2, -2], [-3, -2], [-3, -3], [3, -3], [3, -2], [2, -2]]
@@ -23,11 +24,14 @@ class Tank(object):
         self.turret_facing = 0
         self.turret_target = 0
         self.cooldown = 0
+        self.alive = True
         self.tread_speed = {'l': 0, 'r': 0}
         self.tread_target = {'l': 0, 'r': 0}
         self.shape = list(map(lambda p: [4 * p[0], 4 * p[1]], Tank.tank_shape))
         self.turret_shape = list(map(lambda p: [4 * p[0], 4 * p[1]],
             Tank.turret_shape))
+        self.dead_shape = list(map(lambda p: [10 * p[0], 10 * p[1]],
+            generate_explosion()))
 
     def step(self, delta):
         #Update tread speed
@@ -35,8 +39,6 @@ class Tank(object):
         self.move_tank(delta)
 
         self.move_turret(delta)
-
-        #handle gun firing
 
     def update_speed(self, delta):
         for i in 'lr':
@@ -56,8 +58,8 @@ class Tank(object):
     #than moving smoothly in a curve. This should be fine as long as delta is
     #small.
     def move_tank(self, delta):
-        self.facing += (self.tread_speed['r'] - self.tread_speed['l']) /\
-            self.width * delta
+        self.facing += ((self.tread_speed['r'] - self.tread_speed['l']) /
+            self.radius) * delta
 
         self.pos['x'] += (self.tread_speed['r'] + self.tread_speed['l']) *\
             math.cos(self.facing) * delta
@@ -99,3 +101,14 @@ class Tank(object):
         if not self.pos:
             self.pos = {}
         self.pos['x'], self.pos['y'] = pos
+
+    def kill(self):
+        self.alive = False
+
+def generate_explosion():
+    explosion = []
+    for i in range(16):
+        i *= math.pi / 8
+        dist = random.random() * math.sqrt(2) + 1
+        explosion.append([dist * math.cos(i), dist * math.sin(i)])
+    return explosion
