@@ -153,30 +153,27 @@ class Game(object):
                         t1.kill()
                         t2.kill()
 
+    def place_tanks(self):
+        for i, tank in enumerate(self.tanks):
+            placed = False
+            while not placed:
+                pos = (random.randint(0, self.XSIZE),
+                    random.randint(0, self.YSIZE))
+                acceptable = True
+
+                for t in self.tanks[:i]:
+                    dist = math.sqrt((pos[0] - t.pos['x']) ** 2 +
+                        (pos[1] - t.pos['y']) ** 2)
+                    if dist < (tank.radius + t.radius) * 1.5:
+                        acceptable = False
+
+                if acceptable:
+                    placed = True
+                    tank.set_pos(pos)
+                    tank.facing = random.random() * math.pi * 2
+
     def start(self):
-        tank = Tank(self, random_color(), random_color())
-        self.add_tank(tank)
-        tank.tread_target['l'] = 39
-        tank.tread_target['r'] = 40
-        tank.set_pos((100, 100))
-        tank.facing = 0
-        tank.set_turret_target(120)
-
-        tank = Tank(self, random_color(), random_color())
-        self.add_tank(tank)
-        tank.tread_target['l'] = 40
-        tank.tread_target['r'] = 40
-        tank.set_pos((50, 100))
-        tank.facing = 0
-        tank.set_turret_target(300)
-
-        tank = Tank(self, random_color(), random_color())
-        self.add_tank(tank)
-        tank.tread_target['l'] = 10
-        tank.tread_target['r'] = 5
-        tank.set_pos((100, 150))
-        tank.facing = 0
-        tank.set_turret_target(180)
+        self.place_tanks()
 
         t = threading.Thread(target=self.loop)
         t.start()
@@ -187,7 +184,7 @@ class Game(object):
             start = time.perf_counter()
             self.step(delta)
             self.draw_tanks()
-            time.sleep(1 / 60)
+            #time.sleep(1 / 60)
             delta = time.perf_counter() - start
 
 
@@ -206,6 +203,8 @@ def main():
     canvas.pack()
 
     game = Game(canvas)
+    for i in range(5):
+        game.add_tank(Tank(game, random_color(), random_color()))
     game.start()
 
     tkinter.mainloop()

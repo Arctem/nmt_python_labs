@@ -2,12 +2,14 @@ import math
 import random
 
 from sensor import Sensor
+from tankutil import InvalidTreadID
 
 class Tank(object):
-    tread_accel = 20
+    tread_accel = 30
     tread_max = 50
     turret_speed = 30 / 180 * math.pi
     radius = 12
+    cooldown = 2
     #first row is left half of tank, second is right half
     tank_shape = [[2, 2], [3, 2], [3, 3], [-3, 3], [-3, 2], [-2, 2],
         [-2, -2], [-3, -2], [-3, -3], [3, -3], [3, -2], [2, -2]]
@@ -23,7 +25,8 @@ class Tank(object):
         self.sensors = [Sensor(0, 30, 100, False), Sensor(0, 10, 50, True)]
         self.turret_facing = 0
         self.turret_target = 0
-        self.cooldown = 0
+        self.time_since_shot = 0
+        self.firing = False
         self.alive = True
         self.tread_speed = {'l': 0, 'r': 0}
         self.tread_target = {'l': 0, 'r': 0}
@@ -33,14 +36,54 @@ class Tank(object):
         self.dead_shape = list(map(lambda p: [10 * p[0], 10 * p[1]],
             generate_explosion()))
 
+    def ai(self, delta):
+        self.set_turret_target(0)
+        if self.turret_ready() and self.read_sensor(1):
+            self.fire(True)
+
+        #avoid running into things
+        if self.read_sensor(0):
+            self.set_speed('l', -30)
+            self.set_speed('r', -30)
+        else:
+            self.set_speed('l', 40)
+            self.set_speed('r', 35)
+
+
+    ###FUNCTIONS TO BE USED BY AI###
+    def turret_ready(self):
+        """Returns true if the turret can be fired again."""
+        return self.time_since_shot > self.cooldown
+
+    def fire(self, should_fire=True):
+        self.firing = should_fire
+
+    def set_speed(self, tread, speed):
+        if tread not in ['l', 'r']:
+            raise InvalidTreadID
+        else:
+            self.tread_target[tread] = speed
+
+    def read_sensor(self, sensor_num):
+        return self.sensors[sensor_num].active
+
+    def set_turret_target(self, target):
+        """Tells the turret to turn to the given angle. Expects degrees."""
+        self.turret_target = target / 180 * math.pi
+    ###END OF FUNCTIONS TO BE USED BY AI###
+
+
     def step(self, delta):
-        #Update tread speed
+        self.time_since_shot += delta
+        self.ai(delta)
+
         self.update_speed(delta)
         self.move_tank(delta)
 
         self.move_turret(delta)
 
     def update_speed(self, delta):
+        """Update tread speed."""
         for i in 'lr':
             change = self.tread_target[i] - self.tread_speed[i]
 
@@ -92,10 +135,6 @@ class Tank(object):
         change = min(self.turret_speed, change)
         change *= delta
         self.turret_facing += change
-
-    #value should be given in degrees
-    def set_turret_target(self, target):
-        self.turret_target = target / 180 * math.pi
 
     def set_pos(self, pos):
         if not self.pos:
