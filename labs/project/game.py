@@ -106,7 +106,7 @@ class Game(object):
 
 
                 dist = math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
-                angle = math.atan2(y1 - y2, x1 - x2)
+                angle = math.atan2(y2 - y1, x1 - x2)
                 diff = (angle - start) % (2 * math.pi)
                 if dist < sensor.size and diff < (sensor.width / 180 * math.pi):
                     return True
@@ -115,8 +115,8 @@ class Game(object):
     def start(self):
         tank = Tank(self, random_color(), random_color())
         self.add_tank(tank)
-        tank.tread_target['l'] = 50
-        tank.tread_target['r'] = 50
+        tank.tread_target['l'] = 35
+        tank.tread_target['r'] = 40
         tank.set_pos((100, 100))
         tank.facing = 0
         tank.set_turret_target(120)
@@ -124,7 +124,7 @@ class Game(object):
         tank = Tank(self, random_color(), random_color())
         self.add_tank(tank)
         tank.tread_target['l'] = 40
-        tank.tread_target['r'] = 40
+        tank.tread_target['r'] = 35
         tank.set_pos((50, 100))
         tank.facing = 0
         tank.set_turret_target(300)
