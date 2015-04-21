@@ -1,7 +1,7 @@
 import math
 import random
 
-from tankutil import InvalidTreadID, random_color
+from tankutil import InvalidTreadID, random_color, generate_explosion
 
 class Tank(object):
     tread_accel = 50
@@ -131,11 +131,3 @@ class Tank(object):
 
     def kill(self):
         self.alive = False
-
-def generate_explosion():
-    explosion = []
-    for i in range(16):
-        i *= math.pi / 8
-        dist = random.random() * math.sqrt(2) + 1
-        explosion.append([dist * math.cos(i), dist * math.sin(i)])
-    return explosion

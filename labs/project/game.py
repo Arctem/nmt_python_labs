@@ -187,6 +187,10 @@ class Game(object):
             self.draw_tanks()
             #time.sleep(1 / 60)
             delta = time.perf_counter() - start
+            print(1 / delta)
+            # if delta < 1 / 30:
+            #     time.sleep(1 / 30 - delta)
+            #     delta = time.perf_counter() - start
 
 
 def main():
