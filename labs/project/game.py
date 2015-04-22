@@ -243,6 +243,8 @@ def main():
     canvas.pack()
 
     game = Game(canvas)
+
+    ###ADD YOUR TANKS HERE###
     for i in range(10):
         game.add_tank(SampleTank())
     game.start()
