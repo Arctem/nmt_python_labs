@@ -76,12 +76,30 @@ an import at the start of the file in order to be able to access your tanks from
 other files.
 
 \subsubsection{tank.py}
+\texttt{tank.py} contains \pythoninlin{class Tank}, which includes all the
+methods and attributes needed for general functionality of tanks. All of your
+custom tanks should inherit from \pythoninline{Tank}. \emph{You should not edit
+this file whatsoever.} Each tank has a large collection of attributes that
+control its behavior. Most of these you should not touch, but for some of the
+required tanks you may need to change the values of specific attributes in
+your custom constructor.
 
+For your tanks, you will need to redefine
+\pythoninline{ai(self, delta)}, which is the method called each simulation step
+to determine what the tank should do. Inside of this method, the only other
+methods you should call are those in the section of \texttt{tank.py} labeled
+``\texttt{METHODS TO BE USED BY AI}''. They allow you to set the desired speed
+of the tank treads, the desired angle of the turret, and whether the tank should
+fire. They also allow you to check the current status of the treads, turret, and
+the sensors (described in Section\ref{subsubsec:sensor}). Not using these
+methods will result in your tank not behaving properly, as properties such as
+tread acceleration, max speed, and turret speed may be ignored.
 
 \subsubsection{tankutil.py}
 
 
 \subsubsection{sensor.py}
+\label{subsubsec:sensor}
 
 
 \subsubsection{sample\_tank.py}
