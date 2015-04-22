@@ -88,6 +88,10 @@ the sensors (described in Section\ref{subsubsec:sensor}). Not using these
 methods will result in your tank not behaving properly, as properties such as
 tread acceleration, max speed, and turret speed may be ignored.
 
+You should also redefine \pythonline{__init__} to specify the tank's sensors as
+well as any other attributes that may differ from the default tank (left to your
+discretion).
+
 \subsubsection{tankutil.py}
 \texttt{tankutil.py} contains a few miscellaneous functions used by the other
 files. It is relatively inconsequential and you won't need to use it, though it
@@ -161,32 +165,58 @@ in \texttt{tank.py}. Each of your tanks should override, at the very least,
 the \pythoninline{__init__} and \pythoninline{ai(self, delta)} methods of
 the parent class.
 
+You will be graded primarily on code quality, so remember to follow PEP-8 and
+to document everything! Each tank file should give an overview of how its logic
+works and why you made it work that way.
+
 \begin{ex}[README.txt]
-%description of tanks and notes for grader
+You should have a README file briefly describing the logic behind each of your
+tanks. If you changed anything in the given files besides the main() of
+\texttt{game.py}, mention it here and explain why. Mention some changes you
+found that made tanks more or less successful.
 \end{ex}
 
 \begin{ex}[coward.py]
-%runs away from others
+This tank is nervous and doesn't like social interaction. It should do its best
+to avoid all interaction with other tanks and evade them as much as possible.
 \end{ex}
 
 \begin{ex}[charger.py]
-%aggressively pursues anything it sees
+This tank is very enthusiastic to show you how well its turret works! It should
+chase down any tank it sees and give them a demonstration of how well its gun
+works!\footnote{By shooting them.} If the gun isn't ready, it should try to stay
+away from others so as not to reveal that the gun is not completely reliable.
 \end{ex}
 
 \begin{ex}[turret.py]
-%can't move, aims at enemies
+This tank got its treads stuck in the mud. It should never move at all and
+should purely aim its turret at anyone coming near, shooting them when they
+get close enough.
 \end{ex}
 
 \begin{ex}[elephant.py]
-%bigger, slower, harder to kill
+The Elephant is a new experimental heavily armored tank. It is far slower and
+larger than the other tanks while also being harder to kill.
+
+To accomplish this, you will need to change some of the default tank attributes,
+namely shape, radius, tread\_accel, and tread\_max. You will also need to
+redefine \pythoninline{kill(self)}, which is called whenever a tank is shot
+or runs into another tank.
 \end{ex}
 
 \begin{ex}[mouse.py]
-%smaller and faster
+The Mouse is a new experimental hyper fast tank. It is far more agile and
+petite than the other tanks, attempting to succeed by dodging around other
+tanks.
+
+Similarly to with the Elephant, you will need to change some of the default tank
+attributes.
 \end{ex}
 
 \begin{ex}[custom.py]
-%your choice
+Finally, design your own custom tank that works however you wish. Try to give it
+an AI that lets it combine the strategies of the other tanks in a way the makes
+it better than all of them!
 \end{ex}
 
 
