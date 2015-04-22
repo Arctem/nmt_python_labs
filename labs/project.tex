@@ -179,6 +179,9 @@ found that made tanks more or less successful.
 \begin{ex}[coward.py]
 This tank is nervous and doesn't like social interaction. It should do its best
 to avoid all interaction with other tanks and evade them as much as possible.
+Remember, this means more than simply going backwards if something is in front
+of it -- think about what your tank should do if there's one tank in front of it
+and another behind it!
 \end{ex}
 
 \begin{ex}[charger.py]
@@ -190,8 +193,9 @@ away from others so as not to reveal that the gun is not completely reliable.
 
 \begin{ex}[turret.py]
 This tank got its treads stuck in the mud. It should never move at all and
-should purely aim its turret at anyone coming near, shooting them when they
-get close enough.
+should move its turret, shooting anyone who comes near. It should also attempt
+to track tanks as they approach if there isn't anyone currently in range to be
+shot at.
 \end{ex}
 
 \begin{ex}[elephant.py]
