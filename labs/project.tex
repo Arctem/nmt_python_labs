@@ -115,7 +115,33 @@ the sensors for tanks. \pythoninline{Sensor} contains nothing but a connstructor
 and a few attributes. The actual logic for sensors resides inside
 \texttt{game.py}.
 
-\subsubsection{sample\_tank.py}
+A sensor is defined from four attributes:
+\begin{description}
+\item[Direction] A value in degrees that determines what direction the sensor
+    is facing. This direction will indicate the middle of the sensor. 0 means
+    directly in front of the tank, while 180 means directly behind the tank.
+\item[Width] A value in degrees that determines how wide the sensor is. The
+    sensor will detect tanks in half this number of degrees in each direction
+    from the direction chosen above.
+\item[Size] How far the sensor reaches. This distance is in pixels. For
+    reference, the default range of a tank's gun is 50.
+\item[Tracking] Whether or not the sensor will move as the gun's turret moves.
+    This value should be either \pythoninline{True} or \pythoninline{False}. If
+    this value is \pythoninline{False}, then the sensor's direction will be
+    relative to the tank's current facing. If this value is \pythoninline{True},
+    then the sensor's direction will be relative to the turret. This allows you
+    to have sensors that, for example, check if there is something to the left
+    or right of the turret that could be shot if the turret was moved slightly.
+\end{description}
+
+The sensors for your custom tanks should be created inside of the tank's
+constructor. To check whether the sensor has detected a tank, use
+\pythoninline{self.read_sensor(num)}, where \texttt{num} is the index of the
+sensor inside of \pythoninline{self.sensors}.
+
+Each sensor will be shown graphically, and if it detects a tank then it will be
+filled in with the color of its parent tank.
+
 
 
 \pagebreak
