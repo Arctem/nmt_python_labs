@@ -40,7 +40,7 @@ You will be required to extend the tank class to three separate
 \pythoninline{ai} function to provide new behavior for your tank
 type. Additionally, you are able to add sensors to your tank (to
 better your AI experience). To understand this, see
-\texttt{sample_tank.py}. In the \pythoninline{__init__} function of
+\texttt{sample\_tank.py}. In the \pythoninline{__init__} function of
 \pythonineline{SampleTank}, two sensors are added to a sensor list. You, as
 tankgineer
 
@@ -125,9 +125,33 @@ constructor. To check whether the sensor has detected a tank, use
 sensor inside of \pythoninline{self.sensors}.
 
 Each sensor will be shown graphically, and if it detects a tank then it will be
-filled in with the color of its parent tank.
+filled in with the color of its parent tank to indicate that it is active.
 
 
+\subsubsection{sample\_tank.py}
+\texttt{sample\_tank.py} is an example of how you might go about making your own
+custom tanks. You are free to edit this file, but your final submissions should
+be in separate files (as described in Section~\ref{subsec:ex}).
+\pythoninline{class SampleTank} defines two methods: \pythoninline{__init__} and
+\pythoninline{ai(self, delta)}. \pythoninline{__init__} is be used to
+define two sensors: one large one that looks for anything in front of the tank
+and one smaller one that follows the turret to check for anything that can be
+shot. It also determines whether the turret will turn clockwise or
+counter-clockwise.
+
+\pythoninline{ai} is used to control the tank's behavior. The first thing this
+tank does is get the current angle of the turret, then set the desired angle to
+be higher or lower, depending on what chosen in the constructor. This results
+in the turret continuously turning in one direction at a constant rate.
+
+Next, the turret reads from sensor 1 and checks if the turret is able to fire.
+Sensor 1 is the smaller sensor that is following the turret. If both values are
+true, then the turret fires.
+
+Finally, sensor 0 is checked. This is the large one in front of the tank. If
+anything is detected, the tank reverses. If not, it continues forward, with the
+left tread at a slightly higher speed than the right one. This results in the
+tank slowly turning to the right.
 
 \pagebreak
 \subsection{Your Mission}
