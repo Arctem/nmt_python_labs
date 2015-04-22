@@ -46,8 +46,8 @@
 \section{Tanks}
 
 \begin{warningbox}{Dirtbags Tanks}
-  This project is inspired by Dirtbags Tanks by Neale Pickett
-  More information is available at \url{http://dirtbags.net/tanks/}.
+  This project is inspired by Dirtbags Tanks by Neale Pickett.
+  More information is available at \url{http://woozle.org/tanks/intro.html}.
 \end{warningbox}
 
 You will be required to extend the tank class to three separate
@@ -59,12 +59,100 @@ better your AI experience). To understand this, see
 \pythonineline{SampleTank}, two sensors are added to a sensor list. You, as
 tankgineer
 
-\begin{ex}[sample_tank.py]
 
-\end{ex}
+\subsection{Project Overview}
+You will be provided with several files comprising the Tank project. This is the
+skeleton of a game involving several tanks. It consists of the files
+\texttt{game.py}, \texttt{sample\_tank.py}, \texttt{sensor.py},
+\texttt{tank.py}, and \texttt{tankutil.py}. For a description of what each of
+these files do, stay here. For a description of your assignment, see
+Section~\ref{subsec:ex}.
+
+\subsubsection{game.py}
+\texttt{game.py} contains two important things: \pythoninline{class Game} and
+the \pythoninline{main()} function of the program. \pythoninline{Game}
+contains the code that controls the interaction between tanks (collision
+detection and firing) as well as the drawing of objects to the
+\pythoninlin{tkinter} window. You should not have to worry about how it does
+these things.
+
+The \pythoninline{main()} function, however, you will need to edit, slightly.
+This is where you will add your own tanks to the \pythoninline{Game} instance
+that is already being created. To do this, simply imitate how the
+\pythoninline{SampleTank}s are being added. Note that you will also need to add
+an import at the start of the file in order to be able to access your tanks from
+other files.
+
+\subsubsection{tank.py}
+\texttt{tank.py} contains \pythoninlin{class Tank}, which includes all the
+methods and attributes needed for general functionality of tanks. All of your
+custom tanks should inherit from \pythoninline{Tank}. \emph{You should not edit
+this file whatsoever.} Each tank has a large collection of attributes that
+control its behavior. Most of these you should not touch, but for some of the
+required tanks you may need to change the values of specific attributes in
+your custom constructor.
+
+For your tanks, you will need to redefine
+\pythoninline{ai(self, delta)}, which is the method called each simulation step
+to determine what the tank should do. Inside of this method, the only other
+methods you should call are those in the section of \texttt{tank.py} labeled
+``\texttt{METHODS TO BE USED BY AI}''. They allow you to set the desired speed
+of the tank treads, the desired angle of the turret, and whether the tank should
+fire. They also allow you to check the current status of the treads, turret, and
+the sensors (described in Section\ref{subsubsec:sensor}). Not using these
+methods will result in your tank not behaving properly, as properties such as
+tread acceleration, max speed, and turret speed may be ignored.
+
+\subsubsection{tankutil.py}
+
+
+\subsubsection{sensor.py}
+\label{subsubsec:sensor}
+
+
+\subsubsection{sample\_tank.py}
 
 
 \pagebreak
+\subsection{Your Mission}
+\label{subsec:ex}
+You will be submitting 6 tanks that inherit from the \pythoninline{Tank} class
+in \texttt{tank.py}. Each of your tanks should override, at the very least,
+the \pythoninline{__init__} and \pythoninline{ai(self, delta)} methods of
+the parent class.
+
+\begin{ex}[README.txt]
+%description of tanks and notes for grader
+\end{ex}
+
+\begin{ex}[coward.py]
+%runs away from others
+\end{ex}
+
+\begin{ex}[charger.py]
+%aggressively pursues anything it sees
+\end{ex}
+
+\begin{ex}[turret.py]
+%can't move, aims at enemies
+\end{ex}
+
+\begin{ex}[elephant.py]
+%bigger, slower, harder to kill
+\end{ex}
+
+\begin{ex}[mouse.py]
+%smaller and faster
+\end{ex}
+
+\begin{ex}[custom.py]
+%your choice
+\end{ex}
+
+
+\subsection{Bug Bounty}
+
+
 \section{Submitting}
 You should submit your code as a tarball. It should contain all files
 used in the exercises for this lab. The submitted file should be named

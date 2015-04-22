@@ -6,7 +6,7 @@ from tankutil import InvalidTreadID, random_color, generate_explosion
 class Tank(object):
     tread_accel = 50
     tread_max = 50
-    turret_speed = 30 / 180 * math.pi
+    turret_speed = 180 / 180 * math.pi
     radius = 12
     cooldown = 2
     turret_range = 50
@@ -134,8 +134,10 @@ class Tank(object):
         self.turret_target %= 2 * math.pi
 
         change = self.turret_target - self.turret_facing
+        if change < 0:
+            change += 2 * math.pi
         if change > math.pi:
-            change = 2 * math.pi - change
+            change = change - 2 * math.pi
 
         change = max(-self.turret_speed, change)
         change = min(self.turret_speed, change)
