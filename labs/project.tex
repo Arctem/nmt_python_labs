@@ -104,11 +104,16 @@ methods will result in your tank not behaving properly, as properties such as
 tread acceleration, max speed, and turret speed may be ignored.
 
 \subsubsection{tankutil.py}
-
+\texttt{tankutil.py} contains a few miscellaneous functions used by the other
+files. It is relatively inconsequential and you won't need to use it, though it
+may be useful to look at if you want to set custom colors for your tanks.
 
 \subsubsection{sensor.py}
 \label{subsubsec:sensor}
-
+\texttt{sensor.py} contains \pythoninlin{class Sensor}, which is used to define
+the sensors for tanks. \pythoninline{Sensor} contains nothing but a connstructor
+and a few attributes. The actual logic for sensors resides inside
+\texttt{game.py}.
 
 \subsubsection{sample\_tank.py}
 
