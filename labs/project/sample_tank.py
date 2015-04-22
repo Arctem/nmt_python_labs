@@ -2,12 +2,14 @@ from sensor import Sensor
 from tank import Tank
 
 class SampleTank(Tank):
+    """Dumb tank that goes in circles and avoids hitting things."""
+    
     def __init__(self):
         Tank.__init__(self)
         self.sensors = [Sensor(0, 30, 100, False), Sensor(0, 10, 50, True)]
 
     def ai(self, delta):
-        self.set_turret_target(90)
+        self.set_turret_target(self.get_turret_angle() + 12)
         if self.turret_ready() and self.read_sensor(1):
            self.fire(True)
 
