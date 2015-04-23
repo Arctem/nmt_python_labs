@@ -139,9 +139,8 @@ class Tank(object):
         if change > math.pi:
             change = change - 2 * math.pi
 
-        change = max(-self.turret_speed, change)
-        change = min(self.turret_speed, change)
-        change *= delta
+        change = max(-self.turret_speed * delta, change)
+        change = min(self.turret_speed * delta, change)
         self.turret_facing += change
 
     def set_pos(self, pos):
