@@ -73,7 +73,7 @@ class Game(object):
 
                     #draw all sensors
                     for sensor in tank.sensors:
-                        start_arc = -tank.facing / math.pi * 180 +\
+                        start_arc = -tank.facing / math.pi * 180 -\
                             sensor.direction - sensor.width / 2
                         if sensor.tracking:
                             start_arc -= tank.turret_facing / math.pi * 180
@@ -123,7 +123,7 @@ class Game(object):
 
 
     def check_arc(self, sensor, tank):
-        start = -tank.facing / math.pi * 180 + sensor.direction -\
+        start = -tank.facing / math.pi * 180 - sensor.direction -\
             sensor.width / 2
         if sensor.tracking:
             start -= tank.turret_facing / math.pi * 180
