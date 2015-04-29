@@ -10,8 +10,9 @@ class Game(object):
     XSIZE = 500
     YSIZE = 500
 
-    def __init__(self, canvas):
+    def __init__(self, canvas, fixed_delta = None):
         self.canvas = canvas
+        self.fixed_delta = fixed_delta
         self.tanks = []
         self.drawing_map = {}
         for x in [-self.XSIZE, 0, self.XSIZE]:
@@ -227,14 +228,9 @@ class Game(object):
         delta = 0
         while True:
             start = time.perf_counter()
-            self.step(delta)
+            self.step(self.fixed_delta or delta)
             self.draw_tanks()
-            #time.sleep(1 / 60)
             delta = time.perf_counter() - start
-            #print(1 / delta)
-            # if delta < 1 / 30:
-            #     time.sleep(1 / 30 - delta)
-            #     delta = time.perf_counter() - start
 
 
 def main():
