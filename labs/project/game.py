@@ -10,7 +10,8 @@ class Game(object):
     XSIZE = 500
     YSIZE = 500
 
-    def __init__(self, canvas, fixed_delta = None):
+    def __init__(self, root, canvas, fixed_delta = None):
+        self.root = root
         self.canvas = canvas
         self.fixed_delta = fixed_delta
         self.tanks = []
@@ -221,16 +222,18 @@ class Game(object):
     def start(self):
         self.place_tanks()
 
-        t = threading.Thread(target=self.loop)
-        t.start()
+        self.delta = 0
+        self.loop()
+        #t = threading.Thread(target=self.loop)
+        #t.start()
 
     def loop(self):
-        delta = 0
-        while True:
-            start = time.perf_counter()
-            self.step(self.fixed_delta or delta)
-            self.draw_tanks()
-            delta = time.perf_counter() - start
+        start = time.perf_counter()
+        self.step(self.fixed_delta or self.delta)
+        self.draw_tanks()
+        self.delta = time.perf_counter() - start
+        self.root.after(1, self.loop)
+
 
 
 def main():
@@ -238,7 +241,7 @@ def main():
     canvas = tkinter.Canvas(root, width=Game.XSIZE, height=Game.YSIZE)
     canvas.pack()
 
-    game = Game(canvas)
+    game = Game(root, canvas)
 
     ###ADD YOUR TANKS HERE###
     for i in range(10):
