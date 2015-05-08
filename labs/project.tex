@@ -48,7 +48,7 @@ Section~\ref{subsec:ex}.
 the \pythoninline{main()} function of the program. \pythoninline{Game}
 contains the code that controls the interaction between tanks (collision
 detection and firing) as well as the drawing of objects to the
-\pythoninlin{tkinter} window. You should not have to worry about how it does
+\pythoninline{tkinter} window. You should not have to worry about how it does
 these things.
 
 The \pythoninline{main()} function, however, you will need to edit, slightly.
@@ -59,7 +59,7 @@ an import at the start of the file in order to be able to access your tanks from
 other files.
 
 \subsubsection{tank.py}
-\texttt{tank.py} contains \pythoninlin{class Tank}, which includes all the
+\texttt{tank.py} contains \pythoninline{class Tank}, which includes all the
 methods and attributes needed for general functionality of tanks. All of your
 custom tanks should inherit from \pythoninline{Tank}. \emph{You should not edit
 this file whatsoever.} Each tank has a large collection of attributes that
@@ -78,7 +78,7 @@ the sensors (described in Section\ref{subsubsec:sensor}). Not using these
 methods will result in your tank not behaving properly, as properties such as
 tread acceleration, max speed, and turret speed may be ignored.
 
-You should also redefine \pythonline{\_\_init\_\_} to specify the tank's sensors as
+You should also redefine \pythoninline{\_\_init\_\_} to specify the tank's sensors as
 well as any other attributes that may differ from the default tank (left to your
 discretion).
 
@@ -89,8 +89,8 @@ may be useful to look at if you want to set custom colors for your tanks.
 
 \subsubsection{sensor.py}
 \label{subsubsec:sensor}
-\texttt{sensor.py} contains \pythoninlin{class Sensor}, which is used to define
-the sensors for tanks. \pythoninline{Sensor} contains nothing but a connstructor
+\texttt{sensor.py} contains \pythoninline{class Sensor}, which is used to define
+the sensors for tanks. \pythoninline{Sensor} contains nothing but a constructor
 and a few attributes. The actual logic for sensors resides inside
 \texttt{game.py}.
 
