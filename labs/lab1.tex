@@ -22,6 +22,7 @@
 
 \begin{document}
 
+\pagenumbering{roman}
 \maketitle
 
 \hrule
@@ -46,7 +47,7 @@ Programs})
 ``I choose to believe what I was programmed to believe.''
 \end{quotation}
 \begin{flushright}
-  --- Robot (\textit{Futurama})
+  --- Robot Villager \#2 (\textit{Futurama})
 \end{flushright}
 
 \hrule
@@ -60,7 +61,8 @@ environment. In this lab, you will learn how to
   \item log into a computer of the Tech Computer Center (ITC),
   \item learn how to use and navigate Linux,
   \item learn to use Python as an interpreter,
-  \item edit and run a few short Python programs, as well as
+  \item edit and run a few short Python programs
+  \item learn the basics of Python flow control, and
   \item create a tarball and submit it to Canvas.
 \end{enumerate*}
 
@@ -102,8 +104,15 @@ the name of a file, a function, or some action you need to perform.
 % \item Create a Tar archive of your lab submission and submit it to the lab email address.
 % \end{enumerate*}
 
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagenumbering{arabic}
 \section{Linux Environment}
 \label{sec:linux}
 
@@ -120,7 +129,7 @@ activated.
 
 If your computer is currently booted with Windows, restart it and select Fedora
 (a variety of Linux) as your operating system. Please note that using Linux is a
-\emph{requirement} for this class.
+\emph{requirement} for this lab.
 
 \subsection{Open a Terminal}
 In Linux, you will perform most actions from the command line. In order to do
@@ -554,7 +563,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 \subsection{Summary}
 \label{sec:linux.res}
 
-Commands to know for next lab:
+Commands to know for future labs:
 \begin{multicols}{3}
 \begin{itemize}
   \item cd
@@ -580,12 +589,6 @@ Commands to know for next lab:
     \url{http://infohost.nmt.edu/tcc/help/pubs/unixcrib/}.
   \item man pages.
 \end{itemize}
-
-\begin{warningbox}{Quiz}
-  We will likely have a quiz about the above commands at the beginning of lab 2.
-  You do not have to know all the possible options and arguments to these
-  commands, just the basic usage outlined above.
-\end{warningbox}
 
 \pagebreak
 \section{Python as a Calculator}
@@ -933,28 +936,418 @@ There are more functions in the math library, you can find them documented here:
 \end{center}
 
 \pagebreak
+\section{Boolean Logic}
+%Cover basic boolean logic with comparisons and whatnot, then use those to drive if and else statements.
+A common activity when programming is determining if some value is true or
+false. For example, checking if a variable is less than five or if the user
+entered the correct password. Any statement that can be resolved into a true or
+a false value is called a boolean statement, the value it resolves into (true or
+false) is called a boolean value.
 
+\begin{pyconcode}
+>>> x = 5
+>>> print(x < 3)
+False
+>>> print(x < 6)
+True
+\end{pyconcode}
+
+In the above example, the boolean values are \pythoninline{True} and
+\pythoninline{False}. The boolean statements are \pythoninline{x < 3} and 
+\pythoninline{x < 6}. 
+
+In addition to \pythoninline{<}, we can also test for other
+inequalities.
+
+\begin{pyconcode}
+>>> x = 3; y = 6
+>>> print(x < y)
+True
+>>> print(x > y)
+False
+>>> print(x <= y)
+True
+>>> print(x >= y)
+False
+\end{pyconcode}
+
+Note that \pythoninline{<=} means ``less than or equal to'' and \pythoninline{>=}
+means ``greater than or equal to''. 
+
+Finally, we can test if two values are equal
+(\pythoninline{==}) or not equal (\pythoninline{!=}).
+
+\begin{pyconcode}
+>>> x = 3; y = 3; z = 4
+>>> print(x == y)
+True
+>>> print(x == z)
+False
+>>> print(y != 5)
+True
+>>> print(y != x)
+False
+\end{pyconcode}
+
+It is important to remember that we use \pythoninline{=} to assign a value to a variable and \pythoninline{==} to test if two values are equal.
+
+We can also combine boolean statements using \pythoninline!and! and \pythoninline!or!
+as such:
+
+\begin{pyconcode}
+>>> x = 3; y = 5; z = 8
+>>> print(x < y and y < z)
+True
+>>> print(x > y and y < z)
+False
+>>> print(x > y or y < z)
+True
+>>> print(True and False)
+False
+>>> print(True or False)
+True
+\end{pyconcode}
+
+If you combine two boolean statements that are true using \pythoninline!and!, the
+result will be true. In all other cases the result is false. Since 
+\pythoninline!x < y! is true and \pythoninline!y < z! is true, we have that 
+\pythoninline!x < y and y < z! is true. See Table~\ref{tab:truth} for a ``truth
+table'' showing what combinations are true or false -- it should make sense
+though.
+
+In addition to this, there is the \pythoninline!not! operator to negate a boolean
+statement. You can also put a boolean statement in parentheses to do more
+complicated combinations:
+
+\begin{pyconcode}
+>>> x = 3; y = 5; z = 8
+>>> print(not True)
+False
+>>> print(not (x > y and y < z))
+True
+\end{pyconcode}
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{ll | lll}
+    \toprule
+    \pythoninline!A! & \pythoninline!B! & \pythoninline!A and B! & \pythoninline!A or B! & \pythoninline!not A! \\
+    \midrule
+    True & True & True & True & False\\
+    True & False & False & True & False\\
+    False & True & False & True & True\\
+    False & False & False & False & True \\
+    \bottomrule
+  \end{tabular}
+  \caption{Truth table}
+  \label{tab:truth}
+\end{table}
+
+\subsection{Summary}
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{ll}
+    \toprule
+    Comparison operator & What it tests\\
+    \midrule
+    \pythoninline!a < b! & is $a$ less than $b$ \\
+    \pythoninline!a > b! & is $a$ greater than $b$ \\
+    \pythoninline!a <= b! & is $a$ less than or equal to $b$ \\
+    \pythoninline!a >= b! & is $a$ greater than or equal to $b$ \\
+    \pythoninline!a == b! & is $a$ equal to $b$ \\
+    % because pythoninline is retarded and doesn't work right in tables.
+    \pythoninline{a != b} & is $a$ not equal to $b$ \\
+    \bottomrule
+  \end{tabular}
+  \caption{Comparison operators}
+  \label{tab:cmpops}
+\end{table}
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{ll}
+    \toprule
+    Boolean combination operator & What it does \\
+    \midrule
+    \pythoninline!a and b! & true if both $a$ and $b$ are true \\
+    \pythoninline!a or b! & true if either $a$ or $b$ are true or both\\
+    \pythoninline!not a! & true if $a$ is false\\
+    \bottomrule
+  \end{tabular}
+  \caption{Combination operators}
+  \label{tab:cmbops}
+\end{table}
+
+\pagebreak
+\section{Conditional Statements}
+
+The primary use for boolean values is to determine which branch in your code to
+follow. This is accomplished using \pythoninline{if} and \pythoninline{else}, as
+shown in the program below. \pythoninline!elif! will be introduced later in this
+lab. All three -- \pythoninline!if!, \pythoninline!elif!, and
+\pythoninline!else! -- are generally called \emph{conditional statements}.
+
+\begin{python3code}
+x = 1
+y = float(input("Please input a number: "))
+
+if x == y:
+    print("x and y are equal.")
+else:
+    print("x and y are not equal.")
+print("When do I print?")
+\end{python3code}
+
+Try running the above program, putting in different numbers for
+\pythoninline{y}.  If the number input is 1, then the first
+\pythoninline!print()!
+statement will output. If not, then the second one will. The third one will
+output regardless.
+
+The way this works is very simple: either the first
+\pythoninline!print()!
+statement runs or the second \pythoninline!print()! statement runs, but never
+both. Which one runs is determined by Python: if the boolean statement (called
+\emph{condition}) following the \pythoninline!if! evaluates to
+\pythoninline!True!, then Python will run the indented code following the
+\pythoninline!if! and then skip until after the indented code of the
+\pythoninline!else!.
+
+However, if the \emph{condition} evaluates to \pythoninline!False!, then the
+indented code following the \pythoninline!else! is run and Python skips the
+indented code between \pythoninline!if! and \pythoninline!else!.
+
+It is important to note that the code that follows \pythoninline!if! or
+\pythoninline!else! \textbf{must} be indented.
+
+See what happens when you run the code below compared to the other piece of code
+above:
+
+\begin{python3code}
+x = 1
+y = float(input("Please input a number: "))
+
+if x == y:
+    print("x and y are equal.")
+else:
+    print("x and y are not equal.")
+    print("When do I print?")
+\end{python3code}
+
+There are many uses for conditional statements, such as to ensure that a given
+variable is not negative:
+
+\begin{python3code}
+x = float(input("Please input a number: "))
+
+if x < 0:
+    x = 0 # sets x equal to 0 if x was less than 0
+
+print("x = " + str(x))
+\end{python3code}
+
+You can perform other operations as part of a boolean statement, such as this
+convenient way to check if a number is even:
+
+\begin{python3code}
+x = 5
+
+if x % 2 == 0:
+    print("x is even.")
+else:
+    print("x is odd.")
+\end{python3code}
+
+Remember that \pythoninline!%! 
+is the modulus operator: it gives you the remainder of the division.
+
+When using \pythoninline{if} and \pythoninline{else}, you will generally be
+dealing with user input. This is done using the function \pythoninline{input()},
+which you can see used in the above examples. When you use
+\pythoninline{input()} it will display whatever string you pass to it, then
+pause while it waits for the user to type something and then hit enter. It will
+give whatever was entered as a string back to the variable that it is assigned
+to. We will be learning more about strings in future labs, but for now just know
+that strings are basically groups of letters, like what you pass to a
+\pythoninline{print()} statement, and are declared by surrounding something in
+quotes.
+
+% PROBLEMS HERE HERE HERE
+% ``float cannot run'' -- they dont know what that means.
+It is important to understand the order that things happen in a statement like
+
+\pythoninline{x = float(input("Please input a number: "))}
+
+Though both \pythoninline{x = } and \pythoninline{float} appear first in the line, the
+first statement to execute is \pythoninline{input}. This is because
+\pythoninline{input} is inside of \pythoninline{float}'s parentheses and is therefore
+being passed as a parameter to \pythoninline{float}. Therefore, \pythoninline{float}
+cannot run until \pythoninline{input} is finished and has returned a value to be
+used by \pythoninline{float}. Similarly, \pythoninline{x = } will not happen until
+\pythoninline{float} has finished converting the value into a number.
+
+If you are comparing strings, then you do not need to go through the extra step
+of converting the user's input into a number:
+
+\begin{python3code}
+password = "hunter2"
+
+user_pass = input("Please input the password: ")
+
+if password == user_pass:
+    print("Password is correct. Welcome!")
+else:
+    print("Invalid password.")
+\end{python3code}
+
+In some cases, it could be that there are multiple passwords. Try running the
+following code:
+
+\begin{python3code}
+password = "hunter2"
+also_password = "hunter3"
+another_password = "hunter4"
+user_pass = input("Please input the password: ")
+
+if password == user_pass:
+    print("Welcome, administrator.")
+elif user_pass == also_password:
+    print("Welcome, administrator.")
+elif user_pass == another_password:
+    print("Welcome, manager.")
+else:
+    print("Wrong password.")
+\end{python3code}
+
+This introduced you to the \pythoninline!elif! statement: When the condition
+following \pythoninline!if! turns out to be false, Python will then check the first
+\pythoninline!elif! statement. If that condition turns out to be true, it will run
+the code following that \pythoninline!elif! statement or move on to the next
+\pythoninline!elif!. Only if none of the conditions turned out to be true, the code
+following \pythoninline!else! will be run.
+
+If you remember the boolean logic section, this problem could have been solved
+more efficiently: two passwords are resulting in the same code. You could
+rewrite the code like this:
+
+\begin{python3code}
+user_pass = input("Please input the password: ")
+
+if user_pass == "hunter2" or user_pass == "hunter3":
+    print("Welcome, administrator.")
+elif user_pass == "hunter4":
+    print("Welcome, manager.")
+else:
+    print("Wrong password.")
+\end{python3code}
+
+You can also nest the statements you just learned about. Try running the
+following code, trying multiple values:
+
+\begin{python3code}
+x = float(input("Enter a value for x: "))
+y = float(input("Enter a value for y: "))
+
+if x > 0:
+    if y > 0:
+        print("Both are greater than 0.")
+    else:
+        print("x is greater than 0, but y is smaller or equal to 0")
+else:
+    print("x is smaller or equal to 0.")
+\end{python3code}
+
+\pagebreak
+\subsection{Summary}
+
+\begin{itemize}
+  \item Conditional statements look like this:
+
+    \begin{python3code}
+if condition:
+    # some code to run
+elif othercondition:
+    # some other code to run
+else:
+    # alternative code if no condition was met
+    \end{python3code}
+
+  \item The \pythoninline!elif! and \pythoninline!else! sections are both
+    optional.
+  \item \pythoninline!elif! statements can be repeated as many times as you
+    want.
+  \item The conditions must be boolean statements.
+  \item The code inside \pythoninline!if!, \pythoninline!elif!, and
+    \pythoninline!else! statements must be indented. Python will either show an
+    error or behave very weirdly if you do not indent the code.
+  \item You can nest conditional statements.
+\end{itemize}
+
+\pagebreak
+\section{Turtle}
+
+%Cover how to use turtle, give an example of a program to use a while loop to draw a hexagon or something.
+Some of the exercises for this lab will use Turtle, a simple graphics library.
+It can be accessed by using \pythoninline{import turtle} in Python. From there you
+have access to a group of functions for controlling the ``turtle'', a simple
+arrow that moves around at your command, drawing a line where it goes. The
+primary commands to control the turtle are shown in Table \ref{tab:turtle}.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{ll}
+    \toprule
+    Operator & What it does\\
+    \midrule
+    \pythoninline!turtle.forward(x)! & move the turtle forward \pythoninline!x! pixels \\
+    \pythoninline!turtle.backward(x)! & move the turtle backward \pythoninline!x! pixels \\
+    \pythoninline!turtle.left(x)! & turn the turtle left \pythoninline!x! degrees \\
+    \pythoninline!turtle.right(x)! & turn the turtle right \pythoninline!x! degrees \\
+    \bottomrule
+  \end{tabular}
+  \caption{Turtle commands}
+  \label{tab:turtle}
+\end{table}
+
+It should be noted that giving a negative value to these commands is allowed, so
+\pythoninline!turtle.left(-30)! is equivalent to \pythoninline!turtle.right(30)!.
+
+Combining these commands will let you draw potentially complex shapes. For
+example, the following program will draw a hexagon.
+
+\begin{python3code}
+import turtle
+
+turtle.forward(100)
+turtle.left(60)
+turtle.forward(100)
+turtle.left(60)
+turtle.forward(100)
+turtle.left(60)
+turtle.forward(100)
+turtle.left(60)
+turtle.forward(100)
+turtle.left(60)
+turtle.forward(100)
+turtle.left(60)
+\end{python3code}
+
+However, this code is a bit longer than it needs to be. Let's clean it up a bit using \pythoninline{while}.
+
+\begin{python3code}
+import turtle
+
+counter = 0
+
+while counter < 6:
+    turtle.forward(100)
+    turtle.left(angle)
+    counter = counter + 1
+\end{python3code}
+
+\pagebreak
 \section{Exercises}
-
-\begin{ex}[conversions.py] Download \texttt{conversions.py}. It is a simple
-  Python program for converting temperatures from Celsius to Kelvin. We would
-  like to modify it to also convert the temperatures to Fahrenheit. Currently,
-  the output of the program is something like this:
-
-  \begin{verbatimcode}
-Please input a temperature in Celsius: 10
-Kelvin temperature: 283.15
-  \end{verbatimcode}
-
-  Add code (you should not need to modify the existing lines, though you are free
-  to) so that its output is as follows:
-
-  \begin{verbatimcode}
-Please input a temperature in Celsius: 10
-Kelvin temperature: 283.15
-Fahrenheit temperature: 50.0
-  \end{verbatimcode}
-\end{ex}
 
 \begin{ex}[shapes.py] Download \texttt{shapes.py}. It is the start of a Python
   program to display information about shapes. Currently it gets the of the
@@ -975,6 +1368,102 @@ The surface area of the box is 88.0
 The volume of the box is 48.0
   \end{verbatimcode}
 \end{ex}
+
+\begin{ex}[conversions.py] Download \texttt{conversions.py}. It is a simple
+  Python program for converting temperatures from Celsius to Kelvin. We would
+  like to modify it to also convert the temperatures to Fahrenheit. Currently,
+  the output of the program is something like this:
+
+  \begin{verbatimcode}
+Please input a temperature in Celsius: 10
+Kelvin temperature: 283.15
+  \end{verbatimcode}
+
+  Modify the code so that it asks the user whether to convert to Kelvin or
+  Fahrenheit. It should look like this when it is run:
+
+    \begin{verbatimcode}
+Please input the temperature in Celsius: 10
+Please choose Kelvin (K) or Fahrenheit (F): F
+You chose Fahrenheit.
+Fahrenheit temperature: 50.0
+    \end{verbatimcode}
+
+    \begin{verbatimcode}
+Please input the temperature in Celsius: 10
+Please choose Kelvin (K) or Fahrenheit (F): K
+You chose Kelvin.
+Kelvin temperature: 283.15
+    \end{verbatimcode}
+    
+    You should also print an error if they do not enter F or K as asked:
+
+    \begin{verbatimcode}
+Please input the temperature in Celsius: 10
+Please choose Kelvin (K) or Fahrenheit (F): E
+You entered a letter I do not recognize.
+    \end{verbatimcode}
+\end{ex}
+
+\begin{ex}[calculator.py] Write a small calculator that can compute arcsin, arccos,
+    arctan and square root of a number. Use \pythoninline!math.sqrt()!,
+    \pythoninline!math.asin()!, \pythoninline!math.acos()!, and
+    \pythoninline!math.atan()!. Remember to import \pythoninline!math!.
+
+    \emph{Make sure to check for each function that the input is valid.} For
+    example, for square root the input cannot be negative. For arcsin, the input
+    must be between -1 and 1 inclusive. Try to figure out what the input must be
+    for arccos and arctan yourself!
+
+    \begin{verbatimcode}
+Enter a number to use: 16
+Which operation? sqrt (s), arcsin (a), arccos (c), arctan (t): s
+The square root of 16 is 4.0.
+    \end{verbatimcode}
+
+    \begin{verbatimcode}
+Enter a number to use: 16
+Which operation? sqrt (s), arcsin (a), arccos (c), arctan (t): a
+16 is not in the domain of arcsin!
+    \end{verbatimcode}
+
+\end{ex}
+
+\begin{ex}[star.py] Write a program that uses turtle to draw a shape like
+	the picture below.
+  
+    \begin{center}
+      \includegraphics[width=1.0in]{img/star}
+      % Picture and exercise taken from
+      % http://openbookproject.net/thinkcs/python/english3e/hello_little_turtles.html
+      % public under GNU license
+      % Copyright of Peter Wentworth, Jeffrey Elkner, Allen B. Downey and Chris Meyers
+    \end{center}
+
+    Hint: Try this on paper first. (It does not matter if the turtle is still
+    displayed once it is drawn.)
+  \end{ex}
+
+  \begin{ex}[polygons.py] Write a program that takes in the name of a shape -
+  	triangle, square, or pentagon - and draws the chosen regular shape. A regular
+  	polygon is one where each side is the same length and is corner is the same
+  	angle. You only need to allow the above shapes. If anything else is entered,
+  	print out an error message.
+
+    Input:
+
+    \begin{verbatimcode}
+What shape? triangle
+    \end{verbatimcode}
+
+    Output:
+    \begin{center}
+%      \vspace{-10mm}
+      \includegraphics[width=2.0in]{img/triangle}
+%    \vspace{-10mm}
+    \end{center}
+\end{ex}
+
 
 \pagebreak
 \section{Submitting}
