@@ -1333,18 +1333,9 @@ turtle.forward(100)
 turtle.left(60)
 \end{python3code}
 
-However, this code is a bit longer than it needs to be. Let's clean it up a bit using \pythoninline{while}.
-
-\begin{python3code}
-import turtle
-
-counter = 0
-
-while counter < 6:
-    turtle.forward(100)
-    turtle.left(angle)
-    counter = counter + 1
-\end{python3code}
+You may notice that when you run a turtle program it closes the moment it is done
+drawing. In order to keep the picture up after the end of the program, you can add
+\pythoninline!turtle.done()! to the end of your file.
 
 \pagebreak
 \section{Exercises}
