@@ -1,4 +1,4 @@
-% LAB 2: Basic Flow Control
+% LAB 2: Basic Loops and Functions
 % 
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
@@ -7,21 +7,27 @@
 % Fall 2014
 \documentclass[11pt]{cselabheader}
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 2: Basic Flow Control}
-\title{Lab 2: Basic Flow Control}
+\fancyhead[R]{Lab 2: Basic Loops and Functions}
+\title{Lab 2: Basic Loops and Functions}
 
 \begin{document}
 
 \pagenumbering{roman}
 \maketitle
 
-\hrule
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.85\textwidth]{img/xkcd_python.png}
+  \caption{xkcd 353: Python (Source: \url{http://xkcd.com/353})}
+\end{figure}
 
+\pagebreak
+\hrule
 \begin{quotation}
-``When you come to a fork in the road, take it."
+``Only ugly languages become popular. Python is the exception.''
 \end{quotation}
 \begin{flushright}
---- Attributed to Yogi Berra
+  --- Donald Knuth
 \end{flushright}
 
 \begin{quotation}
@@ -42,27 +48,26 @@ a crucial matter that decides between success and failure?''
 
 \hrule
 
-\section*{Introduction}
+\section{Introduction}
 \addcontentsline{toc}{section}{Introduction}
 
-The purpose of this lab is to introduce you to the fundamentals of what
-programmers call flow control. In the previous lab, we showed you how to do
-basic calculations in Python. For example, we had you convert temperature from
-Celsius to Fahrenheit and Kelvin.
+The purpose of this lab is to expand upon the fundamentals of flow control.
+In the previous lab, we showed you how to do basic calculations in Python,
+like converting temperature from Celsius to Fahrenheit and Kelvin, as well
+as using \pythoninline!if!, \pythoninline!elif!, and \pythoninline!else! to
+execute different code depending on what values are given to the program.
 
-What if the user of your conversion program wanted to have only one conversion
-and you did not know which? We have to be able to give the user a choice. In the
-previous lab, you learned about the \pythoninline!input()! function that let you
-``ask'' the user of your program a question. In this lab, you will learn how to
-use \pythoninline!if!, \pythoninline!else!, and \pythoninline!elif! to have the program
-choose one action out of multiple actions; for example, whether to convert to
-Kelvin or to Fahrenheit.
+In some of the exercises (like \pythoninline!star.py!), you likely needed to
+repeat lines of code in order to draw your shape correctly. Hopefully this struck
+you as something that would be nice to avoid: it might be sustainable with fairly
+simple shapes, but what if you wanted a 100-pointed star? Or what if you wanted to
+have the user type in a number to determine how many sides they wanted their shape
+to have? Clearly, repeating lines of code is not sustainable. In this lab, you will
+learn about the \pythoninline!while! statement to help with code you want to run
+several times.
 
-Sometimes, you also want to be able to repeat a calculation for different
-values. For example, you want to calculate the square root of all numbers
-between 1 and 100. To do this, you do not have to actually repeat writing the
-calculation in your code, there is the \pythoninline!while! statement to help you
-repeat code.
+We will also be learning about functions, which allow you to group your code
+into conveniently reusable chunks.
 
 \pagebreak
 
@@ -181,6 +186,36 @@ while it does not make sense to compare strings with numbers.
     Not coincidentally, these type names are also the names of the casting
     functions.
 \end{itemize}
+
+\pagebreak
+\section{Making Calculations Shorter}
+\label{sec:calc}
+
+We showed you simple Python operators such as \pythoninline{+},
+\pythoninline{-}, \pythoninline{*}, \pythoninline{%},
+etc in lab 1. There is a small extension to these that you can use to update a
+variable:
+
+\begin{pyconcode}
+>>> x = 5
+>>> x += 3 # same as x = x + 3
+>>> x
+8
+\end{pyconcode}
+
+The available assignment operators are:
+\begin{multicols}{2}
+\begin{itemize}
+  \item \pythoninline{+=} -- addition
+  \item \pythoninline{-=} -- subtraction
+  \item \pythoninline{*=} -- multiplication
+  \item \pythoninline{/=} -- division
+  \item \pythoninline{//=} -- integer division
+  \item \pythoninline{%=} -- remainder
+  \item \pythoninline{**=} -- exponentiation
+\end{itemize}
+\end{multicols}
+They each correspond to the non-assignment version.
 
 
 \pagebreak
@@ -312,8 +347,8 @@ while x > 0:
     print(x)
 \end{python3code}
 
-\pythoninline{if} and \pythoninline{else} can be combined with \pythoninline{while}, as
-shown below:
+\pythoninline{if} and \pythoninline{else} can be nested within
+\pythoninline{while}, as shown below:
 
 \begin{python3code}
 x = 10
@@ -462,13 +497,194 @@ while condition:
 \end{itemize}
 
 \pagebreak
-\subsection{Exercises}
+\section{\protect\pythoninline{def}: Functions}
+\label{sec:funcs}
+
+So far, we have used functions such as \pythoninline{print()} and
+\pythoninline{math.sqrt()}, but we have not yet written our own functions.
+
+Before we dive into that, let's talk about why to write functions. Some reasons:
+\begin{itemize}
+  \item Instead of writing the same code again, we can just call a function
+    containing the code again. (Functions are \emph{reusable}.)
+  \item Functions allow us to break our programs into many smaller pieces. This
+    also allows us to easily think about each small piece in detail.
+  \item Functions allow us to test small parts of our programs while not
+    affecting other parts of the program -- this reduces errors in our code.
+\end{itemize}
+
+A Python function is simply a ``container'' for a sequence of Python statements
+that do some task. Usually, a function does one task and one task only, but it
+does it really well. Here's the general form of how to write a function:
+
+\begin{python3code}
+def function_name(arg0, arg1, ...):
+    # block of code
+\end{python3code}
+
+A function can have \emph{zero or more} arguments. For example:
+
+\begin{pyconcode}
+>>> def pirate_noises():
+...     i = 1
+...     while i <= 4:
+...         print("Arr!")
+...         i += 1
+...
+\end{pyconcode}
+
+To call this function:
+
+\begin{pyconcode}
+>>> pirate_noises()
+Arr!
+Arr!
+Arr!
+Arr!
+\end{pyconcode}
+
+To call a function, use its name followed by parentheses which contain
+comma-separated parameters:
+
+\begin{python3code}
+function_name(param0, param1, ...)
+\end{python3code}
+
+\begin{itemize}
+  \item You must use parentheses both in the function definition and the function
+    call, even if there are zero arguments.
+  \item The parameter values are substituted for the corresponding arguments to
+    the function. I.e. the value of parameter param0 is substituted for argument
+    arg0, param1 is substituted for arg1, and so forth.
+\end{itemize}
+
+For example:
+
+\begin{pyconcode}
+>>> def grocer(num_fruits, fruit_kind):
+...     print('Stock: {} cases of {}'.format(num_fruits, fruit_kind))
+...
+>>> grocer(37, 'kale')
+Stock: 37 cases of kale
+>>> grocer(0, 'bananas')
+Stock: 0 cases of bananas
+\end{pyconcode}
+
+\subsection{\protect\pythoninline{return}: Giving back values from a function}
+
+When we used functions from the math module, we were always able to assign the
+result of a function to a variable or to print it. For example:
+
+\begin{pyconcode}
+>>> import math
+>>> x = math.sqrt(16)
+>>> print(x)
+4.0
+\end{pyconcode}
+
+So how do we get a function to give back a value (\emph{return} a value)? We use
+the return statement:
+
+\begin{pyconcode}
+>>> def square(x):
+...     return x**2
+...
+>>> y = square(5)
+>>> print(y)
+25
+>>> square(4.3)
+18.49
+\end{pyconcode}
+
+As soon as a \pythoninline{return} statement is reached, the function stops
+executing and just returns the value given to it. Any subsequent statements that
+are part of the function will be omitted. For example:
+
+\begin{pyconcode}
+>>> def wage(hours, base_rate):
+...     if hours > 40:
+...         ot_pay = (hours - 40) * base_rate * 1.5
+...         return base_rate * 40 + ot_pay
+...     pay = hours * base_rate
+...     return pay
+...
+>>> wage(40, 10)
+400
+>>> wage(50, 10)
+550
+\end{pyconcode}
+
+\begin{itemize}
+  \item You can omit the expression after the return and just use a statement of
+    this form:
+
+    \begin{python3code}
+return
+    \end{python3code}
+
+    In this case, the special value \pythoninline{None} is returned from the
+    function.
+
+  \item If Python executes your function body and never encounters a
+    \pythoninline{return} statement, the effect is the same as a
+    \pythoninline{return} with no value at the end of the function body: the
+    special value \pythoninline{None} is returned.
+\end{itemize}
+
+A function may also call other functions. If we keep using the wage example and
+add the ability to calculate the pay after taxes:
+
+\begin{python3code}
+def wage(hours, base_rate):
+    """Calculate and return weekly pay for a given amount of hours and base rate taking
+    into consideration overtime pay at 1.5 times the given rate."""
+    if hours > 40:
+        ot_pay = (hours - 40) * base_rate * 1.5
+        return base_rate * 40 + ot_pay
+    pay = hours * base_rate
+    return pay
+
+def wage_after_tax(hours, base_rate, tax_rate):
+    """Calculate and return weekly pay after taxes for a given amount of hours and a 
+    base rate with a flat tax rate."""
+    pay = wage(hours, base_rate)
+    return pay * (1 - tax_rate)
+\end{python3code}
+
+\subsection{Summary}
+\label{subsec:funcs.sum}
+
+\begin{itemize}
+  \item Function definition syntax:
+
+    \begin{python3code}
+def function_name(arg0, arg1, ...):
+    # block of code
+    \end{python3code}
+
+    Function call syntax:
+
+    \begin{python3code}
+function_name(param0, param1, ...)
+    \end{python3code}
+
+  \item A function may take zero or more arguments.
+
+  \item A function returns one value. (If the programmer does not specify a
+    value, the special value \pythoninline{None} is returned.)
+
+  \item A good resource: \url{https://docs.python.org/3.4/tutorial/controlflow.html#defining-functions}
+\end{itemize}
+
+\pagebreak
+\section{Exercises}
 \label{subsec:whileex}
 
 \begin{ex}[rps.py] Write a program that reads a character for playing the game of
     rock-paper-scissors. If the character entered by the user is not one of
     ``R'', ``P'', or ``S'', the program keeps on prompting the user to enter a
-    character.
+    character. Once they enter a valid character, print out what they chose
+    and quit.
 
     % http://cs.smith.edu/dftwiki/index.php/CSC111_While_Loop_Exercises
 
@@ -497,17 +713,6 @@ Enter a number to add to the sum >>> exit
 Sum of numbers: 41.75
   \end{verbatimcode}
 \end{ex}
-
-  \begin{ex}[primes.py] Write a program that checks if a number $N$ is prime.
-    You have to ask the user for the number. Remember that a prime number is a
-    number that is divisible only by $1$ and itself.
-
-    A simple approach checks all numbers from $2$ up to $N$.
-
-    Try to improve on the simple approach, though: do we really need to check
-    all those numbers? At which point do you know that you can stop? Remember to
-    \pythoninline!import math!.
-  \end{ex}
 
 \begin{ex}[fizzbuzz.py] Have the user enter a positive integer number. Then,
   print the numbers from 1 to that number each on a line. When the printed
@@ -568,29 +773,57 @@ Not a positive number!
 %    \end{verbatimcode}
 % \end{ex}
 
-However, this code is a bit longer than it needs to be. Let's clean it up a bit using \pythoninline{while}.
+\begin{ex}[calls.py] You buy an international calling card to Germany. The
+  calling card company has some special offers.
 
-\begin{python3code}
-import turtle
+    \begin{enumerate}[(a)]
+      \item If you charge your card with less than \$10, you don't get anything
+        extra.
+      \item For a less than \$25 charge, you get \$3 of extra phone time.
+      \item For a less than \$50 charge, you get \$8 of extra phone time.
+      \item For a less than \$100 charge, you get \$20 of extra phone time.
+      \item For a more than \$100 charge, you get \$25 of extra phone time.
+    \end{enumerate}
 
-counter = 0
+    Write a function that takes the value the user wants to charge and returns
+    the actual value charged.
 
-while counter < 6:
-    turtle.forward(100)
-    turtle.left(angle)
-    counter = counter + 1
-\end{python3code}
+    In your script, include a way for someone running the script to enter values
+    to charge and get the actual value charged.
+
+    Example:
+
+    \begin{verbatimcode}
+Enter value you want to charge >>> 24
+27 dollars were added to your calling card.
+    \end{verbatimcode}
+\end{ex}
 
 
-\pagebreak
-\subsection{Exercises}
-\label{subsec:turtleex}
+\begin{ex}[primes.py] 
+  Write a function that checks if a number $N$ is prime. Your function should
+  take in a single argument (the number to test) and return \pythoninline!True!
+  or \pythoninline!False! depending on whether the number is prime or not.
+
+  Have your program ask the user for the number, then call the function you
+  wrote to check if it is prime. Remember that a prime number is a
+  number that is divisible only by $1$ and itself.
+  
+  A simple approach checks all numbers from $2$ up to $N$.
+
+  Try to improve on the simple approach, though: do we really need to check
+  all those numbers? At which point do you know that you can stop? Remember to
+  \pythoninline!import math!.
+\end{ex}
+
 
   \begin{ex}[polygons2.py] Write a program that takes in a number using
     \pythoninline{input} and then draws a regular polygon with that many sides. A
     regular polygon is one where each side is the same length and each corner is
-    the same angle. For example, the sample code given in the section draws a
-    regular hexagon.
+    the same angle.
+    
+    The code to draw the polygon should be entirely within a function that takes
+    in a single integer as an argument.
 
     Input:
 
@@ -649,7 +882,6 @@ Please enter a direction: stop
 \end{ex}
 
 \pagebreak
-
 \section{Submitting}
 
 You should submit your code as a tarball. It should contain all files
