@@ -1,1212 +1,683 @@
-% LAB 4: Lists and Strings
+% LAB 3: Functions
 %
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
 %
 % Prepared by Russell White and Christopher Koch
-% Fall 2014
-\documentclass[11pt]{cselabheader}
+% Spring 2015
 
-%%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 4: Sequence Types -- Lists, Tuples, Strings}
-\title{Lab 4: Sequence Types -- Lists, Tuples, Strings}
+% - Functions
+%   - Positional and Optional Arguments
+%   - Recursion
+% - Modules
+%   - import statements
+%   - main() boilerplate
+% - Comments and PEP-8 style
+% - Keywords: def
+\documentclass[11pt]{cselabheader}
+\fancyhead[R]{Lab 3: Functions}
+\title{Lab 3: Functions}
+\usepgflibrary{fpu}
+\newcommand{\pas}{\mathop{\mathrm{pascal}}}
 
 \begin{document}
-
-\maketitle
 \pagenumbering{roman}
+\maketitle
+
 \hrule
-
 \begin{quotation}
-``Programming is learned by writing programs.''
+``If you don't think carefully, you might believe that programming is just
+typing statements in a programming language.''
 \end{quotation}
 \begin{flushright}
---- Brian Kernighan
+  --- W. Cunningham
 \end{flushright}
 
 \begin{quotation}
-``The purpose of computing is insight, not numbers.''
+``When you come to a fork in the road, take it."
 \end{quotation}
 \begin{flushright}
---- Richard Hamming, 1962
+--- Attributed to Yogi Berra
 \end{flushright}
 
 \begin{quotation}
-  ``From our own history we learn what man is capable of. For that reason we
-  must not imagine that we are quite different and have become better.''
+``The time you enjoy wasting is not wasted time.''
 \end{quotation}
 \begin{flushright}
-  --- Richard von Weizs\"{a}cker
-%\\\textit{Speech to commemorate end of WW II, May 8 1985}
-% English: http://www.hariguchi.org/yoichi/weizsaecker.html
-% Famous speech by RvW, President of Fed Rep of Germ, for the 
-% commemoration of the 40th anniversary of the end of WWII in
-% Germany on May 8, 1985
-% German: http://www.hdg.de/lemo/html/dokumente/NeueHerausforderungen_redeVollstaendigRichardVonWeizsaecker8Mai1985/index.html
+  --- Bertrand Russell
 \end{flushright}
 \hrule
-
-\section*{Introduction}
-\addcontentsline{toc}{section}{Introduction}
-
-In the first few labs, we showed you how to generally use Python and how to
-have your programs make decisions based on what the user entered. With this
-lab, we will be starting to show you how to do some useful things in Python:
-how to make lists and manipulate them -- sort them, reverse them, combine them.
-We will also show you how to deal with strings. You have seen strings before,
-but we will be showing you how to manipulate them.
-
-\pagebreak
 
 \tableofcontents
 
 \pagebreak
-
 \pagenumbering{arabic}
-\section{Lists}
-%in/not in, slicing, pop, append, len, sum
-One of the most important data types in Python is the list. A list is an ordered
-collection of other values. For example, we might create a list of numbers
-representing data points on a graph or create a list of strings representing
-students in a class. Creating a list is simple. We simply place comma-separated
-values inside square brackets.
 
-\begin{pyconcode}
->>> values = [1, 2, 3, 4, 5]
->>> print(values)
-[1, 2, 3, 4, 5]
-\end{pyconcode}
+\section{Introduction}
+\label{sec:intro}
 
-\subsection{Indices}
-Once we put a value in a list, we can treat the list as a single entity or
-access individual values. In order to access an individual element, we need to
-use the index of the value we want to access. The index is the position of the
-element in the list if we start numbering the elements from 0. When we are
-accessing list elements by index we can use them in any way we might use a
-normal variable.
-
-\begin{pyconcode}
->>> values = [23, 7, 18, 0.23, 91]
->>> print(values[0])
-23
->>> print(values[2])
-18
->>> print(values[3])
-0.23
->>> values[3] = 7.5
->>> print(values[3])
-7.5
->>> print(values)
-[23, 7, 18, 7.5, 91]
->>> values[0] = values[0] + values[1]
->>> print(values)
-[30, 7, 18, 7.5, 91]
-\end{pyconcode}
-
-If we wish, we can use negative array indices to reference elements starting at
-the end of the list. For example, -1 is the last element, -2 is the second to
-last element, and so on.
-
-\begin{pyconcode}
->>> values = [32, 1, 54, -3, 6]
->>> print(values[-1])
-6
->>> print(values[-2])
--3
-\end{pyconcode}
-
-\subsection{Values in Lists}
-We can use an existing variable when creating a list. If we change the value of
-the variable, the value in the list will stay the same.
-
-\begin{pyconcode}
->>> x = 35
->>> k = 19
->>> y = 5
->>> values = [x, k, y]
->>> print(values)
-[35, 19, 5]
->>> x = 1
->>> print(values)
-[35, 19, 5]
-\end{pyconcode}
-
-All values in a list do not need to be the same type. If we want, we can create
-a list with both numbers and strings, although this is usually a poor idea.
-
-\begin{pyconcode}
->>> values = [2, 'hello', 5.3]
->>> print(values)
-[2, 'hello', 5.3]
-\end{pyconcode}
-
-If you want, you can even put a list inside a list!
-
-\begin{pyconcode}
->>> values = [1, 5, 2]
->>> more_values = [7, 'test', values]
->>> print(more_values)
-[7, 'test', [1, 5, 2]]
->>> print(more_values[2])
-[1, 5, 2]
-\end{pyconcode}
-
-Note that, unlike with other variables, changing an element of a list inside
-another list will change both values.
-
-\begin{pyconcode}
->>> values = [1, 5, 2]
->>> more_values = [7, 'test', values]
->>> print(more_values)
-[7, 'test', [1, 5, 2]]
->>> values[2] = 7
->>> print(more_values)
-[7, 'test', [1, 5, 7]]
->>> values = [1, 2]
->>> print(more_values)
-[7, 'test', [1, 5, 7]]
-\end{pyconcode}
-
-You generally will not have to worry about this, though the reason is because we
-are modifying the existing value rather than create a new list. When we reassign
-\pythoninline{values}, it no longer changes the values inside inside
-\pythoninline{more_values}. This is because we are creating a new list for
-\pythoninline{values} rather than modifying the existing list.
-
-\subsection{Testing List Contents}
-A common operation is to test if a list contains a given value. We can do this
-using the \pythoninline{in} keyword. We can also test if a list does not contain a
-value using \pythoninline{not in}.
-
-\begin{pyconcode}
->>> values = [1, 'test', 30, 20]
->>> print(1 in values)
-True
->>> print('test' in values)
-True
->>> print(2 in values)
-False
->>> print(2 not in values)
-True
-\end{pyconcode}
-
-This could be used to simplify the example from Lab 2 involving checking user
-input against multiple valid passwords.
-
-\begin{python3code}
-passwords = ['hunter2', 'hunter3', 'hunter4']
-
-user_in = input('Please enter your password: ')
-
-if user_in in passwords:
-    print('Correct password. Welcome!')
-else:
-    print('Incorrect password.')
-\end{python3code}
-
-\subsection{Slicing}
-Often we will want to make a new list out of part of a larger list. We do this
-using slicing. To do this, we specify the first and last indices we want to
-include in our new list, separated by a colon. The last index is used as a
-bookend -- that is, values up to but not including that index are included in
-the new list. If one of the values is omitted, then Python will act as if the
-most extreme index on that side was enterred. Omitting both values will use the
-full list.
-
-Thus, for a list \pythoninline!L! and two positions (indices) \pythoninline!B! and
-\pythoninline!E! within that list, the expression \pythoninline!L[ B : E ]! produces a
-new list containing the elements in \pythoninline!L! between those two positions
-not including \pythoninline!E!. Notice that \pythoninline!B! and \pythoninline!E! must be
-indices -- whole numbers.
-
-\begin{pyconcode}
->>> L = [1, 2, 3, 4, 5]
->>> print(L[1:3])
-[2, 3]
->>> print(L[3])
-4
-\end{pyconcode}
-
-Note that \pythoninline!L[1:3]! did \emph{not} include \pythoninline!L[3]!. 
-
-You may omit the starting position to slice elements from the beginning of the
-list up to the specified position. You may similarly omit the ending position to
-specify that a slice extends to the end of the list. You can even omit both of
-them to just get a copy of the whole list.
-
-\begin{pyconcode}
->>> L[:3]
-[1, 2, 3]
->>> L[1:]
-[2, 3, 4, 5]
->>> L[:]
-[1, 2, 3, 4, 5]
-\end{pyconcode}
-
-Using slicing allows us to add or delete elements from lists:
-
-\begin{pyconcode}
->>> L = [1, 2, 3, 4, 5]
->>> L[2:4] = [93, 94, 95, 96]
->>> L
-[1, 2, 93, 94, 95, 96, 5]
->>> L[3:6] = []
->>> L
-[1, 2, 93, 5]
-\end{pyconcode}
-
-If we include an additional colon and value, we can include a step size. For
-example, a step size of two will create the list from every other value in the
-original list. A negative step size allows the list to be reversed.
-
-Then, given a list \pythoninline!L! and two positions (indices) \pythoninline!B! and
-\pythoninline!E! as well as a step size \pythoninline!S!, you can use the expression
-\pythoninline!L[ B : E : S]! to obtain the elements of \pythoninline!L! between
-\pythoninline!B! and \pythoninline!E! positions in increments of \pythoninline!S!
-positions.
-
-\begin{pyconcode}
->>> values = [1, 2, 3, 4, 5]
->>> values[::2]
-[1, 3, 5]
->>> values[1:4:2]
-[2, 4]
->>> values[4:1:-1]
-[5, 4, 3]
-\end{pyconcode}
-
-\subsection{List Methods and Functions}
-Many functions exist to help manipulate lists. The first of these is
-\pythoninline{.append()}. This adds a new value onto the end of an existing list.
-
-\begin{pyconcode}
->>> values = [1, 2, 3]
->>> values.append(12)
->>> values.append(123)
->>> print(values)
-[1, 2, 3, 12, 123]
-\end{pyconcode}
-
-\pythoninline{.insert()} also inserts a value, but it allows you to choose where it
-goes. The first argument of the function is the index you want your new value to
-be located. Other values will be moved to make room.
-
-\begin{pyconcode}
->>> values = [1, 2, 3, 4]
->>> values.insert(2, 10)
->>> print(values)
-[1, 2, 10, 3, 4]
-\end{pyconcode}
-
-The \pythoninline{.pop()} function works similarly to accessing list values by
-index, but also removes the element from a list. If given a value, then
-\pythoninline{.pop()} will remove the value at that index. If not, it will remove
-the last value in the list.
-
-\begin{pyconcode}
->>> values = [1, 2, 3, 12, 123]
->>> print(values.pop())
-123
->>> print(values.pop(0))
-1
->>> print(values)
-[2, 3, 12]
-\end{pyconcode}
-
-
-Using \pythoninline{len} returns the length of the list passed to it.
-
-\begin{pyconcode}
->>> values = [1, 2, 3, 12, 123]
->>> print(len(values))
-5
-\end{pyconcode}
-
-\pythoninline{sum} allows the easy summing of every value in a list, so long as
-every value in the list is a number. If any values are not, an error will occur.
-
-\begin{pyconcode}
->>> values = [1, 2, 3, 12, 123]
->>> print(sum(values))
-141
->>> values.append('test')
->>> print(sum(values))
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-TypeError: unsupported operand type(s) for +: 'int' and 'str'
-\end{pyconcode}
-
-\begin{table}[!ht]
-  \centering
-  \begin{tabular}{ll}
-    \toprule
-    Function/method & What it does \\
-    \midrule
-    \pythoninline!lst.append(x)! & appends \pythoninline!x! to \pythoninline!lst! \\
-    \pythoninline!lst.insert(i, x)! & inserts \pythoninline!x! at index \pythoninline!i!
-    in \pythoninline!lst! (moves other elements) \\
-    \pythoninline!x = lst.pop()! & removes last element of \pythoninline!lst! and
-    places it in \pythoninline!x! \\
-    \pythoninline!lst.reverse()! & reverses the order of elements in list
-    \pythoninline!lst! in place\\
-    \pythoninline!lst.sort()! & sort \pythoninline!lst! in place \\
-    \pythoninline!len(lst)! & number of elements in \pythoninline!lst! \\
-    \pythoninline!sum(lst)! & sum the elements of \pythoninline!lst! (only works when
-    \pythoninline!+! works between the elements)\\
-    \bottomrule
-  \end{tabular}
-  \caption{List methods and functions, where \texttt{lst} is a variable that holds a list}
-  \label{tab:lists}
-\end{table}
-
-\subsection{Combining Lists}
-Two lists can be added together in order to combine them into one list.
-
-\begin{pyconcode}
->>> values = [1, 2, 3]
->>> more_values = [3, 2, 1]
->>> combined = values + more_values
->>> print(combined)
-[1, 2, 3, 3, 2, 1]
-\end{pyconcode}
-
-\subsection{Summary}
-
-\begin{itemize}
-  \item A list is created from a series of comma-separated values inside square
-    brackets.  
-  \item An element in an array can be referenced and manipulated
-    using its index. The first element has an index of 0. Negative indices can
-    be used to reference elements from the end of the list, with the last
-    element having an index of -1.
-  \item The \pythoninline{in} keyword can be used to test if a value exists in a
-    list, while \pythoninline!not in! can be used to test if a value does not exist
-    in a list.
-  \item Slicing can be used to create a new list from an existing one.
-  \item See Table~\ref{tab:lists} for functions on lists.
-\end{itemize}
+In the previous lab, we showed you simple control flow and how to repeat a piece
+of code using \pythoninline{while}. In this lab, we will be learning how to
+break a lot of code into smaller, reusable pieces called \emph{functions}.
 
 \pagebreak
-\section{Tuples}
+\section{Modules}
+\label{sec:modules}
 
-Tuples work a lot like lists, except they cannot be modified; they are
-\emph{immutable}. Instead of brackets \pythoninline{[]} we use parentheses
-\pythoninline{()} around the elements.
+A program that is saved in a text file and then run with Python is called a
+\emph{script}. As your programs get longer, you may want to split them into
+multiple files for easier legibility, maintenance, or abstraction. To do this,
+Python supports a way to put definitions (of functions) in a file and use them
+in another script or in the interpreter. A file like this is called a
+\emph{module}. An example for such a module is the math module we have used
+previously. The definitions from a module can be \emph{imported} into other
+scripts.
 
-\begin{pyconcode}
->>> food = ('eggs', 'bananas', 'lemonheads')
->>> food[1]
-'bananas'
->>> food[1:3]
-('bananas', 'lemonheads')
->>> food[1] = 'steak' # tuples are immutable!
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-TypeError: 'tuple' object does not support item assignment
-\end{pyconcode}
-
-Lists and tuples turn out to be \texttt{sequence} data types -- this means they
-support indexing and slicing. We will see below that strings are also a sequence
-type.
-
-We can also define a tuple by simply separating values by commas:
-
-\begin{pyconcode}
->>> food = 'trail mix', 'nothing'
->>> food[0]
-'trail mix'
-\end{pyconcode}
-
-And of course, we can nest tuples and lists interchangably:
-
-\begin{pyconcode}
->>> foo = ([1, 2, 3], [4, 5, (7, 8, 9)], (10, 11))
->>> foo
-([1, 2, 3], [4, 5, (7, 8, 9)], (10, 11))
-\end{pyconcode}
-
-Tuples, like lists, can also be empty. Use \pythoninline{len()} to find the
-length of a tuple:
-
-\begin{pyconcode}
->>> foo = ()
->>> len(foo)
-0
-\end{pyconcode}
-
-We can also \emph{unpack} tuples, which means assigning each element of a tuple
-to a variable. For example:
-
-\begin{pyconcode}
->>> food = 'trail mix', 'nothing'
->>> tylerfood, chrisfood = food
->>> # equivalent to, but shorter than:
-... tylerfood = food[0]
-... chrisfood = food[1]
->>> tylerfood
-'trail mix'
->>> chrisfood
-'nothing'
-\end{pyconcode}
-
-\subsection{Summary}
-
-\begin{itemize}
-  \item Tuples are a like lists, but they are immutable.
-
-  \item Syntax: like lists, but use parentheses \pythoninline{()} instead of
-    brackets \pythoninline{[]}.
-
-  \item Find more documentation about sequence types here:
-
-    \begin{center}
-      \url{https://docs.python.org/3.4/library/stdtypes.html#typesseq}
-    \end{center}
-\end{itemize}
-
-\pagebreak
-\section{Strings}
-
-You have seen strings in Python before. They are sequences of characters
-enclosed by either double quotes or single quotes; for example:
-
-\begin{pyconcode}
->>> s = "I'm a string."
->>> print(s)
-I'm a string.
->>> r = 'I am also a string.'
->>> print(r)
-I am also a string.
-\end{pyconcode}
-
-Notice how we did not use a single quote in the second string because it was
-enclosed (\emph{delimited}) by single quotes. The proper way to use a single
-quote in a single quoted string or a double quote in a double quoted string
-goes like this:
-
-\begin{pyconcode}
->>> s = "Previously, we said \"I'm a string.\"."
->>> print(s)
-Previously, we said "I'm a string.".
->>> r = 'I\'m also a string.'
->>> print(r)
-I'm also a string.
-\end{pyconcode}
-
-This is called \emph{escaping} a character. We \emph{escaped} the double quotes
-and single quote respectively so that Python did not think it was the end of
-the string.
-
-You do not have to escape a single quote in a double quoted string and vice
-versa:
-
-\begin{pyconcode}
->>> s = "I can use single quotes '' here"
->>> print(s)
-I can use single quotes '' here
->>> r = 'I can use double quotes "" here'
->>> print(r)
-I can use double quotes "" here
-\end{pyconcode}
-
-If you want a string to go to a new line, you use \pythoninline!\n! for that:
+A module is just a file with Python statements in it. A module takes the name of
+the file that it is in. For example, imagine we have a file
+\texttt{circlemath.py} in our current working directory:
 
 \begin{listing}[H]
-  \vspace{-0.5em}
-\begin{pyconcode}
->>> r = 'I hear America singing, the varied carols I hear,\nThose of mechanics,' + \
-...     'each one singing his as it should be blithe and strong,\nThe carpenter' + \
-...     'singing his as he measures his plank or beam,'
->>> print(r)
-I hear America singing, the varied carols I hear,
-Those of mechanics, each one singing his as it should be blithe and strong,
-The carpenter singing his as he measures his plank or beam,
-\end{pyconcode}
-  \vspace{-1em}
-  \caption{Excerpt of \emph{I Hear America Singing} by Walt Whitman}
-  \vspace{-0.5em}
+\vspace{-0.5em}
+\begin{python3code}
+import math # importing the math module
+
+def area(radius):
+    """Find and return the area of a circle (float) given the radius"""
+    return math.pi * radius**2
+
+def circumference(radius):
+    """Find and return the circumference of a circle (float) given the radius"""
+    return 2 * math.pi * radius
+\end{python3code}
+\vspace{-1em}
+\caption{\texttt{circlemath.py}}
+\vspace{-0.5em}
 \end{listing}
 
-What, however, if you actually need a \pythoninline!\n! in a string? You will want
-to create a raw string. You do this by placing an \pythoninline!r! before the
-beginning quote:
+Then, open the interpreter and import the module:
 
 \begin{pyconcode}
->>> s = r'C:\Users\Files\nothing\more'
->>> print(s)
-C:\Users\Files\nothing\more
+>>> import circlemath
+>>> circlemath.circumference(5) # have to use modulename.attributename
+31.41592653589793
+>>> circlemath.area(5)
+78.53981633974483
+>>> circlemath.__name__
+'circlemath'
 \end{pyconcode}
 
-As you can see, the \pythoninline!\n! in the middle of the string did not end up
-being a line break.
+Every module has a \pythoninline{__name__} attribute that contains the name of
+the module, except in one special case that we will see soon.
 
-A lot of the operations you can do on lists also work on strings. We also saw
-indirectly and previously that we can concatenate strings together using the
-addition operator \pythoninline!+!:
+There are other kinds of import statements with different effects:
 
 \begin{pyconcode}
->>> s = "The cat"
->>> r = " in the hat"
->>> t = s+r
->>> print(t)
-The cat in the hat
-\end{pyconcode}
-
-In addition to that, we can repeat strings using the multiplication operator
-\pythoninline!*!:
-
-\begin{pyconcode}
->>> s = "Hi"
->>> r = 5*s
->>> print(r)
-HiHiHiHiHi
->>> n = 3
->>> print(r + 'cat' * n)
-HiHiHiHIHicatcatcat
-\end{pyconcode}
-
-Note how we can also combine both.
-
-You previously saw \emph{slicing} in the section on lists. Slicing works on strings, too!
-
-\begin{pyconcode}
->>> s = "The cat in the hat"
->>> print(s[2])
-e
->>> print(s[4:7])
-cat
->>> print(s[15:18])
-hat
->>> print(s[14:18])
- hat
->>> print(s[17:14:-1])
-tah
->>> print(s[17::-1])
-tah eht ni tac ehT
-\end{pyconcode}
-
-As opposed to lists, strings are \emph{immutable}. This means that the string
-cannot be changed at all:
-
-\begin{pyconcode}
->>> s = 'Python'
->>> s[0] = 'J'
+>>> from circlemath import area
+>>> area(5) # can just use the attribute imported without modulename.
+78.53981633974483
+>>> circumference(5) # not defined, because not imported
 Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-TypeError: 'str' object does not support item assignment
+  File "<input>", line 1, in <module>
+NameError: name 'circumference' is not defined
 \end{pyconcode}
-
-If you want to change a string, just create a new string!
 
 \begin{pyconcode}
->>> s = 'Python'
->>> r = 'J' + s[1:]
->>> print(r)
-Jython
+>>> from circlemath import area, circumference # use commas to separate multiple
+>>> area(5)
+78.53981633974483
+>>> circumference(5)
+31.41592653589793
 \end{pyconcode}
-
-Just as with lists, you can test membership of a string using \pythoninline!in! and
-\pythoninline!not in!:
 
 \begin{pyconcode}
->>> s = 'abcde'
->>> print('c' in s)
-True
->>> print('f' in s)
-False
->>> print('f' not in s)
-True
->>> print('ab' in s)
-True
+>>> from circlemath import * # import all definitions made
+>>> area(5)
+78.53981633974483
+>>> circumference(5)
+31.41592653589793
 \end{pyconcode}
 
-If you want strings to go on for two or more lines of Python code, you have to use three double
-quotes:
+\begin{pyconcode}
+>>> from circlemath import area as carea
+>>> carea(5)
+78.53981633974483
+\end{pyconcode}
+
+The last option is rather frowned upon; we would prefer you to use
+\pythoninline{circlemath.area} instead as it is more descriptive.
+
+You may also rename a module upon importing it:
+
+\begin{pyconcode}
+>>> import circlemath as cmath
+>>> cmath.area(5)
+78.53981633974483
+\end{pyconcode}
+
+
+\begin{infobox}{Convention (PEP 8)}
+  Always put \pythoninline{import} statements at the beginning of a file in the
+  following order:
+  \begin{enumerate}
+    \item Built-in standard library modules
+    \item Third-party modules (e.g. matplotlib)
+    \item Self-written modules
+  \end{enumerate}
+  Put a blank line between each group of imports.
+\end{infobox}
+
+\subsection{Using Modules as Scripts and Boilerplate}
+
+If there is code in your module that is not a function definition, Python will
+run it just once when the module is imported. For example, take the file
+\texttt{mid.py}:
 
 \begin{listing}[H]
   \vspace{-0.5em}
 \begin{python3code}
-weizsaecker = """We in the older generation owe to young people not the 
-fulfillment of dreams but honesty. We must help younger people to 
-understand why it is vital to keep memories alive. We want to help them 
-to accept historical truth soberly, not one-sidedly, without taking 
-refuge in utopian doctrines, but also without moral arrogance. From our
-own history we learn what man is capable of. For that reason we must not
-imagine that we are quite different and have become better. There is no
-ultimately achievable moral perfection. We have learned as human beings,
-and as human beings we remain in danger. But we have the strength to 
-overcome such danger again and again."""
+def midpoint(a, b):
+    """Find and return the midpoint of two numbers."""
+    return (a+b)/2
+
+print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
 \end{python3code}
   \vspace{-1em}
-  \caption{Excerpt of Richard von Weizs\"{a}cker's speech in
-the Bundestag to commemorate the 40th anniversary of the end of World War II.}
+  \caption{\texttt{mid.py}}
   \vspace{-0.5em}
 \end{listing}
 
-\subsection{String Methods and Functions}
-
-As with lists, there are a few functions you can use with strings.
-
 \begin{pyconcode}
->>> s = 'abcDE'
->>> print(len(s))
-5
->>> print(s.upper())
-ABCDE
->>> print(s.lower())
-abcde
->>> print(s.capitalize())
-Abcde
->>> print(s.isnumeric())
-False
->>> print(s.isalpha())
-True
->>> print(s.islower())
-False
->>> print(s.isupper())
-False
->>> r = s.replace('ab', 'more')
->>> print(r)
-morecDE
->>> print(s)
-abcDE
+>>> import mid
+Midpoint of 5 and 10 is 7.50.
 \end{pyconcode}
 
-You can find a summary of the functions and what they do in Table~\ref{tab:str}.
+The same will happen if you run the module like a script:
 
-\begin{table}[!ht]
-  \centering
-  \begin{tabular}{ll}
-    \toprule
-    String method/function & What it does \\
-    \midrule
-    \pythoninline!len(s)! & Length of \pythoninline!s! \\
-    \pythoninline!r = s.upper()! & replaces all lowercase characters with uppercase
-    and puts that in \pythoninline!r! \\
-    \pythoninline!r = s.lower()! & replaces all uppercase characters with lowercase
-    and puts that in \pythoninline!r! \\
-    \pythoninline!r = s.capitalize()! & lower case of \pythoninline!s! with capital
-    first letter and puts that in \pythoninline!r! \\
-    \pythoninline!r = s.isnumeric()! & \pythoninline!r! is \pythoninline!True! if
-    \pythoninline!s! contains only numbers and \pythoninline!False! otherwise\\
-    \pythoninline!r = s.isalpha()! & \pythoninline!r! is \pythoninline!True! if
-    \pythoninline!s! contains only alphabet characters and \pythoninline!False!
-    otherwise\\
-    \pythoninline!r = s.islower()! & \pythoninline!r! is \pythoninline!True! if
-    \pythoninline!s! contains only lower case characters and \pythoninline!False!
-    otherwise\\
-    \pythoninline!r = s.isupper()! & \pythoninline!r! is \pythoninline!True! if
-    \pythoninline!s! contains only upper case characters and \pythoninline!False!
-    otherwise\\
-    \pythoninline!r = s.replace(x, y)! & replace any occurence of \pythoninline!x! in
-    \pythoninline!s! with \pythoninline!y! and put result in \pythoninline!r! \\
-    \bottomrule 
-  \end{tabular}
-  \caption{String methods and functions, where \texttt{s} is a string}
-  \label{tab:str}
-\end{table}
+\begin{bashcode}
+$ python3 mid.py
+Midpoint of 5 and 10 is 7.50.
+\end{bashcode}
 
+However, this can be rather annoying to deal with, for example if you wrote a
+script with a bunch of functions a while ago and you just want to use the
+functions you wrote, but do not want the other code to run when you're using
+them -- you just want the functions. You can achieve this!
+
+When you run a module as a script, the modules \pythoninline{__name__} attribute
+is not set to the module's name, but to \pythoninline{"__main__"}. Hence, the
+following code in \texttt{mid.py} will do the following:
+
+\begin{listing}[H]
+  \vspace{-0.5em}
+\begin{python3code}
+def midpoint(a, b):
+    """Find and return the midpoint of two numbers."""
+    return (a+b)/2
+
+print(__name__) # just for demonstration, do not put this in real programs
+
+if __name__ == "__main__":
+    print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
+\end{python3code}
+  \vspace{-1em}
+  \caption{\texttt{mid.py}}
+  \vspace{-0.5em}
+\end{listing}
+
+\begin{pyconcode}
+>>> import mid
+mid
+\end{pyconcode}
+
+\begin{bashcode}
+$ python3 mid.py
+__main__
+Midpoint of 5 and 10 is 7.50.
+\end{bashcode}
+
+However, sometimes you may want to import the module \emph{and} run it as if it
+were a script. To enable us to do so, we usually put the script code in a
+function called \pythoninline{main()}:
+
+\begin{listing}[H]
+  \vspace{-0.5em}
+\begin{python3code}
+def midpoint(a, b):
+    """Find and return the midpoint of two numbers."""
+    return (a+b)/2
+
+def main():
+    print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
+
+if __name__ == "__main__":
+    main()
+\end{python3code}
+  \vspace{-1em}
+  \caption{\texttt{mid.py} -- perfect example}
+  \vspace{-0.5em}
+\end{listing}
+
+\begin{pyconcode}
+>>> import mid
+>>> mid.main() # if we want to
+Midpoint of 5 and 10 is 7.50.
+\end{pyconcode}
+
+\begin{bashcode}
+$ python3 mid.py
+Midpoint of 5 and 10 is 7.50.
+\end{bashcode}
+
+We call this combination of the if-statement and the
+\pythoninline{main()} function \emph{boilerplate code}.
+
+\begin{infobox}{Boilerplate Requirement}
+  Please put \textbf{any} code that is not part of a function inside the
+  boilerplate if-statement so that \emph{every} one of your scripts can also be
+  used as a module. This will be required for every lab from now on.
+
+  Wrong:
+
+  \begin{python3code}
+print("Hello World!")
+  \end{python3code}
+
+  Right:
+
+  \begin{python3code}
+def main():
+    print("Hello World!")
+
+if __name__ == "__main__":
+    main()
+  \end{python3code}
+\end{infobox}
+
+\subsection{The \protect\pythoninline{dir()} Function}
+
+Use the \pythoninline{dir()} function to get a list of every attribute --
+variables, functions, and other things you do not know about yet -- that is part
+of a module. For example for the circlemath module we wrote earlier:
+
+\begin{pyconcode}
+>>> import circlemath
+>>> dir(circlemath)
+['__name__', 'area', 'circumference']
+>>> import mid
+>>> dir(mid)
+['__name__', 'midpoint']
+>>> import math
+>>> dir(math)
+['__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'acos',
+'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh',
+'degrees', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial', 'floor', 'fmod',
+'frexp', 'fsum', 'gamma', 'hypot', 'isfinite', 'isinf', 'isnan', 'ldexp', 'lgamma',
+'log', 'log10', 'log1p', 'log2', 'modf', 'pi', 'pow', 'radians', 'sin', 'sinh', 'sqrt',
+'tan', 'tanh', 'trunc']
+\end{pyconcode}
+
+\pagebreak
 \subsection{Summary}
+\label{subsec:modules.sum}
 
 \begin{itemize}
   \item Syntax:
 
     \begin{python3code}
-s = 'String'
-# or
-s = "String"
-# or
-s = """Multiline
-String"""
+import modname1, modname2 # use: modname1.attributename
+import modname3 as othermodname # use: othermodname.attributename
+from modname import attribute1, attribute2 # use: attribute1, attribute2
+from modname import * # use: attributename
+from modname import attribute as otherattribute # use: otherattribute
     \end{python3code}
 
-  \item Escape single quotes in single quoted strings and double quotes in
-    double quoted stings!
+    Attributes can be functions defined in the module or variables defined in
+    the module. A special attribute is \pythoninline{__name__}, which contains
+    the name of the module unless the module is executed as a script.
 
-  \item Can slice strings just like lists, but not change them. You must make a
-    new string if you want something different, because strings are
-    \emph{immutable}.
+  \item Every script is a module whose name is the filename of the script.
 
-  \item Use \pythoninline!r + s! to combine (concatenate) strings \pythoninline!r! and
-    \pythoninline!s! together and
-    \pythoninline!s*n! to repeat a string \pythoninline!s! a number of \pythoninline!n!
-    times.
+  \item If a module is imported, its \pythoninline{__name__} attribute is a
+    variable that contains the module name. If a module is run as a script, its
+    \pythoninline{__name__} attribute contains \pythoninline{"__main__"}. With
+    this, you can have code that only runs if a module is run like a script.
 
-  \item Use \pythoninline!r in s! to test whether \pythoninline!r! occurs in the
-    string \pythoninline!s! and \pythoninline!r not in s! to test whether it does not
-    occur in \pythoninline!s!.
+    We call that boilerplate code:
 
-  \item See string functions in Table~\ref{tab:str}.
+    \begin{python3code}
+def main():
+    # stuff that only runs if module is run as a script
+
+if __name__ == "__main__":
+    main()
+    \end{python3code}
+
+  \item Use \pythoninline{dir()} to get a list of every attribute -- every
+    variable and function (and other things that you do not know about yet) --
+    that is part of a particular module.
+
+  \item A good resource:
+
+    \begin{center}
+      \url{https://docs.python.org/3.4/tutorial/modules.html}
+    \end{center}
+
 \end{itemize}
 
-\pagebreak
-\section{Converting between Sequence Types}
-
-Just like we were able to convert between integers and floating-point types, we
-can convert (\emph{cast}) lists to tuples to strings and vice versa. Use
-\pythoninline{list()}, \pythoninline{tuple()}, and \pythoninline{str()}. For
-example:
-
-\begin{pyconcode}
->>> food = ('nothing', 'cereal', 'lemonheads')
->>> list(food)
-['nothing', 'cereal', 'lemonheads']
->>> str(food) # not particularly useful
-"('nothing', 'cereal', 'lemonheads')"
->>> s = "The cat in the"
->>> list(s)
-['T', 'h', 'e', ' ', 'c', 'a', 't', ' ', 'i', 'n', ' ', 't', 'h', 'e']
->>> tuple(s)
-('T', 'h', 'e', ' ', 'c', 'a', 't', ' ', 'i', 'n', ' ', 't', 'h', 'e')
-\end{pyconcode}
-
-
 
 \pagebreak
-\section{\protect\pythoninline{for} Loops}
-%usage with for lists and strings more in depth
-%using range in combination with a list
+\section{Recursion}
+\label{sec:rec}
 
-\subsection{Lists}
-\pythoninline{for} loops in Python are designed to primarily work with lists and
-other sequence types. A \pythoninline{for} loop iterates through each element in
-a list in order, performing the same operation for each element. The following
-program is a simple \pythoninline{for} loop that prints out every element of a
-list.
-
+Recursion is the idea of a function calling itself. This can be useful in a wide
+variety of situations, but it can also be easy to misuse. Let us first look at a
+good example:
 \begin{python3code}
-values = [1, 2, 3, 4, 5]
-
-for i in values:
-    print(i)
+def factorial(n):
+    """Compute and return n! recursively by knowing that n! = n * (n-1)! for n > 1
+    and 1! = 1 and 0! = 1"""
+    if n <= 1:
+        return 1
+    else
+        return n * factorial(n-1)
 \end{python3code}
 
-This example uses one list as input to create another list consisting of the
-initial list's squares.
+Notice that this is just another way to repeat a statement, similar to a loop.
+In a loop, we have to specify when to stop repeating something, and we have to
+do the same thing with recursion; otherwise, it would run forever.
+
+As an example, this is how the function plays out:
+\[ f(5) = 5 * f(4) = 5 * 4 * f(3) = 5 * 4 * 3 * f(2) = 5 * 4 * 3 * 2 * f(1) = 5
+* 4 * 3 * 2 * 1 = 120 \]
+
+As an example, see this simple \textbf{\emph{bad}} case of recursion:
 
 \begin{python3code}
-values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-squares = []
-
-for i in values:
-    squares.append(i ** 2)
-
-print("Initial values: {}".format(values))
-print("Squares: {}".format(squares))
+def test():
+    """BAD example of recursion."""
+    test()
 \end{python3code}
 
-This prints:
-
-\begin{verbatimcode}
-Initial values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-Squares: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
-\end{verbatimcode}
-
-One limitation of this approach is that we cannot easily manipulate multiple
-values of a list at once. We can get around this using \pythoninline{range}.
-\pythoninline{range} produces a list of the numbers 0 up to and not including the
-number passed as an argument. If given two arguments, the first is used as the
-lower bound rather than zero.
-
-\begin{pyconcode}
->>> for i in range(5):
-...   print(i)
-... 
-0
-1
-2
-3
-4
-\end{pyconcode}
-
-\pythoninline{range()} can take between one and three arguments:
-
-\begin{tabular}{ll}
-  \toprule
-  \pythoninline!range(E)! & numbers from 0 to \pythoninline!E!, not including
-  \pythoninline!E! \\
-  \pythoninline!range(B, E)! & numbers from \pythoninline!B! to \pythoninline!E!, not
-  including \pythoninline!E! \\
-  \pythoninline!range(B, E, S)! & numbers from \pythoninline!B! to \pythoninline!E!, not
-  including \pythoninline!E!, skipping every \pythoninline!S! number \\
-  \bottomrule
-\end{tabular}
-
-Do some experiments with range to see what numbers it gives. For reasons that we
-cannot yet explain to you, you have to use the \pythoninline!list()! function to
-get it to print correctly as you can see in the following example.
-
-\begin{pyconcode}
->>> print(range(5))
-range(0, 5)
->>> print(list(range(5)))
-[0, 1, 2, 3, 4]
->>> print(list(range(1, 5)))
-[1, 2, 3, 4]
->>> print(list(range(1, 7, 2)))
-[1, 3, 5]
-\end{pyconcode}
-
-If we use \pythoninline{range} to produce a list of elements the same length as
-the array being looped over, we can use its values as indices. Here is the
-squares example redone using \pythoninline{range}.
+If this function is called, it will continue to call itself infinitely until
+Python prints out an error message and quits. This is because the function calls
+itself every time it is called -- there is no case where the function ends
+without calling itself again. The case in which the recursion ends is called a
+\emph{base case} and it is important to include one in every recursive function.
+Here is a modified version of the above code that allows the initial call to
+specify a value limiting how many times the recursive call should be made:
 
 \begin{python3code}
-values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-squares = []
-
-for i in range(len(values)):
-    squares.append(values[i] ** 2)
-
-print("Initial values: {}".format(values))
-print("Squares: {}".format(squares))
+def test(x):
+    if x > 0:
+        test(x - 1)
 \end{python3code}
-
-\begin{warningbox}{Using \pythoninline{range} to iterate a list}
-  Always try to \textbf{avoid} using \pythoninline{range} to iterate a list as
-  shown above. Try to iterate through the list directly if you can: after all,
-  it is a sequence type!
-\end{warningbox}
-
-In this example, using \pythoninline{range} does not help us a significant
-amount. In this next example, it allows us to sum every adjacent pair of values
-to create a new list.
-
-\begin{python3code}
-values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-adjacent_sums = []
-
-for i in range(len(values)):
-    if i != 0:
-        adjacent_sums.append(values[i] + values[i - 1])
-
-print("Initial values: {}".format(values))
-print("Sums: {}".format(adjacent_sums))
-\end{python3code}
-
-If we simply want to do something a fixed number of times, we pass that number
-to \pythoninline{range} and put it in a loop.
-
-\begin{pyconcode}
->>> for i in range(3):
-...     print("Hello.")
-...
-Hello.
-Hello.
-Hello.
-\end{pyconcode}
-
-\subsection{Strings}
-
-Strings are sequence types just like lists and tuples:
-
-\begin{python3code}
-for char in 'aHdHefg':
-    if char == 'H':
-        print('5')
-    else:
-        print('1')
-\end{python3code}
-
-This will print:
-
-\begin{verbatimcode}
-1
-5
-1
-5
-1
-1
-1
-\end{verbatimcode}
-
-\subsection{\protect\pythoninline{enumerate()}}
-
-Given any sequence type, \pythoninline{enumerate()} will return a list of tuples
-containing a count and an element of the list. (Actually,
-\pythoninline{enumerate()} is what we call a generator. You need not know what
-that is, just remember that to get an actual list you have to cast the return
-value to a list.) For example:
-
-\begin{pyconcode}
->>> food = ['eggs', 'hamburgers', 'steak and potatos']
->>> list(enumerate(food))
-[(0, 'eggs'), (1, 'hamburgers'), (2, 'steak and potatos')]
-\end{pyconcode}
-
-This is often used with the \emph{tuple unpacking} syntax in for loops:
-
-\begin{pyconcode}
->>> food = ['eggs', 'hamburgers', 'steak and potatos']
->>> for count, item in enumerate(food):
-...     print('{} is the {}th item.'.format(item, count))
-...
-eggs is the 0th item.
-hamburgers is the 1th item.
-steak and potatos is the 2th item.
-\end{pyconcode}
 
 \subsection{Summary}
+\label{subsec:adv.sum}
+
 \begin{itemize}
-  \item A \pythoninline{for} loop can be used to iterate through every value in a
-    sequence, such as a list or a string.
-  \item If we want access to the index number of the current value, we need to
-    use a \pythoninline{range} of the same length as the list.
+  \item A function may call itself. This is called recursion.
+  \item Always need a base case, or the function will keep calling itself
+    forever.
 \end{itemize}
 
 \pagebreak
-\section{Exercises}
-\label{sec:ex}
 
-\begin{warningbox}{Requirements}
-  Remember to adhere to PEP 8, PEP 257, and the boilerplate code requirement.
+\section{Exercises}
+
+%\begin{warningbox}{Requirements}
+%  Remember to adhere to PEP 8, PEP 257, and the boilerplate code requirement.
+%\end{warningbox}
+
+
+\begin{warningbox}{Install}
+  Please have the \pythoninline{matplotlib} module installed on your computer
+  before next lab. If you installed Anaconda Python, you already have it. Please
+  come see a TA if you are having problems with the installation!
 \end{warningbox}
 
-\begin{ex}[stringfun.py]
-\emph{This exercise is a modification of exercises in the Google Python
-  class, licensed under the
-  \href{http://www.apache.org/licenses/LICENSE-2.0.html}{Apache License 2.0}.}
 
-Write the following functions. \emph{You must figure out the appropriate
-  arguments to the functions and design a command line user interface that is
-not part of the prescribed functions.} Please note that the command line user
-interface should \emph{not} be a part of the functions below!
+\begin{ex}[geometry.py, triangle.py, regularpolygons.py, rectangle.py, circle.py]
+  Write a Python script that lets the user do some basic
+  geometry calculations. Your output should look something like the following.
 
-\begin{description}
-  \item[\pythoninline{ends()}]
-  Write a function that takes in a string from the user and
-  prints just the first two and the last two characters of the string.
-  You may assume that any input will be at least 2 characters long.
+  The majority of the output must be calculated by your program using a function
+  for each kind of calculation. \emph{The output given below is just an example.
+  Your program needs to perform the calculations for the numerical values read
+  from the keyboard.}
 
   \begin{verbatimcode}
-== ends ==
-Enter a string >>> spring
-spng
+Welcome to Wile E. Coyote's Geometry Calculator!
+
+Enter height of a rectangle >>> 2
+Enter width of a rectangle >>> 3
+
+The area of a rectangle with height 2 and width 3 is 6.
+The perimeter of a rectangle with height 2 and width 3 is 10.
+The length of the diagonal of a rectangle with height 2 and width 3 is 3.605551.
+
+Enter the radius of a circle >>> 2
+
+The area of a circle with radius 2.00 is 12.57.
+The circumference of a circle with radius 2.00 is 12.57.
+
+Enter the height of a right triangle >>> 1
+Enter the base of a right triangle >>> 1
+
+The area of a right triangle with height 1.00 and base 1.00 is 0.50.
+The perimeter of a triangle with height 1.00 and base 1.00 is 3.41.
+
+Enter the number of sides of a regular polygon as >>> 8
+Enter the length of the side of a regular polygon >>> 5
+
+The exterior angle of a regular polygon with 8 sides is 45.00 degrees.
+The interior angles of a regular polygon with 8 sides sum to 1080.00 degrees.
+Each interior angle of a regular polygon with 8 sides is 135.00 degrees.
+The area of a regular polygon with 8 sides each 5.00 long is 120.71.
   \end{verbatimcode}
 
-  \item[\pythoninline{mix()}]
-Write a function that takes two strings \pythoninline!a! and
-  \pythoninline!b! and prints the two strings concatenated, but with the first
-  two characters of each word swapped with the other word's first two
-  characters. You may assume that any input will be at least two characters
-  long.
-  For example:
+  \begin{center}
+    \bfseries Remember that coding the input part of the program should be your
+    \emph{last} step. It is a beginner's mistake to start with that -- you want
+    the logic of your functions to be correct before doing any of the input.
+    Test your functions with hard-coded values.
+  \end{center}
 
-  \begin{verbatimcode}
-== mix ==
-String a >>> german
-String b >>> english
-enrman geglish
-  \end{verbatimcode}
+  Please split your program into multiple files. Please create a module each for
+  the rectangle functions, the circle functions, the triangle functions, and the
+  polygon functions. For each of the modules, use boilerplate code to test the
+  functions. Here's an example:
 
-  \begin{verbatimcode}
-== mix ==
-String a >>> dog
-String b >>> dinner
-dig donner
-  \end{verbatimcode}
+  \begin{python3code}
+# Module square (square.py)
 
-  \item[\pythoninline{splitit()}]
-Consider dividing a string into two halves. If the length
-  is even, the front and back halves are the same length. If the length is odd,
-  we'll say that the extra character goes in the front. 
+def area(side_length):
+    """Calculates the area of a square given the length of a side."""
+    return side_length ** 2
 
-  For example, in \pythoninline!'abcde'!, the front half is \pythoninline!'abc'!
-  and the back half is \pythoninline!'de'!. 
+def perimeter(side_length):
+    """Calculates the perimeter of a square given the length of a side."""
+    return 4 * side_length
 
-  Write a function that takes in two strings \pythoninline!a! and
-  \pythoninline!b!  and prints a-front + b-front + a-back + b-back.
+def main():
+    side_len = 2
+    print('A square with side length {:.2f} has area {:.2f}.'.format(
+        side_len, area(side_len)))
+    print('A square with side length {:.2f} has perimeter {:.2f}.'.format(
+        side_len, perimeter(side_len)))
 
-  For example,
+if __name__ == '__main__':
+    main()
+  \end{python3code}
 
-  \begin{verbatimcode}
-== splitit ==
-String a >>> abcd
-String b >>> efghi
-abefgcdhi
-  \end{verbatimcode}
+  Then, write a script \texttt{geometry.py} that gives the user interface as
+  seen in the example above.
 
-  \begin{verbatimcode}
-== splitit ==
-String a >>> this dinner is
-String b >>> what am i doing1
-this diwhat am nner isi doing1
-  \end{verbatimcode}
-\end{description}
+  Your program must define the following functions. It is your task to figure
+  out the appropriate arguments and return values as well as the code of these
+  functions. Notice that the triangle is a \emph{right triangle} where height
+  and base are the two legs joined by the 90 degree angle.
+  \begin{multicols}{2}
+    \begin{itemize}
+      \item Module \texttt{triangle}:
+        \begin{itemize}
+          \item \pythoninline{area}
+          \item \pythoninline{hypotenuse}
+          \item \pythoninline{perimeter}
+        \end{itemize}
+      \item Module \texttt{regularpolygons}:
+        \begin{itemize}
+          \item \pythoninline{exterior_angle}
+          \item \pythoninline{interior_angle}
+          \item \pythoninline{area}
+        \end{itemize}
+      \item Module \texttt{rectangle}:
+        \begin{itemize}
+          \item\pythoninline{area}
+          \item \pythoninline{perimeter}
+          \item \pythoninline{diagonal}
+        \end{itemize}
+      \item Module \texttt{circle}:
+        \begin{itemize}
+          \item \pythoninline{area}
+          \item \pythoninline{circumference}
+        \end{itemize}
+    \end{itemize}
+  \end{multicols}
 
+  \emph{Regular Polygons}
+
+  The exterior angle of a regular $n$-polygon is $\frac{360}{n}$, where $n$ is
+  the number of sides. The angle is in degrees.
+
+  The sum of the interior angles of a regular $n$-polygon is $180(n-2)$, where the
+  angle is in degrees.
+
+  To get one particular interior angle of a regular $n$-polygon, divide by the
+  number of angles $n$ to get $\frac{180(n-2)}{n}$.
+
+  Finally, to find the area of a regular $n$-polygon, use the following formula:
+  \[ \frac{s^2 \times n}{4 \times \tan\left( \frac{\pi}{n} \right)}, \]
+  where $s$ is the length of a side and $n$ is the number of sides.
 \end{ex}
 
-\begin{ex}[fractions.py] Any fraction can be written as the division of two
-  integers. You could express this in Python as a tuple -- 
-  (numerator, denominator).
+\begin{ex}[sum.py] Write a recursive function that computes the sum of all the
+  numbers from 1 to $n$, where $n$ is the given parameter.
+\end{ex}
 
-  Write functions for each of the following. They must use the tuple
-  representation to return fractions.
-  \begin{enumerate}
-    \item Given two fractions as tuples, multiply them.
-    \item Given two fractions as tuples, divide them.
-    \item Given a list of fractions as a tuple, return the one that is
-      smallest in value.
+\begin{ex}[peasants.py] \hfill
+  \begin{enumerate}[(a)]
+    \item Russian peasant multiplication is a method of multiplying integers in
+      which you keep halving one factor while
+      doubling the other factor until one of the factors is 1. For example:
+      \begin{IEEEeqnarray*}{RCRCL}
+        &\quad& 8 &\quad\times\quad& 38 \\
+        = && 4 &\quad\times\quad& 76 \\
+        = && 2 &\quad\times\quad& 152 \\
+        = && 1 &\quad\times\quad& 304
+      \end{IEEEeqnarray*}
+      Hence, $8 \times 38 = 304$.
+
+      This, of course, becomes a bit more involved if the integer that you keep
+      halving is not a power of two. For example, imagine $38$ is the number
+      that keeps getting halved:
+      \begin{IEEEeqnarray*}{RCRCLCLCL}
+        && 8 &\times& 38 \\
+        = &\quad& 16 &\times& 19 \\
+        = && 32 &\times& 9 &+& 16      &\qquad& \text{$\nicefrac{19}{2} = 9$ with remainder $1$} \\
+        = && 64 &\times& 4 &+& 16 + 32 &\qquad& \text{$\nicefrac{9}{2} = 4$ with remainder $1$} \\
+        = && 128 &\times& 2 &+& 16 + 32 \\
+        = && 256 &\times& 1 &+& 16 + 32 \\
+        = && 256 && &+& 16 + 32 \\
+        = && 304
+      \end{IEEEeqnarray*}
+
+      This is all based on the following recursive definition of multiplication:
+
+      \[ x \times y = \begin{cases}
+          \frac{x}{2} \times (2 \times y) & \text{if $x$ is even} \\
+          \frac{x-1}{2} \times (2 \times y) + y & \text{if $x$ is odd}
+      \end{cases} \]
+
+      Write a \emph{non-recursive} function that implements Russian
+      peasant multiplication using a \pythoninline{while} loop. Call this
+      function \pythoninline{multiply()}.
+
+    \item The Russian peasant method can also be applied to exponentiation (also
+      only for integers):
+
+      \[ x^y = \begin{cases}
+          \left( x^2 \right)^{\nicefrac{y}{2}} & \text{if $y$ is even} \\
+          x \left( x^2 \right)^{\nicefrac{(y-1)}{2}} & \text{if $y$ is odd} \\
+      \end{cases} \]
+
+      This method is also called exponentiation by squaring or the
+      square-and-multiply method.
+
+      Write a \emph{recursive} function called \pythoninline{expo()} that
+      implements this.
+
   \end{enumerate}
 
-  Also write a small command-line interface such that the user running your
-  script sees something like this:
-
-  \begin{verbatimcode}
-== Multiplication and Division ==
-Enter a fraction >>> 5/3
-Enter a fraction >>> 10/3
-Multiplication of the fractions: 50/9
-Division of the first by the second: 5/10
-
-== Smallest fraction ==
-Enter a fraction >>> 1/3
-Enter a fraction >>> 10/3
-Enter a fraction >>> 6/4
-Enter a fraction >>> stop
-Smallest fraction: 1/3
-  \end{verbatimcode}
 \end{ex}
 
+\begin{ex}[pascal.py] \hfill
 
-\begin{ex}[spiral.py] Use a \pythoninline{for} loop, \pythoninline{range}, and
-  \pythoninline{turtle} to draw a spiral. It does not need to perfectly resemble
-  the example.
+  In Pascal's triangle, each number is the sum of the two numbers directly above
+  it. The left and right ends of the triangle always consists of $1$s.
 
-  Sample:
+  This recursive rule produces the following triangle:
+
   \begin{center}
-    \includegraphics[width=2.0in]{img/spiral}
+\def\N{9}
+\tikz[x=0.75cm,y=0.5cm, 
+  pascal node/.style={font=\small}, 
+  row node/.style={font=\footnotesize, anchor=west, shift=(180:1)}]
+  \path  
+    \foreach \n in {0,...,\N} { 
+      (-\N/2-1, -\n) node  [row node/.try]{Row \n:}
+        \foreach \k in {0,...,\n}{
+          (-\n/2+\k,-\n) node [pascal node/.try] {%
+            \pgfkeys{/pgf/fpu}%
+            \pgfmathparse{round(\n!/(\k!*(\n-\k)!))}%
+            \pgfmathfloattoint{\pgfmathresult}%
+            \pgfmathresult%
+          }}};
   \end{center}
+
+  Write a recursive function \pythoninline{pascal(n, k)} that finds the $k$th
+  value of the $n$th row by using the sum of the numbers directly above it.
+  We start counting at $0$ for both $n$ and $k$.
+
+  Since we know that the left and right end of the triangle are all $1$s, we
+  know that for every row $n$:
+  \begin{IEEEeqnarray*}{RCLCL}
+    \pas(n, 0) &=& 1 &\qquad& \text{left end} \\
+    \pas(n, n) &=& 1 &\qquad& \text{right end}
+  \end{IEEEeqnarray*}
+
+  If for example I want to know the $2$nd entry of the $4$th row:
+
+  \begin{IEEEeqnarray*}{RCLCL}
+    \pas(4, 2) &=& \pas(3, 1) + \pas(3, 2)  \\
+    &=& \pas(2, 0) + \pas(2, 1) + \pas(2, 1) + \pas(2, 2) \\
+    &=& 1 + \pas(1, 0) + \pas(1, 1) + \pas(1, 0) + \pas(1, 1) + 1 \\
+    &=& 1 + 1 + 1 + 1 + 1 + 1 \\
+    &=& 6
+  \end{IEEEeqnarray*}
 \end{ex}
 
-\begin{ex}[parity.py] Take in numbers as input until ``stop'' is entered. Then
-  split the numbers into three lists: one containing all the numbers, one
-  containing all even values, and one containing all odd. Print out all three
-  lists, as well as each list's sum and average. Assume all input values are
-  integers.
-
-  Sample:
-
-\begin{verbatimcode}
-Input a number >>> 1
-Input a number >>> 5
-Input a number >>> 8
-Input a number >>> 2
-Input a number >>> 8
-Input a number >>> 100
-Input a number >>> 3
-Input a number >>> 7
-Input a number >>> 27
-Input a number >>> 5
-Input a number >>> stop
-All numbers: [1, 5, 8, 2, 8, 100, 3, 7, 27, 5]
-Average of all numbers: 16.6
-Sum of all numbers: 166
-Even numbers: [8, 2, 8, 100]
-Average of even numbers: 29.5
-Sum of even numbers: 118
-Odd numbers: [1, 5, 3, 7, 27, 5]
-Average of odd numbers: 8.0
-Sum of odd numbers: 48
-\end{verbatimcode}
-\end{ex}
-
-
-\begin{ex}[navigate2.py] Modify \texttt{navigate.py} from lab 2 so that,
-  rather than performing each action as it is entered, it stores the inputs in a
-  list and runs them all at once after the ``stop'' command has been given.
-\end{ex}
-
-\begin{ex}[sorted.py] Take in numbers as input until ``stop'' is entered. As you
-  take in each number, insert it into a list so that the list is sorted in
-  ascending order. That is, look through the list until you find the place where
-  the new element belongs, then use \pythoninline{.insert()} to place it there.
-  If the number is already in the list, do not add it again. After ``stop'' is
-  entered, print out the list. Do not use any of Python's built-in sorting
-  functions.
-
-  You cannot use \pythoninline!.sort()! for this exercise.
-
-  Sample:
-
-  \begin{verbatimcode}
-Input a number >>> 12
-Input a number >>> 5.2
-Input a number >>> 73
-Input a number >>> 45
-Input a number >>> 100
-Input a number >>> -5
-Input a number >>> 2.3
-Input a number >>> stop
-[-5.0, 2.3, 5.2, 12.0, 45.0, 73.0, 100.0]
-  \end{verbatimcode}
-
-  What happens in the background:
-
-  \begin{verbatimcode}
-Input a number >>> 12
-List contains [12.0]
-Input a number >>> 5.2
-List contains [5.2, 12.0]
-Input a number >>> 73
-List contains [5.2, 12.0, 73.0]
-Input a number >>> 45
-List contains [5.2, 12.0, 45.0, 73.0]
-Input a number >>> 100
-List contains [5.2, 12.0, 45.0, 73.0, 100.0]
-Input a number >>> -5
-List contains [-5.0, 5.2, 12.0, 45.0, 73.0, 100.0]
-Input a number >>> 2.3
-List contains [-5.0, 2.3, 5.2, 12.0, 45.0, 73.0, 100.0]
-Input a number >>> stop
-[-5.0, 2.3, 5.2, 12.0, 45.0, 73.0, 100.0]
-  \end{verbatimcode}
-
-\end{ex}
-
-\begin{ex}[sets.py]
-  Write the following functions:
-
-  \begin{description}
-    \item[\pythoninline{overlap()}] Given two lists, find a list of the elements
-      common to both lists and return it.
-    \item[\pythoninline{join()}] Given two lists, join them together to be one
-      list without duplicate elements and return that list.
-  \end{description}
-
-  Write a small command line interface that is not part of these functions that
-  will look something like this:
-
-  \begin{verbatimcode}
-List 1
-Enter number >>> 1
-Enter number >>> 2
-Enter number >>> 4.5
-List 1 is [1.0, 2.0, 4.5]
-
-List 2
-Enter number >>> 2
-Enter number >>> 4.5
-Enter number >>> 5
-List 2 is [2.0, 4.5, 5.0]
-
-Overlap is [2.0, 4.5]
-Join is [1.0, 2.0, 4.5, 5.0]
-  \end{verbatimcode}
-
-\end{ex}
-
-\pagebreak
 \section{Submitting}
 
 You should submit your code as a tarball. It should contain all files
 used in the exercises for this lab. The submitted file should be named
 \begin{center}
-  \texttt{cse107\_firstname\_lastname\_lab4.tar.gz}
+  \texttt{cse107\_firstname\_lastname\_lab3.tar.gz}
 \end{center}
 
 \begin{center}
-  \textbf{Upload your tarball to Canvas.}
+  \textbf{Upload your tarball to Canvas before the deadline.}
 \end{center}
 
 \listoftheorems
