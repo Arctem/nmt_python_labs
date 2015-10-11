@@ -1,685 +1,570 @@
-% LAB 3: Functions
-%
-% CSE/IT 107: Introduction to Programming
+% LAB 5: Programming Competition
+% 
+% CSE/IT 107: Intro to Programming in Python
 % New Mexico Tech
-%
-% Prepared by Russell White and Christopher Koch
-% Spring 2015
-
-% - Functions
-%   - Positional and Optional Arguments
-%   - Recursion
-% - Modules
-%   - import statements
-%   - main() boilerplate
-% - Comments and PEP-8 style
-% - Keywords: def
+% 
+% Prepared by Christopher Koch
+% Fall 2014
 \documentclass[11pt]{cselabheader}
-\fancyhead[R]{Lab 3: Functions}
-\title{Lab 3: Functions}
-\usepgflibrary{fpu}
-\newcommand{\pas}{\mathop{\mathrm{pascal}}}
+% formatting the problem
+\newcommand{\cop}[3]{\textbf{#1}~(#2 pts, filename: \texttt{#3})\quad}
+\usepackage{IEEEtrantools} 
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+% drawings in latex
+\usepackage{tikz}
+
+\fancyhead[R]{Lab 5: Programming Competition}
+\title{Lab 5: Programming Competition}
 
 \begin{document}
-\pagenumbering{roman}
+
 \maketitle
 
 \hrule
+
 \begin{quotation}
-``If you don't think carefully, you might believe that programming is just
-typing statements in a programming language.''
+  ``First, solve the problem. Then, write the code.''
 \end{quotation}
 \begin{flushright}
-  --- W. Cunningham
+  --- John Johnson
+\end{flushright}
+
+\begin{quotation} ``Beware of bugs in the above code; I have only proved it
+  correct, not tried it.''
+\end{quotation}
+\begin{flushright}
+  --- Donald Knuth
+%\\\textit{Notes on the van Emde Boas construction of priority deques}
+%% From corresponde with Peter van Emde Boas about Priority Deques
+%% http://www-cs-faculty.stanford.edu/~uno/faq.html
 \end{flushright}
 
 \begin{quotation}
-``When you come to a fork in the road, take it."
+  ``Openness always deserves recognition.'' (``Offenheit verdient immer
+  Anerkennung.'')
 \end{quotation}
 \begin{flushright}
---- Attributed to Yogi Berra
+  --- Otto von Bismarck
+% \\\textit{Speeches in the second chamber of Prussian state diet
+% (parliament). November 24th, 1849.}
+
+%% Reden in der preußischen Zweiten Kammer, 24. November 1849
+%% http://de.wikiquote.org/wiki/Otto_von_Bismarck
+%% Translation by Chris
 \end{flushright}
 
-\begin{quotation}
-``The time you enjoy wasting is not wasted time.''
-\end{quotation}
-\begin{flushright}
-  --- Bertrand Russell
-\end{flushright}
 \hrule
 
-\tableofcontents
-
 \pagebreak
-\pagenumbering{arabic}
 
 \section{Introduction}
-\label{sec:intro}
+This lab is solely a problem solving lab. There is nothing to turn in.
 
-In the previous lab, we showed you simple control flow and how to repeat a piece
-of code using \pythoninline{while}. In this lab, we will be learning how to
-break a lot of code into smaller, reusable pieces called \emph{functions}.
+\section{Programming Competition}
+Please form groups of up to three with others in your lab. You will
+enter into the competition together and submit the same files.
 
-\pagebreak
-\section{Modules}
-\label{sec:modules}
+%To submit your answers, find the scoreboard at 
+%\begin{center}
+%	\vspace{-5mm}
+%	\url{http://niedersfeld.cs.nmt.edu/scoreboard/}
+%	\vspace{-5mm}
+%\end{center}
+%Upon submission of your answer, someone will come and check the code to make
+%sure you actually found the answer using code and did not use the internet.
 
-A program that is saved in a text file and then run with Python is called a
-\emph{script}. As your programs get longer, you may want to split them into
-multiple files for easier legibility, maintenance, or abstraction. To do this,
-Python supports a way to put definitions (of functions) in a file and use them
-in another script or in the interpreter. A file like this is called a
-\emph{module}. An example for such a module is the math module we have used
-previously. The definitions from a module can be \emph{imported} into other
-scripts.
+To submit your answers, please notify a TA. The whiteboard will serve as the
+scoreboard for your lab. The TA will want to see the answer to the ``scoreboard
+submission.'' If the TAs are grading another team's submission,  move on to a
+new problem while waiting for them to be free.
 
-A module is just a file with Python statements in it. A module takes the name of
-the file that it is in. For example, imagine we have a file
-\texttt{circlemath.py} in our current working directory:
+\textbf{Do not share the problem descriptions or the code with the other lab
+section.} Everyone needs to have an equally fair chance of doing well in this
+competition.
 
-\begin{listing}[H]
-\vspace{-0.5em}
-\begin{python3code}
-import math # importing the math module
+You may not use the internet to find answers to these problems. Think! If the
+concepts are unclear, please get help from a TA.
 
-def area(radius):
-    """Find and return the area of a circle (float) given the radius"""
-    return math.pi * radius**2
+\subsection{Extra Credit}
+This lab will not count for its own grade. Your standing in the competition 
+will count for extra credit on your lab final.
+The winners of your lab section will get 10\%, the second place will get
+9\%, and so on as extra credit on their lab final. 
 
-def circumference(radius):
-    """Find and return the circumference of a circle (float) given the radius"""
-    return 2 * math.pi * radius
-\end{python3code}
-\vspace{-1em}
-\caption{\texttt{circlemath.py}}
-\vspace{-0.5em}
-\end{listing}
+%You have to gain at least 20 points in the competition in order to qualify
+%for the extra credit.
 
-Then, open the interpreter and import the module:
+\subsection{Requirements}
+Even though this lab ``only'' counts for extra credit, you have to stay the lab
+and try your best. \textbf{You will LOSE 10\% on your lab final if you do not
+stay and try your best.}
 
-\begin{pyconcode}
->>> import circlemath
->>> circlemath.circumference(5) # have to use modulename.attributename
-31.41592653589793
->>> circlemath.area(5)
-78.53981633974483
->>> circlemath.__name__
-'circlemath'
-\end{pyconcode}
+You may choose to do any of the following problems. However, there is no credit
+for incomplete or incorrect submissions.
 
-Every module has a \pythoninline{__name__} attribute that contains the name of
-the module, except in one special case that we will see soon.
-
-There are other kinds of import statements with different effects:
-
-\begin{pyconcode}
->>> from circlemath import area
->>> area(5) # can just use the attribute imported without modulename.
-78.53981633974483
->>> circumference(5) # not defined, because not imported
-Traceback (most recent call last):
-  File "<input>", line 1, in <module>
-NameError: name 'circumference' is not defined
-\end{pyconcode}
-
-\begin{pyconcode}
->>> from circlemath import area, circumference # use commas to separate multiple
->>> area(5)
-78.53981633974483
->>> circumference(5)
-31.41592653589793
-\end{pyconcode}
-
-\begin{pyconcode}
->>> from circlemath import * # import all definitions made
->>> area(5)
-78.53981633974483
->>> circumference(5)
-31.41592653589793
-\end{pyconcode}
-
-\begin{pyconcode}
->>> from circlemath import area as carea
->>> carea(5)
-78.53981633974483
-\end{pyconcode}
-
-The last option is rather frowned upon; we would prefer you to use
-\pythoninline{circlemath.area} instead as it is more descriptive.
-
-You may also rename a module upon importing it:
-
-\begin{pyconcode}
->>> import circlemath as cmath
->>> cmath.area(5)
-78.53981633974483
-\end{pyconcode}
-
-
-\begin{infobox}{Convention (PEP 8)}
-  Always put \pythoninline{import} statements at the beginning of a file in the
-  following order:
-  \begin{enumerate}
-    \item Built-in standard library modules
-    \item Third-party modules (e.g. matplotlib)
-    \item Self-written modules
-  \end{enumerate}
-  Put a blank line between each group of imports.
-\end{infobox}
-
-\subsection{Using Modules as Scripts and Boilerplate}
-
-If there is code in your module that is not a function definition, Python will
-run it just once when the module is imported. For example, take the file
-\texttt{mid.py}:
-
-\begin{listing}[H]
-  \vspace{-0.5em}
-\begin{python3code}
-def midpoint(a, b):
-    """Find and return the midpoint of two numbers."""
-    return (a+b)/2
-
-print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
-\end{python3code}
-  \vspace{-1em}
-  \caption{\texttt{mid.py}}
-  \vspace{-0.5em}
-\end{listing}
-
-\begin{pyconcode}
->>> import mid
-Midpoint of 5 and 10 is 7.50.
-\end{pyconcode}
-
-The same will happen if you run the module like a script:
-
-\begin{bashcode}
-$ python3 mid.py
-Midpoint of 5 and 10 is 7.50.
-\end{bashcode}
-
-However, this can be rather annoying to deal with, for example if you wrote a
-script with a bunch of functions a while ago and you just want to use the
-functions you wrote, but do not want the other code to run when you're using
-them -- you just want the functions. You can achieve this!
-
-When you run a module as a script, the modules \pythoninline{__name__} attribute
-is not set to the module's name, but to \pythoninline{"__main__"}. Hence, the
-following code in \texttt{mid.py} will do the following:
-
-\begin{listing}[H]
-  \vspace{-0.5em}
-\begin{python3code}
-def midpoint(a, b):
-    """Find and return the midpoint of two numbers."""
-    return (a+b)/2
-
-print(__name__) # just for demonstration, do not put this in real programs
-
-if __name__ == "__main__":
-    print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
-\end{python3code}
-  \vspace{-1em}
-  \caption{\texttt{mid.py}}
-  \vspace{-0.5em}
-\end{listing}
-
-\begin{pyconcode}
->>> import mid
-mid
-\end{pyconcode}
-
-\begin{bashcode}
-$ python3 mid.py
-__main__
-Midpoint of 5 and 10 is 7.50.
-\end{bashcode}
-
-However, sometimes you may want to import the module \emph{and} run it as if it
-were a script. To enable us to do so, we usually put the script code in a
-function called \pythoninline{main()}:
-
-\begin{listing}[H]
-  \vspace{-0.5em}
-\begin{python3code}
-def midpoint(a, b):
-    """Find and return the midpoint of two numbers."""
-    return (a+b)/2
-
-def main():
-    print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
-
-if __name__ == "__main__":
-    main()
-\end{python3code}
-  \vspace{-1em}
-  \caption{\texttt{mid.py} -- perfect example}
-  \vspace{-0.5em}
-\end{listing}
-
-\begin{pyconcode}
->>> import mid
->>> mid.main() # if we want to
-Midpoint of 5 and 10 is 7.50.
-\end{pyconcode}
-
-\begin{bashcode}
-$ python3 mid.py
-Midpoint of 5 and 10 is 7.50.
-\end{bashcode}
-
-We call this combination of the if-statement and the
-\pythoninline{main()} function \emph{boilerplate code}.
-
-\begin{infobox}{Boilerplate Requirement}
-  Please put \textbf{any} code that is not part of a function inside the
-  boilerplate if-statement so that \emph{every} one of your scripts can also be
-  used as a module. This will be required for every lab from now on.
-
-  Wrong:
-
-  \begin{python3code}
-print("Hello World!")
-  \end{python3code}
-
-  Right:
-
-  \begin{python3code}
-def main():
-    print("Hello World!")
-
-if __name__ == "__main__":
-    main()
-  \end{python3code}
-\end{infobox}
-
-\subsection{The \protect\pythoninline{dir()} Function}
-
-Use the \pythoninline{dir()} function to get a list of every attribute --
-variables, functions, and other things you do not know about yet -- that is part
-of a module. For example for the circlemath module we wrote earlier:
-
-\begin{pyconcode}
->>> import circlemath
->>> dir(circlemath)
-['__name__', 'area', 'circumference']
->>> import mid
->>> dir(mid)
-['__name__', 'midpoint']
->>> import math
->>> dir(math)
-['__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'acos',
-'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh',
-'degrees', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial', 'floor', 'fmod',
-'frexp', 'fsum', 'gamma', 'hypot', 'isfinite', 'isinf', 'isnan', 'ldexp', 'lgamma',
-'log', 'log10', 'log1p', 'log2', 'modf', 'pi', 'pow', 'radians', 'sin', 'sinh', 'sqrt',
-'tan', 'tanh', 'trunc']
-\end{pyconcode}
+%You may use Google to help find solutions to the problems. However,
+%there are two conditions to this: (1) you \textbf{must}
+%cite the sources you use in your comments (URLs, etc) and (2) you \textbf{must}
+%understand the content you use from these sources. \textbf{Your grader will ask
+%you questions to make sure you understand.}
 
 \pagebreak
-\subsection{Summary}
-\label{subsec:modules.sum}
+\subsection{Problems}
 
-\begin{itemize}
-  \item Syntax:
+\begin{enumerate}[\text{Problem} {[}1{]}~]
+  \item \cop{Multiples of 3 and 5}{5}{multiples.py}
+    % project euler 1
 
-    \begin{python3code}
-import modname1, modname2 # use: modname1.attributename
-import modname3 as othermodname # use: othermodname.attributename
-from modname import attribute1, attribute2 # use: attribute1, attribute2
-from modname import * # use: attributename
-from modname import attribute as otherattribute # use: otherattribute
-    \end{python3code}
+    If we list all the integers (natural numbers) below 10 that are
+    multiples of 3 or 5, we get 3, 5, 6, and 9. The sum of these multiples
+    is 23.
 
-    Attributes can be functions defined in the module or variables defined in
-    the module. A special attribute is \pythoninline{__name__}, which contains
-    the name of the module unless the module is executed as a script.
+    Write a program to find the sum of all the multiples of 3 or 5 below
+    1000.
 
-  \item Every script is a module whose name is the filename of the script.
+    \textit{Scoreboard submission:} The sum of all multiples of 3 or 5
+    below 1000.
 
-  \item If a module is imported, its \pythoninline{__name__} attribute is a
-    variable that contains the module name. If a module is run as a script, its
-    \pythoninline{__name__} attribute contains \pythoninline{"__main__"}. With
-    this, you can have code that only runs if a module is run like a script.
+  \item \cop{Special Pythagorean Triplet}{10}{pythagoras.py}
+    % project euler 9
 
-    We call that boilerplate code:
+    A Pythagorean triplet is a set of three integers (natural numbers), $a
+    < b < c$ such that $a^2 + b^2 = c^2$.
 
-    \begin{python3code}
-def main():
-    # stuff that only runs if module is run as a script
+    For example, $a = 3, b = 4, c = 5$ fits: $3^2 + 4^2 = 9 + 16 = 25 =
+    5^2$.
 
-if __name__ == "__main__":
-    main()
-    \end{python3code}
+    There exists exactly one Pythagorean triplet for which $a + b + c =
+    1000$.
 
-  \item Use \pythoninline{dir()} to get a list of every attribute -- every
-    variable and function (and other things that you do not know about yet) --
-    that is part of a particular module.
+    \textit{Scoreboard submission:} Find the product $abc$ of that special
+    Pythagorean triplet.
 
-  \item A good resource:
+  \item \cop{Reducing Fractions}{10}{fractions.py}
+    % Source: ACM Freshman Coding Competition, Fall 2013 (Russell White)
 
-    \begin{center}
-      \url{https://docs.python.org/3.4/tutorial/modules.html}
-    \end{center}
+    Write a program that reads both the numerator and denominator of
+    a fraction and displays the reduced fraction. For simplicity, you
+    may assume that the numbers entered are less than 10,000. 
 
-\end{itemize}
+    For example:
+
+    \begin{verbatimcode}
+Enter numerator: 4
+Enter denominator: 30
+Result: 2/15
+    \end{verbatimcode}
+
+    \begin{verbatimcode}
+Enter numerator: 25
+Enter denominator: 5
+Result: 5/1
+    \end{verbatimcode}
+
+    \textit{Hints}: See Appendix~\ref{sec:gcd} to find out what a GCD is 
+    and what Euclid's algorithm is. 
+
+    \textit{Scoreboard submission:} Contact a TA for test cases.
+
+  \item \cop{Distances Between Points}{15}{distances.py}
+    The distance between a pair of points $(x_0, y_0)$ and $(x_1, y_1)$ is
+    equal to $$\sqrt{(x_0 - x_1)^2 + (y_0 - y_1)^2}$$
+    
+    Write a program that takes in a series of points, terminated by a blank
+    line, then prints out all but the first point, sorted by the distance from
+    the first point.
+    
+    For example:
+    
+    \begin{verbatimcode}
+Enter a point: 0,0
+Enter a point: 1,1
+Enter a point: 5,5
+Enter a point: 3,3
+Enter a point: 100,100
+Enter a point:
+Result: (1, 1) (3, 3) (5, 5) (100, 100)
+    \end{verbatimcode}
+    
+    \begin{verbatimcode}
+Enter a point: 3,5
+Enter a point: 2,0
+Enter a point: 7,-2
+Enter a point: 3,0
+Enter a point: 12,-2
+Enter a point: 
+Result: (3, 0) (2, 0) (7, -2) (12, -2)
+    \end{verbatimcode}
+    
+    \textit{Scoreboard submission:} Contact a TA for test cases.
+
+  \item \cop{Crossing Hands}{20}{hands.py}
+    % source: http://programmingpraxis.com/2014/02/25/crossing-hands/
+
+    The hands of an analog clock occassionally cross as they revolve around
+    the dial. Write a program that determines the times at which times the 
+    hour and minute hands cross. Assume that
+    the hands move continuously (that is, the hands do not jump between
+    numbers -- the times at which they cross may not necessarily be
+    integer values).
+
+    \textit{Scoreboard submission} Add up the hours, minutes, and seconds
+    of all of the times that the hour and minute hands cross in one
+    twelve-hour cycle and submit it in the format \texttt{H-M-S}, 
+    for example \texttt{30-167-421}.
 
 
+  \item \cop{Anagram Distance}{20}{anadist.py}
+    
+    The anagram distance between two words is how many letters must be added
+    or removed from one of the words in order to make it an anagram of the
+    other. For example, ``dog'' and ``godot'' have an anagram distance of $2$
+    while ``sandwich'' and ``witch'' have an anagram distance of $5$.
+
+    You can assume that input will be purely lowercase letters and will be
+    no longer than 20 characters.
+
+    \begin{verbatimcode}
+Enter first word: sandwich
+Enter second word: witch
+Result: 5
+    \end{verbatimcode}
+
+    \begin{verbatimcode}
+Enter first word: interwebs
+Enter second word: spiderman
+Result: 8
+    \end{verbatimcode}
+
+    \textit{Scoreboard submission} Contact a TA for test cases.
+
+
+  \item \cop{Contiguous Regions}{25}{regions.py}
+    
+    Write a program that takes in a square region and determines whether two
+    points are connected. The region will consist of three characters: \texttt{.},
+    \texttt{x}, and \texttt{s}. There will be exactly two \texttt{s}'s while there
+    can be any number of \texttt{.}'s and \texttt{x}'s. Your program will output
+    either \texttt{connected} or \texttt{not connected}, depending on if the two
+    \texttt{s} can be travelled between by only moving across \texttt{.}'s and only
+    moving in cardinal directions.
+
+    Your program should know when to stop accepting output without requiring a specific
+    ``stop'' command.
+
+    \begin{verbatimcode}
+..s.
+.xxx
+.x..
+...s
+connected
+    \end{verbatimcode}
+
+    \begin{verbatimcode}
+....x
+.s.x.
+..x..
+.x.s.
+x....
+not connected
+    \end{verbatimcode}
+
+    \textit{Scoreboard submission} Contact a TA for test cases.
+
+    
+
+  \item \cop{Finding a Path}{25}{path.py}
+    %Source: ENMU Codecomp, Spring 2014 (Tyler Cecil)
+    
+    Write a program that finds the shortest valid path between two nodes in a graph.
+    Each of the lines of input will be the name of a node (a single, upper-case
+    character), followed by a list of the nodes connected to that node. The final
+    line of input will a single upper-case letter, designating the destination node.
+    You must output a sequence of letters that represents the shortest path to the
+    destination. Assume you start at the first given node. You can assume a path will
+    always exist. There will be less than 10 nodes given. If multiple valid paths
+    exist, any will be accepted.
+    
+    For example:\\
+    \begin{minipage}{.33\linewidth}
+      \begin{minipage}{.8\linewidth}
+        \begin{lstlisting}[style=bash]
+A B D
+B C D
+C
+
+A B C
+        \end{lstlisting}
+      \end{minipage}
+    \end{minipage}
+    \begin{minipage}{.33\linewidth}
+      \begin{minipage}{.8\linewidth}
+        \begin{lstlisting}[style=bash]
+A B C D
+B F
+D B C
+F E
+E
+
+A B F E
+        \end{lstlisting}
+      \end{minipage}
+    \end{minipage}
+    \begin{minipage}{.33\linewidth}
+      \begin{minipage}{.8\linewidth}
+        \begin{lstlisting}[style=bash]
+A B C D E
+B C D E F
+C D E F
+D E F
+E F
+F
+
+A B F
+        \end{lstlisting}
+      \end{minipage}
+    \end{minipage}
+
+    \textit{Scoreboard submission:} Contact a TA for test cases.
+
+  \item \cop{Block Areas}{35}{blocks.py}
+    % Source: ACM Freshman Coding Competition, Fall 2013 (Russell White)
+    % sample solution: http://www.mathopenref.com/coordpolygonarea2.html
+
+    Write a program to take in a series of coordinate points and finds the 
+    enclosed area. The points will all be non-negative integers not 
+    exceeding 100. All angles in the shape will be 90 degrees. You can 
+    assume that no shape will be defined by more than 20 points. 
+
+    For example:
+    \begin{figure}[!ht]
+      \centering
+      \begin{tikzpicture}[scale=0.7]
+        \node at (2,1) {};% {(2,1)};
+        \node at (4,1) {};% {(4,1)};
+        \node at (4,3) {};% {(4,3)};
+        \node at (3,3) {};% {(3,3)};
+        \node at (3,5) {};% {(3,5)};
+        \node at (1,5) {};% {(1,5)};
+        \node at (1,4) {};% {(1,4)};
+        \node at (2,4) {};% {(2,4)};
+
+        \draw (1,5) -- (3,5);
+        \draw (1,5) -- (1,4);
+        \draw (1,4) -- (2,4);
+        \draw (2,4) -- (2,1);
+        \draw (2,1) -- (4,1);
+        \draw (4,1) -- (4,3);
+        \draw (4,3) -- (3,3);
+        \draw (3,3) -- (3,5);
+      \end{tikzpicture}
+      \caption{Example shape}
+    \end{figure}
+
+    \emph{Hint:} The order that the points are input shouldn't matter
+    for your algorithm.
+
+    \begin{verbatimcode}
+Enter number of points: 8
+Enter point: 2 1
+Enter point: 4 1
+Enter point: 4 3
+Enter point: 3 3
+Enter point: 3 5
+Enter point: 1 5
+Enter point: 1 4
+Enter point: 2 4
+
+Area: 7
+    \end{verbatimcode}
+
+    \textit{Scoreboard submission:} Find the area of the polygon described
+    by the following 14 coordinates.
+    \[
+      (0, 0)~(6, 0)~(6, 1)~(2, 1)~(2, 2)~(7, 2)~(7, 1)
+    \]
+    \[
+      (9, 1)~(9, 4)~(2, 4)~(2, 3)~(1, 3)~(1, 2)~(0, 2)
+    \]
+
+    \begin{figure}[!ht]
+      \centering
+      \begin{tikzpicture}[scale=0.7]
+        \node at (0,0) {};% {(2,1)};
+        \node at (6,0) {};% {(4,1)};
+        \node at (6,1) {};% {(4,3)};
+        \node at (2,1) {};% {(3,3)};
+        \node at (2,2) {};% {(3,5)};
+        \node at (7,2) {};% {(1,5)};
+        \node at (7,1) {};% {(1,4)};
+        \node at (9,1) {};% {(2,4)};
+        \node at (9,4) {};
+        \node at (2,4) {};
+        \node at (2,3) {};
+        \node at (1,3) {};
+        \node at (1,2) {};
+        \node at (0,2) {};
+
+        \draw (0,0) -- (6,0);
+        \draw (6,0) -- (6,1);
+        \draw (6,1) -- (2,1);
+        \draw (2,1) -- (2,2);
+        \draw (2,2) -- (7,2);
+        \draw (7,2) -- (7,1);
+        \draw (7,1) -- (9,1);
+        \draw (9,1) -- (9,4);
+        \draw (9,4) -- (2,4);
+        \draw (2,4) -- (2,3);
+        \draw (2,3) -- (1,3);
+        \draw (1,3) -- (1,2);
+        \draw (1,2) -- (0,2);
+        \draw (0,2) -- (0,0);
+      \end{tikzpicture}
+      \caption{Scoreboard submission shape}
+    \end{figure}
+
+  \item \cop{Nontransitive Dice}{50}{dice.py}
+    %Source: ACM Freshman Coding Competition, Fall 2013 (Rob Kelly)
+
+    A set of dice is called nontransitive if it contains three dice,
+    A, B, and C, with the property that A rolls higher than B more
+    than half the time, and B rolls higher than C more than half
+    the time, but it's not true that A rolls higher than C more than
+    half the time. Intuitively, the existence of such a set might not
+    seem possible - If $A > B > C$, how could it be true that $C > A$?
+    But consider the following set of dice:
+
+    \begin{itemize}
+      \item Die A has sides 3, 3, 3, 3, 3, and 6
+      \item Die B has sides 2, 2, 2, 5, 5, and 5
+      \item Die C has sides 1, 4, 4, 4, 4, and 4
+    \end{itemize}
+    By checking all possible die-rolls, we can see that A will roll
+    higher than B 21 out of 36 times, and likewise B will roll higher
+    than C 21 out of 36 times, but C will roll higher than A 25 out
+    of 36 times. Neat, right?
+
+    Write a program that reads an arbitrary number of six-sided dice
+    configurations followed by a single 0, and displays
+    ``Nontransitive'' if there exists a subset of at least three
+    nontransitive dice in the set, or ``Transitive'' if no such
+    nontransitive subset exists. One die will be input per line,
+    with the numbers of each side seperated by spaces. All side
+    numbers will be between 0 and 999. The order of the input dice
+    does not matter.
+
+    \begin{minipage}{.5\linewidth}
+      \begin{minipage}{.9\linewidth}
+        \begin{lstlisting}[style=bash]
+5 5 5 1 1 1
+3 3 3 3 3 3
+4 4 4 4 0 0
+6 6 2 2 2 2
+8 6 7 5 3 0
+0
+
+Nontransitive
+        \end{lstlisting}
+      \end{minipage}
+    \end{minipage}
+    \begin{minipage}{.5\linewidth}
+      \begin{minipage}{.9\linewidth}
+        \begin{lstlisting}[style=bash]
+1 2 3 4 5 6
+7 8 9 10 11 12
+10 20 30 40 50 60
+100 200 300 400 500 600
+0
+
+Transitive
+        \end{lstlisting}
+      \end{minipage}
+    \end{minipage}
+
+    \textit{Scoreboard submission:} Contact a TA for test cases.
+\end{enumerate}
 \pagebreak
-\section{Recursion}
-\label{sec:rec}
 
-Recursion is the idea of a function calling itself. This can be useful in a wide
-variety of situations, but it can also be easy to misuse. Let us first look at a
-good example:
-\begin{python3code}
-def factorial(n):
-    """Compute and return n! recursively by knowing that n! = n * (n-1)! for n > 1
-    and 1! = 1 and 0! = 1"""
-    if n <= 1:
-        return 1
-    else
-        return n * factorial(n-1)
-\end{python3code}
+\begin{appendices}
+  \section{Reducing Fractions -- GCD and Euler's Algorithm}
+  \label{sec:gcd}
 
-Notice that this is just another way to repeat a statement, similar to a loop.
-In a loop, we have to specify when to stop repeating something, and we have to
-do the same thing with recursion; otherwise, it would run forever.
+  Reducing a fraction involves dividing the numerator and denominator by
+  the same integers until there is nothing that divides both numerator and
+  denominator anymore.
 
-As an example, this is how the function plays out:
-\[ f(5) = 5 * f(4) = 5 * 4 * f(3) = 5 * 4 * 3 * f(2) = 5 * 4 * 3 * 2 * f(1) = 5
-* 4 * 3 * 2 * 1 = 120 \]
+  For example, $\frac{60}{6} = \frac{30}{3} = \frac{10}{1} = 10$. First, I
+  divided both numerator and denominator by $2$, and then by $3$. 
 
-As an example, see this simple \textbf{\emph{bad}} case of recursion:
+  This is where the concept of a GCD comes in. GCD stands for ``greatest
+  common divisor'' -- given two numbers such as $60$ and $6$, the GCD is the
+  greatest whole number that both numbers are divisible by. Since both $60$ 
+  and $6$ are divisible by $6$ and since there is no greater integer than $6$
+  that one can divide them both by, the $\gcd(60, 6) = 6$. For another
+  example, $\gcd(40, 6) = 2$.
 
-\begin{python3code}
-def test():
-    """BAD example of recursion."""
-    test()
-\end{python3code}
+  If you think about it more, it becomes clear that one can reduce a fraction
+  by dividing both the numerator and denominator by the GCD of both. In
+  essence, given a fraction $\frac{a}{b}$, the reduced fraction would be:
+  \[
+    \frac{a}{b} = \frac{~\frac{a}{\gcd(a, b)}~}{~\frac{b}{\gcd(a, b)}}
+  \]
 
-If this function is called, it will continue to call itself infinitely until
-Python prints out an error message and quits. This is because the function calls
-itself every time it is called -- there is no case where the function ends
-without calling itself again. The case in which the recursion ends is called a
-\emph{base case} and it is important to include one in every recursive function.
-Here is a modified version of the above code that allows the initial call to
-specify a value limiting how many times the recursive call should be made:
+  How do we find the GCD though? Here, a neat algorithm called Euclid's
+  algorithm comes in. Euclid's algorithm takes advantage of the fact that
+  when an integer $a$ is divided by another integer $b$, we get a quotient
+  $q$ and a remainder $r$. This is called the Division Algorithm (see
+  Theorem~\ref{thm:div}). 
 
-\begin{python3code}
-def test(x):
-    if x > 0:
-        test(x - 1)
-\end{python3code}
+  \begin{thm}[Division Algorithm] \label{thm:div}
+    Given integers $a$ and $b$, where $b > 0$, there exist unique integers
+    $q$ (the quotient) and $r$ (the remainder) such that 
+    \[ a = bq + r\text{, where }0 \leq r < b. \]
+  \end{thm}
 
-\subsection{Summary}
-\label{subsec:adv.sum}
+  For example, when $5$ is divided by $2$, we get a quotient of $2$ and a
+  remainder of $1$, since $5 = 2 \times 2 + 1$. You have already taken 
+  advantage of this algorithm when you validated credit card numbers. 
 
-\begin{itemize}
-  \item A function may call itself. This is called recursion.
-  \item Always need a base case, or the function will keep calling itself
-    forever.
-\end{itemize}
+  In Python, we can find the quotient by doing integer division and the remainder
+  using the modulus operator \%.
 
-\pagebreak
+  \subsection{Euclid's Algorithm}
 
-\section{Exercises}
+  Euclid's algorithm finds the GCD by repeatedly using the division
+  algorithm. Given integers $a$ and $b$, where $a > b$, that we want to find 
+  the GCD of, we
+  find the quotient $q$ and $r$. If the remainder is $0$, $b$ is the GCD. If
+  the remainder is not $0$, we repeat the same steps, but we let $a = b$ and
+  $b = r$.
 
-%\begin{warningbox}{Requirements}
-%  Remember to adhere to PEP 8, PEP 257, and the boilerplate code requirement.
-%\end{warningbox}
+  In essence, it goes:
+  \begin{IEEEeqnarray*}{RCLCL}
+    a &=& bq + r &\text{ where }&0 \leq r < b \\
+    b &=& rq_2 + r_2 &\text{ where }&0 \leq r_2 < r \\
+    r &=& r_2q_3 + r_3 &\text{ where }&0 \leq r_3 < r_2
+  \end{IEEEeqnarray*}
+  So we are saying that $\gcd(a, b) = \gcd(b, r) = \gcd(r, r_2) = \cdots =
+  \gcd(r_n, 0) = r_n$. Notice that the quotient is not used at all, only the
+  given integers $a, b$ and the remainder $r$ matter.
 
+  Notice that $r_n < \cdots < r_3 < r_2 < r < b$.
 
-\begin{warningbox}{Install}
-  Please have the \pythoninline{matplotlib} module installed on your computer
-  before next lab. If you installed Anaconda Python, you already have it. Please
-  come see a TA if you are having problems with the installation!
-\end{warningbox}
-
-
-\begin{ex}[geometry.py, triangle.py, regularpolygons.py, rectangle.py, circle.py]
-  Write a Python script that lets the user do some basic
-  geometry calculations. Your output should look something like the following.
-
-  The majority of the output must be calculated by your program using a function
-  for each kind of calculation. \emph{The output given below is just an example.
-  Your program needs to perform the calculations for the numerical values read
-  from the keyboard.}
+  It seems natural to write this with recursion. In pseudocode, with recursion:
 
   \begin{verbatimcode}
-Welcome to Wile E. Coyote's Geometry Calculator!
+euclids(a, b) 
+  if(a < b) 
+    return euclids(b, a)
 
-Enter height of a rectangle >>> 2
-Enter width of a rectangle >>> 3
-
-The area of a rectangle with height 2 and width 3 is 6.
-The perimeter of a rectangle with height 2 and width 3 is 10.
-The length of the diagonal of a rectangle with height 2 and width 3 is 3.605551.
-
-Enter the radius of a circle >>> 2
-
-The area of a circle with radius 2.00 is 12.57.
-The circumference of a circle with radius 2.00 is 12.57.
-
-Enter the height of a right triangle >>> 1
-Enter the base of a right triangle >>> 1
-
-The area of a right triangle with height 1.00 and base 1.00 is 0.50.
-The perimeter of a triangle with height 1.00 and base 1.00 is 3.41.
-
-Enter the number of sides of a regular polygon as >>> 8
-Enter the length of the side of a regular polygon >>> 5
-
-The exterior angle of a regular polygon with 8 sides is 45.00 degrees.
-The interior angles of a regular polygon with 8 sides sum to 1080.00 degrees.
-Each interior angle of a regular polygon with 8 sides is 135.00 degrees.
-The area of a regular polygon with 8 sides each 5.00 long is 120.71.
+  r = a modulus b
+  if(r == 0)
+    return b
+  else
+    return euclids(b, r)
   \end{verbatimcode}
+  % TODO use algorithmicx pseudocode typesetting
 
-  \begin{center}
-    \bfseries Remember that coding the input part of the program should be your
-    \emph{last} step. It is a beginner's mistake to start with that -- you want
-    the logic of your functions to be correct before doing any of the input.
-    Test your functions with hard-coded values.
-  \end{center}
-
-  Please split your program into multiple files. Please create a module each for
-  the rectangle functions, the circle functions, the triangle functions, and the
-  polygon functions. For each of the modules, use boilerplate code to test the
-  functions. Here's an example:
-
-  \begin{python3code}
-# Module square (square.py)
-
-def area(side_length):
-    """Calculates the area of a square given the length of a side."""
-    return side_length ** 2
-
-def perimeter(side_length):
-    """Calculates the perimeter of a square given the length of a side."""
-    return 4 * side_length
-
-def main():
-    side_len = 2
-    print('A square with side length {:.2f} has area {:.2f}.'.format(
-        side_len, area(side_len)))
-    print('A square with side length {:.2f} has perimeter {:.2f}.'.format(
-        side_len, perimeter(side_len)))
-
-if __name__ == '__main__':
-    main()
-  \end{python3code}
-
-  Then, write a script \texttt{geometry.py} that gives the user interface as
-  seen in the example above.
-
-  Your program must define the following functions. It is your task to figure
-  out the appropriate arguments and return values as well as the code of these
-  functions. Notice that the triangle is a \emph{right triangle} where height
-  and base are the two legs joined by the 90 degree angle.
-  \begin{multicols}{2}
-    \begin{itemize}
-      \item Module \texttt{triangle}:
-        \begin{itemize}
-          \item \pythoninline{area}
-          \item \pythoninline{hypotenuse}
-          \item \pythoninline{perimeter}
-        \end{itemize}
-      \item Module \texttt{regularpolygons}:
-        \begin{itemize}
-          \item \pythoninline{exterior_angle}
-          \item \pythoninline{interior_angle}
-          \item \pythoninline{area}
-        \end{itemize}
-      \item Module \texttt{rectangle}:
-        \begin{itemize}
-          \item\pythoninline{area}
-          \item \pythoninline{perimeter}
-          \item \pythoninline{diagonal}
-        \end{itemize}
-      \item Module \texttt{circle}:
-        \begin{itemize}
-          \item \pythoninline{area}
-          \item \pythoninline{circumference}
-        \end{itemize}
-    \end{itemize}
-  \end{multicols}
-
-  \emph{Regular Polygons}
-
-  The exterior angle of a regular $n$-polygon is $\frac{360}{n}$, where $n$ is
-  the number of sides. The angle is in degrees.
-
-  The sum of the interior angles of a regular $n$-polygon is $180(n-2)$, where the
-  angle is in degrees.
-
-  To get one particular interior angle of a regular $n$-polygon, divide by the
-  number of angles $n$ to get $\frac{180(n-2)}{n}$.
-
-  Finally, to find the area of a regular $n$-polygon, use the following formula:
-  \[ \frac{s^2 \times n}{4 \times \tan\left( \frac{\pi}{n} \right)}, \]
-  where $s$ is the length of a side and $n$ is the number of sides.
-\end{ex}
-
-\begin{ex}[sum.py] Write a recursive function that computes the sum of all the
-  numbers from 1 to $n$, where $n$ is the given parameter.
-\end{ex}
-
-\begin{ex}[peasants.py] \hfill
-  \begin{enumerate}[(a)]
-    \item Russian peasant multiplication is a method of multiplying integers in
-      which you keep halving one factor while
-      doubling the other factor until one of the factors is 1. For example:
-      \begin{IEEEeqnarray*}{RCRCL}
-        &\quad& 8 &\quad\times\quad& 38 \\
-        = && 4 &\quad\times\quad& 76 \\
-        = && 2 &\quad\times\quad& 152 \\
-        = && 1 &\quad\times\quad& 304
-      \end{IEEEeqnarray*}
-      Hence, $8 \times 38 = 304$.
-
-      This, of course, becomes a bit more involved if the integer that you keep
-      halving is not a power of two. For example, imagine $38$ is the number
-      that keeps getting halved:
-      \begin{IEEEeqnarray*}{RCRCLCLCL}
-        && 8 &\times& 38 \\
-        = &\quad& 16 &\times& 19 \\
-        = && 32 &\times& 9 &+& 16      &\qquad& \text{$\nicefrac{19}{2} = 9$ with remainder $1$} \\
-        = && 64 &\times& 4 &+& 16 + 32 &\qquad& \text{$\nicefrac{9}{2} = 4$ with remainder $1$} \\
-        = && 128 &\times& 2 &+& 16 + 32 \\
-        = && 256 &\times& 1 &+& 16 + 32 \\
-        = && 256 && &+& 16 + 32 \\
-        = && 304
-      \end{IEEEeqnarray*}
-
-      This is all based on the following recursive definition of multiplication:
-
-      \[ x \times y = \begin{cases}
-          \frac{x}{2} \times (2 \times y) & \text{if $x$ is even} \\
-          \frac{x-1}{2} \times (2 \times y) + y & \text{if $x$ is odd}
-      \end{cases} \]
-
-      Write a \emph{non-recursive} function that implements Russian
-      peasant multiplication using a \pythoninline{while} loop. Call this
-      function \pythoninline{multiply()}.
-
-    \item The Russian peasant method can also be applied to exponentiation (also
-      only for integers):
-
-      \[ x^y = \begin{cases}
-          \left( x^2 \right)^{\nicefrac{y}{2}} & \text{if $y$ is even} \\
-          x \left( x^2 \right)^{\nicefrac{(y-1)}{2}} & \text{if $y$ is odd} \\
-      \end{cases} \]
-
-      This method is also called exponentiation by squaring or the
-      square-and-multiply method.
-
-      Write a \emph{recursive} function called \pythoninline{expo()} that
-      implements this.
-
-  \end{enumerate}
-
-\end{ex}
-
-\begin{ex}[pascal.py] \hfill
-
-  In Pascal's triangle, each number is the sum of the two numbers directly above
-  it. The left and right ends of the triangle always consists of $1$s.
-
-  This recursive rule produces the following triangle:
-
-  \begin{center}
-\def\N{9}
-\tikz[x=0.75cm,y=0.5cm, 
-  pascal node/.style={font=\small}, 
-  row node/.style={font=\footnotesize, anchor=west, shift=(180:1)}]
-  \path  
-    \foreach \n in {0,...,\N} { 
-      (-\N/2-1, -\n) node  [row node/.try]{Row \n:}
-        \foreach \k in {0,...,\n}{
-          (-\n/2+\k,-\n) node [pascal node/.try] {%
-            \pgfkeys{/pgf/fpu}%
-            \pgfmathparse{round(\n!/(\k!*(\n-\k)!))}%
-            \pgfmathfloattoint{\pgfmathresult}%
-            \pgfmathresult%
-          }}};
-  \end{center}
-
-  Write a recursive function \pythoninline{pascal(n, k)} that finds the $k$th
-  value of the $n$th row by using the sum of the numbers directly above it.
-  We start counting at $0$ for both $n$ and $k$.
-
-  Since we know that the left and right end of the triangle are all $1$s, we
-  know that for every row $n$:
-  \begin{IEEEeqnarray*}{RCLCL}
-    \pas(n, 0) &=& 1 &\qquad& \text{left end} \\
-    \pas(n, n) &=& 1 &\qquad& \text{right end}
-  \end{IEEEeqnarray*}
-
-  If for example I want to know the $2$nd entry of the $4$th row:
-
-  \begin{IEEEeqnarray*}{RCLCL}
-    \pas(4, 2) &=& \pas(3, 1) + \pas(3, 2)  \\
-    &=& \pas(2, 0) + \pas(2, 1) + \pas(2, 1) + \pas(2, 2) \\
-    &=& 1 + \pas(1, 0) + \pas(1, 1) + \pas(1, 0) + \pas(1, 1) + 1 \\
-    &=& 1 + 1 + 1 + 1 + 1 + 1 \\
-    &=& 6
-  \end{IEEEeqnarray*}
-\end{ex}
-
-\section{Submitting}
-
-You should submit your code as a tarball. It should contain all files
-used in the exercises for this lab. The submitted file should be named
-\begin{center}
-  \texttt{cse107\_firstname\_lastname\_lab3.tar.gz}
-\end{center}
-
-\begin{center}
-  \textbf{Upload your tarball to Canvas before the deadline.}
-\end{center}
-
-\listoftheorems
-
+\end{appendices}
 \end{document}
