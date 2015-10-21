@@ -1,538 +1,678 @@
-% LAB 7: Programming Competition
+% LAB 7: Advanced Functions
 % 
-% CSE/IT 107: Intro to Programming in Python
+% CSE/IT 107: Introduction to Programming
 % New Mexico Tech
 % 
-% Prepared by Christopher Koch
+% Prepared by Russell White and Christopher Koch
 % Fall 2014
 \documentclass[11pt]{cselabheader}
-% formatting the problem
-\newcommand{\cop}[3]{\textbf{#1}~(#2 pts, filename: \texttt{#3})\quad}
-\usepackage{IEEEtrantools} 
-\theoremstyle{plain}
-\newtheorem{thm}{Theorem}
-% drawings in latex
-\usepackage{tikz}
+\usepackage{IEEEtrantools}
 
-\fancyhead[R]{Lab 7: Programming Competition}
-\title{Lab 7: Programming Competition}
+%%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
+\fancyhead[R]{Lab 7: Advanced Functions}
+\title{Lab 7: Advanced Functions}
 
 \begin{document}
 
 \maketitle
 
 \hrule
-
 \begin{quotation}
-  ``First, solve the problem. Then, write the code.''
+``I think there is a world market for maybe five computers.''
 \end{quotation}
 \begin{flushright}
-  --- John Johnson
-\end{flushright}
-
-\begin{quotation} ``Beware of bugs in the above code; I have only proved it
-  correct, not tried it.''
-\end{quotation}
-\begin{flushright}
-  --- Donald Knuth
-%\\\textit{Notes on the van Emde Boas construction of priority deques}
-%% From corresponde with Peter van Emde Boas about Priority Deques
-%% http://www-cs-faculty.stanford.edu/~uno/faq.html
+--- Thomas J. Watson (Founder and Chairman, IBM)
 \end{flushright}
 
 \begin{quotation}
-  ``Openness always deserves recognition.'' (``Offenheit verdient immer
-  Anerkennung.'')
+``Judge a man by his questions, rather than his answers.''
 \end{quotation}
 \begin{flushright}
-  --- Otto von Bismarck
-% \\\textit{Speeches in the second chamber of Prussian state diet
-% (parliament). November 24th, 1849.}
+--- Voltaire
+\end{flushright}
 
-%% Reden in der preußischen Zweiten Kammer, 24. November 1849
-%% http://de.wikiquote.org/wiki/Otto_von_Bismarck
-%% Translation by Chris
+\begin{quotation}
+``The limits of your language are the limits of your world.''
+\end{quotation}
+\begin{flushright}
+--- Ludwig Wittgenstein
 \end{flushright}
 
 \hrule
 
-\pagebreak
-
 \section{Introduction}
-This lab is solely a problem solving lab. There is nothing to turn in.
+\emph{Congratulations!} In your last few weeks of lab, you have reached the
+basic knowledge required to work with Python in a useful way. You have learned
+all the tools required to write basic programs in Python and you have applied
+them successfully in the programming competition.
 
-\section{Programming Competition}
-Please form groups of up to three with others in your lab. You will
-enter into the competition together and submit the same files.
-
-%To submit your answers, find the scoreboard at 
-%\begin{center}
-%	\vspace{-5mm}
-%	\url{http://niedersfeld.cs.nmt.edu/scoreboard/}
-%	\vspace{-5mm}
-%\end{center}
-%Upon submission of your answer, someone will come and check the code to make
-%sure you actually found the answer using code and did not use the internet.
-
-To submit your answers, please notify a TA. The whiteboard will serve as the
-scoreboard for your lab. The TA will want to see the answer to the ``scoreboard
-submission.'' If the TAs are grading another team's submission,  move on to a
-new problem while waiting for them to be free.
-
-\textbf{Do not share the problem descriptions or the code with the other lab
-section.} Everyone needs to have an equally fair chance of doing well in this
-competition.
-
-You may not use the internet to find answers to these problems. Think! If the
-concepts are unclear, please get help from a TA.
-
-\subsection{Extra Credit}
-This lab will not count for its own grade. Your standing in the competition 
-will count for extra credit on your lab final.
-The winners of your lab section will get 10\%, the second place will get
-9\%, and so on as extra credit on their lab final. 
-
-You have to gain at least 20 points in the competition in order to qualify
-for the extra credit.
-
-\subsection{Requirements}
-Even though this lab ``only'' counts for extra credit, you have to stay the lab
-and try your best. \textbf{You will LOSE 10\% on your lab final if you do not
-stay and try your best.}
-
-You may choose to do any of the following problems. However, there is no credit
-for incomplete or incorrect submissions.
-
-%You may use Google to help find solutions to the problems. However,
-%there are two conditions to this: (1) you \textbf{must}
-%cite the sources you use in your comments (URLs, etc) and (2) you \textbf{must}
-%understand the content you use from these sources. \textbf{Your grader will ask
-%you questions to make sure you understand.}
+This week, we will teach you a bit more about functions and give you a small
+window to a different kind of programming: functional programming. Here, the
+word ``functional'' is not to mean ``practical'' (although it is very
+practical!), but that it has to do with a lot of functions.
 
 \pagebreak
-\subsection{Problems}
-
-\begin{enumerate}[\text{Problem} {[}1{]}~]
-  \item \cop{Multiples of 3 and 5}{5}{multiples.py}
-    % project euler 1
-
-    If we list all the integers (natural numbers) below 10 that are
-    multiples of 3 or 5, we get 3, 5, 6, and 9. The sum of these multiples
-    is 23.
-
-    Write a program to find the sum of all the multiples of 3 or 5 below
-    1000.
-
-    \textit{Scoreboard submission:} The sum of all multiples of 3 or 5
-    below 1000.
-
-  \item \cop{Special Pythagorean Triplet}{10}{pythagoras.py}
-    % project euler 9
-
-    A Pythagorean triplet is a set of three integers (natural numbers), $a
-    < b < c$ such that $a^2 + b^2 = c^2$.
-
-    For example, $a = 3, b = 4, c = 5$ fits: $3^2 + 4^2 = 9 + 16 = 25 =
-    5^2$.
-
-    There exists exactly one Pythagorean triplet for which $a + b + c =
-    1000$.
-
-    \textit{Scoreboard submission:} Find the product $abc$ of that special
-    Pythagorean triplet.
-
-  \item \cop{Reducing Fractions}{10}{fractions.py}
-    % Source: ACM Freshman Coding Competition, Fall 2013 (Russell White)
-
-    Write a program that reads both the numerator and denominator of
-    a fraction and displays the reduced fraction. For simplicity, you
-    may assume that the numbers entered are less than 10,000. 
-
-    For example:
-
-    \begin{verbatimcode}
-Enter numerator: 4
-Enter denominator: 30
-Result: 2/15
-    \end{verbatimcode}
-
-    \begin{verbatimcode}
-Enter numerator: 25
-Enter denominator: 5
-Result: 5/1
-    \end{verbatimcode}
-
-    \textit{Hints}: See Appendix~\ref{sec:gcd} to find out what a GCD is 
-    and what Euclid's algorithm is. 
-
-    \textit{Scoreboard submission:} Contact a TA for test cases.
-
-  \item \cop{Crossing Hands}{20}{hands.py}
-    % source: http://programmingpraxis.com/2014/02/25/crossing-hands/
-
-    The hands of an analog clock occassionally cross as they revolve around
-    the dial. Write a program that determines the times at which times the 
-    hour and minute hands cross. Assume that
-    the hands move continuously (that is, the hands do not jump between
-    numbers -- the times at which they cross may not necessarily be
-    integer values).
-
-    \textit{Scoreboard submission} Add up the hours, minutes, and seconds
-    of all of the times that the hour and minute hands cross in one
-    twelve-hour cycle and submit it in the format \texttt{H-M-S}, 
-    for example \texttt{30-167-421}.
-
-
-  \item \cop{Anagram Distance}{20}{anadist.py}
-    
-    The anagram distance between two words is how many letters must be added
-    or removed from one of the words in order to make it an anagram of the
-    other. For example, ``dog'' and ``godot'' have an anagram distance of $2$
-    while ``sandwich'' and ``witch'' have an anagram distance of $5$.
-
-    You can assume that input will be purely lowercase letters and will be
-    no longer than 20 characters.
-
-    \begin{verbatimcode}
-Enter first word: sandwich
-Enter second word: witch
-Result: 5
-    \end{verbatimcode}
-
-    \begin{verbatimcode}
-Enter first word: interwebs
-Enter second word: spiderman
-Result: 8
-    \end{verbatimcode}
-
-    \textit{Scoreboard submission} Contact a TA for test cases.
-
-
-  \item \cop{Contiguous Regions}{25}{regions.py}
-    
-    Write a program that takes in a square region and determines whether two
-    points are connected. The region will consist of three characters: \texttt{.},
-    \texttt{x}, and \texttt{s}. There will be exactly two \texttt{s}'s while there
-    can be any number of \texttt{.}'s and \texttt{x}'s. Your program will output
-    either \texttt{connected} or \texttt{not connected}, depending on if the two
-    \texttt{s} can be travelled between by only moving across \texttt{.}'s and only
-    moving in cardinal directions.
-
-    Your program should know when to stop accepting output without requiring a specific
-    ``stop'' command.
-
-    \begin{verbatimcode}
-..s.
-.xxx
-.x..
-...s
-connected
-    \end{verbatimcode}
-
-    \begin{verbatimcode}
-....x
-.s.x.
-..x..
-.x.s.
-x....
-not connected
-    \end{verbatimcode}
-
-    \textit{Scoreboard submission} Contact a TA for test cases.
-
-    
-
-  \item \cop{Finding a Path}{25}{path.py}
-    %Source: ENMU Codecomp, Spring 2014 (Tyler Cecil)
-    
-    Write a program that finds the shortest valid path between two nodes in a graph.
-    Each of the lines of input will be the name of a node (a single, upper-case
-    character), followed by a list of the nodes connected to that node. The final
-    line of input will a single upper-case letter, designating the destination node.
-    You must output a sequence of letters that represents the shortest path to the
-    destination. Assume you start at the first given node. You can assume a path will
-    always exist. There will be less than 10 nodes given. If multiple valid paths
-    exist, any will be accepted.
-    
-    For example:\\
-    \begin{minipage}{.33\linewidth}
-      \begin{minipage}{.8\linewidth}
-        \begin{lstlisting}[style=bash]
-A B D
-B C D
-C
-
-A B C
-        \end{lstlisting}
-      \end{minipage}
-    \end{minipage}
-    \begin{minipage}{.33\linewidth}
-      \begin{minipage}{.8\linewidth}
-        \begin{lstlisting}[style=bash]
-A B C D
-B F
-D B C
-F E
-E
-
-A B F E
-        \end{lstlisting}
-      \end{minipage}
-    \end{minipage}
-    \begin{minipage}{.33\linewidth}
-      \begin{minipage}{.8\linewidth}
-        \begin{lstlisting}[style=bash]
-A B C D E
-B C D E F
-C D E F
-D E F
-E F
-F
-
-A B F
-        \end{lstlisting}
-      \end{minipage}
-    \end{minipage}
-
-    \textit{Scoreboard submission:} Contact a TA for test cases.
-
-  \item \cop{Block Areas}{35}{blocks.py}
-    % Source: ACM Freshman Coding Competition, Fall 2013 (Russell White)
-    % sample solution: http://www.mathopenref.com/coordpolygonarea2.html
-
-    Write a program to take in a series of coordinate points and finds the 
-    enclosed area. The points will all be non-negative integers not 
-    exceeding 100. All angles in the shape will be 90 degrees. You can 
-    assume that no shape will be defined by more than 20 points. 
-
-    For example:
-    \begin{figure}[!ht]
-      \centering
-      \begin{tikzpicture}[scale=0.7]
-        \node at (2,1) {};% {(2,1)};
-        \node at (4,1) {};% {(4,1)};
-        \node at (4,3) {};% {(4,3)};
-        \node at (3,3) {};% {(3,3)};
-        \node at (3,5) {};% {(3,5)};
-        \node at (1,5) {};% {(1,5)};
-        \node at (1,4) {};% {(1,4)};
-        \node at (2,4) {};% {(2,4)};
-
-        \draw (1,5) -- (3,5);
-        \draw (1,5) -- (1,4);
-        \draw (1,4) -- (2,4);
-        \draw (2,4) -- (2,1);
-        \draw (2,1) -- (4,1);
-        \draw (4,1) -- (4,3);
-        \draw (4,3) -- (3,3);
-        \draw (3,3) -- (3,5);
-      \end{tikzpicture}
-      \caption{Example shape}
-    \end{figure}
-
-    \emph{Hint:} The order that the points are input shouldn't matter
-    for your algorithm.
-
-    \begin{verbatimcode}
-Enter number of points: 8
-Enter point: 2 1
-Enter point: 4 1
-Enter point: 4 3
-Enter point: 3 3
-Enter point: 3 5
-Enter point: 1 5
-Enter point: 1 4
-Enter point: 2 4
-
-Area: 7
-    \end{verbatimcode}
-
-    \textit{Scoreboard submission:} Find the area of the polygon described
-    by the following 14 coordinates.
-    \[
-      (0, 0)~(6, 0)~(6, 1)~(2, 1)~(2, 2)~(7, 2)~(7, 1)
-    \]
-    \[
-      (9, 1)~(9, 4)~(2, 4)~(2, 3)~(1, 3)~(1, 2)~(0, 2)
-    \]
-
-    \begin{figure}[!ht]
-      \centering
-      \begin{tikzpicture}[scale=0.7]
-        \node at (0,0) {};% {(2,1)};
-        \node at (6,0) {};% {(4,1)};
-        \node at (6,1) {};% {(4,3)};
-        \node at (2,1) {};% {(3,3)};
-        \node at (2,2) {};% {(3,5)};
-        \node at (7,2) {};% {(1,5)};
-        \node at (7,1) {};% {(1,4)};
-        \node at (9,1) {};% {(2,4)};
-        \node at (9,4) {};
-        \node at (2,4) {};
-        \node at (2,3) {};
-        \node at (1,3) {};
-        \node at (1,2) {};
-        \node at (0,2) {};
-
-        \draw (0,0) -- (6,0);
-        \draw (6,0) -- (6,1);
-        \draw (6,1) -- (2,1);
-        \draw (2,1) -- (2,2);
-        \draw (2,2) -- (7,2);
-        \draw (7,2) -- (7,1);
-        \draw (7,1) -- (9,1);
-        \draw (9,1) -- (9,4);
-        \draw (9,4) -- (2,4);
-        \draw (2,4) -- (2,3);
-        \draw (2,3) -- (1,3);
-        \draw (1,3) -- (1,2);
-        \draw (1,2) -- (0,2);
-        \draw (0,2) -- (0,0);
-      \end{tikzpicture}
-      \caption{Scoreboard submission shape}
-    \end{figure}
-
-  \item \cop{Nontransitive Dice}{50}{dice.py}
-    %Source: ACM Freshman Coding Competition, Fall 2013 (Rob Kelly)
-
-    A set of dice is called nontransitive if it contains three dice,
-    A, B, and C, with the property that A rolls higher than B more
-    than half the time, and B rolls higher than C more than half
-    the time, but it's not true that A rolls higher than C more than
-    half the time. Intuitively, the existence of such a set might not
-    seem possible - If $A > B > C$, how could it be true that $C > A$?
-    But consider the following set of dice:
-
-    \begin{itemize}
-      \item Die A has sides 3, 3, 3, 3, 3, and 6
-      \item Die B has sides 2, 2, 2, 5, 5, and 5
-      \item Die C has sides 1, 4, 4, 4, 4, and 4
-    \end{itemize}
-    By checking all possible die-rolls, we can see that A will roll
-    higher than B 21 out of 36 times, and likewise B will roll higher
-    than C 21 out of 36 times, but C will roll higher than A 25 out
-    of 36 times. Neat, right?
-
-    Write a program that reads an arbitrary number of six-sided dice
-    configurations followed by a single 0, and displays
-    ``Nontransitive'' if there exists a subset of at least three
-    nontransitive dice in the set, or ``Transitive'' if no such
-    nontransitive subset exists. One die will be input per line,
-    with the numbers of each side seperated by spaces. All side
-    numbers will be between 0 and 999. The order of the input dice
-    does not matter.
-
-    \begin{minipage}{.5\linewidth}
-      \begin{minipage}{.9\linewidth}
-        \begin{lstlisting}[style=bash]
-5 5 5 1 1 1
-3 3 3 3 3 3
-4 4 4 4 0 0
-6 6 2 2 2 2
-8 6 7 5 3 0
-0
-
-Nontransitive
-        \end{lstlisting}
-      \end{minipage}
-    \end{minipage}
-    \begin{minipage}{.5\linewidth}
-      \begin{minipage}{.9\linewidth}
-        \begin{lstlisting}[style=bash]
-1 2 3 4 5 6
-7 8 9 10 11 12
-10 20 30 40 50 60
-100 200 300 400 500 600
-0
-
-Transitive
-        \end{lstlisting}
-      \end{minipage}
-    \end{minipage}
-
-    \textit{Scoreboard submission:} Contact a TA for test cases.
-\end{enumerate}
-\pagebreak
-
-\begin{appendices}
-  \section{Reducing Fractions -- GCD and Euler's Algorithm}
-  \label{sec:gcd}
-
-  Reducing a fraction involves dividing the numerator and denominator by
-  the same integers until there is nothing that divides both numerator and
-  denominator anymore.
-
-  For example, $\frac{60}{6} = \frac{30}{3} = \frac{10}{1} = 10$. First, I
-  divided both numerator and denominator by $2$, and then by $3$. 
-
-  This is where the concept of a GCD comes in. GCD stands for ``greatest
-  common divisor'' -- given two numbers such as $60$ and $6$, the GCD is the
-  greatest whole number that both numbers are divisible by. Since both $60$ 
-  and $6$ are divisible by $6$ and since there is no greater integer than $6$
-  that one can divide them both by, the $\gcd(60, 6) = 6$. For another
-  example, $\gcd(40, 6) = 2$.
-
-  If you think about it more, it becomes clear that one can reduce a fraction
-  by dividing both the numerator and denominator by the GCD of both. In
-  essence, given a fraction $\frac{a}{b}$, the reduced fraction would be:
-  \[
-    \frac{a}{b} = \frac{~\frac{a}{\gcd(a, b)}~}{~\frac{b}{\gcd(a, b)}}
-  \]
-
-  How do we find the GCD though? Here, a neat algorithm called Euclid's
-  algorithm comes in. Euclid's algorithm takes advantage of the fact that
-  when an integer $a$ is divided by another integer $b$, we get a quotient
-  $q$ and a remainder $r$. This is called the Division Algorithm (see
-  Theorem~\ref{thm:div}). 
-
-  \begin{thm}[Division Algorithm] \label{thm:div}
-    Given integers $a$ and $b$, where $b > 0$, there exist unique integers
-    $q$ (the quotient) and $r$ (the remainder) such that 
-    \[ a = bq + r\text{, where }0 \leq r < b. \]
-  \end{thm}
-
-  For example, when $5$ is divided by $2$, we get a quotient of $2$ and a
-  remainder of $1$, since $5 = 2 \times 2 + 1$. You have already taken 
-  advantage of this algorithm when you validated credit card numbers. 
-
-  In Python, we can find the quotient by doing integer division and the remainder
-  using the modulus operator \%.
-
-  \subsection{Euclid's Algorithm}
-
-  Euclid's algorithm finds the GCD by repeatedly using the division
-  algorithm. Given integers $a$ and $b$, where $a > b$, that we want to find 
-  the GCD of, we
-  find the quotient $q$ and $r$. If the remainder is $0$, $b$ is the GCD. If
-  the remainder is not $0$, we repeat the same steps, but we let $a = b$ and
-  $b = r$.
-
-  In essence, it goes:
-  \begin{IEEEeqnarray*}{RCLCL}
-    a &=& bq + r &\text{ where }&0 \leq r < b \\
-    b &=& rq_2 + r_2 &\text{ where }&0 \leq r_2 < r \\
-    r &=& r_2q_3 + r_3 &\text{ where }&0 \leq r_3 < r_2
-  \end{IEEEeqnarray*}
-  So we are saying that $\gcd(a, b) = \gcd(b, r) = \gcd(r, r_2) = \cdots =
-  \gcd(r_n, 0) = r_n$. Notice that the quotient is not used at all, only the
-  given integers $a, b$ and the remainder $r$ matter.
-
-  Notice that $r_n < \cdots < r_3 < r_2 < r < b$.
-
-  It seems natural to write this with recursion. In pseudocode, with recursion:
-
-  \begin{verbatimcode}
-euclids(a, b) 
-  if(a < b) 
-    return euclids(b, a)
-
-  r = a modulus b
-  if(r == 0)
-    return b
+\section{Advanced Functions}
+\label{sec:advfun}
+
+\subsection{Keyword Arguments}
+\label{subsec:adv.args}
+
+Many of the built-in functions we have been using, such as \pythoninline{input}
+and \pythoninline{print}, accept a variable number of arguments. We can do the
+same thing with our own functions by specifying default values for our
+arguments:
+
+\begin{pyconcode}
+>>> def celebrate(times=1):
+...     i = 1
+...     while i <= times:
+...         print("Yay!")
+...         i += 1
+...
+>>> celebrate()
+Yay!
+>>> celebrate(5)
+Yay!
+Yay!
+Yay!
+Yay!
+Yay!
+\end{pyconcode}
+
+Here, we have a function called \pythoninline!celebrate! which takes the
+parameter variable \pythoninline!times!. If that parameter is left unspecified
+in a function call, it will take the \emph{default value} of 1.
+
+Note what happens for each call of this function. The first time it only prints
+\pythoninline{"Yay!"} once, since the default argument is \pythoninline{1},
+while the second call overwrites the default value and prints it five times.
+
+While you are allowed to have a function that has some arguments with default
+values and some without, you must always put those with default values after
+those without any, so that Python will know which arguments go into which values
+if you do not include all of them when calling the function. This is because
+arguments from a function call are usually matched in order by their position.
+
+\begin{pyconcode}
+>>> def test(a, b=5, c, d=6):
+...     print(a, b, c, d)
+  File "<stdin>", line 1
+SyntaxError: non-default argument follows default argument
+>>> def test(a, c, b=5, d=6):
+...     print(a, b, c, d)
+...
+>>> test(2, 3)
+2 5 3 6
+>>> test(2, 3, 10)
+2 10 3 6
+>>> test(2, 3, 10, 100)
+2 10 3 100
+\end{pyconcode}
+
+We call the arguments that are non-default arguments \emph{positional
+arguments}, while the default arguments are called \emph{keyword arguments}.
+
+Sometimes we might want to include some default arguments while excluding
+others. We do this by specifying which of the arguments we wish to pass a value
+to:
+
+\begin{pyconcode}
+>>> def test(a=0, b=0, c=0, d=0):
+...     print(a, b, c, d)
+...
+>>> test(c=10)
+0 0 10 0
+>>> test(d=5, c=6)
+0 0 6 5
+\end{pyconcode}
+
+\begin{itemize}
+  \item If a function's caller supplies both positional and keyword arguments,
+    all positional parameters must precede all keyword parameters.
+  \item Keyword parameters may occur in any order.
+  \item The function call must supply at least as many parameters as the
+    function has positional arguments.
+  \item If the caller supplies more positional parameters than the function has
+    positional arguments, parameters are matched with keyword arguments
+    according to their position.
+\end{itemize}
+
+\subsection{Recursion}
+\label{subsec:recur}
+Recursion is the idea of a function calling itself. This can be useful in a wide
+variety of situations, but it can also be easy to misuse. Let us first look at a
+good example:
+
+\begin{python3code}
+def factorial(n):
+  if n <= 1:
+    return 1
   else
-    return euclids(b, r)
-  \end{verbatimcode}
-  % TODO use algorithmicx pseudocode typesetting
+    return n * factorial(n-1)
+\end{python3code}
 
-\end{appendices}
+Notice that this is just another way to repeat a statement, similar to a loop.
+In a loop, we have to specify when to stop repeating something, and we have to
+do the same thing with recursion; otherwise, it would run forever.
+
+As an example, see this simple \emph{bad} case of recursion:
+
+\begin{python3code}
+def test():
+    test()
+\end{python3code}
+
+If this function is called, it will continue to call itself infinitely until
+Python prints out an error message and quits. This is because the function calls
+itself every time it is called -- there is no case where the function ends
+without calling itself again. The case in which the recursion ends is called a
+\emph{base case} and it is important to include one in every recursive function.
+Here is a modified version of the above code that allows the initial call to
+specify a value limiting how many times the recursive call should be made:
+
+\begin{python3code}
+def test(x):
+    if x > 0:
+        test(x - 1)
+\end{python3code}
+
+As an example of a more complex way of using recursion to solve a problem, here
+is an example of a recursive function that will sum a list where each element is
+either an integer or another list containing integers and lists:
+
+\begin{python3code}
+def sum_lists(x):
+    total = 0
+    for i in x:
+        if type(i) == int:
+            total += i
+        else:
+            total += sum_lists(i)
+    return total
+
+data = [1, 2, [3, 4, [5, 6], 7], 8, 9]
+print(sum_lists(data))
+\end{python3code}
+
+This program outputs \pythoninline{45}, which is the sum of all the elements of the
+list, including all of the lists inside it. Notice that the base case in this
+function is if every element of the list passed to \pythoninline{sum_lists} is an
+\pythoninline{int}.
+
+\subsection{Summary}
+
+\begin{description}
+\item[Default arguments] Function arguments may have a default value, for
+    example:
+    \begin{python3code}
+import time
+def print_error(message, now = time.time()):
+  print("Error: {} at time {}!".format(message, now))
+
+print_error('All wrong')
+print_error('All more wrong', now = 1.5)
+    \end{python3code}
+
+    Default arguments must be specified after arguments that do not have
+    defaults.
+
+  \item[Recursion] Recursion occurs when a function calls itself. There must be
+    a base case to stop the recursion!
+\end{description}
+
+\pagebreak
+\section{First-class Functions}
+\label{subsec:first}
+In Python, functions are so-called ``first-class citizens''. This means
+essentially that they can be used in the same way as variables: they can be
+assigned to variables, passed to, and returned from functions, as well as stored
+in collections. As an example, here is a short program that stores functions
+inside of a list, then calls each one of those functions with the same argument.
+
+\begin{python3code}
+def print_backwards(string):
+    print(string[::-1])
+
+def print_half(string):
+    print(string[:len(string)//2])
+
+def print_question(string):
+    print("Why do you want me to print '{}'?".format(string))
+
+# Just use the name of the function!
+print_functions = [print, print_backwards, print_half, print_question]
+
+for func in print_functions:
+    func("Hello, World!")
+\end{python3code}
+
+\begin{verbatimcode}
+Hello, World!
+!dlroW ,olleH
+Hello,
+Why do you want me to print 'Hello, World!'?
+\end{verbatimcode}
+
+This can lead to cool pieces of code where a function takes another function as
+an argument and uses it in some way. For example, we can use it to write a
+function that composes two other functions and calls them with a given $x$. In
+math, this would be like taking a function $f(x)$ and a function $g(x)$ and
+composing them to be $h(x) = f(g(x))$. The function below takes $f$ and $g$ and
+finds the value of $h$ at a $x$.
+
+\begin{python3code}
+def h(f, g, x):
+  return f(g(x))
+\end{python3code}
+
+\subsection{Map}
+\label{subsec:map}
+A common operation in Python is to call the same function for every element in a
+collection, such as a list or a tuple and then create a new list with the
+results. Previously, we would have accomplished this with a \pythoninline{for}
+loop:
+
+\begin{python3code}
+def double(x):
+    return x * 2
+
+data = [5, 23, 76]
+new_data = []
+
+for i in data:
+    new_data.append(double(i))
+
+print(new_data)
+\end{python3code}
+
+\begin{verbatimcode}
+[10, 46, 152]
+\end{verbatimcode}
+
+If we use the \pythoninline{map} function, we can make this code much more simple:
+
+\begin{python3code}
+def double(x):
+    return x * 2
+
+data = [5, 23, 76]
+data = list(map(double, data))
+print(data)
+\end{python3code}
+
+\begin{verbatimcode}
+[10, 46, 152]
+\end{verbatimcode}
+
+The \pythoninline{map} function takes in a function and any iterable data type
+(such as a list, tuple, set, etc.) as arguments. It calls that function for
+every element of the other value passed, then returns a new data type containing
+all of those results. This new data type is a special map object, but in most
+cases we are fine with instantly converting it back to our initial data type (in
+the above example, a list).
+
+%List comprehensions?
+
+%Reduce has been removed as of Python 3: https://docs.python.org/3.0/whatsnew/3.0.html#builtins
+\subsection{Reduce}
+\label{subsec:reduce}
+\pythoninline{reduce} is a similar function to \pythoninline{map}, but rather than
+create a new list with the modified values, \pythoninline{reduce} should be used to
+simplify a list into a single value. Similarly to \pythoninline{map},
+\pythoninline{reduce} takes in a function and an iterable data type. The difference
+is that rather than taking and returning a single value, the function passed to
+\pythoninline{reduce} takes in two arguments and returns their combination. As an
+example, here is an example of using \pythoninline{reduce} to join a list of
+strings into a single larger string.
+
+\begin{python3code}
+import functools
+
+def combine(glob, new):
+    print("Adding {} to {}.".format(new, glob))
+    return glob + new
+
+data = ['this', 'is', 'a', 'test']
+data = functools.reduce(combine, data)
+print("Final value: {}".format(data))
+\end{python3code}
+
+\begin{python3code}
+Adding this to is
+Adding thisis to a
+Adding thisisa to test
+Final value: thisisatest
+\end{python3code}
+
+Note that we need to run \pythoninline{import functools} in order to have access to
+\pythoninline{reduce}.
+
+Let's take a simpler example:
+\begin{python3code}
+import functools
+
+def add(x, y):
+  return x + y
+
+numbers = [1, 3, 4, 6, 7]
+s = functools.reduce(add, numbers)
+\end{python3code}
+
+\pythoninline!s! is the sum of the values in the list \pythoninline!numbers!. The way
+\pythoninline!reduce! works is that it takes the first two values, calls the
+\pythoninline!add! function on them, returns the result, and then takes that result
+and the next number. In essence, the example above expands to this:
+\begin{python3code}
+s = add(add(add(add(1, 3), 4), 6), 7)
+\end{python3code}
+
+This shows that at each step, you get to see an intermediate value: The first
+call to \pythoninline!add! gets the first two values, $1$ and $3$, while the second
+call gets the addition of those, $4$ and the next value in the list, $4$. The
+third call to \pythoninline!add! gets the result of that, $8$, and the next number,
+$6$. This will go on until the list is exhausted.
+
+\subsection{Filter}
+\label{subsec:filter}
+\pythoninline{filter} is a function that allows easy removal of some elements from
+a list. It works similarly to \pythoninline{map}, but the function used needs to
+return either \pythoninline{True} or \pythoninline{False}. If it returns
+\pythoninline{True} then the given element is included in the final list. If
+\pythoninline{False} is returned, then it is not. As an example, here is a short
+program that removes all odd elements from a list:
+
+\begin{python3code}
+def is_even(x):
+    return x % 2 == 0
+
+data = [5, 3, 34, 36, 38, 1, 0, 0, 2]
+data = list(filter(is_even, data))
+print(data)
+\end{python3code}
+
+\begin{verbatimcode}
+[34, 36, 38, 0, 0, 2]
+\end{verbatimcode}
+
+\subsection{Lambda Functions}
+\label{subsec:lambda}
+Lambda functions are anonymous functions that are created while the program is
+running and are not assigned to a name like normal functions. They can be used
+very similarly to normal functions if assigned to a variable:
+
+\begin{pyconcode}
+>>> def f(x):
+...   return x + 1
+... 
+>>> g = lambda x: x + 1
+>>> f(5)
+6
+>>> g(5)
+6
+\end{pyconcode}
+
+In the above case, \pythoninline{f} and \pythoninline{g} are functionally equivalent;
+we have just used a different syntax to describe them. 
+Both are functions that take in a single value and return that value increased
+by one. The primary difference is in syntax: note that the lambda function does
+not have a return statement: it will simply return the value computed after the
+colon.
+
+Lambda functions are commonly used in conjunction with \pythoninline{map},
+\pythoninline{reduce}, and \pythoninline{filter} as shown below:
+
+\begin{python3code}
+data = [5, 3, 34, 36, 38, 1, 0, 0, 2]
+data = list(filter(lambda x: x % 2 == 0, data))
+print(data)
+\end{python3code}
+
+\begin{verbatimcode}
+[34, 36, 38, 0, 0, 2]
+\end{verbatimcode}
+
+This program works just like the example shown in the section on
+\pythoninline{filter}, but it does not require us to declare the separate
+\pythoninline{is_even} function. Instead, we simply define a lambda inside the call
+to \pythoninline{filter}, accomplishing the same thing.
+
+We can similarly use lambda functions to shorten our initial example of
+first-class functions:
+
+\begin{python3code}
+print_functions = [print,
+    lambda string: print(string[::-1]),
+    lambda string: print(string[:len(string)//2]),
+    lambda string: print("Why do you want me to print '{}'?".format(string))]
+
+for func in print_functions:
+    func("Hello, World!")
+\end{python3code}
+
+Lambda functions can take more than one argument as well:
+\begin{python3code}
+multiply = lambda x, y: x * y
+print(multiply(3, 5)) # 15
+\end{python3code}
+
+One extra use for lambda functions is to modify default sorting behavior. For
+example, if we have a list of tuples and try to sort them, Python will sort them
+based on their first element, then second if the first elements are the same,
+and so on:
+
+\begin{pyconcode}
+>>> data = [(5, 2, 4), (6, 3, 2), (4, 4, 4), (3, 3, 3), (5, 3, 10)]
+>>> sorted(data)
+[(3, 3, 3), (4, 4, 4), (5, 2, 4), (5, 3, 10), (6, 3, 2)]
+\end{pyconcode}
+
+However, what if we want to sort these tuples based on their last element? To do
+this, we define a special \pythoninline{key} value for \pythoninline{sorted}. Each
+value of the tuple will be passed to this function, and then the return values
+will be used when sorting in place of the actual value of the tuple:
+
+\begin{pyconcode}
+>>> data = [(5, 2, 4), (6, 3, 2), (4, 4, 4), (3, 3, 3), (5, 3, 10)]
+>>> sorted(data, key=lambda x: x[-1])
+[(6, 3, 2), (3, 3, 3), (5, 2, 4), (4, 4, 4), (5, 3, 10)]
+\end{pyconcode}
+
+Notice that \pythoninline!key! is just a default argument to the function 
+\pythoninline!sorted!. The default value would be a function that sorts based on
+the first element.
+
+Lambda functions also allow us to create functions on the fly. In the
+first-class functions section, we composed two functions $f$ and $g$ and found
+the value at a point $x$. However, sometimes we do not want the value at $x$, we
+want a function that takes in a parameter $x$ and returns the composition. Let's
+say, for example, that we want a function $h(x) = sqrt(factorial(x))$. Take
+a look at the following code:
+\begin{python3code}
+import math
+
+def compose(f, g):
+  # Creates another function that is the composition of f and g and returns it
+  return lambda x: f(g(x))
+
+# Using math.sqrt and math.factorial as first-class citizens
+h = compose(math.sqrt, math.factorial)
+
+# compose returns a function, so we can use h like a function!
+print(h(6))
+print(h(10))
+
+m = compose(math.sin, math.cos)
+print(m(3))
+print(m(4))
+\end{python3code}
+
+\begin{verbatimcode}
+26.832815729997478
+1904.9409439665053
+-0.8360218615377305
+-0.6080830096407656
+\end{verbatimcode}
+
+If you check the answers, you will find that $\sqrt{ 6! } = \sqrt{ 720 } =
+26.832\cdots$ and similarly for the others.
+
+Continuing the code, we could now compose $h$ and \pythoninline!math.log10!
+(Logarithm with base 10):
+\begin{python3code}
+logh = compose(math.log10, h)
+print(logh(6)) # 1.4286662482156343
+\end{python3code}
+
+We can also plug in a lambda function of our choice to the composition function.
+For example, if we wanted a function $p(x) = \sqrt{ x^3 }$:
+\begin{python3code}
+p = compose(math.sqrt, lambda x: x**3)
+print(p(100)) # 1000.0
+print(p(10)) # 31.622776601683793
+\end{python3code}
+
+\pagebreak
+
+\section{Exercises}
+\label{sec:ex}
+
+\begin{warningbox}{Boilerplate}
+  Remember that this lab \emph{must} use the
+  boilerplate syntax introduced in Lab~3.
+\end{warningbox}
+
+\begin{ex}[palindrome.py] Write a recursive function that determines whether a
+    string is a palindrome. A palindrome is a word that is the same forwards and
+    backwards, for example ``abba''.
+
+    The function should take in only one argument (the string to check) and
+    return either \lstinline{True} or \lstinline{False}.
+    
+    It is required that your function must be recursive and take only one argument.
+    This is not the easiest way to check if a string is a palindrome, but the goal
+    is to solve a problem recursively, not to check if a value is a palindrome.
+\end{ex}
+
+\begin{ex}[fractions2.py] Using the same tuple representation of fractions as in
+    Lab~3, do the following:
+
+    \begin{enumerate}
+      \item Write a function \pythoninline!prompt_fractions()! that implements the
+        following interface that prompts the user for as many fractions as
+        he/she wants to enter:
+
+        \begin{verbatimcode}
+Enter fraction: 10/2
+Enter fraction: 5/7
+Enter fraction: 3/8
+Enter fraction: stop
+        \end{verbatimcode}
+
+        Use \pythoninline!map! to convert each string, such as ``10/2'' to a
+        tuple of integers.
+
+        The function should return a list of tuples. In the example, it would
+        return:
+        \begin{python3code}
+[(10, 2), (5, 7), (3, 8)]
+        \end{python3code}
+
+      \item Write a function \pythoninline{min_frac} such that calling
+        \pythoninline{functools.reduce(min_frac, list_of_fractions)} will return
+        the smallest value fraction in the list.
+      \item Write a function \pythoninline{sum_frac} such that calling
+        \pythoninline{functools.reduce(sum_frac, list_of_fractions)} will return
+        a fraction that is the sum of all the fractions in the list.
+      \item Write a function \pythoninline{reduce_frac} that takes in a fraction
+        and returns that fraction reduced to its lowest terms. Use this function
+        with \pythoninline{map} to reduce a list of fractions.
+      \item Write a function \pythoninline{reduced} such that calling
+        \pythoninline{filter(reduced, list_of_fractions)} will return a list consisting
+        of only fractions that are reduced to their lowest terms.
+      \item Write a function \pythoninline!sort_frac! that takes in a list of
+        fractions and uses \pythoninline{sorted}
+        and a lambda \pythoninline{key} function to sort a list of fractions from
+        smallest to largest.
+    \end{enumerate}
+
+    Do not use any built-in fraction functions or libraries.
+
+    You should use the following boilerplate code for \texttt{fractions2.py}:
+    \begin{python3code}
+import functools
+
+# ADD YOUR FUNCTIONS HERE
+
+def main():
+  list_fractions = prompt_fractions()
+
+  format_frac = lambda frac : "{}/{}".format(frac[0], frac[1])
+
+  smallest = functools.reduce(min_frac, list_fractions)
+  print("Smallest fraction:", format_frac(smallest))
+
+  sumfrac = functools.reduce(sum_frac, list_fractions)
+  print("Sum of fractions:", format_frac(sumfrac))
+
+  # reducedfrac = map() ??? You fill in!
+  # print("Reduced fractions:", reducedfrac)
+
+  fracsorted = sort_frac(list_fraction)
+  print("Sorted fractions:", fracsorted)
+
+if __name__ == '__main__':
+  main()
+    \end{python3code}
+  \end{ex}
+
+  \begin{ex}[rpn.py] Take \texttt{rpn\_calculator.py} from Lab~4 and rewrite
+    it to use a dictionary of lambda functions to do the actual operation.
+    Operations you should support are $+ - * /$. Also, add a $\sin$ and $\cos$
+    operation. For example: \texttt{0 sin} should give $0$, while
+    \texttt{1 2 + sin} should give $0.1411200080598672$ (this is $\sin(3)$).
+  \end{ex}
+
+%  \item[wrapper.py] Write a function \pythoninline!wrapper! that takes two
+%    functions, prints their names, calls the first function, prints its result,
+%    calls the second function with the first function's result as an argument,
+%    prints its result, and then says ``Done.'' Given a function \pythoninline!f!,
+%    you can get its name using \pythoninline!f.__name__!. For example:
+%
+%    \begin{python3code}
+%import math
+%print(math.sqrt.__name__) # sqrt
+%
+%def five():
+%  return 5
+%
+%def square(x):
+%  return x**2
+%
+%wrapper(five, square)
+%    \end{python3code}
+%
+%    \begin{verbatimcode}
+%Calling function 'five'
+%5
+%Calling function 'square'
+%25
+%Done.
+%    \end{verbatimcode}
+
+\pagebreak
+\section{Submitting}
+
+You should submit your code as a tarball. It should contain all files
+used in the exercises for this lab. The submitted file should be named
+\begin{center}
+  \texttt{cse107\_firstname\_lastname\_lab7.tar.gz}
+\end{center}
+
+\begin{center}
+  \textbf{Upload your tarball to Canvas.}
+\end{center}
+
+\listoftheorems
+
 \end{document}

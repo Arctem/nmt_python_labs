@@ -1,165 +1,401 @@
-% LAB 8: Advanced Functions
-% 
+% LAB 3: Functions
+%
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
-% 
+%
 % Prepared by Russell White and Christopher Koch
-% Fall 2014
-\documentclass[11pt]{cselabheader}
-\usepackage{IEEEtrantools}
+% Spring 2015
 
-%%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 8: Advanced Functions}
-\title{Lab 8: Advanced Functions}
+% - Functions
+%   - Positional and Optional Arguments
+%   - Recursion
+% - Modules
+%   - import statements
+%   - main() boilerplate
+% - Comments and PEP-8 style
+% - Keywords: def
+\documentclass[11pt]{cselabheader}
+\fancyhead[R]{Lab 3: Functions}
+\title{Lab 3: Functions}
+\usepgflibrary{fpu}
+\newcommand{\pas}{\mathop{\mathrm{pascal}}}
 
 \begin{document}
-
+\pagenumbering{roman}
 \maketitle
 
 \hrule
 \begin{quotation}
-``I think there is a world market for maybe five computers.''
+``If you don't think carefully, you might believe that programming is just
+typing statements in a programming language.''
 \end{quotation}
 \begin{flushright}
---- Thomas J. Watson (Founder and Chairman, IBM)
+  --- W. Cunningham
 \end{flushright}
 
 \begin{quotation}
-``Judge a man by his questions, rather than his answers.''
+``When you come to a fork in the road, take it."
 \end{quotation}
 \begin{flushright}
---- Voltaire
+--- Attributed to Yogi Berra
 \end{flushright}
 
 \begin{quotation}
-``The limits of your language are the limits of your world.''
+``The time you enjoy wasting is not wasted time.''
 \end{quotation}
 \begin{flushright}
---- Ludwig Wittgenstein
+  --- Bertrand Russell
 \end{flushright}
-
 \hrule
 
-\section{Introduction}
-\emph{Congratulations!} In your last three weeks of lab, you have reached the
-basic knowledge required to work with Python in a useful way. You have learned
-all the tools required to write basic programs in Python and you have applied
-them successfully in the programming competition.
-
-This week, we will teach you a bit more about functions and give you a small
-window to a different kind of programming: functional programming. Here, the
-word ``functional'' is not to mean ``practical'' (although it is very
-practical!), but that it has to do with a lot of functions.
+\tableofcontents
 
 \pagebreak
-\section{Advanced Functions}
-\label{sec:advfun}
+\pagenumbering{arabic}
 
-\subsection{Keyword Arguments}
-\label{subsec:adv.args}
+\section{Introduction}
+\label{sec:intro}
 
-Many of the built-in functions we have been using, such as \pythoninline{input}
-and \pythoninline{print}, accept a variable number of arguments. We can do the
-same thing with our own functions by specifying default values for our
-arguments:
+In the previous lab, we showed you simple control flow and how to repeat a piece
+of code using \pythoninline{while}. In this lab, we will be learning how to
+break a lot of code into smaller, reusable pieces called \emph{functions}.
 
-\begin{pyconcode}
->>> def celebrate(times=1):
-...     i = 1
-...     while i <= times:
-...         print("Yay!")
-...         i += 1
-...
->>> celebrate()
-Yay!
->>> celebrate(5)
-Yay!
-Yay!
-Yay!
-Yay!
-Yay!
-\end{pyconcode}
+\pagebreak
+\section{Modules}
+\label{sec:modules}
 
-Here, we have a function called \pythoninline!celebrate! which takes the
-parameter variable \pythoninline!times!. If that parameter is left unspecified
-in a function call, it will take the \emph{default value} of 1.
+A program that is saved in a text file and then run with Python is called a
+\emph{script}. As your programs get longer, you may want to split them into
+multiple files for easier legibility, maintenance, or abstraction. To do this,
+Python supports a way to put definitions (of functions) in a file and use them
+in another script or in the interpreter. A file like this is called a
+\emph{module}. An example for such a module is the math module we have used
+previously. The definitions from a module can be \emph{imported} into other
+scripts.
 
-Note what happens for each call of this function. The first time it only prints
-\pythoninline{"Yay!"} once, since the default argument is \pythoninline{1},
-while the second call overwrites the default value and prints it five times.
+A module is just a file with Python statements in it. A module takes the name of
+the file that it is in. For example, imagine we have a file
+\texttt{circlemath.py} in our current working directory:
 
-While you are allowed to have a function that has some arguments with default
-values and some without, you must always put those with default values after
-those without any, so that Python will know which arguments go into which values
-if you do not include all of them when calling the function. This is because
-arguments from a function call are usually matched in order by their position.
+\begin{listing}[H]
+\vspace{-0.5em}
+\begin{python3code}
+import math # importing the math module
 
-\begin{pyconcode}
->>> def test(a, b=5, c, d=6):
-...     print(a, b, c, d)
-  File "<stdin>", line 1
-SyntaxError: non-default argument follows default argument
->>> def test(a, c, b=5, d=6):
-...     print(a, b, c, d)
-...
->>> test(2, 3)
-2 5 3 6
->>> test(2, 3, 10)
-2 10 3 6
->>> test(2, 3, 10, 100)
-2 10 3 100
-\end{pyconcode}
+def area(radius):
+    """Find and return the area of a circle (float) given the radius"""
+    return math.pi * radius**2
 
-We call the arguments that are non-default arguments \emph{positional
-arguments}, while the default arguments are called \emph{keyword arguments}.
+def circumference(radius):
+    """Find and return the circumference of a circle (float) given the radius"""
+    return 2 * math.pi * radius
+\end{python3code}
+\vspace{-1em}
+\caption{\texttt{circlemath.py}}
+\vspace{-0.5em}
+\end{listing}
 
-Sometimes we might want to include some default arguments while excluding
-others. We do this by specifying which of the arguments we wish to pass a value
-to:
+Then, open the interpreter and import the module:
 
 \begin{pyconcode}
->>> def test(a=0, b=0, c=0, d=0):
-...     print(a, b, c, d)
-...
->>> test(c=10)
-0 0 10 0
->>> test(d=5, c=6)
-0 0 6 5
+>>> import circlemath
+>>> circlemath.circumference(5) # have to use modulename.attributename
+31.41592653589793
+>>> circlemath.area(5)
+78.53981633974483
+>>> circlemath.__name__
+'circlemath'
 \end{pyconcode}
+
+Every module has a \pythoninline{__name__} attribute that contains the name of
+the module, except in one special case that we will see soon.
+
+There are other kinds of import statements with different effects:
+
+\begin{pyconcode}
+>>> from circlemath import area
+>>> area(5) # can just use the attribute imported without modulename.
+78.53981633974483
+>>> circumference(5) # not defined, because not imported
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+NameError: name 'circumference' is not defined
+\end{pyconcode}
+
+\begin{pyconcode}
+>>> from circlemath import area, circumference # use commas to separate multiple
+>>> area(5)
+78.53981633974483
+>>> circumference(5)
+31.41592653589793
+\end{pyconcode}
+
+\begin{pyconcode}
+>>> from circlemath import * # import all definitions made
+>>> area(5)
+78.53981633974483
+>>> circumference(5)
+31.41592653589793
+\end{pyconcode}
+
+\begin{pyconcode}
+>>> from circlemath import area as carea
+>>> carea(5)
+78.53981633974483
+\end{pyconcode}
+
+The last option is rather frowned upon; we would prefer you to use
+\pythoninline{circlemath.area} instead as it is more descriptive.
+
+You may also rename a module upon importing it:
+
+\begin{pyconcode}
+>>> import circlemath as cmath
+>>> cmath.area(5)
+78.53981633974483
+\end{pyconcode}
+
+
+\begin{infobox}{Convention (PEP 8)}
+  Always put \pythoninline{import} statements at the beginning of a file in the
+  following order:
+  \begin{enumerate}
+    \item Built-in standard library modules
+    \item Third-party modules (e.g. matplotlib)
+    \item Self-written modules
+  \end{enumerate}
+  Put a blank line between each group of imports.
+\end{infobox}
+
+\subsection{Using Modules as Scripts and Boilerplate}
+
+If there is code in your module that is not a function definition, Python will
+run it just once when the module is imported. For example, take the file
+\texttt{mid.py}:
+
+\begin{listing}[H]
+  \vspace{-0.5em}
+\begin{python3code}
+def midpoint(a, b):
+    """Find and return the midpoint of two numbers."""
+    return (a+b)/2
+
+print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
+\end{python3code}
+  \vspace{-1em}
+  \caption{\texttt{mid.py}}
+  \vspace{-0.5em}
+\end{listing}
+
+\begin{pyconcode}
+>>> import mid
+Midpoint of 5 and 10 is 7.50.
+\end{pyconcode}
+
+The same will happen if you run the module like a script:
+
+\begin{bashcode}
+$ python3 mid.py
+Midpoint of 5 and 10 is 7.50.
+\end{bashcode}
+
+However, this can be rather annoying to deal with, for example if you wrote a
+script with a bunch of functions a while ago and you just want to use the
+functions you wrote, but do not want the other code to run when you're using
+them -- you just want the functions. You can achieve this!
+
+When you run a module as a script, the modules \pythoninline{__name__} attribute
+is not set to the module's name, but to \pythoninline{"__main__"}. Hence, the
+following code in \texttt{mid.py} will do the following:
+
+\begin{listing}[H]
+  \vspace{-0.5em}
+\begin{python3code}
+def midpoint(a, b):
+    """Find and return the midpoint of two numbers."""
+    return (a+b)/2
+
+print(__name__) # just for demonstration, do not put this in real programs
+
+if __name__ == "__main__":
+    print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
+\end{python3code}
+  \vspace{-1em}
+  \caption{\texttt{mid.py}}
+  \vspace{-0.5em}
+\end{listing}
+
+\begin{pyconcode}
+>>> import mid
+mid
+\end{pyconcode}
+
+\begin{bashcode}
+$ python3 mid.py
+__main__
+Midpoint of 5 and 10 is 7.50.
+\end{bashcode}
+
+However, sometimes you may want to import the module \emph{and} run it as if it
+were a script. To enable us to do so, we usually put the script code in a
+function called \pythoninline{main()}:
+
+\begin{listing}[H]
+  \vspace{-0.5em}
+\begin{python3code}
+def midpoint(a, b):
+    """Find and return the midpoint of two numbers."""
+    return (a+b)/2
+
+def main():
+    print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
+
+if __name__ == "__main__":
+    main()
+\end{python3code}
+  \vspace{-1em}
+  \caption{\texttt{mid.py} -- perfect example}
+  \vspace{-0.5em}
+\end{listing}
+
+\begin{pyconcode}
+>>> import mid
+>>> mid.main() # if we want to
+Midpoint of 5 and 10 is 7.50.
+\end{pyconcode}
+
+\begin{bashcode}
+$ python3 mid.py
+Midpoint of 5 and 10 is 7.50.
+\end{bashcode}
+
+We call this combination of the if-statement and the
+\pythoninline{main()} function \emph{boilerplate code}.
+
+\begin{infobox}{Boilerplate Requirement}
+  Please put \textbf{any} code that is not part of a function inside the
+  boilerplate if-statement so that \emph{every} one of your scripts can also be
+  used as a module. This will be required for every lab from now on.
+
+  Wrong:
+
+  \begin{python3code}
+print("Hello World!")
+  \end{python3code}
+
+  Right:
+
+  \begin{python3code}
+def main():
+    print("Hello World!")
+
+if __name__ == "__main__":
+    main()
+  \end{python3code}
+\end{infobox}
+
+\subsection{The \protect\pythoninline{dir()} Function}
+
+Use the \pythoninline{dir()} function to get a list of every attribute --
+variables, functions, and other things you do not know about yet -- that is part
+of a module. For example for the circlemath module we wrote earlier:
+
+\begin{pyconcode}
+>>> import circlemath
+>>> dir(circlemath)
+['__name__', 'area', 'circumference']
+>>> import mid
+>>> dir(mid)
+['__name__', 'midpoint']
+>>> import math
+>>> dir(math)
+['__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'acos',
+'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh',
+'degrees', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial', 'floor', 'fmod',
+'frexp', 'fsum', 'gamma', 'hypot', 'isfinite', 'isinf', 'isnan', 'ldexp', 'lgamma',
+'log', 'log10', 'log1p', 'log2', 'modf', 'pi', 'pow', 'radians', 'sin', 'sinh', 'sqrt',
+'tan', 'tanh', 'trunc']
+\end{pyconcode}
+
+\pagebreak
+\subsection{Summary}
+\label{subsec:modules.sum}
 
 \begin{itemize}
-  \item If a function's caller supplies both positional and keyword arguments,
-    all positional parameters must precede all keyword parameters.
-  \item Keyword parameters may occur in any order.
-  \item The function call must supply at least as many parameters as the
-    function has positional arguments.
-  \item If the caller supplies more positional parameters than the function has
-    positional arguments, parameters are matched with keyword arguments
-    according to their position.
+  \item Syntax:
+
+    \begin{python3code}
+import modname1, modname2 # use: modname1.attributename
+import modname3 as othermodname # use: othermodname.attributename
+from modname import attribute1, attribute2 # use: attribute1, attribute2
+from modname import * # use: attributename
+from modname import attribute as otherattribute # use: otherattribute
+    \end{python3code}
+
+    Attributes can be functions defined in the module or variables defined in
+    the module. A special attribute is \pythoninline{__name__}, which contains
+    the name of the module unless the module is executed as a script.
+
+  \item Every script is a module whose name is the filename of the script.
+
+  \item If a module is imported, its \pythoninline{__name__} attribute is a
+    variable that contains the module name. If a module is run as a script, its
+    \pythoninline{__name__} attribute contains \pythoninline{"__main__"}. With
+    this, you can have code that only runs if a module is run like a script.
+
+    We call that boilerplate code:
+
+    \begin{python3code}
+def main():
+    # stuff that only runs if module is run as a script
+
+if __name__ == "__main__":
+    main()
+    \end{python3code}
+
+  \item Use \pythoninline{dir()} to get a list of every attribute -- every
+    variable and function (and other things that you do not know about yet) --
+    that is part of a particular module.
+
+  \item A good resource:
+
+    \begin{center}
+      \url{https://docs.python.org/3.4/tutorial/modules.html}
+    \end{center}
+
 \end{itemize}
 
-\subsection{Recursion}
-\label{subsec:recur}
+
+\pagebreak
+\section{Recursion}
+\label{sec:rec}
+
 Recursion is the idea of a function calling itself. This can be useful in a wide
 variety of situations, but it can also be easy to misuse. Let us first look at a
 good example:
-
 \begin{python3code}
 def factorial(n):
-  if n <= 1:
-    return 1
-  else
-    return n * factorial(n-1)
+    """Compute and return n! recursively by knowing that n! = n * (n-1)! for n > 1
+    and 1! = 1 and 0! = 1"""
+    if n <= 1:
+        return 1
+    else
+        return n * factorial(n-1)
 \end{python3code}
 
 Notice that this is just another way to repeat a statement, similar to a loop.
 In a loop, we have to specify when to stop repeating something, and we have to
 do the same thing with recursion; otherwise, it would run forever.
 
-As an example, see this simple \emph{bad} case of recursion:
+As an example, this is how the function plays out:
+\[ f(5) = 5 * f(4) = 5 * 4 * f(3) = 5 * 4 * 3 * f(2) = 5 * 4 * 3 * 2 * f(1) = 5
+* 4 * 3 * 2 * 1 = 120 \]
+
+As an example, see this simple \textbf{\emph{bad}} case of recursion:
 
 \begin{python3code}
 def test():
+    """BAD example of recursion."""
     test()
 \end{python3code}
 
@@ -177,496 +413,271 @@ def test(x):
         test(x - 1)
 \end{python3code}
 
-As an example of a more complex way of using recursion to solve a problem, here
-is an example of a recursive function that will sum a list where each element is
-either an integer or another list containing integers and lists:
-
-\begin{python3code}
-def sum_lists(x):
-    total = 0
-    for i in x:
-        if type(i) == int:
-            total += i
-        else:
-            total += sum_lists(i)
-    return total
-
-data = [1, 2, [3, 4, [5, 6], 7], 8, 9]
-print(sum_lists(data))
-\end{python3code}
-
-This program outputs \pythoninline{45}, which is the sum of all the elements of the
-list, including all of the lists inside it. Notice that the base case in this
-function is if every element of the list passed to \pythoninline{sum_lists} is an
-\pythoninline{int}.
-
 \subsection{Summary}
-
-\begin{description}
-\item[Default arguments] Function arguments may have a default value, for
-    example:
-    \begin{python3code}
-import time
-def print_error(message, now = time.time()):
-  print("Error: {} at time {}!".format(message, now))
-
-print_error('All wrong')
-print_error('All more wrong', now = 1.5)
-    \end{python3code}
-
-    Default arguments must be specified after arguments that do not have
-    defaults.
-
-  \item[Recursion] Recursion occurs when a function calls itself. There must be
-    a base case to stop the recursion!
-\end{description}
-
-\pagebreak
-\section{First-class Functions}
-\label{subsec:first}
-In Python, functions are so-called ``first-class citizens''. This means
-essentially that they can be used in the same way as variables: they can be
-assigned to variables, passed to, and returned from functions, as well as stored
-in collections. As an example, here is a short program that stores functions
-inside of a list, then calls each one of those functions with the same argument.
-
-\begin{python3code}
-def print_backwards(string):
-    print(string[::-1])
-
-def print_half(string):
-    print(string[:len(string)//2])
-
-def print_question(string):
-    print("Why do you want me to print '{}'?".format(string))
-
-# Just use the name of the function!
-print_functions = [print, print_backwards, print_half, print_question]
-
-for func in print_functions:
-    func("Hello, World!")
-\end{python3code}
-
-\begin{verbatimcode}
-Hello, World!
-!dlroW ,olleH
-Hello,
-Why do you want me to print 'Hello, World!'?
-\end{verbatimcode}
-
-This can lead to cool pieces of code where a function takes another function as
-an argument and uses it in some way. For example, we can use it to write a
-function that composes two other functions and calls them with a given $x$. In
-math, this would be like taking a function $f(x)$ and a function $g(x)$ and
-composing them to be $h(x) = f(g(x))$. The function below takes $f$ and $g$ and
-finds the value of $h$ at a $x$.
-
-\begin{python3code}
-def h(f, g, x):
-  return f(g(x))
-\end{python3code}
-
-\subsection{Map}
-\label{subsec:map}
-A common operation in Python is to call the same function for every element in a
-collection, such as a list or a tuple and then create a new list with the
-results. Previously, we would have accomplished this with a \pythoninline{for}
-loop:
-
-\begin{python3code}
-def double(x):
-    return x * 2
-
-data = [5, 23, 76]
-new_data = []
-
-for i in data:
-    new_data.append(double(i))
-
-print(new_data)
-\end{python3code}
-
-\begin{verbatimcode}
-[10, 46, 152]
-\end{verbatimcode}
-
-If we use the \pythoninline{map} function, we can make this code much more simple:
-
-\begin{python3code}
-def double(x):
-    return x * 2
-
-data = [5, 23, 76]
-data = list(map(double, data))
-print(data)
-\end{python3code}
-
-\begin{verbatimcode}
-[10, 46, 152]
-\end{verbatimcode}
-
-The \pythoninline{map} function takes in a function and any iterable data type
-(such as a list, tuple, set, etc.) as arguments. It calls that function for
-every element of the other value passed, then returns a new data type containing
-all of those results. This new data type is a special map object, but in most
-cases we are fine with instantly converting it back to our initial data type (in
-the above example, a list).
-
-%List comprehensions?
-
-%Reduce has been removed as of Python 3: https://docs.python.org/3.0/whatsnew/3.0.html#builtins
-\subsection{Reduce}
-\label{subsec:reduce}
-\pythoninline{reduce} is a similar function to \pythoninline{map}, but rather than
-create a new list with the modified values, \pythoninline{reduce} should be used to
-simplify a list into a single value. Similarly to \pythoninline{map},
-\pythoninline{reduce} takes in a function and an iterable data type. The difference
-is that rather than taking and returning a single value, the function passed to
-\pythoninline{reduce} takes in two arguments and returns their combination. As an
-example, here is an example of using \pythoninline{reduce} to join a list of
-strings into a single larger string.
-
-\begin{python3code}
-import functools
-
-def combine(glob, new):
-    print("Adding {} to {}.".format(new, glob))
-    return glob + new
-
-data = ['this', 'is', 'a', 'test']
-data = functools.reduce(combine, data)
-print("Final value: {}".format(data))
-\end{python3code}
-
-\begin{python3code}
-Adding this to is
-Adding thisis to a
-Adding thisisa to test
-Final value: thisisatest
-\end{python3code}
-
-Note that we need to run \pythoninline{import functools} in order to have access to
-\pythoninline{reduce}.
-
-Let's take a simpler example:
-\begin{python3code}
-import functools
-
-def add(x, y):
-  return x + y
-
-numbers = [1, 3, 4, 6, 7]
-s = functools.reduce(add, numbers)
-\end{python3code}
-
-\pythoninline!s! is the sum of the values in the list \pythoninline!numbers!. The way
-\pythoninline!reduce! works is that it takes the first two values, calls the
-\pythoninline!add! function on them, returns the result, and then takes that result
-and the next number. In essence, the example above expands to this:
-\begin{python3code}
-s = add(add(add(add(1, 3), 4), 6), 7)
-\end{python3code}
-
-This shows that at each step, you get to see an intermediate value: The first
-call to \pythoninline!add! gets the first two values, $1$ and $3$, while the second
-call gets the addition of those, $4$ and the next value in the list, $4$. The
-third call to \pythoninline!add! gets the result of that, $8$, and the next number,
-$6$. This will go on until the list is exhausted.
-
-\subsection{Filter}
-\label{subsec:filter}
-\pythoninline{filter} is a function that allows easy removal of some elements from
-a list. It works similarly to \pythoninline{map}, but the function used needs to
-return either \pythoninline{True} or \pythoninline{False}. If it returns
-\pythoninline{True} then the given element is included in the final list. If
-\pythoninline{False} is returned, then it is not. As an example, here is a short
-program that removes all odd elements from a list:
-
-\begin{python3code}
-def is_even(x):
-    return x % 2 == 0
-
-data = [5, 3, 34, 36, 38, 1, 0, 0, 2]
-data = list(filter(is_even, data))
-print(data)
-\end{python3code}
-
-\begin{verbatimcode}
-[34, 36, 38, 0, 0, 2]
-\end{verbatimcode}
-
-\subsection{Lambda Functions}
-\label{subsec:lambda}
-Lambda functions are anonymous functions that are created while the program is
-running and are not assigned to a name like normal functions. They can be used
-very similarly to normal functions if assigned to a variable:
-
-\begin{pyconcode}
->>> def f(x):
-...   return x + 1
-... 
->>> g = lambda x: x + 1
->>> f(5)
-6
->>> g(5)
-6
-\end{pyconcode}
-
-In the above case, \pythoninline{f} and \pythoninline{g} are functionally equivalent;
-we have just used a different syntax to describe them. 
-Both are functions that take in a single value and return that value increased
-by one. The primary difference is in syntax: note that the lambda function does
-not have a return statement: it will simply return the value computed after the
-colon.
-
-Lambda functions are commonly used in conjunction with \pythoninline{map},
-\pythoninline{reduce}, and \pythoninline{filter} as shown below:
-
-\begin{python3code}
-data = [5, 3, 34, 36, 38, 1, 0, 0, 2]
-data = list(filter(lambda x: x % 2 == 0, data))
-print(data)
-\end{python3code}
-
-\begin{verbatimcode}
-[34, 36, 38, 0, 0, 2]
-\end{verbatimcode}
-
-This program works just like the example shown in the section on
-\pythoninline{filter}, but it does not require us to declare the separate
-\pythoninline{is_even} function. Instead, we simply define a lambda inside the call
-to \pythoninline{filter}, accomplishing the same thing.
-
-We can similarly use lambda functions to shorten our initial example of
-first-class functions:
-
-\begin{python3code}
-print_functions = [print,
-    lambda string: print(string[::-1]),
-    lambda string: print(string[:len(string)//2]),
-    lambda string: print("Why do you want me to print '{}'?".format(string))]
-
-for func in print_functions:
-    func("Hello, World!")
-\end{python3code}
-
-Lambda functions can take more than one argument as well:
-\begin{python3code}
-multiply = lambda x, y: x * y
-print(multiply(3, 5)) # 15
-\end{python3code}
-
-One extra use for lambda functions is to modify default sorting behavior. For
-example, if we have a list of tuples and try to sort them, Python will sort them
-based on their first element, then second if the first elements are the same,
-and so on:
-
-\begin{pyconcode}
->>> data = [(5, 2, 4), (6, 3, 2), (4, 4, 4), (3, 3, 3), (5, 3, 10)]
->>> sorted(data)
-[(3, 3, 3), (4, 4, 4), (5, 2, 4), (5, 3, 10), (6, 3, 2)]
-\end{pyconcode}
-
-However, what if we want to sort these tuples based on their last element? To do
-this, we define a special \pythoninline{key} value for \pythoninline{sorted}. Each
-value of the tuple will be passed to this function, and then the return values
-will be used when sorting in place of the actual value of the tuple:
-
-\begin{pyconcode}
->>> data = [(5, 2, 4), (6, 3, 2), (4, 4, 4), (3, 3, 3), (5, 3, 10)]
->>> sorted(data, key=lambda x: x[-1])
-[(6, 3, 2), (3, 3, 3), (5, 2, 4), (4, 4, 4), (5, 3, 10)]
-\end{pyconcode}
-
-Notice that \pythoninline!key! is just a default argument to the function 
-\pythoninline!sorted!. The default value would be a function that sorts based on
-the first element.
-
-Lambda functions also allow us to create functions on the fly. In the
-first-class functions section, we composed two functions $f$ and $g$ and found
-the value at a point $x$. However, sometimes we do not want the value at $x$, we
-want a function that takes in a parameter $x$ and returns the composition. Let's
-say, for example, that we want a function $h(x) = sqrt(factorial(x))$. Take
-a look at the following code:
-\begin{python3code}
-import math
-
-def compose(f, g):
-  # Creates another function that is the composition of f and g and returns it
-  return lambda x: f(g(x))
-
-# Using math.sqrt and math.factorial as first-class citizens
-h = compose(math.sqrt, math.factorial)
-
-# compose returns a function, so we can use h like a function!
-print(h(6))
-print(h(10))
-
-m = compose(math.sin, math.cos)
-print(m(3))
-print(m(4))
-\end{python3code}
-
-\begin{verbatimcode}
-26.832815729997478
-1904.9409439665053
--0.8360218615377305
--0.6080830096407656
-\end{verbatimcode}
-
-If you check the answers, you will find that $\sqrt{ 6! } = \sqrt{ 720 } =
-26.832\cdots$ and similarly for the others.
-
-Continuing the code, we could now compose $h$ and \pythoninline!math.log10!
-(Logarithm with base 10):
-\begin{python3code}
-logh = compose(math.log10, h)
-print(logh(6)) # 1.4286662482156343
-\end{python3code}
-
-We can also plug in a lambda function of our choice to the composition function.
-For example, if we wanted a function $p(x) = \sqrt{ x^3 }$:
-\begin{python3code}
-p = compose(math.sqrt, lambda x: x**3)
-print(p(100)) # 1000.0
-print(p(10)) # 31.622776601683793
-\end{python3code}
+\label{subsec:adv.sum}
+
+\begin{itemize}
+  \item A function may call itself. This is called recursion.
+  \item Always need a base case, or the function will keep calling itself
+    forever.
+\end{itemize}
 
 \pagebreak
 
 \section{Exercises}
-\label{sec:ex}
 
-\begin{warningbox}{Boilerplate}
-  Remember that this lab \emph{must} use the
-  boilerplate syntax introduced in Lab~5, including the review exercises.
+%\begin{warningbox}{Requirements}
+%  Remember to adhere to PEP 8, PEP 257, and the boilerplate code requirement.
+%\end{warningbox}
+
+
+\begin{warningbox}{Install}
+  Please have the \pythoninline{matplotlib} module installed on your computer
+  before next lab. If you installed Anaconda Python, you already have it. Please
+  come see a TA if you are having problems with the installation!
 \end{warningbox}
 
-\begin{ex}[palindrome.py] Write a recursive function that determines whether a
-    string is a palindrome. A palindrome is a word that is the same forwards and
-    backwards, for example ``abba''.
 
-    The function should take in only one argument (the string to check) and
-    return either \lstinline{True} or \lstinline{False}.
-\end{ex}
+\begin{ex}[geometry.py, triangle.py, regularpolygons.py, rectangle.py, circle.py]
+  Write a Python script that lets the user do some basic
+  geometry calculations. Your output should look something like the following.
 
-\begin{ex}[fractions2.py] Using the same tuple representation of fractions as in
-    Lab~4, do the following:
+  The majority of the output must be calculated by your program using a function
+  for each kind of calculation. \emph{The output given below is just an example.
+  Your program needs to perform the calculations for the numerical values read
+  from the keyboard.}
 
-    \begin{enumerate}
-      \item Write a function \pythoninline!prompt_fractions()! that implements the
-        following interface that prompts the user for as many fractions as
-        he/she wants to enter:
+  \begin{verbatimcode}
+Welcome to Wile E. Coyote's Geometry Calculator!
 
-        \begin{verbatimcode}
-Enter fraction: 10/2
-Enter fraction: 5/7
-Enter fraction: 3/8
-Enter fraction: stop
-        \end{verbatimcode}
+Enter height of a rectangle >>> 2
+Enter width of a rectangle >>> 3
 
-        Use \pythoninline!map! to convert each string, such as ``10/2'' to a
-        tuple of integers.
+The area of a rectangle with height 2 and width 3 is 6.
+The perimeter of a rectangle with height 2 and width 3 is 10.
+The length of the diagonal of a rectangle with height 2 and width 3 is 3.605551.
 
-        The function should return a list of tuples. In the example, it would
-        return:
-        \begin{python3code}
-[(10, 2), (5, 7), (3, 8)]
-        \end{python3code}
+Enter the radius of a circle >>> 2
 
-      \item Write a function \pythoninline{min_frac} such that calling
-        \pythoninline{functools.reduce(min_frac, list_of_fractions)} will return
-        the smallest value fraction in the list.
-      \item Write a function \pythoninline{sum_frac} such that calling
-        \pythoninline{functools.reduce(sum_frac, list_of_fractions)} will return
-        a fraction that is the sum of all the fractions in the list.
-      \item Write a function \pythoninline{reduce_frac} that takes in a fraction
-        and returns that fraction reduced to its lowest terms. Use this function
-        with \pythoninline{map} to reduce a list of fractions.
-      \item Write a function \pythoninline{reduced} such that calling
-        \pythoninline{filter(reduced, list_of_fractions)} will return a list consisting
-        of only fractions that are reduced to their lowest terms.
-      \item Write a function \pythoninline!sort_frac! that takes in a list of
-        fractions and uses \pythoninline{sorted}
-        and a lambda \pythoninline{key} function to sort a list of fractions from
-        smallest to largest.
-    \end{enumerate}
+The area of a circle with radius 2.00 is 12.57.
+The circumference of a circle with radius 2.00 is 12.57.
 
-    Do not use any built-in fraction functions or libraries.
+Enter the height of a right triangle >>> 1
+Enter the base of a right triangle >>> 1
 
-    You should use the following boilerplate code for \texttt{fractions2.py}:
-    \begin{python3code}
-import functools
+The area of a right triangle with height 1.00 and base 1.00 is 0.50.
+The perimeter of a triangle with height 1.00 and base 1.00 is 3.41.
 
-# ADD YOUR FUNCTIONS HERE
+Enter the number of sides of a regular polygon as >>> 8
+Enter the length of the side of a regular polygon >>> 5
+
+The exterior angle of a regular polygon with 8 sides is 45.00 degrees.
+The interior angles of a regular polygon with 8 sides sum to 1080.00 degrees.
+Each interior angle of a regular polygon with 8 sides is 135.00 degrees.
+The area of a regular polygon with 8 sides each 5.00 long is 120.71.
+  \end{verbatimcode}
+
+  \begin{center}
+    \bfseries Remember that coding the input part of the program should be your
+    \emph{last} step. It is a beginner's mistake to start with that -- you want
+    the logic of your functions to be correct before doing any of the input.
+    Test your functions with hard-coded values.
+  \end{center}
+
+  Please split your program into multiple files. Please create a module each for
+  the rectangle functions, the circle functions, the triangle functions, and the
+  polygon functions. For each of the modules, use boilerplate code to test the
+  functions. Here's an example:
+
+  \begin{python3code}
+# Module square (square.py)
+
+def area(side_length):
+    """Calculates the area of a square given the length of a side."""
+    return side_length ** 2
+
+def perimeter(side_length):
+    """Calculates the perimeter of a square given the length of a side."""
+    return 4 * side_length
 
 def main():
-  list_fractions = prompt_fractions()
-
-  format_frac = lambda frac : "{}/{}".format(frac[0], frac[1])
-
-  smallest = functools.reduce(min_frac, list_fractions)
-  print("Smallest fraction:", format_frac(smallest))
-
-  sumfrac = functools.reduce(sum_frac, list_fractions)
-  print("Sum of fractions:", format_frac(sumfrac))
-
-  # reducedfrac = map() ??? You fill in!
-  # print("Reduced fractions:", reducedfrac)
-
-  fracsorted = sort_frac(list_fraction)
-  print("Sorted fractions:", fracsorted)
+    side_len = 2
+    print('A square with side length {:.2f} has area {:.2f}.'.format(
+        side_len, area(side_len)))
+    print('A square with side length {:.2f} has perimeter {:.2f}.'.format(
+        side_len, perimeter(side_len)))
 
 if __name__ == '__main__':
-  main()
-    \end{python3code}
-  \end{ex}
+    main()
+  \end{python3code}
 
-  \begin{ex}[rpn.py] Take \texttt{rpn\_calculator.py} from Lab~4 and rewrite
-    it to use a dictionary of lambda functions to do the actual operation.
-    Operations you should support are $+ - * /$. Also, add a $\sin$ and $\cos$
-    operation. For example: $0 \sin$ should give $0$, while $1~2~+~\sin$ should
-    give $0.1411200080598672$ (this is $\sin(3)$).
-  \end{ex}
+  Then, write a script \texttt{geometry.py} that gives the user interface as
+  seen in the example above.
 
-%  \item[wrapper.py] Write a function \pythoninline!wrapper! that takes two
-%    functions, prints their names, calls the first function, prints its result,
-%    calls the second function with the first function's result as an argument,
-%    prints its result, and then says ``Done.'' Given a function \pythoninline!f!,
-%    you can get its name using \pythoninline!f.__name__!. For example:
-%
-%    \begin{python3code}
-%import math
-%print(math.sqrt.__name__) # sqrt
-%
-%def five():
-%  return 5
-%
-%def square(x):
-%  return x**2
-%
-%wrapper(five, square)
-%    \end{python3code}
-%
-%    \begin{verbatimcode}
-%Calling function 'five'
-%5
-%Calling function 'square'
-%25
-%Done.
-%    \end{verbatimcode}
+  Your program must define the following functions. It is your task to figure
+  out the appropriate arguments and return values as well as the code of these
+  functions. Notice that the triangle is a \emph{right triangle} where height
+  and base are the two legs joined by the 90 degree angle.
+  \begin{multicols}{2}
+    \begin{itemize}
+      \item Module \texttt{triangle}:
+        \begin{itemize}
+          \item \pythoninline{area}
+          \item \pythoninline{hypotenuse}
+          \item \pythoninline{perimeter}
+        \end{itemize}
+      \item Module \texttt{regularpolygons}:
+        \begin{itemize}
+          \item \pythoninline{exterior_angle}
+          \item \pythoninline{interior_angle}
+          \item \pythoninline{area}
+        \end{itemize}
+      \item Module \texttt{rectangle}:
+        \begin{itemize}
+          \item\pythoninline{area}
+          \item \pythoninline{perimeter}
+          \item \pythoninline{diagonal}
+        \end{itemize}
+      \item Module \texttt{circle}:
+        \begin{itemize}
+          \item \pythoninline{area}
+          \item \pythoninline{circumference}
+        \end{itemize}
+    \end{itemize}
+  \end{multicols}
 
-\pagebreak
+  \emph{Regular Polygons}
+
+  The exterior angle of a regular $n$-polygon is $\frac{360}{n}$, where $n$ is
+  the number of sides. The angle is in degrees.
+
+  The sum of the interior angles of a regular $n$-polygon is $180(n-2)$, where the
+  angle is in degrees.
+
+  To get one particular interior angle of a regular $n$-polygon, divide by the
+  number of angles $n$ to get $\frac{180(n-2)}{n}$.
+
+  Finally, to find the area of a regular $n$-polygon, use the following formula:
+  \[ \frac{s^2 \times n}{4 \times \tan\left( \frac{\pi}{n} \right)}, \]
+  where $s$ is the length of a side and $n$ is the number of sides.
+\end{ex}
+
+\begin{ex}[sum.py] Write a recursive function that computes the sum of all the
+  numbers from 1 to $n$, where $n$ is the given parameter.
+\end{ex}
+
+\begin{ex}[peasants.py] \hfill
+  \begin{enumerate}[(a)]
+    \item Russian peasant multiplication is a method of multiplying integers in
+      which you keep halving one factor while
+      doubling the other factor until one of the factors is 1. For example:
+      \begin{IEEEeqnarray*}{RCRCL}
+        &\quad& 8 &\quad\times\quad& 38 \\
+        = && 4 &\quad\times\quad& 76 \\
+        = && 2 &\quad\times\quad& 152 \\
+        = && 1 &\quad\times\quad& 304
+      \end{IEEEeqnarray*}
+      Hence, $8 \times 38 = 304$.
+
+      This, of course, becomes a bit more involved if the integer that you keep
+      halving is not a power of two. For example, imagine $38$ is the number
+      that keeps getting halved:
+      \begin{IEEEeqnarray*}{RCRCLCLCL}
+        && 8 &\times& 38 \\
+        = &\quad& 16 &\times& 19 \\
+        = && 32 &\times& 9 &+& 16      &\qquad& \text{$\nicefrac{19}{2} = 9$ with remainder $1$} \\
+        = && 64 &\times& 4 &+& 16 + 32 &\qquad& \text{$\nicefrac{9}{2} = 4$ with remainder $1$} \\
+        = && 128 &\times& 2 &+& 16 + 32 \\
+        = && 256 &\times& 1 &+& 16 + 32 \\
+        = && 256 && &+& 16 + 32 \\
+        = && 304
+      \end{IEEEeqnarray*}
+
+      This is all based on the following recursive definition of multiplication:
+
+      \[ x \times y = \begin{cases}
+          \frac{x}{2} \times (2 \times y) & \text{if $x$ is even} \\
+          \frac{x-1}{2} \times (2 \times y) + y & \text{if $x$ is odd}
+      \end{cases} \]
+
+      Write a \emph{non-recursive} function that implements Russian
+      peasant multiplication using a \pythoninline{while} loop. Call this
+      function \pythoninline{multiply()}.
+
+    \item The Russian peasant method can also be applied to exponentiation (also
+      only for integers):
+
+      \[ x^y = \begin{cases}
+          \left( x^2 \right)^{\nicefrac{y}{2}} & \text{if $y$ is even} \\
+          x \left( x^2 \right)^{\nicefrac{(y-1)}{2}} & \text{if $y$ is odd} \\
+      \end{cases} \]
+
+      This method is also called exponentiation by squaring or the
+      square-and-multiply method.
+
+      Write a \emph{recursive} function called \pythoninline{expo()} that
+      implements this.
+
+  \end{enumerate}
+
+\end{ex}
+
+\begin{ex}[pascal.py] \hfill
+
+  In Pascal's triangle, each number is the sum of the two numbers directly above
+  it. The left and right ends of the triangle always consists of $1$s.
+
+  This recursive rule produces the following triangle:
+
+  \begin{center}
+\def\N{9}
+\tikz[x=0.75cm,y=0.5cm, 
+  pascal node/.style={font=\small}, 
+  row node/.style={font=\footnotesize, anchor=west, shift=(180:1)}]
+  \path  
+    \foreach \n in {0,...,\N} { 
+      (-\N/2-1, -\n) node  [row node/.try]{Row \n:}
+        \foreach \k in {0,...,\n}{
+          (-\n/2+\k,-\n) node [pascal node/.try] {%
+            \pgfkeys{/pgf/fpu}%
+            \pgfmathparse{round(\n!/(\k!*(\n-\k)!))}%
+            \pgfmathfloattoint{\pgfmathresult}%
+            \pgfmathresult%
+          }}};
+  \end{center}
+
+  Write a recursive function \pythoninline{pascal(n, k)} that finds the $k$th
+  value of the $n$th row by using the sum of the numbers directly above it.
+  We start counting at $0$ for both $n$ and $k$.
+
+  Since we know that the left and right end of the triangle are all $1$s, we
+  know that for every row $n$:
+  \begin{IEEEeqnarray*}{RCLCL}
+    \pas(n, 0) &=& 1 &\qquad& \text{left end} \\
+    \pas(n, n) &=& 1 &\qquad& \text{right end}
+  \end{IEEEeqnarray*}
+
+  If for example I want to know the $2$nd entry of the $4$th row:
+
+  \begin{IEEEeqnarray*}{RCLCL}
+    \pas(4, 2) &=& \pas(3, 1) + \pas(3, 2)  \\
+    &=& \pas(2, 0) + \pas(2, 1) + \pas(2, 1) + \pas(2, 2) \\
+    &=& 1 + \pas(1, 0) + \pas(1, 1) + \pas(1, 0) + \pas(1, 1) + 1 \\
+    &=& 1 + 1 + 1 + 1 + 1 + 1 \\
+    &=& 6
+  \end{IEEEeqnarray*}
+\end{ex}
+
 \section{Submitting}
 
 You should submit your code as a tarball. It should contain all files
 used in the exercises for this lab. The submitted file should be named
 \begin{center}
-  \texttt{cse107\_firstname\_lastname\_lab8.tar.gz}
+  \texttt{cse107\_firstname\_lastname\_lab3.tar.gz}
 \end{center}
 
 \begin{center}
-  \textbf{Upload your tarball to Canvas.}
+  \textbf{Upload your tarball to Canvas before the deadline.}
 \end{center}
 
 \listoftheorems

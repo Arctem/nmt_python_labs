@@ -1,683 +1,668 @@
-% LAB 3: Functions
-%
+% LAB 4: Dictionaries and Sets
+% 
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
-%
+% 
 % Prepared by Russell White and Christopher Koch
 % Spring 2015
-
-% - Functions
-%   - Positional and Optional Arguments
-%   - Recursion
-% - Modules
-%   - import statements
-%   - main() boilerplate
-% - Comments and PEP-8 style
-% - Keywords: def
 \documentclass[11pt]{cselabheader}
-\fancyhead[R]{Lab 3: Functions}
-\title{Lab 3: Functions}
-\usepgflibrary{fpu}
-\newcommand{\pas}{\mathop{\mathrm{pascal}}}
+\usepackage{IEEEtrantools}
+
+%%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
+\fancyhead[R]{Lab 4: Dictionaries and Sets}
+\title{Lab 4: Dictionaries and Sets}
 
 \begin{document}
-\pagenumbering{roman}
+
 \maketitle
+\pagenumbering{roman}
+\hrule
+
+\begin{quotation}
+``All thought is a kind of computation.''
+\end{quotation}
+\begin{flushright}
+--- D. Hobbes
+\end{flushright}
+
+\begin{quotation}
+``Vague and nebulous is the beginning of all things, but not their end.''
+\end{quotation}
+\begin{flushright}
+--- K. Gibran
+\end{flushright}
+
+\begin{quotation}
+``It [programming] is the only job I can think of where I get to be both an
+engineer and artist. There's an incredible, rigorous, technical element to it,
+which I like because you have to do very precise thinking. On the other hand, it
+has a wildly creative side where the boundaries of imagination are the only real
+limitation.''
+\end{quotation}
+\begin{flushright}
+--- A. Hertzfeld
+\end{flushright}
 
 \hrule
-\begin{quotation}
-``If you don't think carefully, you might believe that programming is just
-typing statements in a programming language.''
-\end{quotation}
-\begin{flushright}
-  --- W. Cunningham
-\end{flushright}
 
-\begin{quotation}
-``When you come to a fork in the road, take it."
-\end{quotation}
-\begin{flushright}
---- Attributed to Yogi Berra
-\end{flushright}
+\section{Introduction}
 
-\begin{quotation}
-``The time you enjoy wasting is not wasted time.''
-\end{quotation}
-\begin{flushright}
-  --- Bertrand Russell
-\end{flushright}
-\hrule
+In previous labs, we have used lists and tuples to be able to enclose data
+in a certain
+structure and manipulate it. Lists gave us an easy way to find sums of numbers,
+to store things, to sort things, and much more. Structures like this are
+commonly referred to as collections: collections collect data and encapsulate
+it. They give us useful methods to manipulate that data.
+
+A list in Python is an ordered container of any elements you want indexed by
+whole numbers starting at 0. Lists are mutable: this means you can add elements,
+change elements, and remove elements from a list. Meanwhile, tuples are immuatable
+and cannot be changed once they are created.
+In this lab, we will introduce you to two other collections: Sets and dictionaries.
+
+\pagebreak
 
 \tableofcontents
 
 \pagebreak
+
 \pagenumbering{arabic}
+\section{Sets}
+Sets are a lot like lists, but their properties are a bit different.
+A set is just like a list, but \emph{no element can appear twice} and it is
+\emph{unordered}. Additionally, they cannot contain mutable elements. Thus,
+a set cannot contain a list. Sets themselves are mutable.
 
-\section{Introduction}
-\label{sec:intro}
-
-In the previous lab, we showed you simple control flow and how to repeat a piece
-of code using \pythoninline{while}. In this lab, we will be learning how to
-break a lot of code into smaller, reusable pieces called \emph{functions}.
-
-\pagebreak
-\section{Modules}
-\label{sec:modules}
-
-A program that is saved in a text file and then run with Python is called a
-\emph{script}. As your programs get longer, you may want to split them into
-multiple files for easier legibility, maintenance, or abstraction. To do this,
-Python supports a way to put definitions (of functions) in a file and use them
-in another script or in the interpreter. A file like this is called a
-\emph{module}. An example for such a module is the math module we have used
-previously. The definitions from a module can be \emph{imported} into other
-scripts.
-
-A module is just a file with Python statements in it. A module takes the name of
-the file that it is in. For example, imagine we have a file
-\texttt{circlemath.py} in our current working directory:
-
-\begin{listing}[H]
-\vspace{-0.5em}
-\begin{python3code}
-import math # importing the math module
-
-def area(radius):
-    """Find and return the area of a circle (float) given the radius"""
-    return math.pi * radius**2
-
-def circumference(radius):
-    """Find and return the circumference of a circle (float) given the radius"""
-    return 2 * math.pi * radius
-\end{python3code}
-\vspace{-1em}
-\caption{\texttt{circlemath.py}}
-\vspace{-0.5em}
-\end{listing}
-
-Then, open the interpreter and import the module:
-
+A set is made using curly braces or from a list:
 \begin{pyconcode}
->>> import circlemath
->>> circlemath.circumference(5) # have to use modulename.attributename
-31.41592653589793
->>> circlemath.area(5)
-78.53981633974483
->>> circlemath.__name__
-'circlemath'
+>>> a = {5, 5, 4, 3, 2} # duplicates ignored
+>>> print(a)
+{2, 3, 4, 5}
+>>> b = set([5, 5, 4, 3])
+>>> print(b)
+{3, 4, 5}
 \end{pyconcode}
 
-Every module has a \pythoninline{__name__} attribute that contains the name of
-the module, except in one special case that we will see soon.
-
-There are other kinds of import statements with different effects:
-
+Sets are heterogeneous -- their elements do not need to be of the same type:
 \begin{pyconcode}
->>> from circlemath import area
->>> area(5) # can just use the attribute imported without modulename.
-78.53981633974483
->>> circumference(5) # not defined, because not imported
+>>> a = {5, 4, 'a'}
+>>> print(a)
+{'a', 4, 5}
+\end{pyconcode}
+
+Because sets are inherently unordered, they cannot be indexed. That means you
+cannot use the \pythoninline![]! operator on sets:
+\begin{pyconcode}
+>>> a = {5, 4, 3, 2}
+>>> a[1]
 Traceback (most recent call last):
-  File "<input>", line 1, in <module>
-NameError: name 'circumference' is not defined
-\end{pyconcode}
-
-\begin{pyconcode}
->>> from circlemath import area, circumference # use commas to separate multiple
->>> area(5)
-78.53981633974483
->>> circumference(5)
-31.41592653589793
-\end{pyconcode}
-
-\begin{pyconcode}
->>> from circlemath import * # import all definitions made
->>> area(5)
-78.53981633974483
->>> circumference(5)
-31.41592653589793
-\end{pyconcode}
-
-\begin{pyconcode}
->>> from circlemath import area as carea
->>> carea(5)
-78.53981633974483
-\end{pyconcode}
-
-The last option is rather frowned upon; we would prefer you to use
-\pythoninline{circlemath.area} instead as it is more descriptive.
-
-You may also rename a module upon importing it:
-
-\begin{pyconcode}
->>> import circlemath as cmath
->>> cmath.area(5)
-78.53981633974483
+  File "<stdin>", line 1, in <module>
+TypeError: 'set' object does not support indexing
 \end{pyconcode}
 
 
-\begin{infobox}{Convention (PEP 8)}
-  Always put \pythoninline{import} statements at the beginning of a file in the
-  following order:
-  \begin{enumerate}
-    \item Built-in standard library modules
-    \item Third-party modules (e.g. matplotlib)
-    \item Self-written modules
-  \end{enumerate}
-  Put a blank line between each group of imports.
-\end{infobox}
-
-\subsection{Using Modules as Scripts and Boilerplate}
-
-If there is code in your module that is not a function definition, Python will
-run it just once when the module is imported. For example, take the file
-\texttt{mid.py}:
-
-\begin{listing}[H]
-  \vspace{-0.5em}
-\begin{python3code}
-def midpoint(a, b):
-    """Find and return the midpoint of two numbers."""
-    return (a+b)/2
-
-print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
-\end{python3code}
-  \vspace{-1em}
-  \caption{\texttt{mid.py}}
-  \vspace{-0.5em}
-\end{listing}
-
+The \pythoninline!|! operator can be used to join sets together. This results
+in a new set composed of the elements of the two composite sets. This is called
+the \emph{union} of the two sets. Since the result is also a set, any duplicate
+values will be only included once.
 \begin{pyconcode}
->>> import mid
-Midpoint of 5 and 10 is 7.50.
+>>> a = {1, 2, 4, 8, 16}
+>>> b = {1, 3, 9, 27}
+>>> a | b
+{1, 2, 3, 4, 8, 9, 16, 27}
 \end{pyconcode}
 
-The same will happen if you run the module like a script:
-
-\begin{bashcode}
-$ python3 mid.py
-Midpoint of 5 and 10 is 7.50.
-\end{bashcode}
-
-However, this can be rather annoying to deal with, for example if you wrote a
-script with a bunch of functions a while ago and you just want to use the
-functions you wrote, but do not want the other code to run when you're using
-them -- you just want the functions. You can achieve this!
-
-When you run a module as a script, the modules \pythoninline{__name__} attribute
-is not set to the module's name, but to \pythoninline{"__main__"}. Hence, the
-following code in \texttt{mid.py} will do the following:
-
-\begin{listing}[H]
-  \vspace{-0.5em}
-\begin{python3code}
-def midpoint(a, b):
-    """Find and return the midpoint of two numbers."""
-    return (a+b)/2
-
-print(__name__) # just for demonstration, do not put this in real programs
-
-if __name__ == "__main__":
-    print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
-\end{python3code}
-  \vspace{-1em}
-  \caption{\texttt{mid.py}}
-  \vspace{-0.5em}
-\end{listing}
-
+The \pythoninline!&! operator can be used to find the intersection of two sets.
+This is the set containing all elements that are in both sets.
 \begin{pyconcode}
->>> import mid
-mid
+>>> a = {2, 4, 6, 8, 10, 12}
+>>> b = {3, 6, 9, 12, 15, 18}
+>>> a & b
+{12, 6}
 \end{pyconcode}
 
-\begin{bashcode}
-$ python3 mid.py
-__main__
-Midpoint of 5 and 10 is 7.50.
-\end{bashcode}
-
-However, sometimes you may want to import the module \emph{and} run it as if it
-were a script. To enable us to do so, we usually put the script code in a
-function called \pythoninline{main()}:
-
-\begin{listing}[H]
-  \vspace{-0.5em}
-\begin{python3code}
-def midpoint(a, b):
-    """Find and return the midpoint of two numbers."""
-    return (a+b)/2
-
-def main():
-    print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
-
-if __name__ == "__main__":
-    main()
-\end{python3code}
-  \vspace{-1em}
-  \caption{\texttt{mid.py} -- perfect example}
-  \vspace{-0.5em}
-\end{listing}
-
+The \pythoninline!-! operator can be used to find the difference of two sets.
+This is the first set with all of the elements of the second set removed.
 \begin{pyconcode}
->>> import mid
->>> mid.main() # if we want to
-Midpoint of 5 and 10 is 7.50.
+>>> a = {2, 4, 6, 8, 10, 12}
+>>> b = {3, 6, 9, 12, 15, 18}
+>>> a - b
+{8, 2, 10, 4}
 \end{pyconcode}
 
-\begin{bashcode}
-$ python3 mid.py
-Midpoint of 5 and 10 is 7.50.
-\end{bashcode}
-
-We call this combination of the if-statement and the
-\pythoninline{main()} function \emph{boilerplate code}.
-
-\begin{infobox}{Boilerplate Requirement}
-  Please put \textbf{any} code that is not part of a function inside the
-  boilerplate if-statement so that \emph{every} one of your scripts can also be
-  used as a module. This will be required for every lab from now on.
-
-  Wrong:
-
-  \begin{python3code}
-print("Hello World!")
-  \end{python3code}
-
-  Right:
-
-  \begin{python3code}
-def main():
-    print("Hello World!")
-
-if __name__ == "__main__":
-    main()
-  \end{python3code}
-\end{infobox}
-
-\subsection{The \protect\pythoninline{dir()} Function}
-
-Use the \pythoninline{dir()} function to get a list of every attribute --
-variables, functions, and other things you do not know about yet -- that is part
-of a module. For example for the circlemath module we wrote earlier:
-
+The \pythoninline!^! operator can be used to find the symmetric difference
+of two sets. This is the set containing all elements in one of the original
+sets, but not in both.
 \begin{pyconcode}
->>> import circlemath
->>> dir(circlemath)
-['__name__', 'area', 'circumference']
->>> import mid
->>> dir(mid)
-['__name__', 'midpoint']
->>> import math
->>> dir(math)
-['__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'acos',
-'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh',
-'degrees', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial', 'floor', 'fmod',
-'frexp', 'fsum', 'gamma', 'hypot', 'isfinite', 'isinf', 'isnan', 'ldexp', 'lgamma',
-'log', 'log10', 'log1p', 'log2', 'modf', 'pi', 'pow', 'radians', 'sin', 'sinh', 'sqrt',
-'tan', 'tanh', 'trunc']
+>>> a = {'one', 'eight'}
+>>> b = {'two', 'four', 'six', 'eight'}
+>>> a ^ b
+{'one', 'six', 'two', 'four'}
+\end{pyconcode}
+
+A list can be converted into a set using the \pythoninline!set()! function:
+\begin{pyconcode}
+>>> a = [1, 5, 2, 'hello', 2.3, 5, 2]
+>>> set(a) # duplicate removed!
+{1, 2, 'hello', 2.3, 5}
+\end{pyconcode}
+
+Similarly, a set can be converted into a list using the \pythoninline!list()!
+function:
+\begin{pyconcode}
+>>> a = {1, 2, 2, 5, 'asdf', 3, 2}
+>>> list(a)
+[1, 2, 3, 5, 'asdf']
+\end{pyconcode}
+
+You may also iterate over a set and add elements using the
+\pythoninline!.add()! method:
+\begin{pyconcode}
+>>> companions_nine = {'rose', 'jack'}
+>>> companions_ten = {'rose', 'mickey', 'jack', 'donna', 'martha', 'wilf'}
+>>> # iterating over elements
+... for companion in companions_nine:
+...     print(companion)
+...
+rose
+jack
+>>> # adding an element to set
+... companions_ten.add('sarah jane')
+>>> companions_ten
+{'donna', 'sarah jane', 'wilf', 'rose', 'martha', 'mickey', 'jack'}
 \end{pyconcode}
 
 \pagebreak
 \subsection{Summary}
-\label{subsec:modules.sum}
 
 \begin{itemize}
-  \item Syntax:
-
+  \item Sets can be made using curly braces or using the \pythoninline!set()!
+    function given another sequence type:
     \begin{python3code}
-import modname1, modname2 # use: modname1.attributename
-import modname3 as othermodname # use: othermodname.attributename
-from modname import attribute1, attribute2 # use: attribute1, attribute2
-from modname import * # use: attributename
-from modname import attribute as otherattribute # use: otherattribute
+food = {'burgers', 'carne adovada', 'burritos'}
+food = set(['burgers', 'carne adovada', 'burritos'])
+food = set(('burgers', 'carne adovada', 'burritos'))
     \end{python3code}
 
-    Attributes can be functions defined in the module or variables defined in
-    the module. A special attribute is \pythoninline{__name__}, which contains
-    the name of the module unless the module is executed as a script.
+    \emph{Note that empty curly braces create an empty dictionary.} To create an
+    empty set, use the \pythoninline!set()! function:
+    \begin{pyconcode}
+>>> type({})
+<class 'dict'>
+>>> type(set())
+<class 'set'>
+    \end{pyconcode}
 
-  \item Every script is a module whose name is the filename of the script.
+  \item No element can appear twice.
 
-  \item If a module is imported, its \pythoninline{__name__} attribute is a
-    variable that contains the module name. If a module is run as a script, its
-    \pythoninline{__name__} attribute contains \pythoninline{"__main__"}. With
-    this, you can have code that only runs if a module is run like a script.
+  \item Can only contain immutable elements (for example, lists are not allowed
+    as elements, but tuples are as long as the tuple only contains immutable
+    elements).
 
-    We call that boilerplate code:
+  \item Given two sets \pythoninline!a! and \pythoninline!b!:
+    \begin{tabular}{ll}
+      \pythoninline!a | b! & union of \pythoninline!a! and \pythoninline!b! \\
+      \pythoninline!a & b! & intersection of \pythoninline!a! and \pythoninline!b! \\
+      \pythoninline!a - b! & difference of \pythoninline!a! and \pythoninline!b! \\
+      \pythoninline!a ^ b! & symmetric difference of \pythoninline!a! and \pythoninline!b! \\
+    \end{tabular}
 
-    \begin{python3code}
-def main():
-    # stuff that only runs if module is run as a script
+  \item Python docs:
 
-if __name__ == "__main__":
-    main()
-    \end{python3code}
-
-  \item Use \pythoninline{dir()} to get a list of every attribute -- every
-    variable and function (and other things that you do not know about yet) --
-    that is part of a particular module.
-
-  \item A good resource:
-
-    \begin{center}
-      \url{https://docs.python.org/3.4/tutorial/modules.html}
-    \end{center}
-
+    \url{https://docs.python.org/3.5/tutorial/datastructures.html#sets}
 \end{itemize}
+
+\pagebreak
+\section{Dictionaries}
+Dictionaries are similar to lists, but with a different index system.
+The elements of a dictionary are stored using a key-value system. A key
+is used similarly to the indices of a list, but it must be of any immutable
+type. A value is simply the element associated with that key and can be
+anything. This means that dictionaries are useful for storing elements best
+identified by a description or name rather than a strict order.
+
+\begin{itemize}
+  \item A dictionary is made using curly braces, followed by listing the
+    key-value pairs that make up the dictionary. Keys and values are separated
+    by colons, while key-value pairs are separated by commas.
+  \item Values can be accessed, changed, or added by using their keys just as
+    you would use the indices of a list.
+\end{itemize}
+\begin{pyconcode}
+>>> food = {'breakfast': 'burrito', 'lunch': 'burger', 'dinner': 'tacos'}
+>>> print(food)
+{'dinner': 'tacos', 'lunch': 'burger', 'breakfast': 'burrito'}
+>>> food['breakfast'] = 'toast'
+>>> print(food)
+{'dinner': 'tacos', 'lunch': 'burger', 'breakfast': 'toast'}
+>>> food['brunch'] = 'biscuits'
+>>> print(food)
+{'dinner': 'tacos', 'brunch': 'biscuits', 'lunch': 'burger', 'breakfast': 'toast'}
+\end{pyconcode}
+
+\begin{itemize}
+  \item Like sets, the elements of a dictionary are unordered.
+
+  \item A list of the keys of a dictionary can be accessed using the
+    \pythoninline!.keys()! function.
+\end{itemize}
+
+\begin{pyconcode}
+>>> a = {1: 5, 'cake': 'lots', 'color': 'green'}
+>>> print(a)
+{1: 5, 'cake': 'lots', 'color': 'green'}
+>>> print(a.keys())
+dict_keys([1, 'cake', 'color'])
+\end{pyconcode}
+
+\begin{itemize}
+  \item Only immutable elements can be used as keys.
+  \item (Actually, only \emph{hashable} elements can be used as keys; however,
+    this usually means immutable. The error message will tell you that a type is
+    \emph{unhashable} when you used a mutable element as a key or set element.)
+  \item Since tuples are immutable, they can be used as keys for dictionaries.
+    However, the tuple must not contain anything mutable, like a list,
+    dictionary, or set.
+\end{itemize}
+
+\begin{pyconcode}
+>>> a = {}
+>>> a[('a', 'b')] = 5
+>>> print(a)
+{('a', 'b'): 5}
+>>> a[('a', 'c')] = 6
+>>> print(a)
+{('a', 'c'): 6, ('a', 'b'): 5}
+>>> a['a', []] = 7
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: unhashable type: 'list'
+\end{pyconcode}
+
+\begin{itemize}
+  \item You can use the \pythoninline!in! keyword to test whether an item is a
+    key in the respective dictionary.
+  \item You can use a for loop to iterate over the \emph{keys} of a dictionary.
+  \item \pythoninline!.items()! returns a list of tuples where the first element
+    is the key of a dictionary item and the second element is the corresponding
+    value. This can be used in a for loop as well with the unpacking syntax.
+\end{itemize}
+
+\begin{pyconcode}
+>>> states = {'NM' : 'New Mexico', 'TX' : 'Texas', 'KS' : 'Kansas'}
+>>> 'NM' in states
+True
+>>> for state_short in states:
+...     print(state_short, states[state_short])
+...
+KS Kansas
+TX Texas
+NM New Mexico
+>>> states.items()
+dict_items([('KS', 'Kansas'), ('TX', 'Texas'), ('NM', 'New Mexico')])
+>>> for state_short, state_name in states.items():
+...     print(state_short, state_name)
+...
+KS Kansas
+TX Texas
+NM New Mexico
+\end{pyconcode}
+
+Dictionaries are good for a load of things. Here's an example:
+
+\begin{python3code}
+states = {'NM' : 'New Mexico', 'TX' : 'Texas', 'KS' : 'Kansas'}
+capitals = { # multiline dictionaries are easier to read
+  'NM' : 'Santa Fe',
+  'TX' : 'Austin',
+  'KS' : 'Kansas City',
+}
+
+state = input('Enter a state >>> ')
+if state in states:
+    print('You selected {}. The state capital is {}.'.format(states[state], 
+        capitals[state]))
+else:
+    print('The state you selected is not known to this program.')
+\end{python3code}
+
+\pagebreak
+\section{Collection Similarities}
+Collections share several properties that make them convenient to work with.
+
+\begin{itemize}
+\item The \pythoninline!len()! function can be used on any collection object
+  in order to find the number of elements.
+\item All collections can be iterated over with \pythoninline!for! loops,
+  getting one element with each iteration. For dictionaries, the values provided
+  will be the keys. Note that for sets and dictionaries the order is not fixed.
+
+  \begin{pyconcode}
+>>> a = {'a': 1, 'b': 2}
+>>> for i in a:
+...     print(i)
+...     print(a[i])
+... 
+b
+2
+a
+1
+  \end{pyconcode}
+
+\item All collections can use the \pythoninline!in! keyword to test
+  if an element is in that collection. For dictionaries, this will
+  compare against the list of keys, not the values.
+  \begin{pyconcode}
+>>> a = {'1': 1}
+>>> 1 in a
+False
+>>> '1' in a
+True
+  \end{pyconcode}
+\item Tuples, sets, and lists can all be freely converted from one
+  to another using the \pythoninline!tuple()!, \pythoninline!set()!,
+  \pythoninline!list()!, \pythoninline!str()!, and \pythoninline!dict()! functions.
+\end{itemize}
+
+\pagebreak
+\section{Collections Summary}
+
+% this could be something better than a table
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{p{1.6cm}lp{1.6cm}p{3.5cm}lp{4.5cm}}
+    \toprule
+    Data Structure & Mutable & Mutable elements & Indexing & Ordered
+    & Other
+    properties\\
+    \midrule
+    List \lstinline![]! & yes & yes & by whole numbers & yes & can contain elements more than once\\
+    Sets \lstinline!{}! & yes & no & not indexable & no & no element can appear more than once\\
+    Tuples \lstinline!()! & no & yes & by whole numbers & yes & can contain elements more than
+    once\\
+    Dictionary \lstinline!{}! & yes & yes & by anything ``hashable'' (immutable collections or
+    basic types) & no & \\
+    \bottomrule
+  \end{tabular}
+  \caption{Summary of Data Structures in Python}
+  \label{tab:sum}
+\end{table}
+
+
+%\subsection{List Syntax}
+%
+%\begin{lstlisting}[style=ipython]
+%>>> semester_gpas = [4.0, 3.5, 2.0, 1.5, 4.0, 3.7]
+%>>> 4.0 in semester_gpas
+%True
+%>>> 1.0 not in semester_gpas
+%True
+%>>> 2.0 not in semester_gpas
+%False
+%>>> mult_gpas = 1
+%>>> for gpa in semester_gpas:
+%      mult_gpas += gpa
+%>>> print(mult_gpas)
+%621.6
+%>>> semester_gpas[2]
+%2.0
+%>>> semester_gpas[:2]
+%[4.0, 3.5]
+%>>> semester_gpas.append(3.4)
+%>>> semester_gpas
+%[4.0, 3.5, 2.0, 1.5, 4.0, 3.7, 3.4]
+%\end{lstlisting}
+%
+%Refer to lab 3 for more list functions and the slicing notation.
+%
+%\subsection{Set Syntax}
+%
+%\begin{lstlisting}[style=ipython]
+%>>> companions_nine = {'rose', 'jack'}
+%>>> companions_ten = {'rose', 'mickey', 'jack', 'donna', 'martha', 'wilf'}
+%# intersection
+%>>> companions_of_both = companions_nine & companions_ten
+%>>> print(companions_of_both)
+%{'jack', 'rose'}
+%# union
+%>>> print(companions_nine | companions_ten)
+%{'donna', 'wilf', 'rose', 'martha', 'mickey', 'jack'}
+%# testing membership
+%>>> 'rose' in companions_nine
+%True
+%# iterating over elements
+%>>> for companion in companions_nine:
+%      print(companion)
+%
+%rose
+%jack
+%# adding an element to set
+%>>> companions_ten.add('sarah jane')
+%>>> print(companions_ten)
+%{'donna', 'sarah jane', 'wilf', 'rose', 'martha', 'mickey', 'jack'}
+%\end{lstlisting}
+%
+%\subsection{Tuple Syntax}
+%
+%\begin{lstlisting}[style=ipython]
+%>>> ordered_pairs = [(1,2), (2,1), (3,3), (4,5), (5,4)] # list of tuples
+%\end{lstlisting}
+%
+%\subsection{Dictionary Syntax}
+%
+%\begin{lstlisting}[style=ipython]
+%ages = {'chris': 20, 'tyler': 22, 'randomperson': 34} # dictionary
+%\end{lstlisting}
 
 
 \pagebreak
-\section{Recursion}
-\label{sec:rec}
+\section{Stacks}
+\label{sec:stacks}
 
-Recursion is the idea of a function calling itself. This can be useful in a wide
-variety of situations, but it can also be easy to misuse. Let us first look at a
-good example:
-\begin{python3code}
-def factorial(n):
-    """Compute and return n! recursively by knowing that n! = n * (n-1)! for n > 1
-    and 1! = 1 and 0! = 1"""
-    if n <= 1:
-        return 1
-    else
-        return n * factorial(n-1)
-\end{python3code}
+Stacks are an important data structure in the world of computer
+science. They are at the heart of every operating system and used in many, many
+pieces of software.
 
-Notice that this is just another way to repeat a statement, similar to a loop.
-In a loop, we have to specify when to stop repeating something, and we have to
-do the same thing with recursion; otherwise, it would run forever.
+For a stack, imagine a stack of plates. You can only add plates to the top and
+remove plates from the top. We call this a ``Last-In-First-Out'' data structure:
+If you add three plates to your stack, the last one you added will be the first
+one you remove.
 
-As an example, this is how the function plays out:
-\[ f(5) = 5 * f(4) = 5 * 4 * f(3) = 5 * 4 * 3 * f(2) = 5 * 4 * 3 * 2 * f(1) = 5
-* 4 * 3 * 2 * 1 = 120 \]
+Similar to that, in Python you can say that a stack
+is a list where you can only add elements to the end or remove elements from the
+end. In Python, this is accomplished using the
+\lstinline!.pop()! and \lstinline!.append(element)! methods on lists. When given
+no arguments, the pop method will remove the last element of the list and return
+it. The append method will add an element to the end of the list.
 
-As an example, see this simple \textbf{\emph{bad}} case of recursion:
+When we ask you to use a stack in Python, you should use a list and only use
+these two methods and the array index \lstinline![-1]! to inspect the last
+element of the list. For example:
 
-\begin{python3code}
-def test():
-    """BAD example of recursion."""
-    test()
-\end{python3code}
+\begin{pyconcode}
+>>> somelist = [1, 2, 3]
+>>> a = somelist.pop()
+>>> print(a)
+3
+>>> print(somelist)
+[1, 2]
+>>> somelist.append(4)
+>>> print(somelist)
+[1, 2, 4]
+>>> somelist[-1]
+4
+\end{pyconcode}
 
-If this function is called, it will continue to call itself infinitely until
-Python prints out an error message and quits. This is because the function calls
-itself every time it is called -- there is no case where the function ends
-without calling itself again. The case in which the recursion ends is called a
-\emph{base case} and it is important to include one in every recursive function.
-Here is a modified version of the above code that allows the initial call to
-specify a value limiting how many times the recursive call should be made:
-
-\begin{python3code}
-def test(x):
-    if x > 0:
-        test(x - 1)
-\end{python3code}
-
-\subsection{Summary}
-\label{subsec:adv.sum}
-
-\begin{itemize}
-  \item A function may call itself. This is called recursion.
-  \item Always need a base case, or the function will keep calling itself
-    forever.
-\end{itemize}
+Interacting with the elements of the list in any other way violates the
+idea of the list being a stack.
 
 \pagebreak
 
 \section{Exercises}
+\label{sec:ex}
 
-%\begin{warningbox}{Requirements}
-%  Remember to adhere to PEP 8, PEP 257, and the boilerplate code requirement.
-%\end{warningbox}
-
-
-\begin{warningbox}{Install}
-  Please have the \pythoninline{matplotlib} module installed on your computer
-  before next lab. If you installed Anaconda Python, you already have it. Please
-  come see a TA if you are having problems with the installation!
+\begin{warningbox}{Requirements}
+  Remember PEP 8, PEP 257, and the boilerplate code requirement.
 \end{warningbox}
 
+\begin{ex}[anagrams.py] Write a function that takes in two strings. If the strings
+  are anagrams of one another, return \lstinline{True}. If not, return
+  \lstinline{False}.
 
-\begin{ex}[geometry.py, triangle.py, regularpolygons.py, rectangle.py, circle.py]
-  Write a Python script that lets the user do some basic
-  geometry calculations. Your output should look something like the following.
+  Two strings are \href{http://en.wikipedia.org/wiki/Anagram}{anagrams} of one
+  another if the characters of one can be rearranged to make the other.
+\end{ex}
 
-  The majority of the output must be calculated by your program using a function
-  for each kind of calculation. \emph{The output given below is just an example.
-  Your program needs to perform the calculations for the numerical values read
-  from the keyboard.}
+\begin{ex}[days.py] Write a function that takes four arguments -- day, month, and
+    year as numbers, and weekday as MTWRFSU -- and converts this date to a
+    human-readable string. Have the program be called with user-specified
+    input. For example:
 
-  \begin{verbatimcode}
-Welcome to Wile E. Coyote's Geometry Calculator!
+    \begin{verbatimcode}
+Enter day >>> 28
+Enter month >>> 9
+Enter year >>> 2014
+Enter weekday >>> U
+Date is: Sunday, September 28, 2014
+    \end{verbatimcode}
 
-Enter height of a rectangle >>> 2
-Enter width of a rectangle >>> 3
+    Use dictionaries to convert weekdays to their long name and months to their
+    long name. You should verify that the month and weekday are valid, but you
+    do not need to check if the full date is. That is,
+    ``Sunday, September 10000, -2015'' should be considered valid.
+\end{ex}
 
-The area of a rectangle with height 2 and width 3 is 6.
-The perimeter of a rectangle with height 2 and width 3 is 10.
-The length of the diagonal of a rectangle with height 2 and width 3 is 3.605551.
 
-Enter the radius of a circle >>> 2
+%  \item[zombies.py] Zombie lab from 113. Use struct like dict and array like
+%    list.
 
-The area of a circle with radius 2.00 is 12.57.
-The circumference of a circle with radius 2.00 is 12.57.
+%  \item[words.py] Write program that takes a file and
+%    \begin{enumerate}
+%      \item finds how many unique words there are
+%      \item finds the unique words and writes them to
+%        \texttt{originalfile\_unique.txt}
+%      \item calculate the percentage of unique words
+%      \item MORE
+%    \end{enumerate}
+%
+  %\item[data.py] Some data analysis exercise. Chris will fill in. Use tuples,
+  %  use matplotlib. Use set to remove duplicates in data.
+  % exercise will be made available in the second week. no time to write about
+  % matplotlib.
 
-Enter the height of a right triangle >>> 1
-Enter the base of a right triangle >>> 1
+\begin{ex}[rpn\_calculator.py] Write a reverse Polish notation
+    calculator. In reverse Polish notation (also known as HP
+    calculator notation), mathematical expressions are written with the operator
+    following its operands. For example, $3 + 4$ becomes $3~4~+$.
 
-The area of a right triangle with height 1.00 and base 1.00 is 0.50.
-The perimeter of a triangle with height 1.00 and base 1.00 is 3.41.
+    Order of operations is entirely based on the ordering of the operators
+    and operands. To write $3 + (4 * 2)$, we would write $4~2~*~3~+$ in RPN.
+    The expressions are evaluated from left to right.
 
-Enter the number of sides of a regular polygon as >>> 8
-Enter the length of the side of a regular polygon >>> 5
+    A longer example of an expression is this: 
+    \[ 5~1~2~/~4~*~+~3~- \]
+    which translates to
+    \[ 5 + ( (1 / 2) * 4 ) - 3 \]
 
-The exterior angle of a regular polygon with 8 sides is 45.00 degrees.
-The interior angles of a regular polygon with 8 sides sum to 1080.00 degrees.
-Each interior angle of a regular polygon with 8 sides is 135.00 degrees.
-The area of a regular polygon with 8 sides each 5.00 long is 120.71.
-  \end{verbatimcode}
+    If you were to try to ``parse'' the RPN expression from left to right, you
+    would probably ``remember'' values until you hit an operator, at which point
+    you take the last two values and use the operator on them. In the example
+    expression above, you would store 5, then 1, then 2, then see the division
+    operator (/) and take the last two values you stored (1 and 2) to do the
+    division. Then, you would store the result of that (0.5) and encounter
+    4, which you store. When you encounter the multiplication sign (*), you
+    would take the last two values stored and do the operation ($4 * 0.5$)
+    and store that.
 
-  \begin{center}
-    \bfseries Remember that coding the input part of the program should be your
-    \emph{last} step. It is a beginner's mistake to start with that -- you want
-    the logic of your functions to be correct before doing any of the input.
-    Test your functions with hard-coded values.
-  \end{center}
+    Following this through step by step, the steps would look something like
+    this (the bold number is the most recently computed value):
 
-  Please split your program into multiple files. Please create a module each for
-  the rectangle functions, the circle functions, the triangle functions, and the
-  polygon functions. For each of the modules, use boilerplate code to test the
-  functions. Here's an example:
+    \[5~1~2~/~4~*~+~3~-\]
+    \[5~\bm{0.5}~4~*~+~3~-\]
+    \[5~\bm{2}~+~3~-\]
+    \[\bm{7}~3~-\]
+    \[\bm{4}\]
 
-  \begin{python3code}
-# Module square (square.py)
+    Writing this algorithm for evaluating RPN in pseudo code, we get:
 
-def area(side_length):
-    """Calculates the area of a square given the length of a side."""
-    return side_length ** 2
+\begin{enumerate}
+  \item Read next value in expression.
+  \item If number, store.
+  \item If operator:
+    \begin{enumerate}
+      \item Remove last two numbers stored.
+      \item Do operation with these last two numbers.
+      \item Store the result of the operation as last number.
+    \end{enumerate}
+\end{enumerate}
 
-def perimeter(side_length):
-    """Calculates the perimeter of a square given the length of a side."""
-    return 4 * side_length
+    If you keep repeating this algorithm, you will eventually just end up with
+    one number stored unless the RPN expression was invalid.
 
-def main():
-    side_len = 2
-    print('A square with side length {:.2f} has area {:.2f}.'.format(
-        side_len, area(side_len)))
-    print('A square with side length {:.2f} has perimeter {:.2f}.'.format(
-        side_len, perimeter(side_len)))
+    Your task is to write an RPN calculator which asks the user for an RPN
+    expression and prints the result of that expression. You \emph{must} use a
+    stack (see Section~\ref{sec:stacks}). The RPN algorithm has to be in a
+    separate function (not main). You need to support the four basic operators
+    (+, -, *, and /).
 
-if __name__ == '__main__':
-    main()
-  \end{python3code}
-
-  Then, write a script \texttt{geometry.py} that gives the user interface as
-  seen in the example above.
-
-  Your program must define the following functions. It is your task to figure
-  out the appropriate arguments and return values as well as the code of these
-  functions. Notice that the triangle is a \emph{right triangle} where height
-  and base are the two legs joined by the 90 degree angle.
-  \begin{multicols}{2}
+    You should detect and display messages for the following errors:
     \begin{itemize}
-      \item Module \texttt{triangle}:
-        \begin{itemize}
-          \item \pythoninline{area}
-          \item \pythoninline{hypotenuse}
-          \item \pythoninline{perimeter}
-        \end{itemize}
-      \item Module \texttt{regularpolygons}:
-        \begin{itemize}
-          \item \pythoninline{exterior_angle}
-          \item \pythoninline{interior_angle}
-          \item \pythoninline{area}
-        \end{itemize}
-      \item Module \texttt{rectangle}:
-        \begin{itemize}
-          \item\pythoninline{area}
-          \item \pythoninline{perimeter}
-          \item \pythoninline{diagonal}
-        \end{itemize}
-      \item Module \texttt{circle}:
-        \begin{itemize}
-          \item \pythoninline{area}
-          \item \pythoninline{circumference}
-        \end{itemize}
+    \item Operand is used when not enough numbers are stored.
+    \item More or less than one number stored after the expression is
+      evaluated.
     \end{itemize}
-  \end{multicols}
 
-  \emph{Regular Polygons}
+    Please see the example input and output below for expressions you can test
+    with.
 
-  The exterior angle of a regular $n$-polygon is $\frac{360}{n}$, where $n$ is
-  the number of sides. The angle is in degrees.
+    \begin{center}
+    \begin{tabular}{cc}
+      \toprule
+      RPN Expression & Output\\
+      \midrule
+      $5~1~2~/~4~*~+~3~-$ & $4$\\
+      $4~2~+~1~5~+~*~+$ & Not enough operands for +.\\
+      $2~100~3~*~5~+~2~2~2~+~+~*~*$ & $3660$\\
+      \bottomrule
+    \end{tabular}
+    \end{center}
+    
+    Note that you need to support multi-digit numbers. You cannot expect all
+    input to be single digits.
 
-  The sum of the interior angles of a regular $n$-polygon is $180(n-2)$, where the
-  angle is in degrees.
+  \end{ex}
 
-  To get one particular interior angle of a regular $n$-polygon, divide by the
-  number of angles $n$ to get $\frac{180(n-2)}{n}$.
+\begin{ex}[lettercount.py]
+Write program that reads in a string on the command line and returns a table of
+the letters of the alphabet in alphabetical order which occur in the string
+together with the number of times each letter occurs. Case should be ignored. A
+sample run of the program would look this:
 
-  Finally, to find the area of a regular $n$-polygon, use the following formula:
-  \[ \frac{s^2 \times n}{4 \times \tan\left( \frac{\pi}{n} \right)}, \]
-  where $s$ is the length of a side and $n$ is the number of sides.
+\begin{verbatimcode}
+Enter some letters >>> The cat in the hat
+a 2
+c 1
+e 2
+h 3
+i 1
+n 1
+t 4
+\end{verbatimcode}
+
+This should involve writing a function that takes in a string and returns a
+dictionary with these letters and counts.
 \end{ex}
-
-\begin{ex}[sum.py] Write a recursive function that computes the sum of all the
-  numbers from 1 to $n$, where $n$ is the given parameter.
-\end{ex}
-
-\begin{ex}[peasants.py] \hfill
-  \begin{enumerate}[(a)]
-    \item Russian peasant multiplication is a method of multiplying integers in
-      which you keep halving one factor while
-      doubling the other factor until one of the factors is 1. For example:
-      \begin{IEEEeqnarray*}{RCRCL}
-        &\quad& 8 &\quad\times\quad& 38 \\
-        = && 4 &\quad\times\quad& 76 \\
-        = && 2 &\quad\times\quad& 152 \\
-        = && 1 &\quad\times\quad& 304
-      \end{IEEEeqnarray*}
-      Hence, $8 \times 38 = 304$.
-
-      This, of course, becomes a bit more involved if the integer that you keep
-      halving is not a power of two. For example, imagine $38$ is the number
-      that keeps getting halved:
-      \begin{IEEEeqnarray*}{RCRCLCLCL}
-        && 8 &\times& 38 \\
-        = &\quad& 16 &\times& 19 \\
-        = && 32 &\times& 9 &+& 16      &\qquad& \text{$\nicefrac{19}{2} = 9$ with remainder $1$} \\
-        = && 64 &\times& 4 &+& 16 + 32 &\qquad& \text{$\nicefrac{9}{2} = 4$ with remainder $1$} \\
-        = && 128 &\times& 2 &+& 16 + 32 \\
-        = && 256 &\times& 1 &+& 16 + 32 \\
-        = && 256 && &+& 16 + 32 \\
-        = && 304
-      \end{IEEEeqnarray*}
-
-      This is all based on the following recursive definition of multiplication:
-
-      \[ x \times y = \begin{cases}
-          \frac{x}{2} \times (2 \times y) & \text{if $x$ is even} \\
-          \frac{x-1}{2} \times (2 \times y) + y & \text{if $x$ is odd}
-      \end{cases} \]
-
-      Write a \emph{non-recursive} function that implements Russian
-      peasant multiplication using a \pythoninline{while} loop. Call this
-      function \pythoninline{multiply()}.
-
-    \item The Russian peasant method can also be applied to exponentiation (also
-      only for integers):
-
-      \[ x^y = \begin{cases}
-          \left( x^2 \right)^{\nicefrac{y}{2}} & \text{if $y$ is even} \\
-          x \left( x^2 \right)^{\nicefrac{(y-1)}{2}} & \text{if $y$ is odd} \\
-      \end{cases} \]
-
-      This method is also called exponentiation by squaring or the
-      square-and-multiply method.
-
-      Write a \emph{recursive} function called \pythoninline{expo()} that
-      implements this.
-
-  \end{enumerate}
-
-\end{ex}
-
-\begin{ex}[pascal.py] \hfill
-
-  In Pascal's triangle, each number is the sum of the two numbers directly above
-  it. The left and right ends of the triangle always consists of $1$s.
-
-  This recursive rule produces the following triangle:
-
-  \begin{center}
-\def\N{9}
-\tikz[x=0.75cm,y=0.5cm, 
-  pascal node/.style={font=\small}, 
-  row node/.style={font=\footnotesize, anchor=west, shift=(180:1)}]
-  \path  
-    \foreach \n in {0,...,\N} { 
-      (-\N/2-1, -\n) node  [row node/.try]{Row \n:}
-        \foreach \k in {0,...,\n}{
-          (-\n/2+\k,-\n) node [pascal node/.try] {%
-            \pgfkeys{/pgf/fpu}%
-            \pgfmathparse{round(\n!/(\k!*(\n-\k)!))}%
-            \pgfmathfloattoint{\pgfmathresult}%
-            \pgfmathresult%
-          }}};
-  \end{center}
-
-  Write a recursive function \pythoninline{pascal(n, k)} that finds the $k$th
-  value of the $n$th row by using the sum of the numbers directly above it.
-  We start counting at $0$ for both $n$ and $k$.
-
-  Since we know that the left and right end of the triangle are all $1$s, we
-  know that for every row $n$:
-  \begin{IEEEeqnarray*}{RCLCL}
-    \pas(n, 0) &=& 1 &\qquad& \text{left end} \\
-    \pas(n, n) &=& 1 &\qquad& \text{right end}
-  \end{IEEEeqnarray*}
-
-  If for example I want to know the $2$nd entry of the $4$th row:
-
-  \begin{IEEEeqnarray*}{RCLCL}
-    \pas(4, 2) &=& \pas(3, 1) + \pas(3, 2)  \\
-    &=& \pas(2, 0) + \pas(2, 1) + \pas(2, 1) + \pas(2, 2) \\
-    &=& 1 + \pas(1, 0) + \pas(1, 1) + \pas(1, 0) + \pas(1, 1) + 1 \\
-    &=& 1 + 1 + 1 + 1 + 1 + 1 \\
-    &=& 6
-  \end{IEEEeqnarray*}
-\end{ex}
-
+\pagebreak
 \section{Submitting}
 
 You should submit your code as a tarball. It should contain all files
 used in the exercises for this lab. The submitted file should be named
 \begin{center}
-  \texttt{cse107\_firstname\_lastname\_lab3.tar.gz}
+  \texttt{cse107\_firstname\_lastname\_lab4.tar.gz}
 \end{center}
 
 \begin{center}
-  \textbf{Upload your tarball to Canvas before the deadline.}
+  \textbf{Upload your tarball to Canvas.}
 \end{center}
 
 \listoftheorems
