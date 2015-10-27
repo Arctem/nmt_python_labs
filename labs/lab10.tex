@@ -1,4 +1,4 @@
-% LAB 10: Classes
+% LAB 11: Car Project
 %
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
@@ -9,349 +9,171 @@
 \usepackage{caption}
 
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 10: Classes}
-\title{Lab 10: Classes}
+\fancyhead[R]{Lab 11: Car Project}
+\title{Lab 11: Car Project}
 
 \begin{document}
 
 \maketitle
 
 \hrule
+
 \begin{quotation}
-``Who are you? How did you get in my house?''
+  ``When I see a bird that walks like a duck and swims like a duck and quacks like
+  a duck, I call that bird a duck.''
 \end{quotation}
 \begin{flushright}
-  --- \href{https://xkcd.com/163/}{Donald Knuth}
+  --- James Whitcomb Riley, Duck Enthusiast
+\end{flushright}
+
+
+
+\begin{quotation}
+``Imagination is more important than knowledge.''
+\end{quotation}
+\begin{flushright}
+  --- Albert Einstein
+\end{flushright}
+
+\begin{quotation}
+``The limits of my language mean the limits of my world.''
+\end{quotation}
+\begin{flushright}
+  --- Ludwig Wittgenstein
 \end{flushright}
 
 \hrule
 
-\section{Introduction}
-This week, we will have a brief introduction to Object Oriented Programming by
-way of Python's classes.
 
-\pagebreak
-\section{Classes and Objects}
-\label{sec:classes}
-In Python, classes are a way to group together functions and attributes
-that are closely related to one another. A \pythoninline{class} is defined
-similarly to a function, though it uses the \pythoninline{class} keyword rather
-than \pythoninline{def}.
+\section{Car Project}
 
-\begin{pyconcode}
->>> class Test:
-...     i = 5
-...     def hi():
-...         print('Hello world.')
-...
->>> Test.i
-5
->>> Test.hi()
-Hello world.
-\end{pyconcode}
+\begin{warningbox}{Cars Are Hard}
+  \emph{Warning}: The following exercise was designed with little regard for
+  how cars and physics actually work in the real world. Sorry.
+\end{warningbox}
 
-Once a class has been declared, an \emph{Object} or
-\emph{Instance} of that class can be created. An object is an independent
-copy of the class, with all of the same attributes and functions that were
-declared with the class that the object was created from. This is the
-primary use for classes, as it allows for you to easily create a group of
-objects that store the same kind of data.
+\begin{ex}[car.py, tire.py, engine.py, race.py]
+  For this project, you will be submitting four files:
 
-When doing this, it is important to declare a special function called
-\pythoninline{__init__} inside the class. This function is called when
-creating the new class and can be used to initialize values for the
-new object:
+  \pythoninline{car.py} will contain the definition of \pythoninline{class Car}. A
+  Car will have an \pythoninline{Engine} and a \pythoninline{Tire}  (representing all 4)
+  as attributes. Additionally, each car should have an attribute representing its name.
+  Additionally, a Car should have a method \pythoninline{travel_time(self, time)} that returns
+  the distance that the Car travels in the time given as well as a method
+  \pythoninline{travel_dist(self, dist)} that returns the time it takes for the Car to travel
+  the given distance. Both methods should assume that
+  the car starts at a standstill and accelerates throughout the travel time. The results
+  should take into account the attributes of the Car's Tire and Engine.
+  
+  \pythoninline{tire.py} will contain the definition of \pythoninline{class Tire}. Each Tire
+  will have two attributes: traction and radius. The traction of the wheel indicates the
+  maximum ideal acceleration the wheel can provide. If the car's acceleration would be
+  above this number, then it is instead the average of this number and the
+  ideal acceleration. The radius of the tire determines how far it causes the
+  car to travel per rotation. This is important because Engine strength is
+  measured in rotations. Traction and radius are both measured in meters.
+  
+  \pythoninline{engine.py} will contain the definition of
+  \pythoninline{class Engine}. Each Engine will have two attributes:
+  max speed and acceleration. Max speed is in terms of tire rotations per
+  second. Acceleration is a value between $0$ and $1$ that indicates how much
+  closer the current speed gets to the max speed each second. Each second, the
+  new speed is determined by the following formula:
+  $$newSpeed = oldSpeed + acceleration \cdot \left(maxSpeed - oldSpeed\right)$$
+  Since engine speed is measured in rotations per second, the actual
+  acceleration of the car must take into account the engine's speed, the tire's
+  traction, and the tire's radius to determine how far it travels each second.
+  Because of the tire's traction, it is possible that the car is not
+  experiencing the full speed that might be indicated by
+  $engineSpeed \cdot tireCircumference$. Thus, the car's speed cannot be purely
+  calculated from the engine's speed each second.
 
-\begin{python3code}
-class Test:
-    def __init__(self):
-        self.x = 10
-
-    def set(self, x):
-        self.x = x
-
-a = Test()
-b = Test()
-print(a.x, b.x) #10 10
-a.set(20)
-print(a.x, b.x) #20 10
-\end{python3code}
-
-Note the use of the variable \pythoninline{self} in the function declarations.
-This variable should be first in any function declared that needs to be used on
-a function level. This variable refers to the object that the function is
-being called on. For example, in line 11, \pythoninline{self} would refer to
-\pythoninline{a}. Note that \pythoninline{a.set(20)} is equivalent to
-\pythoninline{Test.set(a, 20)}. The former is preferred because it is shorter
-and more readable. Additionally, a function that refers operates on an instance
-of the class (that is, has \pythoninline{self} as the first argument) are called
-methods rather than functions.A ny variable referred to with
-\pythoninline{self.variablename} will stay with the object, while other
-variables will stay local to the function.
-
-\pythoninline{__init__} can be passed additional arguments in addition to
-\pythoninline{self} so that the new objects can be initialized differently.
-
-The special method \pythoninline{__str__(self)} can be defined to override
-how the object is displayed when printed. By default, printing an object will
-display something like this:
-
-\begin{pyconcode}
->>> class Test:
-...     pass
-...
->>> a = Test()
->>> print(a)
-<__main__.Test object at 0x7f2b806cc9e8>
-\end{pyconcode}
-
-However, if we define the method, it will instead print whatever we want it
-to. \pythoninline{__str__} should always return a string.
-
-\begin{python3code}
-class Test:
-    def __init__(self):
-        self.x = 5
-
-    def __str__(self):
-        return 'x = {}'.format(self.x)
-
-a = Test()
-print(a)
-\end{python3code}
-
-Try running the above code. It should print out \pythoninline{x = 5}. Overriding
-\pythoninline{__str__} makes our output code far simpler when printing objects.
-
-\section{Inheritance}
-\label{sec:inheritance}
-A class can be built on another class. This is commonly done when multiple
-classes should logically be different but share common functionality. A class
-that inherits from another class is considered to be a subclass of its parent
-class. The subclass gains all the functions and attributes of its parent class.
-
-An example
-might be that both Books and Articles could be considered Publications. Both
-would have a title and an author, but only the book would have a chapter count.
-
-\begin{python3code}
-class Publication:
-    def __init__(self, title, author):
-        self.title = title
-        self.author = author
-
-    def __str__(self):
-        return '{} by {}'.format(self.title, self.author)
-
-class Book(Publication):
-    def __init__(self, title, author, chapters):
-        Publication.__init__(self, title, author)
-        self.chapters = chapters
-
-class Article(Publication):
-    def __init__(self, title, author, magazine):
-        Publication.__init__(self, title, author)
-        self.magazine = magazine
-
-    def __str__(self):
-        return '{} by {}, published in {}'.format(self.title, self.author,
-            self.magazine)
-
-b = Book('Title', 'Author', 100)
-a = Article('Other Title', 'Other Author', 'Some Magazine')
-
-print(b) #Title by Author
-print(a) #Other Title by Other Author, published in Some Magazine
-\end{python3code}
-
-Note that \pythoninline{Article} creates its own version of the
-\pythoninline{__str__} method, while \pythoninline{Book} does not. This means
-that \pythoninline{Book} simply uses the method that it inherits from
-\pythoninline{Publication}.
-
-Also note that each of the subclasses call the constructors of the parent class.
-This is required to properly initialize the attributes of the object. Though it
-is not strictly required, doing otherwise would require duplicating the
-contents of the parent class's constructor in the subclass. A class can inherit
-from multiple other classes. In that case, it would be expected to call the
-constructors for both of its parent classes.
-
-Sometimes you will want to check if an object belongs to a specific class. This
-can be done with the \pythoninline{isinstance} function. This function will
-return \pythoninline{True} if the given object is an instance of the given class
-or of a subclass of that class.
-
-\begin{python3code}
-class A:
-    pass
-class B:
-    pass
-class C(A):
-    pass
-class D(C, B):
-    pass
-
-print(isinstance(A(), A)) #True
-print(isinstance(B(), A)) #False
-print(isinstance(C(), A)) #True
-print(isinstance(D(), B)) #True
-\end{python3code}
-
-\section{Iteration}
-\label{sec:iter}
-By defining a couple of special methods, we can make an object of any class that
-we create iterable. These two functions are \pythoninline{__iter__(self)} and
-\pythoninline{__next__(self)}. These functions are used by anything that uses
-iterables (such as \pythoninline{for} loops). \pythoninline{__iter__} is called
-when the loop starts and is expected to return an object with
-\pythoninline{__next__} defined. Thus, we can usually just
-\pythoninline{return self} if we've defined it ourselves. Then,
-\pythoninline{__next__} is called repeatedly until it raises an exception called
-\pythoninline{StopIteration}. Using this knowledge we can write our own version
-of \pythoninline{range()}:
-
-\begin{python3code}
-class MyRange:
-    def __init__(self, start, end):
-        self.start = start
-        self.end = end
-
-    def __iter__(self):
-        self.current = None
-        return self
-
-    def __next__(self):
-        if self.current is None:
-            self.current = self.start
-        else:
-            self.current += 1
-
-        if self.current >= self.end:
-            raise StopIteration
-        else:
-            return self.current
-
-r = MyRange(1, 10)
-for i in r:
-    print(i) #prints 1, 2, 3, ..., 9
-\end{python3code}
-
-With a bit more complex logic in our \pythoninline{__next__} we can do some
-pretty complicated things with \pythoninline{for} loops!
-
-\clearpage
-\section{Exercises}
-\label{sec:ex}
-
-\begin{ex}[library.py]
-    Create a module called \pythoninline{library}. This module should include
-    two classes as well as methods for each. The provided file
-    \pythoninline{library_test.py} will use the contents of
-    \pythoninline{library.py}. Do not edit \pythoninline{library_test.py} for
-    your submission, though you are free to comment out lines using parts of
-    \pythoninline{library.py} that you have not implemented yet. The contents of
-    \pythoninline{library.py} should be as follows:
-
-    \begin{description}
-    \item[class Library] A \pythoninline{Library} object stores multiple
-        \pythoninline{Book}
-        objects and has methods to return statistics about those books. When
-        printed, the object should list all of the books it contains in
-        alphabetical order by author (as listed. You do not need to split into
-        first and last names).
-        \begin{description}
-        \item[def add\_book(self, book)] This method takes in either a line of
-            text or a book object. If the input is a line of text, then it
-            creates a new \pythoninline{Book} object out of it. The line of
-            text will be formatted as are the lines in \pythoninline{library.txt}
-            and should be parsed as needed to form a \pythoninline{Book} object.
-            The object (whether given or created) is then stored inside the
-            library.
-        \item[def get\_authors(self)] This method returns a list of all the
-            authors who have works contained in the library. No author should
-            appear more than once.
-        \item[def get\_books\_per\_author(self)] This method returns a
-            dictionary.
-            Each author should be a key in the dictionary. The value for each
-            author should be the number of books by that author in the library.
-        \end{description}
-    \item[class Book] A \pythoninline{Book} object stores the author and title
-        of a book. When printed, the object should display both the title and
-        author of the book. The constructor should take in two arguments:
-        the title of the book and the author of the book.
-    \end{description}
-
-    You are free (and encouraged) to include any additional methods that you may
-    need to accomplish the tasks given.
-\end{ex}
-
-\begin{ex}[myturtle.py]
-    Write a class that inherits from \pythoninline{turtle.Turtle}. Overwrite
-    the \pythoninline{forward}, \pythoninline{backward}, \pythoninline{left},
-    and \pythoninline{right} methods so that, if given a negative value, they
-    cause no movement to occur. Add a new method \pythoninline{regular_polygon}
-    that takes as arguments a number of sides anda length for the sides, then
-    draws out the regular polygon fulfilling those requirements.
-
-    Write a program using your replacement \pythoninline{Turtle} class that
-    creates multiple objects of that class and tests out each of the methods
-    you have written.
-\end{ex}
-
-\begin{ex}[tree.py]
-    Write a class that implements a simple binary tree data structure. That is a
-    tree that consists of a group of nodes, each of which has an optional
-    ``left'' and ``right'' child. The class needs to include the following:
-    \begin{description}
-    \item[class Tree] The class used to create objects representing trees. Each
-        object will also represent one of the nodes of the tree. The constructor
-        should take in one argument: the contents of that node. The contents can
-        be anything and are not important for the scope of this exercise. The
-        constructor should have two optional arguments: left and right trees. If
-        given, these will be the left and right children of the new node. This
-        allows for the joining of two trees into a single one with a new parent
-        node.
-        \begin{description}
-        \item[self.left] The left child of the node. May be
-            \pythoninline{None} or a \pythoninline{Tree} object.
-        \item[self.right] The right child of the node. May be
-            \pythoninline{None} or a \pythoninline{Tree} object.
-        \item[self.datum] The contents of the node.
-        \item[def height(self)] Returns the height of the tree that this node
-            is the root of. This is equal to one more than the largest height
-            of the children trees. If a child tree is \pythoninline{None} then
-            its height is 0.
-        \item[def add\_item(self, item)] Create a new \pythoninline{Tree} object
-            and add it to the tree. The new object should be added to the child
-            tree with the smallest height (remember that a \pythoninline{None}
-            tree has a height of 0!). If there is a tie, favor the left tree.
-        \end{description}
-    \end{description}
-
-    Additionally, you should implement \pythoninline{__iter__(self)} and
-    \pythoninline{__next__(self)} such that the tree can be used in a for loop.
-    When used in a for loop, the nodes of the tree should be accessed in-order.
-    This means that they should be accessed from left to right. That is, if we
-    have a tree that looks like this:
-
-\begin{verbatim}
-    1
-   / \
-  2   3
- / \ / \
-4  5 6  7
-\end{verbatim}
-
-    Then the nodes should be accessed in the order 4, 2, 5, 1, 6, 3, 7. To
-    accomplish this, you will need to keep track of where in the traversal the
-    loop currently is, as well as \pythoninline{raise StopIteration} when
-    necessary.
-
-    \emph{Hint}: You may find using a stack to track where you are in the tree
-    to be useful!
-
-    Once you have it using, you should be able to use \pythoninline{list} to
-    convert your tree into a list.
+  \pythoninline{race.py} will contain your \pythoninline{main()} function and will
+  manipulate the classes from the other files. The program should call the
+  constructors for each of the classes described above in order to create
+  several complete cars, then print out data comparing the performance of the
+  cars. The data displayed should include every attribute about every car,
+  followed by a table comparing the performance of each car in a trial
+  comparing either how far each car travels in a given time or how long each
+  car takes to travel a given distance. These should use the relevant methods
+  described above. You should ask the user whether they want a table of distances
+  gone in fixed times or times taken to go fixed distances. You should be able
+  to compare 1, 2, 3, or 4 cars in one table. Figure~\ref{gofast} shows the
+  data you need to show when comparing distances given a fixed time. You should be
+  able to make a similar table the other way around.
+  
+  \begin{center}
+    \begin{tabular}{crrrr}
+    \toprule
+    Car Name & Traction & Tire Radius & Max Speed & Acceleration\\
+    \midrule
+    Rabbit & 0 & 0.5 & 1000 & 0.1\\
+    Hare & 100 & 0.1 & 500 & 1.0\\
+    \bottomrule
+    \end{tabular}
+    \captionof{table}{Data to print out about cars.}
+  \end{center}
+  
+  \begin{center}
+    \begin{tabular}{crr}
+    \toprule
+    Time & Rabbit & Hare\\
+    \midrule
+    0 & 0.00 & 0.00\\
+    1 & 0.00 & 0.00\\
+    2 & 157.08 & 207.08\\
+    3 & 534.07 & 517.70\\
+    4 & 1148.25 & 831.86\\
+    5 & 1995.54 & 1146.02\\
+    6 & 3062.44 & 1460.18\\
+    7 & 4331.90 & 1774.34\\
+    8 & 5786.12 & 2088.50\\
+    9 & 7407.85 & 2402.65\\
+    10 & 9180.95 & 2716.81\\
+    \bottomrule
+    \end{tabular}
+    \label{gofast}
+    \captionof{table}{Data to display about how far cars go in given times.}
+  \end{center}
+  
+  When simulating the cars, you should use a time delta of 1 second. This means
+  that you simulate time in chunks of one second at a time. Thus, a car should
+  be considered to have the same speed throughout the entirety of each second.
+  This can result in some inaccurate results (such as each car always
+  traveling a distance of 0 for the first second), but is fine for our
+  purposes. As an example of how a car's travel might work, see
+  Table~\ref{carexample}, which is a breakdown of the stats of a car at each
+  second of a 10 second trip. The car's tires have a radius of $\frac{1}{\pi}$
+  (giving a circumference of 2) and a traction of 10. The car's engine has a
+  max speed of 100 and an acceleration of 0.5.
+  
+  \begin{center}
+    \begin{tabular}{crrrr}
+    \toprule
+    Time $(s)$ & Distance $(m)$ & Car Speed $(\frac{m}{s})$ &
+    Ideal Car Speed $(\frac{m}{s})$ & Engine Speed $(\frac{rot}{s})$\\
+    \midrule
+    0  &    0.00 &   0.00 &   0.00 &  0.00\\
+    1  &    0.00 &  55.00 & 100.00 & 50.00\\
+    2  &   55.00 & 107.50 & 150.00 & 75.00\\
+    3  &  162.50 & 146.25 & 175.00 & 87.50\\
+    4  &  308.75 & 171.88 & 187.50 & 93.75\\
+    5  &  480.63 & 187.81 & 193.75 & 96.88\\
+    6  &  668.44 & 196.88 & 196.88 & 98.44\\
+    7  &  865.31 & 198.44 & 198.44 & 99.22\\
+    8  & 1063.75 & 199.22 & 199.22 & 99.61\\
+    9  & 1262.97 & 199.61 & 199.61 & 99.80\\
+    10 & 1462.58 & 199.80 & 199.80 & 99.90\\
+    \bottomrule
+    \end{tabular}
+    \label{carexample}
+    \captionof{table}{Example of a Car's Performance}
+  \end{center}
+  
+  It should be noted that the Distance column of Table~\ref{carexample}
+  represents the return value of Car's
+  \pythoninline{distance_time} method when given the
+  corresponding Time column as an argument.
 \end{ex}
 
 \pagebreak
@@ -359,7 +181,7 @@ pretty complicated things with \pythoninline{for} loops!
 You should submit your code as a tarball. It should contain all files
 used in the exercises for this lab. The submitted file should be named
 \begin{center}
-  \texttt{cse107\_firstname\_lastname\_lab10.tar.gz}
+  \texttt{cse107\_firstname\_lastname\_lab11.tar.gz}
 \end{center}
 
 \begin{center}

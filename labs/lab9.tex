@@ -1,16 +1,16 @@
-% LAB 9: Review and Markov
-% 
+% LAB 10: Classes
+%
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
-% 
+%
 % Prepared by Russell White and Christopher Koch
-% Fall 2014
+% Spring 2015
 \documentclass[11pt]{cselabheader}
 \usepackage{caption}
 
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 9: Review and Markov}
-\title{Lab 9: Review and Markov}
+\fancyhead[R]{Lab 10: Classes}
+\title{Lab 10: Classes}
 
 \begin{document}
 
@@ -18,322 +18,348 @@
 
 \hrule
 \begin{quotation}
-``Holy shit, you geeks are badass.''
+``Who are you? How did you get in my house?''
 \end{quotation}
 \begin{flushright}
-  --- Pam (\emph{Archer})
-\end{flushright}
-
-
-\begin{quotation}
-``Simplicity is prerequisite for reliability.''
-\end{quotation}
-\begin{flushright}
---- Edsger W. Dijkstra
-\end{flushright}
-
-
-\begin{quotation}
-``The truth is a trap: you can not get it without it getting you; you cannot get
-the truth by capturing it, only by its capturing you.''
-\end{quotation}
-\begin{flushright}
---- S{\o}ren Kierkegaard
-\end{flushright}
-
-\begin{quotation}
-  ``A police radar’s effective range is 1.0 km, and your roommate plot to drop water balloons on students entering your dorm. Your window is 20 m above the ground. (a) If an ammeter with 0.10-V resistance is 1000 V. When measured with a 100-Hz frequency shift, what’s the speed with which cesium atoms must be ``tossed'' in the positive x-direction with speed v0 but undergoing acceleration of a proton is a hydrogen atom?''
-\end{quotation}
-\begin{flushright}
-  --- \href{http://infohost.nmt.edu/~rkelly/physbot.html}{Professor Markov's Physics Revue}
+  --- \href{https://xkcd.com/163/}{Donald Knuth}
 \end{flushright}
 
 \hrule
 
-\pagebreak
 \section{Introduction}
-
-Today's lab will be just another small project.
-We will not be covering any new
-topics: this is primarily an application of what you already know. 
-
-You will be
-writing a program that generates
-\href{http://en.wikipedia.org/wiki/Markov_chain}{Markov chains} from an input
-file. Markov chains are the simplest way for to generate sentences that
-imitate the style of the chain's input text.
-They are based on figuring out the
-likelihood of a word following another word by looking at existing bodies of
-text (for example, Wikipedia). They then generate statements by choosing a
-starting word and then repeatedly choosing words from the words that follow
-the previous word chosen, based on the input text.
-
-As an example, this was a markov chain generated based on conversations between
-Russell and Chris about Python lab (given the starting word ``CS''):
-\begin{quotation}
-%``CS be hard!''
-``CS grad student claiming to stare again for you? Cool! Where?''
-\end{quotation}
-\begin{flushright}
---- arcbot
-\end{flushright}
-
-
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[width=\linewidth]{img/garkov}
-  \caption*{\href{http://joshmillard.com/garkov/}{Garkov}:
-    A Garfield comic generated using Markov chains.}
-  \label{garkov}
-\end{figure}
+This week, we will have a brief introduction to Object Oriented Programming by
+way of Python's classes.
 
 \pagebreak
-
-\section{Markov Chains}
-\label{sec:markov}
-
-A Markov chain is a method of randomly generating a sequence based on a set of
-input data. In this lab, we will be using Markov chains to generate sentences
-based on an input text file. In order to do this, we must understand how Markov
-chains work.
-
-The basic steps of creating Markov chains are:
-\begin{enumerate}
-  \item Select a random starting word to start our new sentence.
-  \item From all the words that ever follow that word in the input sequence,
-    choose one. Add that word to the end of our new sentence.
-  \item Continue selecting randomly from the words that can possibly follow the
-    current last word of our sentence until either there are no possible choices
-    or we have made a sentence as long as desired.
-\end{enumerate}
-
-For a simple example, let's generate Markov phrases using inputs of ``Hello, how
-are you?'' and ``Where are my keys?''. If we convert these sentences into a
-graph showing the possible results, we would get Figure \ref{mark_ex}.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.2\linewidth]{lab9/example}
-  \caption{A graphical representation of the Markov possibilities for ``Hello,
-    how are you?'' and ``Where are my keys?''}
-  \label{mark_ex}
-\end{figure}
-
-In this graph, each arrow represents a choice we can take based on the last word
-we added to our sentence, continuing until there are no valid paths to take.
-Looking at the graph, it's pretty easy to see there are four possible outputs if
-we start our chain with either ``Hello,'' or ``Where'':
-
-\begin{itemize}
-  \item Hello, how are you?
-  \item Hello, how are my keys?
-  \item Where are you?
-  \item Where are my keys?
-\end{itemize}
-
-For a more complex example, let's use the input phrase ``There is a fifth
-dimension, beyond that which is known to man. It is a dimension as vast as space
-and as timeless as infinity.''. If we were to convert this sentence into a graph
-representing the possible choices to make at each step, it would look something
-like Figure \ref{twilight}.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\linewidth]{lab9/twilight_zone}
-  \caption{A graphical representation of the Markov possibilities for \emph{The
-    Twilight Zone}'s introduction.}
-  \label{twilight}
-\end{figure}
-
-In this graph, if we start with ``There'', our only option for a next word is
-``is''. ``is'' is followed by ``a'' twice and ``known'' once, so it has two
-arrows to ``a'' and one to ``known''. This means that, when we randomly choose a
-next step, we should have a $\frac{2}{3}$ chance to choose ``a'' and a
-$\frac{1}{3}$ chance to choose ``known''. If we (randomly) choose to continue to
-``a'', we have the choice of either ``fifth'' or ``dimension'' to continue our
-sentence with. A few possible new sentences we could generate from this input
-are:
-\begin{itemize}
-  \item There is a dimension as infinity.
-  \item There is a fifth dimension, beyond that which is a fifth dimension,
-    beyond that which is a dimension as vast as space and as infinity.
-  \item There is known to man. It is known to man. It is a dimension as space
-    and as infinity.
-\end{itemize}
-
-As you can see, Markov chains have a tendency to make sentences which almost
-make sense. This is because every individual pairing of two words will make
-sense, but the combinations of the pairings might not. For example, ``as vast''
-and ``vast as'' can both make sense given the right context, but ``vast as vast
-as vast as vast'' is nonsense. We can help alleviate this problem by taking into
-account the last 2 (or 3, or 4...) words when choosing the next word instead of
-just the last one, but this requires a far larger input or it will result in the
-output being the same as the input.
-
-\subsection{Random Numbers}
-\label{subsec:random}
-You may find the module \pythoninline{random} to be especially useful when
-creating Markov chains. Below is a brief example of some common functions
-inside \pythoninline{random}.
+\section{Classes and Objects}
+\label{sec:classes}
+In Python, classes are a way to group together functions and attributes
+that are closely related to one another. A \pythoninline{class} is defined
+similarly to a function, though it uses the \pythoninline{class} keyword rather
+than \pythoninline{def}.
 
 \begin{pyconcode}
->>> import random
->>> print(random.random())
-0.7682548548225483
->>> print(random.uniform(1, 100))
-36.30623079969581
->>> print(random.choice(['joe', 'moe', 'larry', 'shemp', 'curly']))
-larry
->>> print(random.randint(1, 100))
-79
+>>> class Test:
+...     i = 5
+...     def hi():
+...         print('Hello world.')
+...
+>>> Test.i
+5
+>>> Test.hi()
+Hello world.
 \end{pyconcode}
 
-Take a look at the documentation for \pythoninline!random! if you would like a
-random number not based on a uniform distribution:
-\begin{center}
-  \url{https://docs.python.org/3.4/library/random.html}
-\end{center}
+Once a class has been declared, an \emph{Object} or
+\emph{Instance} of that class can be created. An object is an independent
+copy of the class, with all of the same attributes and functions that were
+declared with the class that the object was created from. This is the
+primary use for classes, as it allows for you to easily create a group of
+objects that store the same kind of data.
 
-\begin{table}[!ht]
-  \centering
-  \begin{tabular}{p{3.0cm} p{2cm} p{10cm}}
-    \toprule
-    \bfseries Function & \bfseries Arguments & \bfseries Purpose \\
-    \midrule
-    \pythoninline{random.random()} & & Returns a random number between 0.0 and 1.0,
-    including 0.0 but not 1.0.\\
-    \pythoninline{random.uniform()} & \pythoninline{a}, \pythoninline{b} & Returns a
-    random number between \pythoninline{a} and \pythoninline{b} inclusive. Each real number between
-    \pythoninline!a! and \pythoninline!b! has an equal probability of occurring.\\
-    \pythoninline{random.randint()} & \pythoninline{a}, \pythoninline{b} & Returns a
-    random integer between \pythoninline{a} and \pythoninline{b} inclusive. Each integer between
-    \pythoninline!a! and \pythoninline!b! has an equal probability of occuring.\\
-    \pythoninline{random.choice()} & \pythoninline{list} & Returns a random value from \pythoninline{list}.\\
-    \bottomrule
-  \end{tabular}
-  \caption{Summary of \pythoninline{random} functions.}
-  \label{tab:rand}
-\end{table}
+When doing this, it is important to declare a special function called
+\pythoninline{__init__} inside the class. This function is called when
+creating the new class and can be used to initialize values for the
+new object:
+
+\begin{python3code}
+class Test:
+    def __init__(self):
+        self.x = 10
+
+    def set(self, x):
+        self.x = x
+
+a = Test()
+b = Test()
+print(a.x, b.x) #10 10
+a.set(20)
+print(a.x, b.x) #20 10
+\end{python3code}
+
+Note the use of the variable \pythoninline{self} in the function declarations.
+This variable should be first in any function declared that needs to be used on
+a function level. This variable refers to the object that the function is
+being called on. For example, in line 11, \pythoninline{self} would refer to
+\pythoninline{a}. Note that \pythoninline{a.set(20)} is equivalent to
+\pythoninline{Test.set(a, 20)}. The former is preferred because it is shorter
+and more readable. Additionally, a function that refers operates on an instance
+of the class (that is, has \pythoninline{self} as the first argument) are called
+methods rather than functions.A ny variable referred to with
+\pythoninline{self.variablename} will stay with the object, while other
+variables will stay local to the function.
+
+\pythoninline{__init__} can be passed additional arguments in addition to
+\pythoninline{self} so that the new objects can be initialized differently.
+
+The special method \pythoninline{__str__(self)} can be defined to override
+how the object is displayed when printed. By default, printing an object will
+display something like this:
+
+\begin{pyconcode}
+>>> class Test:
+...     pass
+...
+>>> a = Test()
+>>> print(a)
+<__main__.Test object at 0x7f2b806cc9e8>
+\end{pyconcode}
+
+However, if we define the method, it will instead print whatever we want it
+to. \pythoninline{__str__} should always return a string.
+
+\begin{python3code}
+class Test:
+    def __init__(self):
+        self.x = 5
+
+    def __str__(self):
+        return 'x = {}'.format(self.x)
+
+a = Test()
+print(a)
+\end{python3code}
+
+Try running the above code. It should print out \pythoninline{x = 5}. Overriding
+\pythoninline{__str__} makes our output code far simpler when printing objects.
+
+\section{Inheritance}
+\label{sec:inheritance}
+A class can be built on another class. This is commonly done when multiple
+classes should logically be different but share common functionality. A class
+that inherits from another class is considered to be a subclass of its parent
+class. The subclass gains all the functions and attributes of its parent class.
+
+An example
+might be that both Books and Articles could be considered Publications. Both
+would have a title and an author, but only the book would have a chapter count.
+
+\begin{python3code}
+class Publication:
+    def __init__(self, title, author):
+        self.title = title
+        self.author = author
+
+    def __str__(self):
+        return '{} by {}'.format(self.title, self.author)
+
+class Book(Publication):
+    def __init__(self, title, author, chapters):
+        Publication.__init__(self, title, author)
+        self.chapters = chapters
+
+class Article(Publication):
+    def __init__(self, title, author, magazine):
+        Publication.__init__(self, title, author)
+        self.magazine = magazine
+
+    def __str__(self):
+        return '{} by {}, published in {}'.format(self.title, self.author,
+            self.magazine)
+
+b = Book('Title', 'Author', 100)
+a = Article('Other Title', 'Other Author', 'Some Magazine')
+
+print(b) #Title by Author
+print(a) #Other Title by Other Author, published in Some Magazine
+\end{python3code}
+
+Note that \pythoninline{Article} creates its own version of the
+\pythoninline{__str__} method, while \pythoninline{Book} does not. This means
+that \pythoninline{Book} simply uses the method that it inherits from
+\pythoninline{Publication}.
+
+Also note that each of the subclasses call the constructors of the parent class.
+This is required to properly initialize the attributes of the object. Though it
+is not strictly required, doing otherwise would require duplicating the
+contents of the parent class's constructor in the subclass. A class can inherit
+from multiple other classes. In that case, it would be expected to call the
+constructors for both of its parent classes.
+
+Sometimes you will want to check if an object belongs to a specific class. This
+can be done with the \pythoninline{isinstance} function. This function will
+return \pythoninline{True} if the given object is an instance of the given class
+or of a subclass of that class.
+
+\begin{python3code}
+class A:
+    pass
+class B:
+    pass
+class C(A):
+    pass
+class D(C, B):
+    pass
+
+print(isinstance(A(), A)) #True
+print(isinstance(B(), A)) #False
+print(isinstance(C(), A)) #True
+print(isinstance(D(), B)) #True
+\end{python3code}
+
+\section{Iteration}
+\label{sec:iter}
+By defining a couple of special methods, we can make an object of any class that
+we create iterable. These two functions are \pythoninline{__iter__(self)} and
+\pythoninline{__next__(self)}. These functions are used by anything that uses
+iterables (such as \pythoninline{for} loops). \pythoninline{__iter__} is called
+when the loop starts and is expected to return an object with
+\pythoninline{__next__} defined. Thus, we can usually just
+\pythoninline{return self} if we've defined it ourselves. Then,
+\pythoninline{__next__} is called repeatedly until it raises an exception called
+\pythoninline{StopIteration}. Using this knowledge we can write our own version
+of \pythoninline{range()}:
+
+\begin{python3code}
+class MyRange:
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+
+    def __iter__(self):
+        self.current = None
+        return self
+
+    def __next__(self):
+        if self.current is None:
+            self.current = self.start
+        else:
+            self.current += 1
+
+        if self.current >= self.end:
+            raise StopIteration
+        else:
+            return self.current
+
+r = MyRange(1, 10)
+for i in r:
+    print(i) #prints 1, 2, 3, ..., 9
+\end{python3code}
+
+With a bit more complex logic in our \pythoninline{__next__} we can do some
+pretty complicated things with \pythoninline{for} loops!
 
 \clearpage
 \section{Exercises}
 \label{sec:ex}
 
+\begin{ex}[library.py]
+    Create a module called \pythoninline{library}. This module should include
+    two classes as well as methods for each. The provided file
+    \pythoninline{library_test.py} will use the contents of
+    \pythoninline{library.py}. Do not edit \pythoninline{library_test.py} for
+    your submission, though you are free to comment out lines using parts of
+    \pythoninline{library.py} that you have not implemented yet. The contents of
+    \pythoninline{library.py} should be as follows:
 
-\begin{ex}[markov.py] Write a program that takes in a filename, reads each line of the file, converts the lines into a format convenient for making Markov chains, and then prints out a new sentence randomly generated from the data, based on the Markov algorithm. When loading the file, treat the lines as separate statements. That is, if ``Hello, how are you?'' and ``Where are my keys?'' are lines in a file, then ``you?'' should not be followed by ``Where'' when generating a chain. However, ``are'' should be allowed to be followed by either ``you?'' or ``my'', as seen in Figure \ref{mark_ex}.
+    \begin{description}
+    \item[class Library] A \pythoninline{Library} object stores multiple
+        \pythoninline{Book}
+        objects and has methods to return statistics about those books. When
+        printed, the object should list all of the books it contains in
+        alphabetical order by author (as listed. You do not need to split into
+        first and last names).
+        \begin{description}
+        \item[def add\_book(self, book)] This method takes in either a line of
+            text or a book object. If the input is a line of text, then it
+            creates a new \pythoninline{Book} object out of it. The line of
+            text will be formatted as are the lines in \pythoninline{library.txt}
+            and should be parsed as needed to form a \pythoninline{Book} object.
+            The object (whether given or created) is then stored inside the
+            library.
+        \item[def get\_authors(self)] This method returns a list of all the
+            authors who have works contained in the library. No author should
+            appear more than once.
+        \item[def get\_books\_per\_author(self)] This method returns a
+            dictionary.
+            Each author should be a key in the dictionary. The value for each
+            author should be the number of books by that author in the library.
+        \end{description}
+    \item[class Book] A \pythoninline{Book} object stores the author and title
+        of a book. When printed, the object should display both the title and
+        author of the book. The constructor should take in two arguments:
+        the title of the book and the author of the book.
+    \end{description}
 
-  When creating a new chain, the first element should always be a randomly selected first word of a line in the file. The chain should end when either:
-  \begin{itemize}
-  \item There are no valid choices to continue the sentence with.
-  \item The sentence has reached a length of 100 words.
-  \end{itemize}
-
-  Remember that you need to account for different frequencies of possible
-  follow words. That is, a situation like in Figure \ref{twilight} where
-  there is a higher chance for ``a'' to follow ``is'' than for ``known''
-  to. You need to account for whatever probabilities might come up within
-  your input file.
-
-  You may use any file you wish for test input, though \pythoninline{alice.txt} and
-  \pythoninline{cthulhu.txt} are provided for you.
-  \pythoninline{alice.txt} is a slightly edited version of the complete text of
-  Lewis Carroll's \emph{Alice's Adventures in Wonderland}, taken from
-  \url{https://www.gutenberg.org/files/11/11-h/11-h.htm}.
-  \pythoninline{cthulhu.txt} is a slightly edited version of the complete text of
-  H.P. Lovecrafts's \emph{The Call of Cthulhu}, taken from
-  \url{http://www.hplovecraft.com/writings/texts/fiction/cc.aspx}.
-  When parsing the input file, you should ignore any blank lines.
-
-  \emph{Hint}: You may find dictionaries to be useful in implementing
-  Markov chains.
-
-\end{ex}
-\begin{ex}[piglatin.py] Write a program that translates a file from English to
-  pig latin.
-
-  The rules for pig latin are as follows:
-
-  For a word that begins with consonant sounds, the initial consonant or
-  consonant cluster is moved to the end of the word and ``ay'' is added as a
-  suffix:
-  \begin{itemize}
-    \item ``happy'' $\to$ ``appyhay''
-    \item ``glove'' $\to$ ``oveglay''
-  \end{itemize}
-
-  For words that begin with vowels, you add ``way'' to the end of the word:
-  \begin{itemize}
-    \item ``egg'' $\to$ ``eggway''
-    \item ``inbox'' $\to$ ``inboxway''
-  \end{itemize}
-
-  For your program, you \emph{must} write a function that takes in one
-  individual word and returns the translation to pig latin. Write another
-  function that takes a string, which may be sentences (may contain the
-  characters ``a-zA-Z,.-;!?()'' and space), and returns the translation of the
-  sentence to pig latin. Strip out any punctuation. For example, ``Hello, how
-  are you?'' would translate into ``elloHay owhay areway ouyay''.
-
-  The user must be able to specify the filename for the file to be translated
-  and the filename that the program should write to. For example:
-
-  \begin{bashcode}
-$ cat test.txt
-Hello, how are you?
-$ python3 piglatin.py
-Enter English filename >>> test.txt
-Enter filename to write to >>> test_piglatin.txt
-Done.
-$ cat test_piglatin.txt
-elloHay owhay areway ouyay
-  \end{bashcode}
+    You are free (and encouraged) to include any additional methods that you may
+    need to accomplish the tasks given.
 \end{ex}
 
-\begin{ex}[luhns.py] Luhn's algorithm
-    (\url{http://en.wikipedia.org/wiki/Luhn_algorithm}) provides a quick way to
-    check if a credit card is valid or not. The algorithm consists of three
-    steps:
+\begin{ex}[myturtle.py]
+    Write a class that inherits from \pythoninline{turtle.Turtle}. Overwrite
+    the \pythoninline{forward}, \pythoninline{backward}, \pythoninline{left},
+    and \pythoninline{right} methods so that, if given a negative value, they
+    cause no movement to occur. Add a new method \pythoninline{regular_polygon}
+    that takes as arguments a number of sides anda length for the sides, then
+    draws out the regular polygon fulfilling those requirements.
 
-    \begin{enumerate}
-      \item Starting with the second to last digit (ten's column digit),
-        multiply every other digit by two.
-      \item Sum all the digits of the resulting number.
-      \item If the total sum modulo by 10 is zero, then the card is valid;
-        otherwise it is invalid.
-    \end{enumerate}
+    Write a program using your replacement \pythoninline{Turtle} class that
+    creates multiple objects of that class and tests out each of the methods
+    you have written.
+\end{ex}
 
-    For example, to check that the Diners Club card 38520000023237 is valid, you
-    would start at 3, double it and double every other digit to give, writing
-    the credit card number as separate digits: 
-    \begin{IEEEeqnarray*}{RCCRCCRCCRCCRCCRCCRCCRCCRCCRCCRCCRCCR}
-3 &~& 8 &~& 5  &~& 2 &~& 0 &~& 0 &~& 0 &~& 0 &~& 0 &~& 2 &~& 3 &~& 2 &~& 3 &~& 7\\
-6 &~& 8 &~& 10 &~& 2 &~& 0 &~& 0 &~& 0 &~& 0 &~& 0 &~& 2 &~& 6 &~& 2 &~& 6 &~& 7
-    \end{IEEEeqnarray*}
-    Next you would sum all the digits of the resulting number:
-    \[ 6 + 8 + (1 + 0) + 2 + 0 + 0 + 0 + 0 + 0 + 2 + 6 + 2 + 6 + 7 = 40 \]
+\begin{ex}[tree.py]
+    Write a class that implements a simple binary tree data structure. That is a
+    tree that consists of a group of nodes, each of which has an optional
+    ``left'' and ``right'' child. The class needs to include the following:
+    \begin{description}
+    \item[class Tree] The class used to create objects representing trees. Each
+        object will also represent one of the nodes of the tree. The constructor
+        should take in one argument: the contents of that node. The contents can
+        be anything and are not important for the scope of this exercise. The
+        constructor should have two optional arguments: left and right trees. If
+        given, these will be the left and right children of the new node. This
+        allows for the joining of two trees into a single one with a new parent
+        node.
+        \begin{description}
+        \item[self.left] The left child of the node. May be
+            \pythoninline{None} or a \pythoninline{Tree} object.
+        \item[self.right] The right child of the node. May be
+            \pythoninline{None} or a \pythoninline{Tree} object.
+        \item[self.datum] The contents of the node.
+        \item[def height(self)] Returns the height of the tree that this node
+            is the root of. This is equal to one more than the largest height
+            of the children trees. If a child tree is \pythoninline{None} then
+            its height is 0.
+        \item[def add\_item(self, item)] Create a new \pythoninline{Tree} object
+            and add it to the tree. The new object should be added to the child
+            tree with the smallest height (remember that a \pythoninline{None}
+            tree has a height of 0!). If there is a tie, favor the left tree.
+        \end{description}
+    \end{description}
 
-    Note that for 10, you also sum its digits: $(1 + 0)$.
+    Additionally, you should implement \pythoninline{__iter__(self)} and
+    \pythoninline{__next__(self)} such that the tree can be used in a for loop.
+    When used in a for loop, the nodes of the tree should be accessed in-order.
+    This means that they should be accessed from left to right. That is, if we
+    have a tree that looks like this:
 
-    The last step is to check if $40$ modulus 10 is equal to 0, which is true.
-    So the card is valid.
+\begin{verbatim}
+    1
+   / \
+  2   3
+ / \ / \
+4  5 6  7
+\end{verbatim}
 
-    Write a program that implements Luhn's Algorithm for validating credit
-    cards. It should ask the user to enter a credit card number and tell the
-    user whether it is valid or not. 
+    Then the nodes should be accessed in the order 4, 2, 5, 1, 6, 3, 7. To
+    accomplish this, you will need to keep track of where in the traversal the
+    loop currently is, as well as \pythoninline{raise StopIteration} when
+    necessary.
 
-    \emph{There must be a separate function that takes in a card number and
-    validates it.}
-  \end{ex}
-  
-%INSERT HERE
+    \emph{Hint}: You may find using a stack to track where you are in the tree
+    to be useful!
 
+    Once you have it using, you should be able to use \pythoninline{list} to
+    convert your tree into a list.
+\end{ex}
 
 \pagebreak
 \section{Submitting}
 You should submit your code as a tarball. It should contain all files
 used in the exercises for this lab. The submitted file should be named
 \begin{center}
-  \texttt{cse107\_firstname\_lastname\_lab9.tar.gz}
+  \texttt{cse107\_firstname\_lastname\_lab10.tar.gz}
 \end{center}
 
 \begin{center}
@@ -341,6 +367,5 @@ used in the exercises for this lab. The submitted file should be named
 \end{center}
 
 \listoftheorems
-
 
 \end{document}

@@ -1,685 +1,346 @@
-% LAB 3: Functions
-%
+% LAB 9: Review and Markov
+% 
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
-%
+% 
 % Prepared by Russell White and Christopher Koch
-% Spring 2015
-
-% - Functions
-%   - Positional and Optional Arguments
-%   - Recursion
-% - Modules
-%   - import statements
-%   - main() boilerplate
-% - Comments and PEP-8 style
-% - Keywords: def
+% Fall 2014
 \documentclass[11pt]{cselabheader}
-\fancyhead[R]{Lab 3: Functions}
-\title{Lab 3: Functions}
-\usepgflibrary{fpu}
-\newcommand{\pas}{\mathop{\mathrm{pascal}}}
+\usepackage{caption}
+
+%%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
+\fancyhead[R]{Lab 9: Review and Markov}
+\title{Lab 9: Review and Markov}
 
 \begin{document}
-\pagenumbering{roman}
+
 \maketitle
 
 \hrule
 \begin{quotation}
-``If you don't think carefully, you might believe that programming is just
-typing statements in a programming language.''
+``Holy shit, you geeks are badass.''
 \end{quotation}
 \begin{flushright}
-  --- W. Cunningham
+  --- Pam (\emph{Archer})
+\end{flushright}
+
+
+\begin{quotation}
+``Simplicity is prerequisite for reliability.''
+\end{quotation}
+\begin{flushright}
+--- Edsger W. Dijkstra
+\end{flushright}
+
+
+\begin{quotation}
+``The truth is a trap: you can not get it without it getting you; you cannot get
+the truth by capturing it, only by its capturing you.''
+\end{quotation}
+\begin{flushright}
+--- S{\o}ren Kierkegaard
 \end{flushright}
 
 \begin{quotation}
-``When you come to a fork in the road, take it."
+  ``A police radar’s effective range is 1.0 km, and your roommate plot to drop water balloons on students entering your dorm. Your window is 20 m above the ground. (a) If an ammeter with 0.10-V resistance is 1000 V. When measured with a 100-Hz frequency shift, what’s the speed with which cesium atoms must be ``tossed'' in the positive x-direction with speed v0 but undergoing acceleration of a proton is a hydrogen atom?''
 \end{quotation}
 \begin{flushright}
---- Attributed to Yogi Berra
+  --- \href{http://infohost.nmt.edu/~rkelly/physbot.html}{Professor Markov's Physics Revue}
 \end{flushright}
 
-\begin{quotation}
-``The time you enjoy wasting is not wasted time.''
-\end{quotation}
-\begin{flushright}
-  --- Bertrand Russell
-\end{flushright}
 \hrule
 
-\tableofcontents
-
 \pagebreak
-\pagenumbering{arabic}
-
 \section{Introduction}
-\label{sec:intro}
 
-In the previous lab, we showed you simple control flow and how to repeat a piece
-of code using \pythoninline{while}. In this lab, we will be learning how to
-break a lot of code into smaller, reusable pieces called \emph{functions}.
+Today's lab will be just another small project.
+We will not be covering any new
+topics: this is primarily an application of what you already know. 
 
-\pagebreak
-\section{Modules}
-\label{sec:modules}
+You will be
+writing a program that generates
+\href{http://en.wikipedia.org/wiki/Markov_chain}{Markov chains} from an input
+file. Markov chains are the simplest way for to generate sentences that
+imitate the style of the chain's input text.
+They are based on figuring out the
+likelihood of a word following another word by looking at existing bodies of
+text (for example, Wikipedia). They then generate statements by choosing a
+starting word and then repeatedly choosing words from the words that follow
+the previous word chosen, based on the input text.
 
-A program that is saved in a text file and then run with Python is called a
-\emph{script}. As your programs get longer, you may want to split them into
-multiple files for easier legibility, maintenance, or abstraction. To do this,
-Python supports a way to put definitions (of functions) in a file and use them
-in another script or in the interpreter. A file like this is called a
-\emph{module}. An example for such a module is the math module we have used
-previously. The definitions from a module can be \emph{imported} into other
-scripts.
-
-A module is just a file with Python statements in it. A module takes the name of
-the file that it is in. For example, imagine we have a file
-\texttt{circlemath.py} in our current working directory:
-
-\begin{listing}[H]
-\vspace{-0.5em}
-\begin{python3code}
-import math # importing the math module
-
-def area(radius):
-    """Find and return the area of a circle (float) given the radius"""
-    return math.pi * radius**2
-
-def circumference(radius):
-    """Find and return the circumference of a circle (float) given the radius"""
-    return 2 * math.pi * radius
-\end{python3code}
-\vspace{-1em}
-\caption{\texttt{circlemath.py}}
-\vspace{-0.5em}
-\end{listing}
-
-Then, open the interpreter and import the module:
-
-\begin{pyconcode}
->>> import circlemath
->>> circlemath.circumference(5) # have to use modulename.attributename
-31.41592653589793
->>> circlemath.area(5)
-78.53981633974483
->>> circlemath.__name__
-'circlemath'
-\end{pyconcode}
-
-Every module has a \pythoninline{__name__} attribute that contains the name of
-the module, except in one special case that we will see soon.
-
-There are other kinds of import statements with different effects:
-
-\begin{pyconcode}
->>> from circlemath import area
->>> area(5) # can just use the attribute imported without modulename.
-78.53981633974483
->>> circumference(5) # not defined, because not imported
-Traceback (most recent call last):
-  File "<input>", line 1, in <module>
-NameError: name 'circumference' is not defined
-\end{pyconcode}
-
-\begin{pyconcode}
->>> from circlemath import area, circumference # use commas to separate multiple
->>> area(5)
-78.53981633974483
->>> circumference(5)
-31.41592653589793
-\end{pyconcode}
-
-\begin{pyconcode}
->>> from circlemath import * # import all definitions made
->>> area(5)
-78.53981633974483
->>> circumference(5)
-31.41592653589793
-\end{pyconcode}
-
-\begin{pyconcode}
->>> from circlemath import area as carea
->>> carea(5)
-78.53981633974483
-\end{pyconcode}
-
-The last option is rather frowned upon; we would prefer you to use
-\pythoninline{circlemath.area} instead as it is more descriptive.
-
-You may also rename a module upon importing it:
-
-\begin{pyconcode}
->>> import circlemath as cmath
->>> cmath.area(5)
-78.53981633974483
-\end{pyconcode}
+As an example, this was a markov chain generated based on conversations between
+Russell and Chris about Python lab (given the starting word ``CS''):
+\begin{quotation}
+%``CS be hard!''
+``CS grad student claiming to stare again for you? Cool! Where?''
+\end{quotation}
+\begin{flushright}
+--- arcbot
+\end{flushright}
 
 
-\begin{infobox}{Convention (PEP 8)}
-  Always put \pythoninline{import} statements at the beginning of a file in the
-  following order:
-  \begin{enumerate}
-    \item Built-in standard library modules
-    \item Third-party modules (e.g. matplotlib)
-    \item Self-written modules
-  \end{enumerate}
-  Put a blank line between each group of imports.
-\end{infobox}
-
-\subsection{Using Modules as Scripts and Boilerplate}
-
-If there is code in your module that is not a function definition, Python will
-run it just once when the module is imported. For example, take the file
-\texttt{mid.py}:
-
-\begin{listing}[H]
-  \vspace{-0.5em}
-\begin{python3code}
-def midpoint(a, b):
-    """Find and return the midpoint of two numbers."""
-    return (a+b)/2
-
-print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
-\end{python3code}
-  \vspace{-1em}
-  \caption{\texttt{mid.py}}
-  \vspace{-0.5em}
-\end{listing}
-
-\begin{pyconcode}
->>> import mid
-Midpoint of 5 and 10 is 7.50.
-\end{pyconcode}
-
-The same will happen if you run the module like a script:
-
-\begin{bashcode}
-$ python3 mid.py
-Midpoint of 5 and 10 is 7.50.
-\end{bashcode}
-
-However, this can be rather annoying to deal with, for example if you wrote a
-script with a bunch of functions a while ago and you just want to use the
-functions you wrote, but do not want the other code to run when you're using
-them -- you just want the functions. You can achieve this!
-
-When you run a module as a script, the modules \pythoninline{__name__} attribute
-is not set to the module's name, but to \pythoninline{"__main__"}. Hence, the
-following code in \texttt{mid.py} will do the following:
-
-\begin{listing}[H]
-  \vspace{-0.5em}
-\begin{python3code}
-def midpoint(a, b):
-    """Find and return the midpoint of two numbers."""
-    return (a+b)/2
-
-print(__name__) # just for demonstration, do not put this in real programs
-
-if __name__ == "__main__":
-    print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
-\end{python3code}
-  \vspace{-1em}
-  \caption{\texttt{mid.py}}
-  \vspace{-0.5em}
-\end{listing}
-
-\begin{pyconcode}
->>> import mid
-mid
-\end{pyconcode}
-
-\begin{bashcode}
-$ python3 mid.py
-__main__
-Midpoint of 5 and 10 is 7.50.
-\end{bashcode}
-
-However, sometimes you may want to import the module \emph{and} run it as if it
-were a script. To enable us to do so, we usually put the script code in a
-function called \pythoninline{main()}:
-
-\begin{listing}[H]
-  \vspace{-0.5em}
-\begin{python3code}
-def midpoint(a, b):
-    """Find and return the midpoint of two numbers."""
-    return (a+b)/2
-
-def main():
-    print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
-
-if __name__ == "__main__":
-    main()
-\end{python3code}
-  \vspace{-1em}
-  \caption{\texttt{mid.py} -- perfect example}
-  \vspace{-0.5em}
-\end{listing}
-
-\begin{pyconcode}
->>> import mid
->>> mid.main() # if we want to
-Midpoint of 5 and 10 is 7.50.
-\end{pyconcode}
-
-\begin{bashcode}
-$ python3 mid.py
-Midpoint of 5 and 10 is 7.50.
-\end{bashcode}
-
-We call this combination of the if-statement and the
-\pythoninline{main()} function \emph{boilerplate code}.
-
-\begin{infobox}{Boilerplate Requirement}
-  Please put \textbf{any} code that is not part of a function inside the
-  boilerplate if-statement so that \emph{every} one of your scripts can also be
-  used as a module. This will be required for every lab from now on.
-
-  Wrong:
-
-  \begin{python3code}
-print("Hello World!")
-  \end{python3code}
-
-  Right:
-
-  \begin{python3code}
-def main():
-    print("Hello World!")
-
-if __name__ == "__main__":
-    main()
-  \end{python3code}
-\end{infobox}
-
-\subsection{The \protect\pythoninline{dir()} Function}
-
-Use the \pythoninline{dir()} function to get a list of every attribute --
-variables, functions, and other things you do not know about yet -- that is part
-of a module. For example for the circlemath module we wrote earlier:
-
-\begin{pyconcode}
->>> import circlemath
->>> dir(circlemath)
-['__name__', 'area', 'circumference']
->>> import mid
->>> dir(mid)
-['__name__', 'midpoint']
->>> import math
->>> dir(math)
-['__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'acos',
-'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh',
-'degrees', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial', 'floor', 'fmod',
-'frexp', 'fsum', 'gamma', 'hypot', 'isfinite', 'isinf', 'isnan', 'ldexp', 'lgamma',
-'log', 'log10', 'log1p', 'log2', 'modf', 'pi', 'pow', 'radians', 'sin', 'sinh', 'sqrt',
-'tan', 'tanh', 'trunc']
-\end{pyconcode}
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=\linewidth]{img/garkov}
+  \caption*{\href{http://joshmillard.com/garkov/}{Garkov}:
+    A Garfield comic generated using Markov chains.}
+  \label{garkov}
+\end{figure}
 
 \pagebreak
-\subsection{Summary}
-\label{subsec:modules.sum}
+
+\section{Markov Chains}
+\label{sec:markov}
+
+A Markov chain is a method of randomly generating a sequence based on a set of
+input data. In this lab, we will be using Markov chains to generate sentences
+based on an input text file. In order to do this, we must understand how Markov
+chains work.
+
+The basic steps of creating Markov chains are:
+\begin{enumerate}
+  \item Select a random starting word to start our new sentence.
+  \item From all the words that ever follow that word in the input sequence,
+    choose one. Add that word to the end of our new sentence.
+  \item Continue selecting randomly from the words that can possibly follow the
+    current last word of our sentence until either there are no possible choices
+    or we have made a sentence as long as desired.
+\end{enumerate}
+
+For a simple example, let's generate Markov phrases using inputs of ``Hello, how
+are you?'' and ``Where are my keys?''. If we convert these sentences into a
+graph showing the possible results, we would get Figure \ref{mark_ex}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.2\linewidth]{lab9/example}
+  \caption{A graphical representation of the Markov possibilities for ``Hello,
+    how are you?'' and ``Where are my keys?''}
+  \label{mark_ex}
+\end{figure}
+
+In this graph, each arrow represents a choice we can take based on the last word
+we added to our sentence, continuing until there are no valid paths to take.
+Looking at the graph, it's pretty easy to see there are four possible outputs if
+we start our chain with either ``Hello,'' or ``Where'':
 
 \begin{itemize}
-  \item Syntax:
-
-    \begin{python3code}
-import modname1, modname2 # use: modname1.attributename
-import modname3 as othermodname # use: othermodname.attributename
-from modname import attribute1, attribute2 # use: attribute1, attribute2
-from modname import * # use: attributename
-from modname import attribute as otherattribute # use: otherattribute
-    \end{python3code}
-
-    Attributes can be functions defined in the module or variables defined in
-    the module. A special attribute is \pythoninline{__name__}, which contains
-    the name of the module unless the module is executed as a script.
-
-  \item Every script is a module whose name is the filename of the script.
-
-  \item If a module is imported, its \pythoninline{__name__} attribute is a
-    variable that contains the module name. If a module is run as a script, its
-    \pythoninline{__name__} attribute contains \pythoninline{"__main__"}. With
-    this, you can have code that only runs if a module is run like a script.
-
-    We call that boilerplate code:
-
-    \begin{python3code}
-def main():
-    # stuff that only runs if module is run as a script
-
-if __name__ == "__main__":
-    main()
-    \end{python3code}
-
-  \item Use \pythoninline{dir()} to get a list of every attribute -- every
-    variable and function (and other things that you do not know about yet) --
-    that is part of a particular module.
-
-  \item A good resource:
-
-    \begin{center}
-      \url{https://docs.python.org/3.4/tutorial/modules.html}
-    \end{center}
-
+  \item Hello, how are you?
+  \item Hello, how are my keys?
+  \item Where are you?
+  \item Where are my keys?
 \end{itemize}
 
+For a more complex example, let's use the input phrase ``There is a fifth
+dimension, beyond that which is known to man. It is a dimension as vast as space
+and as timeless as infinity.''. If we were to convert this sentence into a graph
+representing the possible choices to make at each step, it would look something
+like Figure \ref{twilight}.
 
-\pagebreak
-\section{Recursion}
-\label{sec:rec}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{lab9/twilight_zone}
+  \caption{A graphical representation of the Markov possibilities for \emph{The
+    Twilight Zone}'s introduction.}
+  \label{twilight}
+\end{figure}
 
-Recursion is the idea of a function calling itself. This can be useful in a wide
-variety of situations, but it can also be easy to misuse. Let us first look at a
-good example:
-\begin{python3code}
-def factorial(n):
-    """Compute and return n! recursively by knowing that n! = n * (n-1)! for n > 1
-    and 1! = 1 and 0! = 1"""
-    if n <= 1:
-        return 1
-    else
-        return n * factorial(n-1)
-\end{python3code}
-
-Notice that this is just another way to repeat a statement, similar to a loop.
-In a loop, we have to specify when to stop repeating something, and we have to
-do the same thing with recursion; otherwise, it would run forever.
-
-As an example, this is how the function plays out:
-\[ f(5) = 5 * f(4) = 5 * 4 * f(3) = 5 * 4 * 3 * f(2) = 5 * 4 * 3 * 2 * f(1) = 5
-* 4 * 3 * 2 * 1 = 120 \]
-
-As an example, see this simple \textbf{\emph{bad}} case of recursion:
-
-\begin{python3code}
-def test():
-    """BAD example of recursion."""
-    test()
-\end{python3code}
-
-If this function is called, it will continue to call itself infinitely until
-Python prints out an error message and quits. This is because the function calls
-itself every time it is called -- there is no case where the function ends
-without calling itself again. The case in which the recursion ends is called a
-\emph{base case} and it is important to include one in every recursive function.
-Here is a modified version of the above code that allows the initial call to
-specify a value limiting how many times the recursive call should be made:
-
-\begin{python3code}
-def test(x):
-    if x > 0:
-        test(x - 1)
-\end{python3code}
-
-\subsection{Summary}
-\label{subsec:adv.sum}
-
+In this graph, if we start with ``There'', our only option for a next word is
+``is''. ``is'' is followed by ``a'' twice and ``known'' once, so it has two
+arrows to ``a'' and one to ``known''. This means that, when we randomly choose a
+next step, we should have a $\frac{2}{3}$ chance to choose ``a'' and a
+$\frac{1}{3}$ chance to choose ``known''. If we (randomly) choose to continue to
+``a'', we have the choice of either ``fifth'' or ``dimension'' to continue our
+sentence with. A few possible new sentences we could generate from this input
+are:
 \begin{itemize}
-  \item A function may call itself. This is called recursion.
-  \item Always need a base case, or the function will keep calling itself
-    forever.
+  \item There is a dimension as infinity.
+  \item There is a fifth dimension, beyond that which is a fifth dimension,
+    beyond that which is a dimension as vast as space and as infinity.
+  \item There is known to man. It is known to man. It is a dimension as space
+    and as infinity.
 \end{itemize}
 
-\pagebreak
+As you can see, Markov chains have a tendency to make sentences which almost
+make sense. This is because every individual pairing of two words will make
+sense, but the combinations of the pairings might not. For example, ``as vast''
+and ``vast as'' can both make sense given the right context, but ``vast as vast
+as vast as vast'' is nonsense. We can help alleviate this problem by taking into
+account the last 2 (or 3, or 4...) words when choosing the next word instead of
+just the last one, but this requires a far larger input or it will result in the
+output being the same as the input.
 
+\subsection{Random Numbers}
+\label{subsec:random}
+You may find the module \pythoninline{random} to be especially useful when
+creating Markov chains. Below is a brief example of some common functions
+inside \pythoninline{random}.
+
+\begin{pyconcode}
+>>> import random
+>>> print(random.random())
+0.7682548548225483
+>>> print(random.uniform(1, 100))
+36.30623079969581
+>>> print(random.choice(['joe', 'moe', 'larry', 'shemp', 'curly']))
+larry
+>>> print(random.randint(1, 100))
+79
+\end{pyconcode}
+
+Take a look at the documentation for \pythoninline!random! if you would like a
+random number not based on a uniform distribution:
+\begin{center}
+  \url{https://docs.python.org/3.4/library/random.html}
+\end{center}
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{p{3.0cm} p{2cm} p{10cm}}
+    \toprule
+    \bfseries Function & \bfseries Arguments & \bfseries Purpose \\
+    \midrule
+    \pythoninline{random.random()} & & Returns a random number between 0.0 and 1.0,
+    including 0.0 but not 1.0.\\
+    \pythoninline{random.uniform()} & \pythoninline{a}, \pythoninline{b} & Returns a
+    random number between \pythoninline{a} and \pythoninline{b} inclusive. Each real number between
+    \pythoninline!a! and \pythoninline!b! has an equal probability of occurring.\\
+    \pythoninline{random.randint()} & \pythoninline{a}, \pythoninline{b} & Returns a
+    random integer between \pythoninline{a} and \pythoninline{b} inclusive. Each integer between
+    \pythoninline!a! and \pythoninline!b! has an equal probability of occuring.\\
+    \pythoninline{random.choice()} & \pythoninline{list} & Returns a random value from \pythoninline{list}.\\
+    \bottomrule
+  \end{tabular}
+  \caption{Summary of \pythoninline{random} functions.}
+  \label{tab:rand}
+\end{table}
+
+\clearpage
 \section{Exercises}
-
-%\begin{warningbox}{Requirements}
-%  Remember to adhere to PEP 8, PEP 257, and the boilerplate code requirement.
-%\end{warningbox}
+\label{sec:ex}
 
 
-\begin{warningbox}{Install}
-  Please have the \pythoninline{matplotlib} module installed on your computer
-  before next lab. If you installed Anaconda Python, you already have it. Please
-  come see a TA if you are having problems with the installation!
-\end{warningbox}
+\begin{ex}[markov.py] Write a program that takes in a filename, reads each line of the file, converts the lines into a format convenient for making Markov chains, and then prints out a new sentence randomly generated from the data, based on the Markov algorithm. When loading the file, treat the lines as separate statements. That is, if ``Hello, how are you?'' and ``Where are my keys?'' are lines in a file, then ``you?'' should not be followed by ``Where'' when generating a chain. However, ``are'' should be allowed to be followed by either ``you?'' or ``my'', as seen in Figure \ref{mark_ex}.
 
+  When creating a new chain, the first element should always be a randomly selected first word of a line in the file. The chain should end when either:
+  \begin{itemize}
+  \item There are no valid choices to continue the sentence with.
+  \item The sentence has reached a length of 100 words.
+  \end{itemize}
 
-\begin{ex}[geometry.py, triangle.py, regularpolygons.py, rectangle.py, circle.py]
-  Write a Python script that lets the user do some basic
-  geometry calculations. Your output should look something like the following.
+  Remember that you need to account for different frequencies of possible
+  follow words. That is, a situation like in Figure \ref{twilight} where
+  there is a higher chance for ``a'' to follow ``is'' than for ``known''
+  to. You need to account for whatever probabilities might come up within
+  your input file.
 
-  The majority of the output must be calculated by your program using a function
-  for each kind of calculation. \emph{The output given below is just an example.
-  Your program needs to perform the calculations for the numerical values read
-  from the keyboard.}
+  You may use any file you wish for test input, though \pythoninline{alice.txt} and
+  \pythoninline{cthulhu.txt} are provided for you.
+  \pythoninline{alice.txt} is a slightly edited version of the complete text of
+  Lewis Carroll's \emph{Alice's Adventures in Wonderland}, taken from
+  \url{https://www.gutenberg.org/files/11/11-h/11-h.htm}.
+  \pythoninline{cthulhu.txt} is a slightly edited version of the complete text of
+  H.P. Lovecrafts's \emph{The Call of Cthulhu}, taken from
+  \url{http://www.hplovecraft.com/writings/texts/fiction/cc.aspx}.
+  When parsing the input file, you should ignore any blank lines.
 
-  \begin{verbatimcode}
-Welcome to Wile E. Coyote's Geometry Calculator!
-
-Enter height of a rectangle >>> 2
-Enter width of a rectangle >>> 3
-
-The area of a rectangle with height 2 and width 3 is 6.
-The perimeter of a rectangle with height 2 and width 3 is 10.
-The length of the diagonal of a rectangle with height 2 and width 3 is 3.605551.
-
-Enter the radius of a circle >>> 2
-
-The area of a circle with radius 2.00 is 12.57.
-The circumference of a circle with radius 2.00 is 12.57.
-
-Enter the height of a right triangle >>> 1
-Enter the base of a right triangle >>> 1
-
-The area of a right triangle with height 1.00 and base 1.00 is 0.50.
-The perimeter of a triangle with height 1.00 and base 1.00 is 3.41.
-
-Enter the number of sides of a regular polygon as >>> 8
-Enter the length of the side of a regular polygon >>> 5
-
-The exterior angle of a regular polygon with 8 sides is 45.00 degrees.
-The interior angles of a regular polygon with 8 sides sum to 1080.00 degrees.
-Each interior angle of a regular polygon with 8 sides is 135.00 degrees.
-The area of a regular polygon with 8 sides each 5.00 long is 120.71.
-  \end{verbatimcode}
-
-  \begin{center}
-    \bfseries Remember that coding the input part of the program should be your
-    \emph{last} step. It is a beginner's mistake to start with that -- you want
-    the logic of your functions to be correct before doing any of the input.
-    Test your functions with hard-coded values.
-  \end{center}
-
-  Please split your program into multiple files. Please create a module each for
-  the rectangle functions, the circle functions, the triangle functions, and the
-  polygon functions. For each of the modules, use boilerplate code to test the
-  functions. Here's an example:
-
-  \begin{python3code}
-# Module square (square.py)
-
-def area(side_length):
-    """Calculates the area of a square given the length of a side."""
-    return side_length ** 2
-
-def perimeter(side_length):
-    """Calculates the perimeter of a square given the length of a side."""
-    return 4 * side_length
-
-def main():
-    side_len = 2
-    print('A square with side length {:.2f} has area {:.2f}.'.format(
-        side_len, area(side_len)))
-    print('A square with side length {:.2f} has perimeter {:.2f}.'.format(
-        side_len, perimeter(side_len)))
-
-if __name__ == '__main__':
-    main()
-  \end{python3code}
-
-  Then, write a script \texttt{geometry.py} that gives the user interface as
-  seen in the example above.
-
-  Your program must define the following functions. It is your task to figure
-  out the appropriate arguments and return values as well as the code of these
-  functions. Notice that the triangle is a \emph{right triangle} where height
-  and base are the two legs joined by the 90 degree angle.
-  \begin{multicols}{2}
-    \begin{itemize}
-      \item Module \texttt{triangle}:
-        \begin{itemize}
-          \item \pythoninline{area}
-          \item \pythoninline{hypotenuse}
-          \item \pythoninline{perimeter}
-        \end{itemize}
-      \item Module \texttt{regularpolygons}:
-        \begin{itemize}
-          \item \pythoninline{exterior_angle}
-          \item \pythoninline{interior_angle}
-          \item \pythoninline{area}
-        \end{itemize}
-      \item Module \texttt{rectangle}:
-        \begin{itemize}
-          \item\pythoninline{area}
-          \item \pythoninline{perimeter}
-          \item \pythoninline{diagonal}
-        \end{itemize}
-      \item Module \texttt{circle}:
-        \begin{itemize}
-          \item \pythoninline{area}
-          \item \pythoninline{circumference}
-        \end{itemize}
-    \end{itemize}
-  \end{multicols}
-
-  \emph{Regular Polygons}
-
-  The exterior angle of a regular $n$-polygon is $\frac{360}{n}$, where $n$ is
-  the number of sides. The angle is in degrees.
-
-  The sum of the interior angles of a regular $n$-polygon is $180(n-2)$, where the
-  angle is in degrees.
-
-  To get one particular interior angle of a regular $n$-polygon, divide by the
-  number of angles $n$ to get $\frac{180(n-2)}{n}$.
-
-  Finally, to find the area of a regular $n$-polygon, use the following formula:
-  \[ \frac{s^2 \times n}{4 \times \tan\left( \frac{\pi}{n} \right)}, \]
-  where $s$ is the length of a side and $n$ is the number of sides.
-\end{ex}
-
-\begin{ex}[sum.py] Write a recursive function that computes the sum of all the
-  numbers from 1 to $n$, where $n$ is the given parameter.
-\end{ex}
-
-\begin{ex}[peasants.py] \hfill
-  \begin{enumerate}[(a)]
-    \item Russian peasant multiplication is a method of multiplying integers in
-      which you keep halving one factor while
-      doubling the other factor until one of the factors is 1. For example:
-      \begin{IEEEeqnarray*}{RCRCL}
-        &\quad& 8 &\quad\times\quad& 38 \\
-        = && 4 &\quad\times\quad& 76 \\
-        = && 2 &\quad\times\quad& 152 \\
-        = && 1 &\quad\times\quad& 304
-      \end{IEEEeqnarray*}
-      Hence, $8 \times 38 = 304$.
-
-      This, of course, becomes a bit more involved if the integer that you keep
-      halving is not a power of two. For example, imagine $38$ is the number
-      that keeps getting halved:
-      \begin{IEEEeqnarray*}{RCRCLCLCL}
-        && 8 &\times& 38 \\
-        = &\quad& 16 &\times& 19 \\
-        = && 32 &\times& 9 &+& 16      &\qquad& \text{$\nicefrac{19}{2} = 9$ with remainder $1$} \\
-        = && 64 &\times& 4 &+& 16 + 32 &\qquad& \text{$\nicefrac{9}{2} = 4$ with remainder $1$} \\
-        = && 128 &\times& 2 &+& 16 + 32 \\
-        = && 256 &\times& 1 &+& 16 + 32 \\
-        = && 256 && &+& 16 + 32 \\
-        = && 304
-      \end{IEEEeqnarray*}
-
-      This is all based on the following recursive definition of multiplication:
-
-      \[ x \times y = \begin{cases}
-          \frac{x}{2} \times (2 \times y) & \text{if $x$ is even} \\
-          \frac{x-1}{2} \times (2 \times y) + y & \text{if $x$ is odd}
-      \end{cases} \]
-
-      Write a \emph{non-recursive} function that implements Russian
-      peasant multiplication using a \pythoninline{while} loop. Call this
-      function \pythoninline{multiply()}.
-
-    \item The Russian peasant method can also be applied to exponentiation (also
-      only for integers):
-
-      \[ x^y = \begin{cases}
-          \left( x^2 \right)^{\nicefrac{y}{2}} & \text{if $y$ is even} \\
-          x \left( x^2 \right)^{\nicefrac{(y-1)}{2}} & \text{if $y$ is odd} \\
-      \end{cases} \]
-
-      This method is also called exponentiation by squaring or the
-      square-and-multiply method.
-
-      Write a \emph{recursive} function called \pythoninline{expo()} that
-      implements this.
-
-  \end{enumerate}
+  \emph{Hint}: You may find dictionaries to be useful in implementing
+  Markov chains.
 
 \end{ex}
+\begin{ex}[piglatin.py] Write a program that translates a file from English to
+  pig latin.
 
-\begin{ex}[pascal.py] \hfill
+  The rules for pig latin are as follows:
 
-  In Pascal's triangle, each number is the sum of the two numbers directly above
-  it. The left and right ends of the triangle always consists of $1$s.
+  For a word that begins with consonant sounds, the initial consonant or
+  consonant cluster is moved to the end of the word and ``ay'' is added as a
+  suffix:
+  \begin{itemize}
+    \item ``happy'' $\to$ ``appyhay''
+    \item ``glove'' $\to$ ``oveglay''
+  \end{itemize}
 
-  This recursive rule produces the following triangle:
+  For words that begin with vowels, you add ``way'' to the end of the word:
+  \begin{itemize}
+    \item ``egg'' $\to$ ``eggway''
+    \item ``inbox'' $\to$ ``inboxway''
+  \end{itemize}
 
-  \begin{center}
-\def\N{9}
-\tikz[x=0.75cm,y=0.5cm, 
-  pascal node/.style={font=\small}, 
-  row node/.style={font=\footnotesize, anchor=west, shift=(180:1)}]
-  \path  
-    \foreach \n in {0,...,\N} { 
-      (-\N/2-1, -\n) node  [row node/.try]{Row \n:}
-        \foreach \k in {0,...,\n}{
-          (-\n/2+\k,-\n) node [pascal node/.try] {%
-            \pgfkeys{/pgf/fpu}%
-            \pgfmathparse{round(\n!/(\k!*(\n-\k)!))}%
-            \pgfmathfloattoint{\pgfmathresult}%
-            \pgfmathresult%
-          }}};
-  \end{center}
+  For your program, you \emph{must} write a function that takes in one
+  individual word and returns the translation to pig latin. Write another
+  function that takes a string, which may be sentences (may contain the
+  characters ``a-zA-Z,.-;!?()'' and space), and returns the translation of the
+  sentence to pig latin. Strip out any punctuation. For example, ``Hello, how
+  are you?'' would translate into ``elloHay owhay areway ouyay''.
 
-  Write a recursive function \pythoninline{pascal(n, k)} that finds the $k$th
-  value of the $n$th row by using the sum of the numbers directly above it.
-  We start counting at $0$ for both $n$ and $k$.
+  The user must be able to specify the filename for the file to be translated
+  and the filename that the program should write to. For example:
 
-  Since we know that the left and right end of the triangle are all $1$s, we
-  know that for every row $n$:
-  \begin{IEEEeqnarray*}{RCLCL}
-    \pas(n, 0) &=& 1 &\qquad& \text{left end} \\
-    \pas(n, n) &=& 1 &\qquad& \text{right end}
-  \end{IEEEeqnarray*}
-
-  If for example I want to know the $2$nd entry of the $4$th row:
-
-  \begin{IEEEeqnarray*}{RCLCL}
-    \pas(4, 2) &=& \pas(3, 1) + \pas(3, 2)  \\
-    &=& \pas(2, 0) + \pas(2, 1) + \pas(2, 1) + \pas(2, 2) \\
-    &=& 1 + \pas(1, 0) + \pas(1, 1) + \pas(1, 0) + \pas(1, 1) + 1 \\
-    &=& 1 + 1 + 1 + 1 + 1 + 1 \\
-    &=& 6
-  \end{IEEEeqnarray*}
+  \begin{bashcode}
+$ cat test.txt
+Hello, how are you?
+$ python3 piglatin.py
+Enter English filename >>> test.txt
+Enter filename to write to >>> test_piglatin.txt
+Done.
+$ cat test_piglatin.txt
+elloHay owhay areway ouyay
+  \end{bashcode}
 \end{ex}
 
+\begin{ex}[luhns.py] Luhn's algorithm
+    (\url{http://en.wikipedia.org/wiki/Luhn_algorithm}) provides a quick way to
+    check if a credit card is valid or not. The algorithm consists of three
+    steps:
+
+    \begin{enumerate}
+      \item Starting with the second to last digit (ten's column digit),
+        multiply every other digit by two.
+      \item Sum all the digits of the resulting number.
+      \item If the total sum modulo by 10 is zero, then the card is valid;
+        otherwise it is invalid.
+    \end{enumerate}
+
+    For example, to check that the Diners Club card 38520000023237 is valid, you
+    would start at 3, double it and double every other digit to give, writing
+    the credit card number as separate digits: 
+    \begin{IEEEeqnarray*}{RCCRCCRCCRCCRCCRCCRCCRCCRCCRCCRCCRCCR}
+3 &~& 8 &~& 5  &~& 2 &~& 0 &~& 0 &~& 0 &~& 0 &~& 0 &~& 2 &~& 3 &~& 2 &~& 3 &~& 7\\
+6 &~& 8 &~& 10 &~& 2 &~& 0 &~& 0 &~& 0 &~& 0 &~& 0 &~& 2 &~& 6 &~& 2 &~& 6 &~& 7
+    \end{IEEEeqnarray*}
+    Next you would sum all the digits of the resulting number:
+    \[ 6 + 8 + (1 + 0) + 2 + 0 + 0 + 0 + 0 + 0 + 2 + 6 + 2 + 6 + 7 = 40 \]
+
+    Note that for 10, you also sum its digits: $(1 + 0)$.
+
+    The last step is to check if $40$ modulus 10 is equal to 0, which is true.
+    So the card is valid.
+
+    Write a program that implements Luhn's Algorithm for validating credit
+    cards. It should ask the user to enter a credit card number and tell the
+    user whether it is valid or not. 
+
+    \emph{There must be a separate function that takes in a card number and
+    validates it.}
+  \end{ex}
+  
+%INSERT HERE
+
+
+\pagebreak
 \section{Submitting}
-
 You should submit your code as a tarball. It should contain all files
 used in the exercises for this lab. The submitted file should be named
 \begin{center}
-  \texttt{cse107\_firstname\_lastname\_lab3.tar.gz}
+  \texttt{cse107\_firstname\_lastname\_lab9.tar.gz}
 \end{center}
 
 \begin{center}
-  \textbf{Upload your tarball to Canvas before the deadline.}
+  \textbf{Upload your tarball to Canvas.}
 \end{center}
 
 \listoftheorems
+
 
 \end{document}
