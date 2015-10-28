@@ -38,8 +38,8 @@ class LuhnsTest(unittest.TestCase):
         test_cases = [("38520000023237", True),
                       ("49927398716", True),
                       ("49927398717", False),
-                      ("1234567812345670", False),
-                      ("1234567812345678", True)]
+                      ("1234567812345678", False),
+                      ("1234567812345670", True)]
         for ccnum, valid in test_cases:
             with self.subTest(i=ccnum):
                 self.assertEqual(luhns.validate(ccnum), valid)
