@@ -1,4 +1,4 @@
-% LAB 10: Classes
+% LAB 9: Classes
 %
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
@@ -9,14 +9,15 @@
 \usepackage{caption}
 
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 10: Classes}
-\title{Lab 10: Classes}
+\fancyhead[R]{Lab 9: Classes}
+\title{Lab 9: Classes}
 
 \begin{document}
 
 \maketitle
-
+\pagenumbering{roman}
 \hrule
+
 \begin{quotation}
 ``Who are you? How did you get in my house?''
 \end{quotation}
@@ -31,6 +32,292 @@ This week, we will have a brief introduction to Object Oriented Programming by
 way of Python's classes.
 
 \pagebreak
+\tableofcontents
+\pagebreak
+\pagenumbering{arabic}
+
+\section{Modules}
+\label{sec:modules}
+
+A program that is saved in a text file and then run with Python is called a
+\emph{script}. As your programs get longer, you may want to split them into
+multiple files for easier legibility, maintenance, or abstraction. To do this,
+Python supports a way to put definitions (of functions) in a file and use them
+in another script or in the interpreter. A file like this is called a
+\emph{module}. An example for such a module is the math module we have used
+previously. The definitions from a module can be \emph{imported} into other
+scripts.
+
+A module is just a file with Python statements in it. A module takes the name of
+the file that it is in. For example, imagine we have a file
+\texttt{circlemath.py} in our current working directory:
+
+\begin{listing}[H]
+\vspace{-0.5em}
+\begin{python3code}
+import math # importing the math module
+
+def area(radius):
+    """Find and return the area of a circle (float) given the radius"""
+    return math.pi * radius**2
+
+def circumference(radius):
+    """Find and return the circumference of a circle (float) given the radius"""
+    return 2 * math.pi * radius
+\end{python3code}
+\vspace{-1em}
+\caption{\texttt{circlemath.py}}
+\vspace{-0.5em}
+\end{listing}
+
+Then, open the interpreter and import the module:
+
+\begin{pyconcode}
+>>> import circlemath
+>>> circlemath.circumference(5) # have to use modulename.attributename
+31.41592653589793
+>>> circlemath.area(5)
+78.53981633974483
+>>> circlemath.__name__
+'circlemath'
+\end{pyconcode}
+
+Every module has a \pythoninline{__name__} attribute that contains the name of
+the module, except in one special case that we will see soon.
+
+There are other kinds of import statements with different effects:
+
+\begin{pyconcode}
+>>> from circlemath import area
+>>> area(5) # can just use the attribute imported without modulename.
+78.53981633974483
+>>> circumference(5) # not defined, because not imported
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+NameError: name 'circumference' is not defined
+\end{pyconcode}
+
+\begin{pyconcode}
+>>> from circlemath import area, circumference # use commas to separate multiple
+>>> area(5)
+78.53981633974483
+>>> circumference(5)
+31.41592653589793
+\end{pyconcode}
+
+\begin{pyconcode}
+>>> from circlemath import * # import all definitions made
+>>> area(5)
+78.53981633974483
+>>> circumference(5)
+31.41592653589793
+\end{pyconcode}
+
+\begin{pyconcode}
+>>> from circlemath import area as carea
+>>> carea(5)
+78.53981633974483
+\end{pyconcode}
+
+The last option is rather frowned upon; we would prefer you to use
+\pythoninline{circlemath.area} instead as it is more descriptive.
+
+You may also rename a module upon importing it:
+
+\begin{pyconcode}
+>>> import circlemath as cmath
+>>> cmath.area(5)
+78.53981633974483
+\end{pyconcode}
+
+
+\begin{infobox}{Convention (PEP 8)}
+  Always put \pythoninline{import} statements at the beginning of a file in the
+  following order:
+  \begin{enumerate}
+    \item Built-in standard library modules
+    \item Third-party modules (e.g. matplotlib)
+    \item Self-written modules
+  \end{enumerate}
+  Put a blank line between each group of imports.
+\end{infobox}
+
+\subsection{Using Modules as Scripts and Boilerplate}
+
+If there is code in your module that is not a function definition, Python will
+run it just once when the module is imported. For example, take the file
+\texttt{mid.py}:
+
+\begin{listing}[H]
+  \vspace{-0.5em}
+\begin{python3code}
+def midpoint(a, b):
+    """Find and return the midpoint of two numbers."""
+    return (a+b)/2
+
+print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
+\end{python3code}
+  \vspace{-1em}
+  \caption{\texttt{mid.py}}
+  \vspace{-0.5em}
+\end{listing}
+
+\begin{pyconcode}
+>>> import mid
+Midpoint of 5 and 10 is 7.50.
+\end{pyconcode}
+
+The same will happen if you run the module like a script:
+
+\begin{bashcode}
+$ python3 mid.py
+Midpoint of 5 and 10 is 7.50.
+\end{bashcode}
+
+However, this can be rather annoying to deal with, for example if you wrote a
+script with a bunch of functions a while ago and you just want to use the
+functions you wrote, but do not want the other code to run when you're using
+them -- you just want the functions. You can achieve this!
+
+When you run a module as a script, the modules \pythoninline{__name__} attribute
+is not set to the module's name, but to \pythoninline{"__main__"}. Hence, the
+following code in \texttt{mid.py} will do the following:
+
+\begin{listing}[H]
+  \vspace{-0.5em}
+\begin{python3code}
+def midpoint(a, b):
+    """Find and return the midpoint of two numbers."""
+    return (a+b)/2
+
+print(__name__) # just for demonstration, do not put this in real programs
+
+if __name__ == "__main__":
+    print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
+\end{python3code}
+  \vspace{-1em}
+  \caption{\texttt{mid.py}}
+  \vspace{-0.5em}
+\end{listing}
+
+\begin{pyconcode}
+>>> import mid
+mid
+\end{pyconcode}
+
+\begin{bashcode}
+$ python3 mid.py
+__main__
+Midpoint of 5 and 10 is 7.50.
+\end{bashcode}
+
+However, sometimes you may want to import the module \emph{and} run it as if it
+were a script. To enable us to do so, we usually put the script code in a
+function called \pythoninline{main()}:
+
+\begin{listing}[H]
+  \vspace{-0.5em}
+\begin{python3code}
+def midpoint(a, b):
+    """Find and return the midpoint of two numbers."""
+    return (a+b)/2
+
+def main():
+    print('Midpoint of {} and {} is {:.2f}.'.format(5, 10, midpoint(5, 10)))
+
+if __name__ == "__main__":
+    main()
+\end{python3code}
+  \vspace{-1em}
+  \caption{\texttt{mid.py} -- perfect example}
+  \vspace{-0.5em}
+\end{listing}
+
+\begin{pyconcode}
+>>> import mid
+>>> mid.main() # if we want to
+Midpoint of 5 and 10 is 7.50.
+\end{pyconcode}
+
+\begin{bashcode}
+$ python3 mid.py
+Midpoint of 5 and 10 is 7.50.
+\end{bashcode}
+
+We call this combination of the if-statement and the
+\pythoninline{main()} function \emph{boilerplate code}.
+
+\subsection{The \protect\pythoninline{dir()} Function}
+
+Use the \pythoninline{dir()} function to get a list of every attribute --
+variables, functions, and other things you do not know about yet -- that is part
+of a module. For example for the circlemath module we wrote earlier:
+
+\begin{pyconcode}
+>>> import circlemath
+>>> dir(circlemath)
+['__name__', 'area', 'circumference']
+>>> import mid
+>>> dir(mid)
+['__name__', 'midpoint']
+>>> import math
+>>> dir(math)
+['__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'acos',
+'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh',
+'degrees', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial', 'floor', 'fmod',
+'frexp', 'fsum', 'gamma', 'hypot', 'isfinite', 'isinf', 'isnan', 'ldexp', 'lgamma',
+'log', 'log10', 'log1p', 'log2', 'modf', 'pi', 'pow', 'radians', 'sin', 'sinh', 'sqrt',
+'tan', 'tanh', 'trunc']
+\end{pyconcode}
+
+\subsection{Summary}
+\label{subsec:modules.sum}
+
+\begin{itemize}
+  \item Syntax:
+
+    \begin{python3code}
+import modname1, modname2 # use: modname1.attributename
+import modname3 as othermodname # use: othermodname.attributename
+from modname import attribute1, attribute2 # use: attribute1, attribute2
+from modname import * # use: attributename
+from modname import attribute as otherattribute # use: otherattribute
+    \end{python3code}
+
+    Attributes can be functions defined in the module or variables defined in
+    the module. A special attribute is \pythoninline{__name__}, which contains
+    the name of the module unless the module is executed as a script.
+
+  \item Every script is a module whose name is the filename of the script.
+
+  \item If a module is imported, its \pythoninline{__name__} attribute is a
+    variable that contains the module name. If a module is run as a script, its
+    \pythoninline{__name__} attribute contains \pythoninline{"__main__"}. With
+    this, you can have code that only runs if a module is run like a script.
+
+    We call that boilerplate code:
+
+    \begin{python3code}
+def main():
+    # stuff that only runs if module is run as a script
+
+if __name__ == "__main__":
+    main()
+    \end{python3code}
+
+  \item Use \pythoninline{dir()} to get a list of every attribute -- every
+    variable and function (and other things that you do not know about yet) --
+    that is part of a particular module.
+
+  \item A good resource:
+
+    \begin{center}
+      \url{https://docs.python.org/3.4/tutorial/modules.html}
+    \end{center}
+
+\end{itemize}
+
+
 \section{Classes and Objects}
 \label{sec:classes}
 In Python, classes are a way to group together functions and attributes
@@ -125,10 +412,11 @@ Try running the above code. It should print out \pythoninline{x = 5}. Overriding
 
 \section{Inheritance}
 \label{sec:inheritance}
-A class can be built on another class. This is commonly done when multiple
+A class can be built from another class. This is commonly done when multiple
 classes should logically be different but share common functionality. A class
-that inherits from another class is considered to be a subclass of its parent
-class. The subclass gains all the functions and attributes of its parent class.
+that inherits from another class is considered to be a subclass or child of
+its parent class. The subclass gains all the functions and attributes of
+its parent class.
 
 An example
 might be that both Books and Articles could be considered Publications. Both
@@ -199,16 +487,19 @@ print(isinstance(D(), B)) #True
 
 \section{Iteration}
 \label{sec:iter}
-By defining a couple of special methods, we can make an object of any class that
-we create iterable. These two functions are \pythoninline{__iter__(self)} and
-\pythoninline{__next__(self)}. These functions are used by anything that uses
+By defining a special method, we can make an object of any class that
+we create iterable. This function is \pythoninline{__iter__(self)}.
+This function is used by anything that uses
 iterables (such as \pythoninline{for} loops). \pythoninline{__iter__} is called
-when the loop starts and is expected to return an object with
-\pythoninline{__next__} defined. Thus, we can usually just
-\pythoninline{return self} if we've defined it ourselves. Then,
-\pythoninline{__next__} is called repeatedly until it raises an exception called
-\pythoninline{StopIteration}. Using this knowledge we can write our own version
-of \pythoninline{range()}:
+when the loop starts and then uses the \pythoninline{yield} keyword to return
+each successive element for the loop. \pythoninline{yield} works almost exactly
+like \pythoninline{return} except it does not end the function. Instead the function
+is ``paused''
+until the next value is requested, at which point execution continues until the
+next \pythoninline{yield} is encountered. The loop ends when the function raises
+and exception called \pythoninline{StopIteration}.
+Using this knowledge we can write our
+own version of \pythoninline{range()}:
 
 \begin{python3code}
 class MyRange:
@@ -217,26 +508,18 @@ class MyRange:
         self.end = end
 
     def __iter__(self):
-        self.current = None
-        return self
-
-    def __next__(self):
-        if self.current is None:
-            self.current = self.start
-        else:
-            self.current += 1
-
-        if self.current >= self.end:
-            raise StopIteration
-        else:
-            return self.current
+        current = self.start
+        while current < self.end:
+            yield current
+            current += 1
+        raise StopIteration
 
 r = MyRange(1, 10)
 for i in r:
     print(i) #prints 1, 2, 3, ..., 9
 \end{python3code}
 
-With a bit more complex logic in our \pythoninline{__next__} we can do some
+With a bit more complex logic in our \pythoninline{__iter__} we can do some
 pretty complicated things with \pythoninline{for} loops!
 
 \clearpage
@@ -290,7 +573,7 @@ pretty complicated things with \pythoninline{for} loops!
     the \pythoninline{forward}, \pythoninline{backward}, \pythoninline{left},
     and \pythoninline{right} methods so that, if given a negative value, they
     cause no movement to occur. Add a new method \pythoninline{regular_polygon}
-    that takes as arguments a number of sides anda length for the sides, then
+    that takes as arguments a number of sides and a length for the sides, then
     draws out the regular polygon fulfilling those requirements.
 
     Write a program using your replacement \pythoninline{Turtle} class that
@@ -328,8 +611,8 @@ pretty complicated things with \pythoninline{for} loops!
         \end{description}
     \end{description}
 
-    Additionally, you should implement \pythoninline{__iter__(self)} and
-    \pythoninline{__next__(self)} such that the tree can be used in a for loop.
+    Additionally, you should implement \pythoninline{__iter__(self)}
+    such that the tree can be used in a for loop.
     When used in a for loop, the nodes of the tree should be accessed in-order.
     This means that they should be accessed from left to right. That is, if we
     have a tree that looks like this:
@@ -347,10 +630,7 @@ pretty complicated things with \pythoninline{for} loops!
     loop currently is, as well as \pythoninline{raise StopIteration} when
     necessary.
 
-    \emph{Hint}: You may find using a stack to track where you are in the tree
-    to be useful!
-
-    Once you have it using, you should be able to use \pythoninline{list} to
+    Once you have it working, you should be able to use \pythoninline{list} to
     convert your tree into a list.
 \end{ex}
 
@@ -359,7 +639,7 @@ pretty complicated things with \pythoninline{for} loops!
 You should submit your code as a tarball. It should contain all files
 used in the exercises for this lab. The submitted file should be named
 \begin{center}
-  \texttt{cse107\_firstname\_lastname\_lab10.tar.gz}
+  \texttt{cse107\_firstname\_lastname\_lab9.tar.gz}
 \end{center}
 
 \begin{center}
