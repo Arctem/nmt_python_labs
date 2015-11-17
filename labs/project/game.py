@@ -1,10 +1,7 @@
 import math
 import random
 import threading
-import tkinter
 import time
-
-from sample_tank import SampleTank
 
 class Game(object):
     XSIZE = 500
@@ -165,8 +162,8 @@ class Game(object):
                     x2, y2 = t2.pos['x'], t2.pos['y']
                     dist = math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
                     if dist < t1.radius + t2.radius:
-                        t1.kill()
-                        t2.kill()
+                        t1.damage()
+                        t2.damage()
 
     def handle_shooting(self):
         for t1 in self.tanks:
@@ -197,7 +194,7 @@ class Game(object):
                         ytmp = y1 + t * (y2 - y1)
                         dist = math.hypot(xtmp - x3, ytmp - y3)
                     if dist < t2.radius:
-                        t2.kill()
+                        t2.damage()
 
 
     def place_tanks(self):
@@ -233,22 +230,3 @@ class Game(object):
         self.draw_tanks()
         self.delta = time.perf_counter() - start
         self.root.after(1, self.loop)
-
-
-
-def main():
-    root = tkinter.Tk()
-    canvas = tkinter.Canvas(root, width=Game.XSIZE, height=Game.YSIZE)
-    canvas.pack()
-
-    game = Game(root, canvas)
-
-    ###ADD YOUR TANKS HERE###
-    for i in range(10):
-        game.add_tank(SampleTank())
-    game.start()
-
-    tkinter.mainloop()
-
-if __name__ == '__main__':
-    main()

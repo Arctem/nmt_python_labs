@@ -8,7 +8,7 @@ class SampleTank(Tank):
 
     def __init__(self):
         Tank.__init__(self)
-        self.sensors = [Sensor(0, 30, 100, False), Sensor(0, 10, 50, True)]
+        self.sensors = [Sensor(0, 90, 75, False), Sensor(0, 10, 50, True)]
         self.clockwise = random.random() < 0.5
 
     def ai(self, delta):
@@ -22,5 +22,5 @@ class SampleTank(Tank):
             self.set_speed('l', -30)
             self.set_speed('r', -30)
         else:
-            self.set_speed('l', 40)
-            self.set_speed('r', 35)
+            self.set_speed('l', 50)
+            self.set_speed('r', 45)

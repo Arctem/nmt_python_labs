@@ -148,5 +148,5 @@ class Tank(object):
             self.pos = {}
         self.pos['x'], self.pos['y'] = pos
 
-    def kill(self):
+    def damage(self):
         self.alive = False

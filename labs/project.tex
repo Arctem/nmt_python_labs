@@ -32,7 +32,7 @@
 
 \begin{warningbox}{Dirtbags Tanks}
   This project is inspired by Dirtbags Tanks by Neale Pickett.
-  More information is available at \url{http://woozle.org/tanks/intro.html}.
+  More information is available at \url{http://dirtbags.net/tanks/}.
 \end{warningbox}
 
 \subsection{Project Overview}
@@ -43,20 +43,20 @@ skeleton of a game involving several tanks. It consists of the files
 these files do, stay here. For a description of your assignment, see
 Section~\ref{subsec:ex}.
 
+\subsubsection{main.py}
+\texttt{main.py} contains the \pythoninline{main()} function of the program.
+You will need to modify this file in order to add your own tanks to the
+\pythoninline{Game} instance that is already being created. To do this,
+simply imitate how the \pythoninline{SampleTank}s are being added. Note
+that you will also need to add an import at the start of the file in
+order to be able to access your tanks from other files.
+
 \subsubsection{game.py}
-\texttt{game.py} contains two important things: \pythoninline{class Game} and
-the \pythoninline{main()} function of the program. \pythoninline{Game}
+\texttt{game.py} contains \pythoninline{class Game}. \pythoninline{Game}
 contains the code that controls the interaction between tanks (collision
 detection and firing) as well as the drawing of objects to the
 \pythoninline{tkinter} window. You should not have to worry about how it does
-these things.
-
-The \pythoninline{main()} function, however, you will need to edit, slightly.
-This is where you will add your own tanks to the \pythoninline{Game} instance
-that is already being created. To do this, simply imitate how the
-\pythoninline{SampleTank}s are being added. Note that you will also need to add
-an import at the start of the file in order to be able to access your tanks from
-other files.
+these things and should not edit this file.
 
 \subsubsection{tank.py}
 \texttt{tank.py} contains \pythoninline{class Tank}, which includes all the
@@ -78,14 +78,15 @@ the sensors (described in Section\ref{subsubsec:sensor}). Not using these
 methods will result in your tank not behaving properly, as properties such as
 tread acceleration, max speed, and turret speed may be ignored.
 
-You should also redefine \pythoninline{\_\_init\_\_} to specify the tank's sensors as
+You should also redefine \pythoninline{__init__} to specify the tank's sensors as
 well as any other attributes that may differ from the default tank (left to your
 discretion).
 
 \subsubsection{tankutil.py}
 \texttt{tankutil.py} contains a few miscellaneous functions used by the other
 files. It is relatively inconsequential and you won't need to use it, though it
-may be useful to look at if you want to set custom colors for your tanks.
+may be useful to look at if you want to set custom colors for your tanks. Once
+again, you should not edit this file.
 
 \subsubsection{sensor.py}
 \label{subsubsec:sensor}
@@ -120,6 +121,9 @@ sensor inside of \pythoninline{self.sensors}.
 
 Each sensor will be shown graphically, and if it detects a tank then it will be
 filled in with the color of its parent tank to indicate that it is active.
+
+As with \texttt{game.py}, \texttt{tank.py}, and \texttt{tank\_util.py} you should
+not edit this file.
 
 
 \subsubsection{sample\_tank.py}
@@ -162,7 +166,7 @@ works and why you made it work that way.
 \begin{ex}[README.txt]
 You should have a README file briefly describing the logic behind each of your
 tanks. If you changed anything in the given files besides the main() of
-\texttt{game.py}, mention it here and explain why. Mention some changes you
+\texttt{main.py}, mention it here and explain why. Mention some changes you
 found that made tanks more or less successful.
 \end{ex}
 
@@ -176,9 +180,10 @@ and another behind it!
 
 \begin{ex}[charger.py]
 This tank is very enthusiastic to show you how well its turret works! It should
-chase down any tank it sees and give them a demonstration of how well its gun
-works!\footnote{By shooting them.} If the gun isn't ready, it should try to stay
-away from others so as not to reveal that the gun is not completely reliable.
+chase down any tank it sees and give them a demonstration of how good it is at
+shooting things!\footnote{By shooting them.} If the gun isn't ready, it should
+try to stay away from others so as not to reveal that its gun is not completely
+reliable.
 \end{ex}
 
 \begin{ex}[turret.py]
@@ -194,7 +199,7 @@ larger than the other tanks while also being harder to kill.
 
 To accomplish this, you will need to change some of the default tank attributes,
 namely shape, radius, tread\_accel, and tread\_max. You will also need to
-redefine \pythoninline{kill(self)}, which is called whenever a tank is shot
+redefine \pythoninline{damage(self)}, which is called whenever a tank is shot
 or runs into another tank.
 \end{ex}
 
@@ -216,8 +221,8 @@ it better than all of them!
 
 \subsection{Bug Bounty}
 The provided code was written fairly quickly and probably has some bugs.
-As such, if you report a bug that
-are not previously known, you will be given 5 points of extra credit. If you can
+As such, if you report a bug that was not previously known, you will be
+given 5 points of extra credit. If you can
 provide a \emph{fix} to a bug, you will be given 10 points. Report all
 bugs/fixes to Russell if you want to receive credit.
 
