@@ -67,24 +67,26 @@
   
   \pythoninline{tire.py} will contain the definition of \pythoninline{class Tire}. Each Tire
   will have two attributes: traction and radius. The traction of the wheel indicates the
-  maximum ideal acceleration the wheel can provide. If the car's acceleration would be
-  above this number, then it is instead the average of this number and the
+  maximum ideal acceleration the wheel can provide. If the car's ideal acceleration
+  would be above this number, then the actual acceleration
+  is instead the average of this number and the
   ideal acceleration. The radius of the tire determines how far it causes the
   car to travel per rotation. This is important because Engine strength is
-  measured in rotations. Traction and radius are both measured in meters.
+  measured in rotations per second while traction is measured in meters
+  per second squared and radius is measured in meters.
   
   \pythoninline{engine.py} will contain the definition of
   \pythoninline{class Engine}. Each Engine will have two attributes:
   max speed and acceleration. Max speed is in terms of tire rotations per
   second. Acceleration is a value between $0$ and $1$ that indicates how much
   closer the current speed gets to the max speed each second. Each second, the
-  new speed is determined by the following formula:
+  new engine speed is determined by the following formula:
   $$newSpeed = oldSpeed + acceleration \cdot \left(maxSpeed - oldSpeed\right)$$
   Since engine speed is measured in rotations per second, the actual
   acceleration of the car must take into account the engine's speed, the tire's
   traction, and the tire's radius to determine how far it travels each second.
   Because of the tire's traction, it is possible that the car is not
-  experiencing the full speed that might be indicated by
+  experiencing the ideal speed that might be indicated by
   $engineSpeed \cdot tireCircumference$. Thus, the car's speed cannot be purely
   calculated from the engine's speed each second.
 
@@ -98,9 +100,11 @@
   car takes to travel a given distance. These should use the relevant methods
   described above. You should ask the user whether they want a table of distances
   gone in fixed times or times taken to go fixed distances. You should be able
-  to compare 1, 2, 3, or 4 cars in one table. Figure~\ref{gofast} shows the
+  to compare 1, 2, 3, or 4 cars in one table. Table~\ref{gofast} shows the
   data you need to show when comparing distances given a fixed time. You should be
-  able to make a similar table the other way around.
+  able to make a similar table where the first column is distances (likely in
+  intervals of 100) and the others are how long the cars took to reach those
+  distances.
   
   \begin{center}
     \begin{tabular}{crrrr}
@@ -132,8 +136,8 @@
     10 & 9180.95 & 2716.81\\
     \bottomrule
     \end{tabular}
-    \label{gofast}
     \captionof{table}{Data to display about how far cars go in given times.}
+    \label{gofast}
   \end{center}
   
   When simulating the cars, you should use a time delta of 1 second. This means
@@ -166,8 +170,8 @@
     10 & 1462.58 & 199.80 & 199.80 & 99.90\\
     \bottomrule
     \end{tabular}
-    \label{carexample}
     \captionof{table}{Example of a Car's Performance}
+    \label{carexample}
   \end{center}
   
   It should be noted that the Distance column of Table~\ref{carexample}
